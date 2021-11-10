@@ -1,0 +1,14 @@
+class RouteName {
+  static const String initial = '/';
+  static const String splashScreen = 'splashScreen';
+  static const String LoginScreen = 'LoginScreen';
+  static const String RegisterScreen = 'RegisterScreen';
+  static const String ForgotPassScreen = 'ForgotPassScreen';
+  static const String VerifyOtpScreen = 'VerifyOtpScreen';
+  static const String ChangePassScreen = 'ChangePassScreen';
+  static const String HomeScreen = 'HomeScreen';
+  static const String ListProductScreen = 'ListProductScreen';
+  static const String DetailProductScreen = 'DetailProductScreen';
+  static const String PersonalScreen = 'PersonalScreen';
+  static const String ProfileScreen = 'ProfileScreen';
+}
