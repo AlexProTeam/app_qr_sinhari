@@ -1,10 +1,8 @@
-
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:intl/intl.dart';
+import 'package:qrcode/common/utils/log_util.dart';
+
 class FormatUtils {
-
-
-
   static double? formatMoneyFromStringTextField(String? input) {
     try {
       if (input?.isEmpty ?? true) return 0.0;
@@ -46,6 +44,21 @@ class FormatUtils {
     String textHour = '${hour != 0 ? '${hour}giờ' : ''}';
     String minuteText = '${minute != 0 ? '${minute}phút' : ''}';
     return '$textHour$minuteText';
+  }
+
+  static String formatCurrencyDoubleToString(int? currency,
+      {bool haveUnit = true, bool aboutZero = false}) {
+    try {
+      if (currency == 0 && aboutZero) {
+        return '0 ₫';
+      }
+      if (CommonUtil.isNull(currency)) return '';
+      final output = NumberFormat.simpleCurrency(locale: 'vi').format(currency);
+      return haveUnit ? output : output.trim().replaceAll('₫', '');
+    } catch (e) {
+      LOG.e('Exception: formatCurrencyDoubleToString: ${e.toString()}');
+      return '$currency';
+    }
   }
 
   static int formatTextPriceToDouble(String input) {

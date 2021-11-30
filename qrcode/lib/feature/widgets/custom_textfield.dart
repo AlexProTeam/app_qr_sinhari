@@ -5,7 +5,11 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
-  const CustomTextField({Key? key, this.controller,this.hintText}) : super(key: key);
+  final TextInputType? keyboardType;
+  final FormFieldValidator<String>? validator;
+  const CustomTextField(
+      {Key? key, this.controller, this.hintText, this.keyboardType,this.validator})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +22,13 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextFormField(
         controller: controller,
+        textInputAction: TextInputAction.done,
+        validator: validator,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
-            contentPadding: EdgeInsets.only(bottom: 12,left: 16),
+            contentPadding: EdgeInsets.only(bottom: 12, left: 16),
             hintStyle: AppTextTheme.smallGrey.copyWith(
               fontStyle: FontStyle.italic,
             )),

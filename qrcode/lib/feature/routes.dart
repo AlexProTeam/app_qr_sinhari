@@ -7,6 +7,7 @@ import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/auth/change_pass/change_pass_screen.dart';
 import 'package:qrcode/feature/auth/forgot_pass/forgot_pass_screen.dart';
 import 'package:qrcode/feature/auth/login/login_screen.dart';
+import 'package:qrcode/feature/auth/login/verify_otp_screen.dart';
 import 'package:qrcode/feature/auth/register/register_screen.dart';
 import 'package:qrcode/feature/auth/splash/splash_screen.dart';
 import 'package:qrcode/feature/auth/verify_otp/verify_otp_screen.dart';
@@ -66,6 +67,13 @@ class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     LOG.d('LOG ROUTE_NAVIGATOR: ${settings.name}');
     switch (settings.name) {
+      case RouteName.VerifyOtpScreen:
+        return CupertinoPageRoute(
+          builder: (context) => VerifyOtpScreen(
+            phone:
+                settings.arguments != null ? settings.arguments as String : '',
+          ),
+        );
       case RouteName.ProfileScreen:
         return CupertinoPageRoute(
           builder: (context) => ProfileScreen(),
@@ -76,11 +84,18 @@ class Routes {
         );
       case RouteName.DetailProductScreen:
         return CupertinoPageRoute(
-          builder: (context) => DetailProductScreen(),
+          builder: (context) => DetailProductScreen(
+            productId:
+                settings.arguments != null ? settings.arguments as int : null,
+          ),
         );
       case RouteName.ListProductScreen:
         return CupertinoPageRoute(
-          builder: (context) => ListProductScreen(),
+          builder: (context) => ListProductScreen(
+            argument: settings.arguments != null
+                ? settings.arguments as ArgumentListProductScreen
+                : null,
+          ),
         );
       case RouteName.HomeScreen:
         return CupertinoPageRoute(
@@ -94,10 +109,10 @@ class Routes {
         return CupertinoPageRoute(
           builder: (context) => RegisterScreen(),
         );
-      case RouteName.VerifyOtpScreen:
-        return CupertinoPageRoute(
-          builder: (context) => VerifyOtpScreen(),
-        );
+      // case RouteName.VerifyOtpScreen:
+      //   return CupertinoPageRoute(
+      //     builder: (context) => VerifyOtpScreen(),
+      //   );
       case RouteName.ForgotPassScreen:
         return CupertinoPageRoute(
           builder: (context) => ForgotPassScreen(),
