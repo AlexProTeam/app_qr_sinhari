@@ -1,0 +1,4 @@
+
+class AppCache {
+  // ProfileModel? profileModel;
+}
