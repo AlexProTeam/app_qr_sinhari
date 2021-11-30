@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/const/key_save_data_local.dart';
+import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
+import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
@@ -54,48 +57,14 @@ class _PersonalScreenState extends State<PersonalScreen> {
               ),
             ),
           ),
-          CustomGestureDetector(
-            onTap: (){
-              Routes.instance.navigateTo(RouteName.ChangePassScreen);
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          IconConst.password,
-                          width: 24,
-                          height: 24,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'Đổi mật khẩu',
-                    style: AppTextTheme.normalBlack.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomButton(
                 onTap: () {
+                  injector<LocalApp>().saveStringSharePreference(KeySaveDataLocal.keySaveAccessToken, '');
                   Routes.instance.navigateAndRemove(RouteName.LoginScreen);
                 },
                 text: 'Đăng xuất',

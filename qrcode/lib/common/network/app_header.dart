@@ -5,10 +5,6 @@ class AppHeader {
 
   AppHeader({this.accessToken, this.lat, this.lng});
 
-  AppHeader.fromJson(Map<String, dynamic> json) {
-    accessToken = json['Authorization'];
-  }
-
   AppHeader.fromLatLng(double lat, double lng) {
     this.lat = lat;
     this.lng = lng;
@@ -17,19 +13,10 @@ class AppHeader {
   Map<String, String> toJson() {
     final Map<String, String> data = Map<String, String>();
     if (accessToken != null) {
-      data['token'] = '$accessToken';
-      data['Content-Type'] = 'application/json';
+      data['Authorization'] = 'Bearer $accessToken';
     }
     return data;
   }
 
-  Map<String, String> toJson2() {
-    final Map<String, String> data = Map<String, String>();
-    if (accessToken != null) {
-      data['token'] = '$accessToken';
-      data['latitude'] = '$lat';
-      data['longitude'] = '$lng';
-    }
-    return data;
-  }
+
 }

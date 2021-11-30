@@ -1,19 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
+import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
+import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/local/app_cache.dart';
+import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/common/utils/format_utils.dart';
+import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_slide.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
+import '../../injector_container.dart';
+
 class DetailProductScreen extends StatefulWidget {
-  const DetailProductScreen({Key? key}) : super(key: key);
+  final int? productId;
+
+  const DetailProductScreen({Key? key, this.productId}) : super(key: key);
 
   @override
   _DetailProductScreenState createState() => _DetailProductScreenState();
 }
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
+  DetailProductModel? _detailProductModel;
+
+  @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
+  void _initData() async {
+    try {
+      injector<LoadingBloc>().add(StartLoading());
+      final data =
+          await injector<AppClient>().get('products/show/${widget.productId}');
+      _detailProductModel = DetailProductModel.fromJson(data['data']);
+      setState(() {});
+    } catch (e) {
+      CommonUtil.handleException(injector<SnackBarBloc>(), e,
+          methodName: 'getThemes CourseCubit');
+      Routes.instance.pop();
+    } finally {
+      injector<LoadingBloc>().add(FinishLoading());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -27,7 +65,9 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DetailProductSlide(),
+            _detailProductModel!=null?  DetailProductSlide(
+              // images: _detailProductModel?.photos,
+            ):const SizedBox(),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -35,7 +75,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '(Sin hair) Dầu gội màu đen',
+                    '${_detailProductModel?.name}',
                     style: AppTextTheme.normalBlack,
                   ),
                   const SizedBox(height: 8),
@@ -46,42 +86,39 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         width: 80,
                         height: 15,
                       ),
-                      Text(
-                        ' 4,5',
-                        style: AppTextTheme.normalBlack,
-                      ),
                     ],
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    '370.000đ',
+                    '${FormatUtils.formatCurrencyDoubleToString(_detailProductModel?.purchasePrice ?? _detailProductModel?.unitPrice)}',
                     style: AppTextTheme.mediumBlack.copyWith(
                       color: AppColors.primaryColor,
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Text(
-                    '''Dầu Gội Phủ Bạc Nhân Sâm Sin Hair
 
-PHỦ BẠC TÓC TỪ LẦN GỘI ĐẦU TIÊN
-NÓI KHÔNG VỚI HÓA CHẤT ĐỘC HẠI
-15 PHÚT TẠI NHÀ – KHÔNG CẦN RA SALON
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=> Chai dung tích 500ml , hạn sử dụng 3 năm
-
-DẦU GỘI SIN HAIR số 1 Nhật Bản thành phần chính là Nhân Sâm và 100% thành phần thảo dược tự nhiên:
-– Không gây kích ứng da, không dị ứng
-– Lên màu nhanh chóng , không bị bay màu
-– Hiệu quả từ lần gội đầu tiên
-
-???? Hướng dẫn sử dụng :
--Để tóc khô hoặc ẩm, thoa đều dầu lên tóc kết hợp masage đến lúc ra bọt trắng sau đó chờ 10-15 phút rồi xả lại với nước.
--Tháng đầu tiên nên dùng mỗi tuần 1 lần. từ tháng thứ 2 dùng mỗi tháng 1 đến 2 lần nhé ạ''',
-                    style: AppTextTheme.normalBlack,
-                  )
                 ],
               ),
             ),
+            _detailProductModel != null
+                ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Html(
+              data: _detailProductModel?.description,
+              style: {
+                  "html": Style(
+                    backgroundColor: Colors.white,
+                    color: AppColors.grey9,
+                    fontWeight: FontWeight.w500,
+                    fontSize: FontSize(14),
+                    padding: EdgeInsets.all(0),
+                    fontStyle: FontStyle.normal,
+                    wordSpacing: 1.5,
+                  ),
+              },
+            ),
+                )
+                : const SizedBox(),
           ],
         ),
       ),

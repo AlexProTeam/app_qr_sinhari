@@ -6,7 +6,6 @@ import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/exceptions/connect_exception.dart';
 import 'package:qrcode/common/exceptions/server_exception.dart';
 import 'package:qrcode/common/exceptions/timeout_exception.dart';
-import 'package:qrcode/common/exceptions/token_expired_exception.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/network/app_header.dart';
@@ -33,6 +32,8 @@ class AppClient {
             onTimeout: () {
       throw TimeOutException();
     });
+    LOG.w('DataTypeNe: ${response.body}');
+    LOG.w('DataTypeNe: ${response.body.runtimeType}');
     Map<String, dynamic> data = json.decode(response.body);
 
     String fullRequets = 'endPoint: ${Configurations.host}$endPoint\n'
@@ -72,11 +73,8 @@ class AppClient {
   }
 
   Map<String, dynamic> _handleData(Map<String, dynamic> input) {
-    if (!input['status']) {
-      if (input['msg'] == 'Yêu cầu đăng nhập lại') {
-        throw TokenExpiredException();
-      }
-      throw ServerException(message: input['msg']);
+    if (!input['success']) {
+      throw ServerException(message: input['message']);
     }
     return input;
   }

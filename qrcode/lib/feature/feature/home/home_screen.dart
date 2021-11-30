@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
+import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
+import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/model/banner_model.dart';
+import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
+import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
+import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/banner_slide_image.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
@@ -17,6 +25,42 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<BannerModel> _bannerModel = [];
+  List<ProductModel> _products = [];
+  List<ProductModel> _productFeatures = [];
+  List<ProductModel> _productSellers = [];
+
+  void _initData() async {
+    try {
+      injector<LoadingBloc>().add(StartLoading());
+      final data = await injector<AppClient>().get('banners');
+      data['data'].forEach((e) {
+        _bannerModel.add(BannerModel.fromJson(e));
+      });
+      final dataProduct1 = await injector<AppClient>().get('list-product');
+      dataProduct1['data']['products'].forEach((e) {
+        _products.add(ProductModel.fromJson(e));
+      });
+      dataProduct1['data']['productFeatures'].forEach((e) {
+        _productFeatures.add(ProductModel.fromJson(e));
+      });
+      dataProduct1['data']['productSellers'].forEach((e) {
+        _productSellers.add(ProductModel.fromJson(e));
+      });
+      setState(() {});
+    } catch (e) {
+      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+    } finally {
+      injector<LoadingBloc>().add(FinishLoading());
+    }
+  }
+
+  @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -26,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 CustomGestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Routes.instance.navigateTo(RouteName.PersonalScreen);
                   },
                   child: Padding(
@@ -66,45 +110,48 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(12.0),
               child: BannerSlideImage(
                 height: 183,
+                images: _bannerModel.map((e) => e.url ?? '').toList(),
               ),
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                const SizedBox(width: 12),
-                Text('Sản phẩm nổi bật',style: AppTextTheme.mediumBlack,),
-                const Spacer(),
-                CustomGestureDetector(
-                  onTap: (){
-                    Routes.instance.navigateTo(RouteName.ListProductScreen);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 4),
-                    child: Text('Xem thêm'),
-                  ),
-                ),
-              ],
+            GridViewDisplayProduct(
+              label: 'Gợi ý',
+              products: _products,
+              notExpand: true,
+              onMore: () {
+                Routes.instance.navigateTo(RouteName.ListProductScreen,
+                    arguments: ArgumentListProductScreen(
+                      products: _products,
+                      label: 'Gợi ý',
+                    ));
+              },
             ),
-            GridViewDisplayProduct(),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                const SizedBox(width: 12),
-                Text('Sản phẩm bán chạy',style: AppTextTheme.mediumBlack,),
-                const Spacer(),
-                CustomGestureDetector(
-                  onTap: (){
-                    Routes.instance.navigateTo(RouteName.ListProductScreen);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 4),
-                    child: Text('Xem thêm'),
-                  ),
-                ),
-                const SizedBox(width: 12),
-              ],
+            GridViewDisplayProduct(
+              label: 'Sản phẩm nổi bật',
+              products: _productFeatures,
+              notExpand: true,
+              onMore: () {
+                Routes.instance.navigateTo(RouteName.ListProductScreen,
+                    arguments: ArgumentListProductScreen(
+                      products: _productFeatures,
+                      label: 'Sản phẩm nổi bật',
+                    ));
+              },
             ),
-            GridViewDisplayProduct(),
+            const SizedBox(height: 12),
+            GridViewDisplayProduct(
+              label: 'Sản phẩm bán chạy',
+              products: _productSellers,
+              notExpand: true,
+              onMore: () {
+                Routes.instance.navigateTo(RouteName.ListProductScreen,
+                    arguments: ArgumentListProductScreen(
+                      products: _productSellers,
+                      label: 'Sản phẩm bán chạy',
+                    ));
+              },
+            ),
           ],
         ),
       ),

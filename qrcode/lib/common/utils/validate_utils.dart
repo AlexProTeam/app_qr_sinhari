@@ -97,22 +97,7 @@ class ValidateUtil {
   }
 
   static String? validPhone(String? phone, {bool aboutNumberPhoneTest = true}) {
-    List<String> _phones = [
-      '0123456781',
-      '0123456782',
-      '0123456783',
-      '0123456784',
-      '0123456785',
-      '0123456786',
-      '0123456787',
-      '0123456788',
-      '0123456789',
-      '0123456112',
-      '0123456113'
-    ];
-    if (_phones.contains(phone) && aboutNumberPhoneTest) {
-      return null;
-    }
+
     if ((phone?.isNotEmpty ?? false) && phone?[0] != '0') {
       phone = '0$phone';
     }
@@ -191,12 +176,15 @@ class ValidateUtil {
     return null;
   }
 
-  static String? validEmail(String input) {
+  static String? validEmail(String? input) {
+    if(input?.isEmpty??true){
+      return 'Mục này không được bỏ trống';
+    }
     String p =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
     RegExp regExp = new RegExp(p);
-    if (regExp.hasMatch(input)) {
+    if (regExp.hasMatch(input!)) {
       return null;
     }
     return 'Email không hợp lệ';

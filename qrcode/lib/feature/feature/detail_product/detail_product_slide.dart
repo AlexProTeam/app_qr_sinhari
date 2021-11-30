@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
-const images = [
-  'https://product.hstatic.net/200000192975/product/9_5ca9ca693ec04b15b7f08dc72b33fa92_master.jpg',
-  'https://file.hstatic.net/200000192975/file/2_a42c30d719f9481ea73da7918365d87d_grande.png',
-  'https://file.hstatic.net/200000192975/file/eu-qua-tai-nha-bang-gung-tuoi4_20668be1f32140e1ba1979b7d10baa9c_grande_981575db7cb441f09e408f5d381f2283_grande.png',
-];
-
 class DetailProductSlide extends StatefulWidget {
-  const DetailProductSlide({Key? key}) : super(key: key);
+  final List<String>? images;
+
+  const DetailProductSlide({Key? key, this.images}) : super(key: key);
 
   @override
   _DetailProductSlideState createState() => _DetailProductSlideState();
@@ -49,8 +45,7 @@ class _DetailProductSlideState extends State<DetailProductSlide> {
                 });
               },
             ),
-            items: images
-                .map((e) => InkWell(
+            items: widget.images?.map((e) => InkWell(
                       onTap: () {},
                       child: Container(
                         color: Colors.transparent,
@@ -59,7 +54,6 @@ class _DetailProductSlideState extends State<DetailProductSlide> {
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,
-
                         ),
                       ),
                     ))
@@ -75,7 +69,7 @@ class _DetailProductSlideState extends State<DetailProductSlide> {
               Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: map<Widget>(images, (index, obj) {
+                children: map<Widget>(widget.images??[], (index, obj) {
                   return Container(
                     width: 8.0,
                     height: 8.0,
