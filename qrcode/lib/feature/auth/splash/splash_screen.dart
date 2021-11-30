@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
     if (_accessToken?.isEmpty ?? true) {
       await Future.delayed(Duration(seconds: 1));
-      Routes.instance.navigateTo(RouteName.LoginScreen);
+      Routes.instance.navigateTo(RouteName.HomeScreen);
       return;
     }
     AppHeader appHeader = AppHeader();

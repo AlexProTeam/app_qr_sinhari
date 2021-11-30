@@ -66,7 +66,7 @@ class _AppState extends State<App> {
           return Flash.bar(
             controller: controller,
             backgroundColor: color,
-            position: FlashPosition.bottom,
+            position: FlashPosition.top,
             horizontalDismissDirection: HorizontalDismissDirection.startToEnd,
             margin: const EdgeInsets.all(8),
             borderRadius: const BorderRadius.all(Radius.circular(8)),

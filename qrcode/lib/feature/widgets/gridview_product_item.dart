@@ -4,6 +4,7 @@ import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
+import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
@@ -25,7 +26,9 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
     return InkWell(
       onTap: () {
         Routes.instance.navigateTo(RouteName.DetailProductScreen,
-            arguments: productModel?.id);
+            arguments: ArgumentDetailProductScreen(
+              productId: productModel?.id,
+            ));
       },
       child: Container(
         width: itemWidth,

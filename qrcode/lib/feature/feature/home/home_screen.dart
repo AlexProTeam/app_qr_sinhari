@@ -3,11 +3,13 @@ import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
@@ -61,6 +63,16 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  void _onScan() async {
+    final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    if (data != null) {
+      Routes.instance.navigateTo(RouteName.DetailProductScreen,
+          arguments: ArgumentDetailProductScreen(
+            url: data,
+          ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -71,7 +83,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 CustomGestureDetector(
                   onTap: () {
-                    Routes.instance.navigateTo(RouteName.PersonalScreen);
+                    if (injector<AppCache>().profileModel != null) {
+                      Routes.instance.navigateTo(RouteName.PersonalScreen);
+                    } else {
+                      Routes.instance
+                          .navigateTo(RouteName.LoginScreen, arguments: true);
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -86,20 +103,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.primaryColor,
-                    ),
-                    child: Center(
-                      child: Image.asset(
-                        IconConst.scan,
-                        width: 24,
-                        height: 24,
+                CustomGestureDetector(
+                  onTap: _onScan,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor,
+                      ),
+                      child: Center(
+                        child: Image.asset(
+                          IconConst.scan,
+                          width: 24,
+                          height: 24,
+                        ),
                       ),
                     ),
                   ),

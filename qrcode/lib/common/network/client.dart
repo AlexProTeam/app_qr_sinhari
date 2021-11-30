@@ -32,8 +32,6 @@ class AppClient {
             onTimeout: () {
       throw TimeOutException();
     });
-    LOG.w('DataTypeNe: ${response.body}');
-    LOG.w('DataTypeNe: ${response.body.runtimeType}');
     Map<String, dynamic> data = json.decode(response.body);
 
     String fullRequets = 'endPoint: ${Configurations.host}$endPoint\n'

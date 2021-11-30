@@ -56,6 +56,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
+  void _initData() {
+    ProfileModel? profileModel = injector<AppCache>().profileModel;
+    _nameController.text = profileModel?.name ?? '';
+    _emailController.text = profileModel?.email ?? '';
+    _phoneController.text = profileModel?.phone ?? '';
+    _adddressController.text = profileModel?.address ?? '';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(

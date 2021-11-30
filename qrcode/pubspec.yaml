@@ -27,7 +27,8 @@ dependencies:
   shared_preferences: ^2.0.7
   pin_code_fields: ^7.3.0
   flutter_html: ^2.1.5 #display context as html
-
+  qr_code_scanner: ^0.6.1 # scan image qr
+  webview_flutter: ^2.1.2 # load url in app
 dev_dependencies:
   flutter_test:
     sdk: flutter
