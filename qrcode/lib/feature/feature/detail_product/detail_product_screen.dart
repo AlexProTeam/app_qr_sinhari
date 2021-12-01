@@ -16,11 +16,13 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
 import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/validate_utils.dart';
+import 'package:qrcode/feature/feature/detail_product/detail_product_contact.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_slide.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
+import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 import '../../injector_container.dart';
@@ -118,6 +120,28 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         iconLeftTap: () {
           Routes.instance.pop();
         },
+        widgetRight: CustomGestureDetector(
+          onTap: () {
+            if (injector<AppCache>().profileModel == null) {
+              Routes.instance
+                  .navigateTo(RouteName.LoginScreen, arguments: true);
+              return;
+            }
+            CommonUtil.showAlertDialog(
+              context,
+              child: DetailProductContact(
+                productId: _detailProductModel?.id ?? 0,
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Text(
+              'Liên hệ',
+              style: AppTextTheme.normalBlue,
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

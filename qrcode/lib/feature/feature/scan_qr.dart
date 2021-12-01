@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
@@ -28,36 +27,36 @@ class _QRViewExampleState extends State<ScanQrScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Column(
-              children: <Widget>[
-                Expanded(child: _buildQrView(context)),
-              ],
-            ),
-            Positioned(
-                left: 0,
-                top: GScreenUtil.statusBarHeight,
-                child: CustomGestureDetector(
-                  onTap: () async {
-                    await controller?.pauseCamera();
-                    await controller?.stopCamera();
-                    controller?.dispose();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Icon(
-                      Icons.arrow_back,
-                      size: 30,
-                      color: Colors.white,
-                    ),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Column(
+            children: <Widget>[
+              Expanded(
+                child: _buildQrView(context),
+              ),
+            ],
+          ),
+          Positioned(
+              left: 0,
+              top: GScreenUtil.statusBarHeight,
+              child: CustomGestureDetector(
+                onTap: () async {
+                  // await controller?.pauseCamera();
+                  // await controller?.stopCamera();
+                  // controller?.dispose();
+                  Routes.instance.pop();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Icon(
+                    Icons.arrow_back,
+                    size: 30,
+                    color: Colors.white,
                   ),
-                ))
-          ],
-        ),
+                ),
+              )),
+        ],
       ),
     );
   }
@@ -84,18 +83,10 @@ class _QRViewExampleState extends State<ScanQrScreen> {
     setState(() {
       this.controller = controller;
     });
-    String? qrData;
-    controller.scannedDataStream.listen((scanData) async {
-      try {
-        LOG.d('_onQRViewCreated listen');
-        qrData = scanData.code;
-        controller.dispose();
-      } catch (e) {
-        LOG.d('_onQRViewCreated GstoreException');
-      }
-    }, onDone: () {
-      LOG.d('_onQRViewCreated done: $qrData');
-      Routes.instance.pop(result: qrData);
+    controller.scannedDataStream.listen((scanData) {
+      controller.pauseCamera();
+      controller.stopCamera();
+      Routes.instance.pop(result: scanData.code ?? '');
     });
   }
 
