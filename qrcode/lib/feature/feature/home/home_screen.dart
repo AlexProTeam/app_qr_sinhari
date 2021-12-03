@@ -3,6 +3,7 @@ import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -58,7 +59,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _initData();
+    _checkAndNavigateToLastScreen();
     super.initState();
+  }
+
+  void _checkAndNavigateToLastScreen() async {
+    await Future.delayed(Duration(seconds: 1));
+    if (injector<AppCache>().cacheProductId != null) {
+      Routes.instance.navigateTo(RouteName.DetailProductScreen,
+          arguments: injector<AppCache>().cacheProductId);
+    }
   }
 
   @override

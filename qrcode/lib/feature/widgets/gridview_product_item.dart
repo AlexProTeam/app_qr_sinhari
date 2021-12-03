@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/string_const.dart';
+import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
+import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
@@ -24,6 +26,9 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
     final _sizeImage = itemWidth - 10;
     return InkWell(
       onTap: () {
+        if(injector<AppCache>().profileModel==null){
+          injector<AppCache>().cacheProductId = productModel?.id;
+        }
         Routes.instance.navigateTo(RouteName.DetailProductScreen,
             arguments: productModel?.id);
       },
