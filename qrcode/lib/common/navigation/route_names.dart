@@ -11,5 +11,5 @@ class RouteName {
   static const String DetailProductScreen = 'DetailProductScreen';
   static const String PersonalScreen = 'PersonalScreen';
   static const String ProfileScreen = 'ProfileScreen';
-  // static const String VerifyOtpScreen = 'VerifyOtpScreen';
+  static const String ScanQrScreen = 'ScanQrScreen';
 }

@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:qrcode/common/utils/log_util.dart';
+
 class DetailProductModel {
   int? id;
   dynamic productIdVtap;
@@ -9,7 +13,7 @@ class DetailProductModel {
   int? subcategoryId;
   int? subsubcategoryId;
   dynamic brandId;
-  String? photos;
+  List<String>? photos;
   String? thumbnailImg;
   String? thumbnailoptimize;
   String? featuredImg;
@@ -56,62 +60,68 @@ class DetailProductModel {
   int? isSale;
   int? isNew;
 
-  DetailProductModel.fromJson(Map<String?, dynamic> json) {
-    id = json['id'];
-    productIdVtap = json['product_id_vtap'];
-    name = json['name'];
-    productCode = json['product_code'];
-    addedBy = json['added_by'];
-    userId = json['user_id'];
-    categoryId = json['category_id'];
-    subcategoryId = json['subcategory_id'];
-    subsubcategoryId = json['subsubcategory_id'];
-    brandId = json['brand_id'];
-    photos = json['photos'];
-    thumbnailImg = json['thumbnail_img'];
-    thumbnailoptimize = json['thumbnailoptimize'];
-    featuredImg = json['featured_img'];
-    flashDealImg = json['flash_deal_img'];
-    videoProvider = json['video_provider'];
-    videoLink = json['video_link'];
-    tags = json['tags'];
-    description = json['description'];
-    unitPrice = json['unit_price'];
-    purchasePrice = json['purchase_price'];
-    choiceOptions = json['choice_options'];
-    properties = json['properties'];
-    attributes = json['attributes'];
-    colors = json['colors'];
-    variations = json['variations'];
-    todaysDeal = json['todays_deal'];
-    published = json['published'];
-    featured = json['featured'];
-    currentStock = json['current_stock'];
-    unit = json['unit'];
-    discount = json['discount'];
-    discountType = json['discount_type'];
-    tax = json['tax'];
-    taxType = json['tax_type'];
-    shippingType = json['shipping_type'];
-    shippingCost = json['shipping_cost'];
-    numOfSale = json['num_of_sale'];
-    metaTitle = json['meta_title'];
-    metaDescription = json['meta_description'];
-    metaImg = json['meta_img'];
-    pdf = json['pdf'];
-    slug = json['slug'];
-    rating = json['rating'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    adminApproval = json['admin_approval'];
-    quantity = json['quantity'];
-    isDelete = json['is_delete'];
-    deleteAt = json['delete_at'];
-    deleteBy = json['delete_by'];
-    isUpdate = json['is_update'];
-    otherSiteProductId = json['other_site_product_id'];
-    productBuyWith = json['product_buy_with'];
-    isSale = json['is_sale'];
-    isNew = json['is_new'];
+  DetailProductModel.fromJson(Map<String?, dynamic> data) {
+    id = data['id'];
+    productIdVtap = data['product_id_vtap'];
+    name = data['name'];
+    productCode = data['product_code'];
+    addedBy = data['added_by'];
+    userId = data['user_id'];
+    categoryId = data['category_id'];
+    subcategoryId = data['subcategory_id'];
+    subsubcategoryId = data['subsubcategory_id'];
+    brandId = data['brand_id'];
+    if (data['photos'] != null) {
+      photos = [];
+      final test = json.decode(data['photos']);
+      for (final obj in test) {
+        photos?.add(obj);
+      }
+    }
+    thumbnailImg = data['thumbnail_img'];
+    thumbnailoptimize = data['thumbnailoptimize'];
+    featuredImg = data['featured_img'];
+    flashDealImg = data['flash_deal_img'];
+    videoProvider = data['video_provider'];
+    videoLink = data['video_link'];
+    tags = data['tags'];
+    description = data['description'];
+    unitPrice = data['unit_price'];
+    purchasePrice = data['purchase_price'];
+    choiceOptions = data['choice_options'];
+    properties = data['properties'];
+    attributes = data['attributes'];
+    colors = data['colors'];
+    variations = data['variations'];
+    todaysDeal = data['todays_deal'];
+    published = data['published'];
+    featured = data['featured'];
+    currentStock = data['current_stock'];
+    unit = data['unit'];
+    discount = data['discount'];
+    discountType = data['discount_type'];
+    tax = data['tax'];
+    taxType = data['tax_type'];
+    shippingType = data['shipping_type'];
+    shippingCost = data['shipping_cost'];
+    numOfSale = data['num_of_sale'];
+    metaTitle = data['meta_title'];
+    metaDescription = data['meta_description'];
+    metaImg = data['meta_img'];
+    pdf = data['pdf'];
+    slug = data['slug'];
+    rating = data['rating'];
+    createdAt = data['created_at'];
+    updatedAt = data['updated_at'];
+    adminApproval = data['admin_approval'];
+    quantity = data['quantity'];
+    isDelete = data['is_delete'];
+    deleteAt = data['delete_at'];
+    deleteBy = data['delete_by'];
+    isUpdate = data['is_update'];
+    otherSiteProductId = data['other_site_product_id'];
+    productBuyWith = data['product_buy_with'];
+    isSale = data['is_sale'];
+    isNew = data['is_new'];
   }
 }

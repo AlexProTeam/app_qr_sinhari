@@ -6,6 +6,7 @@ import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
 import 'package:qrcode/feature/injector_container.dart';
+import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
@@ -30,7 +31,9 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
         Routes.instance.navigateTo(RouteName.DetailProductScreen,
-            arguments: productModel?.id);
+            arguments: ArgumentDetailProductScreen(
+              productId: productModel?.id,
+            ));
       },
       child: Container(
         width: itemWidth,

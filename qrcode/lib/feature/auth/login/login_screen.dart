@@ -20,7 +20,9 @@ import 'package:qrcode/feature/widgets/custom_textfield.dart';
 import '../../injector_container.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final bool? haveBack;
+
+  const LoginScreen({Key? key, this.haveBack}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -52,93 +54,108 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: AppColors.white,
       autoDismissKeyboard: true,
       resizeToAvoidBottomInset: false,
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 34),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    IconConst.logo,
-                    width: 117,
-                    height: 117,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 85),
-              Text(
-                'Đăng nhập',
-                style: AppTextTheme.medium20PxBlack.copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                widget.haveBack == true
+                    ? CustomGestureDetector(
+                        onTap: () {
+                          Routes.instance.pop();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 12),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                          ),
+                        ),
+                      )
+                    : const SizedBox(height: 34),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      IconConst.logo,
+                      width: 117,
+                      height: 117,
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 12),
-              TypePhoneNumber(
-                controller: _phoneController,
-              ),
-              const SizedBox(height: 20),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomButton(
-                    onTap: _onContinue,
-                    text: 'Tiếp Tục',
+                const SizedBox(height: 85),
+                Text(
+                  'Đăng nhập',
+                  style: AppTextTheme.medium20PxBlack.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
                   ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     const Spacer(),
-              //     CustomGestureDetector(
-              //       onTap: () {
-              //         Routes.instance.navigateTo(RouteName.ForgotPassScreen);
-              //       },
-              //       child: Padding(
-              //         padding:
-              //             const EdgeInsets.only(top: 16, left: 16, bottom: 16),
-              //         child: Text(
-              //           'Bạn quên mật khẩu ?',
-              //           style: AppTextTheme.normalGrey,
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // ),
-              // const Spacer(),
-              // CustomGestureDetector(
-              //   onTap: () {
-              //     Routes.instance.navigateTo(RouteName.RegisterScreen);
-              //   },
-              //   child: Padding(
-              //     padding: const EdgeInsets.symmetric(vertical: 16),
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Text.rich(TextSpan(children: [
-              //           TextSpan(
-              //               text: 'Bạn đã có tài khoản chưa? ',
-              //               style: AppTextTheme.normalGrey),
-              //           TextSpan(
-              //               text: 'Đăng ký',
-              //               style: AppTextTheme.normalPrimary.copyWith(
-              //                 fontWeight: FontWeight.w700,
-              //                 decoration: TextDecoration.underline,
-              //               ))
-              //         ]))
-              //       ],
-              //     ),
-              //   ),
-              // )
-            ],
+                ),
+                const SizedBox(height: 12),
+                TypePhoneNumber(
+                  controller: _phoneController,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomButton(
+                      onTap: _onContinue,
+                      text: 'Tiếp Tục',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     const Spacer(),
+                //     CustomGestureDetector(
+                //       onTap: () {
+                //         Routes.instance.navigateTo(RouteName.ForgotPassScreen);
+                //       },
+                //       child: Padding(
+                //         padding:
+                //             const EdgeInsets.only(top: 16, left: 16, bottom: 16),
+                //         child: Text(
+                //           'Bạn quên mật khẩu ?',
+                //           style: AppTextTheme.normalGrey,
+                //         ),
+                //       ),
+                //     )
+                //   ],
+                // ),
+                // const Spacer(),
+                // CustomGestureDetector(
+                //   onTap: () {
+                //     Routes.instance.navigateTo(RouteName.RegisterScreen);
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(vertical: 16),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         Text.rich(TextSpan(children: [
+                //           TextSpan(
+                //               text: 'Bạn đã có tài khoản chưa? ',
+                //               style: AppTextTheme.normalGrey),
+                //           TextSpan(
+                //               text: 'Đăng ký',
+                //               style: AppTextTheme.normalPrimary.copyWith(
+                //                 fontWeight: FontWeight.w700,
+                //                 decoration: TextDecoration.underline,
+                //               ))
+                //         ]))
+                //       ],
+                //     ),
+                //   ),
+                // )
+              ],
+            ),
           ),
         ),
       ),

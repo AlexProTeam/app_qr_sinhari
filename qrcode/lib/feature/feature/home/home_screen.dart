@@ -9,6 +9,7 @@ import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
@@ -39,13 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
         _bannerModel.add(BannerModel.fromJson(e));
       });
       final dataProduct1 = await injector<AppClient>().get('list-product');
-      dataProduct1['data']['products'].forEach((e) {
+      dataProduct1['data']['products']['data'].forEach((e) {
         _products.add(ProductModel.fromJson(e));
       });
-      dataProduct1['data']['productFeatures'].forEach((e) {
+      dataProduct1['data']['productFeatures']['data'].forEach((e) {
         _productFeatures.add(ProductModel.fromJson(e));
       });
-      dataProduct1['data']['productSellers'].forEach((e) {
+      dataProduct1['data']['productSellers']['data'].forEach((e) {
         _productSellers.add(ProductModel.fromJson(e));
       });
       setState(() {});
@@ -63,40 +64,66 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  void _onScan() async {
+    final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    if (data != null) {
+      injector<AppCache>().cacheDataProduct = data;
+      Routes.instance.navigateTo(RouteName.DetailProductScreen,
+          arguments: ArgumentDetailProductScreen(
+            url: data,
+          ));
+    }
+  }
+
   void _checkAndNavigateToLastScreen() async {
     await Future.delayed(Duration(seconds: 1));
+    if (injector<AppCache>().cacheDataProduct != null) {
+      Routes.instance.navigateTo(RouteName.DetailProductScreen,
+          arguments: ArgumentDetailProductScreen(
+            url: injector<AppCache>().cacheDataProduct,
+          ));
+      return;
+    }
     if (injector<AppCache>().cacheProductId != null) {
       Routes.instance.navigateTo(RouteName.DetailProductScreen,
-          arguments: injector<AppCache>().cacheProductId);
+          arguments: ArgumentDetailProductScreen(
+            productId: injector<AppCache>().cacheProductId,
+          ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                CustomGestureDetector(
-                  onTap: () {
+      body: Column(
+        children: [
+          Row(
+            children: [
+              CustomGestureDetector(
+                onTap: () {
+                  if (injector<AppCache>().profileModel != null) {
                     Routes.instance.navigateTo(RouteName.PersonalScreen);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        IconConst.logo,
-                        width: 40,
-                        height: 40,
-                      ),
+                  } else {
+                    Routes.instance
+                        .navigateTo(RouteName.LoginScreen, arguments: true);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      IconConst.logo,
+                      width: 40,
+                      height: 40,
                     ),
                   ),
                 ),
-                const Spacer(),
-                Padding(
+              ),
+              const Spacer(),
+              CustomGestureDetector(
+                onTap: _onScan,
+                child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Container(
                     width: 40,
@@ -113,57 +140,65 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: BannerSlideImage(
-                height: 183,
-                images: _bannerModel.map((e) => e.url ?? '').toList(),
+                ),
+              )
+            ],
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: BannerSlideImage(
+                      height: 183,
+                      images: _bannerModel.map((e) => e.url ?? '').toList(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  GridViewDisplayProduct(
+                    label: 'Gợi ý',
+                    products: _products,
+                    notExpand: true,
+                    onMore: () {
+                      Routes.instance.navigateTo(RouteName.ListProductScreen,
+                          arguments: ArgumentListProductScreen(
+                            products: _products,
+                            label: 'Gợi ý',
+                          ));
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  GridViewDisplayProduct(
+                    label: 'Sản phẩm nổi bật',
+                    products: _productFeatures,
+                    notExpand: true,
+                    onMore: () {
+                      Routes.instance.navigateTo(RouteName.ListProductScreen,
+                          arguments: ArgumentListProductScreen(
+                            products: _productFeatures,
+                            label: 'Sản phẩm nổi bật',
+                          ));
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  GridViewDisplayProduct(
+                    label: 'Sản phẩm bán chạy',
+                    products: _productSellers,
+                    notExpand: true,
+                    onMore: () {
+                      Routes.instance.navigateTo(RouteName.ListProductScreen,
+                          arguments: ArgumentListProductScreen(
+                            products: _productSellers,
+                            label: 'Sản phẩm bán chạy',
+                          ));
+                    },
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 12),
-            GridViewDisplayProduct(
-              label: 'Gợi ý',
-              products: _products,
-              notExpand: true,
-              onMore: () {
-                Routes.instance.navigateTo(RouteName.ListProductScreen,
-                    arguments: ArgumentListProductScreen(
-                      products: _products,
-                      label: 'Gợi ý',
-                    ));
-              },
-            ),
-            const SizedBox(height: 12),
-            GridViewDisplayProduct(
-              label: 'Sản phẩm nổi bật',
-              products: _productFeatures,
-              notExpand: true,
-              onMore: () {
-                Routes.instance.navigateTo(RouteName.ListProductScreen,
-                    arguments: ArgumentListProductScreen(
-                      products: _productFeatures,
-                      label: 'Sản phẩm nổi bật',
-                    ));
-              },
-            ),
-            const SizedBox(height: 12),
-            GridViewDisplayProduct(
-              label: 'Sản phẩm bán chạy',
-              products: _productSellers,
-              notExpand: true,
-              onMore: () {
-                Routes.instance.navigateTo(RouteName.ListProductScreen,
-                    arguments: ArgumentListProductScreen(
-                      products: _productSellers,
-                      label: 'Sản phẩm bán chạy',
-                    ));
-              },
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

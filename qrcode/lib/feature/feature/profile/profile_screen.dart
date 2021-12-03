@@ -55,6 +55,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  void _onDoneNew() async {
+    CommonUtil.dismissKeyBoard(context);
+    if (!CommonUtil.validateAndSave(_formKey)) return;
+    try {
+      injector<LoadingBloc>().add(StartLoading());
+      var headers = {
+        'Authorization': 'Bearer ${injector<AppClient>().header?.accessToken}'
+      };
+      var request = http.MultipartRequest('POST',
+          Uri.parse('https://admin.sinhairvietnam.vn/api/auth/saveProfile'));
+      request.fields.addAll({
+        'name': '${_nameController.text}',
+        'email': '${_emailController.text}',
+        'phone': '${_phoneController.text}',
+        'address': '${_adddressController.text}'
+      });
+      request.files.add(await http.MultipartFile.fromPath('avatar',
+          '/C:/Users/HungHo/Downloads/image/bao-kim-chinh-thuc-trien-khai-du-an-tai-dinh-vi-thuong-hieu-2.jpg'));
+      request.headers.addAll(headers);
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        injector<SnackBarBloc>().add(ShowSnackbarEvent(
+            type: SnackBarType.success,
+            content: 'Cập nhật thông tin thành công!.'));
+        final data = await injector<AppClient>().get('auth/showProfile');
+        ProfileModel profileModel = ProfileModel.fromJson(data['data']);
+        injector<AppCache>().profileModel = profileModel;
+        Routes.instance.pop();
+      }
+    } catch (e) {
+      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+    } finally {
+      injector<LoadingBloc>().add(FinishLoading());
+    }
+  }
+
+  @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
+  void _initData() {
+    ProfileModel? profileModel = injector<AppCache>().profileModel;
+    _nameController.text = profileModel?.name ?? '';
+    _emailController.text = profileModel?.email ?? '';
+    _phoneController.text = profileModel?.phone ?? '';
+    _adddressController.text = profileModel?.address ?? '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(

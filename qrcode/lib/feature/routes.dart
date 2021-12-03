@@ -16,6 +16,7 @@ import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/feature/personal/personal_screen.dart';
 import 'package:qrcode/feature/feature/profile/profile_screen.dart';
+import 'package:qrcode/feature/feature/scan_qr.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
 class Routes {
@@ -74,6 +75,10 @@ class Routes {
                 settings.arguments != null ? settings.arguments as String : '',
           ),
         );
+      case RouteName.ScanQrScreen:
+        return CupertinoPageRoute(
+          builder: (context) => ScanQrScreen(),
+        );
       case RouteName.ProfileScreen:
         return CupertinoPageRoute(
           builder: (context) => ProfileScreen(),
@@ -85,8 +90,9 @@ class Routes {
       case RouteName.DetailProductScreen:
         return CupertinoPageRoute(
           builder: (context) => DetailProductScreen(
-            productId:
-                settings.arguments != null ? settings.arguments as int : null,
+            argument: settings.arguments != null
+                ? settings.arguments as ArgumentDetailProductScreen
+                : null,
           ),
         );
       case RouteName.ListProductScreen:
@@ -119,7 +125,10 @@ class Routes {
         );
       case RouteName.LoginScreen:
         return CupertinoPageRoute(
-          builder: (context) => LoginScreen(),
+          builder: (context) => LoginScreen(
+            haveBack:
+                settings.arguments != null ? settings.arguments as bool : null,
+          ),
         );
       case RouteName.splashScreen:
         return CupertinoPageRoute(
