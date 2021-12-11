@@ -24,7 +24,7 @@ class CommonUtil {
   static Future<String> getDeviceId()async{
     final DeviceInfoPlugin deviceInfoPlugin =   DeviceInfoPlugin();
     String identifier = '';
-    // try {
+    try {
       if (Platform.isAndroid) {
         var build = await deviceInfoPlugin.androidInfo;
         identifier = build.androidId;  //UUID for Android
@@ -32,9 +32,9 @@ class CommonUtil {
         var data = await deviceInfoPlugin.iosInfo;
         identifier = data.identifierForVendor;  //UUID for iOS
       }
-    // } catch(e) {
-    //   return '';
-    // }
+    } catch(e) {
+      return '';
+    }
     return identifier;
   }
   static int countNumberRowOfGridview(List? data) {

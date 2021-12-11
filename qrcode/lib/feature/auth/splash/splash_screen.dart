@@ -7,6 +7,7 @@ import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
@@ -20,14 +21,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
-    // _initData();
+    _initData();
     super.initState();
   }
 
   void _initData() async {
+    injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
     String? _accessToken = injector<LocalApp>()
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
     if (_accessToken?.isEmpty ?? true) {
@@ -63,12 +64,12 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 12),
             Text(
-              'Công ty TNHH Sinhair Viet Nam',
+              'Công ty TNHH Sinhair Japan',
               style: AppTextTheme.medium20PxBlack.copyWith(fontSize: 18),
             ),
             const Spacer(),
             Text(
-              'Bản quyền thuộc sở hữu CÔNG TY TNHH SINHAIR Viet Nam',
+              'Bản quyền thuộc sở hữu CÔNG TY TNHH SINHAIR Japan',
               style: AppTextTheme.normalGrey,
               textAlign: TextAlign.center,
             ),

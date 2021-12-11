@@ -6,4 +6,6 @@ class AppCache {
   bool havedLogin = false;
   int? cacheProductId;
   String? cacheDataProduct;
+  String? deviceId;
+
 }

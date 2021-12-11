@@ -15,6 +15,7 @@ import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/home/widgets/container_drawer_item.dart';
+import 'package:qrcode/feature/feature/home/widgets/home_drawer.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
@@ -23,6 +24,7 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/banner_slide_image.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
+import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/gridview_product.dart';
 
@@ -39,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<ProductModel> _productFeatures = [];
   List<ProductModel> _productSellers = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   void _initData() async {
     try {
       injector<LoadingBloc>().add(StartLoading());
@@ -81,13 +84,16 @@ class _HomeScreenState extends State<HomeScreen> {
     LOG.w('_onScan: $deviceId');
     final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
     LOG.w('_onScan: $data');
-    // if (data != null) {
-    //   injector<AppCache>().cacheDataProduct = data;
-    //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
-    //       arguments: ArgumentDetailProductScreen(
-    //         url: data,
-    //       ));
-    // }
+    if (data != null) {
+      injector<AppClient>().get(
+          'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
+              '&city=ha noi&region=vn&url=$data');
+      injector<AppCache>().cacheDataProduct = data;
+      Routes.instance.navigateTo(RouteName.DetailProductScreen,
+          arguments: ArgumentDetailProductScreen(
+            url: data,
+          ));
+    }
   }
 
   void _checkAndNavigateToLastScreen() async {
@@ -112,56 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
-      drawer: Container(
-        width: 200,
-        height: double.infinity,
-        color: Colors.white,
-        child: ListView(
-          children: [
-            CustomGestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-                Routes.instance.navigateTo(RouteName.ProfileScreen);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Image.asset(
-                        IconConst.person,
-                        width: 40,
-                        height: 40,
-                      ),
-                    ),
-                    Text(
-                      'Thông tin cá nhân',
-                      style: AppTextTheme.normalBlack.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                  onTap: () {
-                    Navigator.pop(context);
-                    injector<LocalApp>().saveStringSharePreference(KeySaveDataLocal.keySaveAccessToken, '');
-                    Routes.instance.navigateAndRemove(RouteName.LoginScreen);
-                  },
-                  text: 'Đăng xuất',
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      drawer: HomeDrawer(),
       body: Column(
         children: [
           SizedBox(
@@ -171,12 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               CustomGestureDetector(
                 onTap: () {
-                  if (injector<AppCache>().profileModel != null) {
-                    _scaffoldKey.currentState?.openDrawer();
-                  } else {
-                    Routes.instance
-                        .navigateTo(RouteName.LoginScreen, arguments: true);
-                  }
+                  _scaffoldKey.currentState?.openDrawer();
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
