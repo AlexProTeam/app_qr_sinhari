@@ -79,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onScan() async {
     final deviceId = await CommonUtil.getDeviceId();
     LOG.w('_onScan: $deviceId');
-    // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    LOG.w('_onScan: $data');
     // if (data != null) {
     //   injector<AppCache>().cacheDataProduct = data;
     //   Routes.instance.navigateTo(RouteName.DetailProductScreen,

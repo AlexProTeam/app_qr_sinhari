@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    _initData();
+    // _initData();
     super.initState();
   }
 
@@ -55,6 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Spacer(),
             Image.asset(
               IconConst.logo,
               width: 207,
@@ -62,9 +63,16 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 12),
             Text(
-              'Công ty TNHH Sinhair Japan',
+              'Công ty TNHH Sinhair Viet Nam',
               style: AppTextTheme.medium20PxBlack.copyWith(fontSize: 18),
             ),
+            const Spacer(),
+            Text(
+              'Bản quyền thuộc sở hữu CÔNG TY TNHH SINHAIR Viet Nam',
+              style: AppTextTheme.normalGrey,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
