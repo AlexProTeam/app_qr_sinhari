@@ -57,7 +57,6 @@ class _PersonalScreenState extends State<PersonalScreen> {
               ),
             ),
           ),
-
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

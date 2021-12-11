@@ -3,18 +3,25 @@ import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
+import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/common/utils/log_util.dart';
+import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
+import 'package:qrcode/feature/feature/home/widgets/container_drawer_item.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
+import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/banner_slide_image.dart';
+import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/gridview_product.dart';
@@ -31,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<ProductModel> _products = [];
   List<ProductModel> _productFeatures = [];
   List<ProductModel> _productSellers = [];
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   void _initData() async {
     try {
       injector<LoadingBloc>().add(StartLoading());
@@ -39,14 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
       data['data'].forEach((e) {
         _bannerModel.add(BannerModel.fromJson(e));
       });
-      final dataProduct1 = await injector<AppClient>().get('list-product');
-      dataProduct1['data']['products']['data'].forEach((e) {
-        _products.add(ProductModel.fromJson(e));
-      });
-      dataProduct1['data']['productFeatures']['data'].forEach((e) {
+      // final dataProduct1 = await injector<AppClient>().get('list-product');
+      // dataProduct1['data']['products']['data'].forEach((e) {
+      //   _products.add(ProductModel.fromJson(e));
+      // });
+
+      final dataSeller =
+          await injector<AppClient>().get('product-seller?page=1');
+      final datafeature =
+          await injector<AppClient>().get('product-feature?page=1');
+      datafeature['data']['productFeatures']['data'].forEach((e) {
         _productFeatures.add(ProductModel.fromJson(e));
       });
-      dataProduct1['data']['productSellers']['data'].forEach((e) {
+      dataSeller['data']['productSellers']['data'].forEach((e) {
         _productSellers.add(ProductModel.fromJson(e));
       });
       setState(() {});
@@ -65,14 +77,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onScan() async {
-    final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
-    if (data != null) {
-      injector<AppCache>().cacheDataProduct = data;
-      Routes.instance.navigateTo(RouteName.DetailProductScreen,
-          arguments: ArgumentDetailProductScreen(
-            url: data,
-          ));
-    }
+    final deviceId = await CommonUtil.getDeviceId();
+    LOG.w('_onScan: $deviceId');
+    // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    // if (data != null) {
+    //   injector<AppCache>().cacheDataProduct = data;
+    //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
+    //       arguments: ArgumentDetailProductScreen(
+    //         url: data,
+    //       ));
+    // }
   }
 
   void _checkAndNavigateToLastScreen() async {
@@ -94,15 +108,70 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      key: _scaffoldKey,
+      drawer: Container(
+        width: 200,
+        height: double.infinity,
+        color: Colors.white,
+        child: ListView(
+          children: [
+            CustomGestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+                Routes.instance.navigateTo(RouteName.ProfileScreen);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Image.asset(
+                        IconConst.person,
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
+                    Text(
+                      'Thông tin cá nhân',
+                      style: AppTextTheme.normalBlack.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomButton(
+                  onTap: () {
+                    Navigator.pop(context);
+                    injector<LocalApp>().saveStringSharePreference(KeySaveDataLocal.keySaveAccessToken, '');
+                    Routes.instance.navigateAndRemove(RouteName.LoginScreen);
+                  },
+                  text: 'Đăng xuất',
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
+          SizedBox(
+            height: GScreenUtil.statusBarHeight,
+          ),
           Row(
             children: [
               CustomGestureDetector(
                 onTap: () {
                   if (injector<AppCache>().profileModel != null) {
-                    Routes.instance.navigateTo(RouteName.PersonalScreen);
+                    _scaffoldKey.currentState?.openDrawer();
                   } else {
                     Routes.instance
                         .navigateTo(RouteName.LoginScreen, arguments: true);
@@ -152,22 +221,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: BannerSlideImage(
                       height: 183,
+                      banners: _bannerModel.map((e) => e).toList(),
                       images: _bannerModel.map((e) => e.url ?? '').toList(),
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  GridViewDisplayProduct(
-                    label: 'Gợi ý',
-                    products: _products,
-                    notExpand: true,
-                    onMore: () {
-                      Routes.instance.navigateTo(RouteName.ListProductScreen,
-                          arguments: ArgumentListProductScreen(
-                            products: _products,
-                            label: 'Gợi ý',
-                          ));
-                    },
-                  ),
+                  // const SizedBox(height: 12),
+                  // GridViewDisplayProduct(
+                  //   label: 'Gợi ý',
+                  //   products: _products,
+                  //   notExpand: true,
+                  //   onMore: () {
+                  //     Routes.instance.navigateTo(RouteName.ListProductScreen,
+                  //         arguments: ArgumentListProductScreen(
+                  //           products: _products,
+                  //           label: 'Gợi ý',
+                  //         ));
+                  //   },
+                  // ),
                   const SizedBox(height: 12),
                   GridViewDisplayProduct(
                     label: 'Sản phẩm nổi bật',
@@ -176,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onMore: () {
                       Routes.instance.navigateTo(RouteName.ListProductScreen,
                           arguments: ArgumentListProductScreen(
-                            products: _productFeatures,
+                            url: 'product-feature',
                             label: 'Sản phẩm nổi bật',
                           ));
                     },
@@ -189,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onMore: () {
                       Routes.instance.navigateTo(RouteName.ListProductScreen,
                           arguments: ArgumentListProductScreen(
-                            products: _productSellers,
+                            url: 'product-seller',
                             label: 'Sản phẩm bán chạy',
                           ));
                     },

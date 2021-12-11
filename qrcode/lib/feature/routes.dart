@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
+import 'package:qrcode/common/navigation/slide_left_route.dart';
 import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/auth/change_pass/change_pass_screen.dart';
 import 'package:qrcode/feature/auth/forgot_pass/forgot_pass_screen.dart';
@@ -17,6 +18,7 @@ import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/feature/personal/personal_screen.dart';
 import 'package:qrcode/feature/feature/profile/profile_screen.dart';
 import 'package:qrcode/feature/feature/scan_qr.dart';
+import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
 class Routes {
@@ -69,70 +71,78 @@ class Routes {
     LOG.d('LOG ROUTE_NAVIGATOR: ${settings.name}');
     switch (settings.name) {
       case RouteName.VerifyOtpScreen:
-        return CupertinoPageRoute(
-          builder: (context) => VerifyOtpScreen(
+        return SlideLeftRoute(
+          widget: VerifyOtpScreen(
             phone:
                 settings.arguments != null ? settings.arguments as String : '',
           ),
         );
       case RouteName.ScanQrScreen:
-        return CupertinoPageRoute(
-          builder: (context) => ScanQrScreen(),
+        return SlideLeftRoute(
+          widget: ScanQrScreen(),
+        );
+      case RouteName.WebViewScreen:
+        return SlideLeftRoute(
+          widget: WebViewScreen(
+            url: settings.arguments != null
+                ? settings.arguments as String
+                : '',
+          ),
         );
       case RouteName.ProfileScreen:
-        return CupertinoPageRoute(
-          builder: (context) => ProfileScreen(),
+        return SlideLeftRoute(
+          widget: ProfileScreen(),
         );
       case RouteName.PersonalScreen:
-        return CupertinoPageRoute(
-          builder: (context) => PersonalScreen(),
+        return SlideLeftRoute(
+          widget: PersonalScreen(),
         );
       case RouteName.DetailProductScreen:
-        return CupertinoPageRoute(
-          builder: (context) => DetailProductScreen(
+        return SlideLeftRoute(
+          widget: DetailProductScreen(
             argument: settings.arguments != null
                 ? settings.arguments as ArgumentDetailProductScreen
                 : null,
           ),
         );
       case RouteName.ListProductScreen:
-        return CupertinoPageRoute(
-          builder: (context) => ListProductScreen(
+        return SlideLeftRoute(
+          widget: ListProductScreen(
             argument: settings.arguments != null
                 ? settings.arguments as ArgumentListProductScreen
                 : null,
           ),
         );
       case RouteName.HomeScreen:
-        return CupertinoPageRoute(
-          builder: (context) => HomeScreen(),
+        return SlideLeftRoute(
+          widget: HomeScreen(),
         );
       case RouteName.ChangePassScreen:
-        return CupertinoPageRoute(
-          builder: (context) => ChangePassScreen(),
+        return SlideLeftRoute(
+          widget: ChangePassScreen(),
         );
       case RouteName.RegisterScreen:
-        return CupertinoPageRoute(
-          builder: (context) => RegisterScreen(),
+        return SlideLeftRoute(
+          widget: RegisterScreen(),
         );
       // case RouteName.VerifyOtpScreen:
       //   return CupertinoPageRoute(
-      //     builder: (context) => VerifyOtpScreen(),
+      //     widget: VerifyOtpScreen(),
       //   );
       case RouteName.ForgotPassScreen:
-        return CupertinoPageRoute(
-          builder: (context) => ForgotPassScreen(),
+        return SlideLeftRoute(
+          widget: ForgotPassScreen(),
         );
       case RouteName.LoginScreen:
-        return CupertinoPageRoute(
-          builder: (context) => LoginScreen(
+        return SlideLeftRoute(
+          widget: LoginScreen(
             haveBack:
                 settings.arguments != null ? settings.arguments as bool : null,
           ),
         );
       case RouteName.splashScreen:
-        return CupertinoPageRoute(
-          builder: (context) => SplashScreen(),
+        return SlideLeftRoute(
+          widget: SplashScreen(),
         );
 
       default:

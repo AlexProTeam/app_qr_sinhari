@@ -105,15 +105,12 @@ class _AppState extends State<App> {
         onGenerateRoute: Routes.generateRoute,
         initialRoute: RouteName.splashScreen,
         theme: ThemeData(
-            primaryColor: AppColors.primaryColor,
-            fontFamily: 'Montserrat',
-            canvasColor: Colors.transparent,
-            bottomAppBarColor: Color(0xff989898),
-            platform: TargetPlatform.iOS,
-            pageTransitionsTheme: const PageTransitionsTheme(builders: {
-              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-            })),
+          primaryColor: AppColors.primaryColor,
+          fontFamily: 'Montserrat',
+          canvasColor: Colors.transparent,
+          bottomAppBarColor: Color(0xff989898),
+          platform: TargetPlatform.iOS,
+        ),
         builder: (context, widget) {
           GScreenUtil.init(context);
           return LoadingContainer(

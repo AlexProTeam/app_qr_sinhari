@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:qrcode/common/model/banner_model.dart';
+import 'package:qrcode/common/navigation/route_names.dart';
+import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
@@ -14,6 +17,7 @@ class BannerSlideImage extends StatefulWidget {
   final Function(int index)? onchangePage;
   final BoxFit? fit;
   final List<String>? images;
+  final List<BannerModel>? banners;
 
   const BannerSlideImage(
       {Key? key,
@@ -26,6 +30,7 @@ class BannerSlideImage extends StatefulWidget {
       this.enableInfiniteScroll = false,
       this.onchangePage,
       this.images,
+      this.banners,
       this.fit})
       : super(key: key);
 
@@ -70,13 +75,21 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
                 });
               },
             ),
-            items: widget.images
+            items: widget.banners
                 ?.map((e) => InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        if (e.urlLink != null &&
+                            (e.urlLink?.contains('http') ?? false)) {
+                          Routes.instance.navigateTo(
+                            RouteName.WebViewScreen,
+                            arguments: e.urlLink,
+                          );
+                        }
+                      },
                       child: Container(
                         color: Colors.transparent,
                         child: CustomImageNetwork(
-                          url: e,
+                          url: e.url,
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,
@@ -93,7 +106,7 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
             Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: map<Widget>(widget.images??[], (index, obj) {
+              children: map<Widget>(widget.images ?? [], (index, obj) {
                 return Container(
                   width: 8.0,
                   height: 8.0,

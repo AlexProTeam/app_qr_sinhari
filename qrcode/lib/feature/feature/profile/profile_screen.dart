@@ -1,17 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_state.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
+import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/validate_utils.dart';
 import 'package:qrcode/feature/routes.dart';
+import 'package:qrcode/feature/widgets/bottom_sheet_select_image.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
+import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 import 'package:http/http.dart';
@@ -31,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _adddressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  File? _image;
 
   void _onDone() async {
     CommonUtil.dismissKeyBoard(context);
@@ -71,8 +79,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         'phone': '${_phoneController.text}',
         'address': '${_adddressController.text}'
       });
-      request.files.add(await http.MultipartFile.fromPath('avatar',
-          '/C:/Users/HungHo/Downloads/image/bao-kim-chinh-thuc-trien-khai-du-an-tai-dinh-vi-thuong-hieu-2.jpg'));
+      if (_image != null) {
+        request.files.add(
+            await http.MultipartFile.fromPath('avatar', '${_image?.path}'));
+      }
       request.headers.addAll(headers);
       http.StreamedResponse response = await request.send();
 
@@ -89,6 +99,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
       injector<LoadingBloc>().add(FinishLoading());
+    }
+  }
+
+  void _chooseTypeImage() {
+    CommonUtil.showCustomBottomSheet(
+        context: context,
+        child: BottomSheetSelectImage(
+          onCameraTap: () {
+            _onSelectImage(true);
+          },
+          onPhotoTap: () {
+            _onSelectImage(false);
+          },
+        ),
+        height: 180,
+        onClosed: () {},
+        backgroundColor: Colors.transparent);
+  }
+
+  void _onSelectImage(bool isCamera) async {
+    XFile? image = await ImagePicker().pickImage(
+      source: isCamera ? ImageSource.camera : ImageSource.gallery,
+    );
+    if (image != null) {
+      if (isCamera) {
+        injector<LocalApp>()
+            .saveBool(KeySaveDataLocal.havedAcceptPermissionCamera, true);
+      } else {
+        injector<LocalApp>()
+            .saveBool(KeySaveDataLocal.havedAcceptPermissionPhoto, true);
+      }
+      _image = File(image.path);
+      setState(() {});
     }
   }
 
@@ -123,19 +166,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
             key: _formKey,
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(56),
-                      child: Image.asset(
-                        IconConst.logo,
-                        width: 112,
-                        height: 112,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  ],
+                const SizedBox(height: 12),
+                InkWell(
+                  onTap: _chooseTypeImage,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(56),
+                        child: _image != null
+                            ? Image.file(
+                                _image!,
+                                width: 112,
+                                height: 112,
+                                fit: BoxFit.cover,
+                              )
+                            : ((injector<AppCache>()
+                                        .profileModel
+                                        ?.avatar
+                                        ?.isEmpty ??
+                                    true)
+                                ? Image.asset(
+                                    IconConst.logo,
+                                    width: 112,
+                                    height: 112,
+                                    fit: BoxFit.cover,
+                                  )
+                                : CustomImageNetwork(
+                                    url: injector<AppCache>()
+                                        .profileModel
+                                        ?.avatar,
+                                    width: 112,
+                                    height: 112,
+                                    fit: BoxFit.cover,
+                                  )),
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
@@ -167,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomButton(
-                      onTap: _onDone,
+                      onTap: _onDoneNew,
                       text: 'Lưu lại',
                     ),
                   ],

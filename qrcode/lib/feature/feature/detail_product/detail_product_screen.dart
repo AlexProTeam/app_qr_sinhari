@@ -112,6 +112,21 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
     }
   }
 
+  void _onContact() async {
+    try {
+      injector<LoadingBloc>().add(StartLoading());
+      await injector<AppClient>()
+          .post('save-contact?product_id=${_detailProductModel?.id}');
+      injector<SnackBarBloc>().add(ShowSnackbarEvent(
+          type: SnackBarType.success, content: 'Lưu thông tin thành công'));
+    } catch (e) {
+      CommonUtil.handleException(injector<SnackBarBloc>(), e,
+          methodName: 'getThemes CourseCubit');
+    } finally {
+      injector<LoadingBloc>().add(FinishLoading());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -122,17 +137,18 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         },
         widgetRight: CustomGestureDetector(
           onTap: () {
-            if (injector<AppCache>().profileModel == null) {
-              Routes.instance
-                  .navigateTo(RouteName.LoginScreen, arguments: true);
-              return;
-            }
-            CommonUtil.showAlertDialog(
-              context,
-              child: DetailProductContact(
-                productId: _detailProductModel?.id ?? 0,
-              ),
-            );
+            _onContact();
+            // if (injector<AppCache>().profileModel == null) {
+            //   Routes.instance
+            //       .navigateTo(RouteName.LoginScreen, arguments: true);
+            //   return;
+            // }
+            // CommonUtil.showAlertDialog(
+            //   context,
+            //   child: DetailProductContact(
+            //     productId: _detailProductModel?.id ?? 0,
+            //   ),
+            // );
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

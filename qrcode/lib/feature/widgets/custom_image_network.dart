@@ -101,21 +101,13 @@ class CustomImageNetwork extends StatelessWidget {
     return _widgetImagePlaceHolder();
   }
 
-  Widget _widgetImagePlaceHolder() => Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          border: Border.all(color: AppColors.grey4),
-        ),
-        padding: EdgeInsets.all(paddingPlaceHolder ?? 16),
-        child: Center(
-          child: SvgPicture.asset(
-            IconConst.imagePlaceHolder,
-            width: double.infinity,
-            height: double.infinity,
-            color: AppColors.grey4,
-          ),
-        ),
-      );
+  Widget _widgetImagePlaceHolder() => ClipRRect(
+    borderRadius: BorderRadius.circular(56),
+    child: Image.asset(
+      IconConst.logo,
+      width: width,
+      height: height,
+      fit: BoxFit.cover,
+    ),
+  );
 }

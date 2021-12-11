@@ -18,7 +18,7 @@ class ProfileModel {
   int? isAgency;
   int? nextQrSerialNo;
   int? isNotification;
-
+String? avatar;
   ProfileModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userType = json['user_type'];
@@ -26,6 +26,10 @@ class ProfileModel {
     email = json['email'];
     address = json['address'];
     country = json['country'];
+    if(json['avatar']!=null){
+      avatar = 'https://admin.sinhairvietnam.vn/api${json['avatar']}';
+    }
+
     city = json['city'];
     districtCode = json['district_code'];
     wardCode = json['ward_code'];

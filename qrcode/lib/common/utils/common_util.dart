@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:device_info/device_info.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,22 @@ import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/alert_dialog_container.dart';
 
 class CommonUtil {
+  static Future<String> getDeviceId()async{
+    final DeviceInfoPlugin deviceInfoPlugin =   DeviceInfoPlugin();
+    String identifier = '';
+    // try {
+      if (Platform.isAndroid) {
+        var build = await deviceInfoPlugin.androidInfo;
+        identifier = build.androidId;  //UUID for Android
+      } else if (Platform.isIOS) {
+        var data = await deviceInfoPlugin.iosInfo;
+        identifier = data.identifierForVendor;  //UUID for iOS
+      }
+    // } catch(e) {
+    //   return '';
+    // }
+    return identifier;
+  }
   static int countNumberRowOfGridview(List? data) {
     if (data?.isEmpty ?? true) {
       return 1;
