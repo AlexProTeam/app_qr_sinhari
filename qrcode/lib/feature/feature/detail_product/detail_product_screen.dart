@@ -87,7 +87,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         _detailProductModel?.countPersonScan =
             data['tracking']['totalUserScan'];
         _detailProductModel?.limitScan = data['tracking']['exceeded'];
-        String dateTimeScan = data['tracking']['datetime_scan'];
+        String? dateTimeScan = data['tracking']['datetime_scan'];
         if (dateTimeScan != null) {
           DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
           DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
@@ -215,7 +215,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
             const SizedBox(height: 12),
             Column(
               children: [
-                _detailProductModel?.dateTimeScanLimit != null
+                _detailProductModel?.limitScan ==true
                     ? _itemLimit(_detailProductModel?.dateTimeScanLimit ?? '')
                     : const SizedBox(),
                 Container(
