@@ -26,11 +26,13 @@ class DateUtils {
     'Fri',
     'Sat'
   ];
+
   static int numberDayOfMonth(int month, {int? year}) {
     year ??= DateTime.now().year;
     DateTime x1 = DateTime(year, month, 0).toUtc();
     return DateTime(year, month + 1, 0).toUtc().difference(x1).inDays;
   }
+
   /// The list of days in a given month
   static List<DateTime> daysInMonth(DateTime month) {
     var first = firstDayOfMonth(month);

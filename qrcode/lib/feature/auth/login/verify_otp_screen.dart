@@ -18,6 +18,7 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
+import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
@@ -81,66 +82,86 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       autoDismissKeyboard: true,
-      body: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 34),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+          Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  IconConst.logo,
-                  width: 117,
-                  height: 117,
+                const SizedBox(height: 34),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      IconConst.logo,
+                      width: 117,
+                      height: 117,
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 85),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: PinCodeTextField(
+                    appContext: context,
+                    length: 6,
+                    obscureText: false,
+                    controller: _controller,
+                    autoDismissKeyboard: false,
+                    focusNode: _focusNode,
+                    pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(4.0),
+                      fieldHeight: 56.0,
+                      fieldWidth: 52.0,
+                      activeColor: AppColors.grey3,
+                      inactiveFillColor: AppColors.grey3,
+                      activeFillColor: AppColors.grey3,
+                      selectedFillColor: AppColors.grey3,
+                      inactiveColor: AppColors.grey3,
+                      selectedColor: AppColors.grey3,
+                    ),
+                    keyboardType: TextInputType.number,
+                    enableActiveFill: true,
+                    onCompleted: (v) {},
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                  ),
+                ),
+                SizedBox(height: 12),
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomButton(
+                      onTap: _onContinue,
+                      text: 'Đăng nhập',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
               ],
             ),
-            const SizedBox(height: 85),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: PinCodeTextField(
-                appContext: context,
-                length: 6,
-                obscureText: false,
-                controller: _controller,
-                autoDismissKeyboard: false,
-                focusNode: _focusNode,
-                pinTheme: PinTheme(
-                  shape: PinCodeFieldShape.box,
-                  borderRadius: BorderRadius.circular(4.0),
-                  fieldHeight: 56.0,
-                  fieldWidth: 52.0,
-                  activeColor: AppColors.grey3,
-                  inactiveFillColor: AppColors.grey3,
-                  activeFillColor: AppColors.grey3,
-                  selectedFillColor: AppColors.grey3,
-                  inactiveColor: AppColors.grey3,
-                  selectedColor: AppColors.grey3,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 0,right: 0),
+            child: CustomGestureDetector(
+              onTap: () {
+                Routes.instance.pop();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 20, horizontal: 12),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
                 ),
-                keyboardType: TextInputType.number,
-                enableActiveFill: true,
-                onCompleted: (v) {},
-                onChanged: (value) {
-                  setState(() {});
-                },
               ),
             ),
-            SizedBox(height: 12),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                  onTap: _onContinue,
-                  text: 'Đăng nhập',
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

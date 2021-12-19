@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
@@ -76,10 +77,25 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
 
   Future _getProductByUrl() async {
     try {
-      final deviceId  = injector<AppCache>().deviceId;
-      final data = await injector<AppClient>()
-          .get('scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url}');
+      final deviceId = injector<AppCache>().deviceId;
+      final data = await injector<AppClient>().get(
+          'scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url}');
       _detailProductModel = DetailProductModel.fromJson(data['data']['data']);
+      _detailProductModel?.serialCode = data['code_active'];
+      if (data['tracking'] != null) {
+        _detailProductModel?.countScan = data['tracking']['totalScan'];
+        _detailProductModel?.countPersonScan =
+            data['tracking']['totalUserScan'];
+        _detailProductModel?.limitScan = data['tracking']['exceeded'];
+        String dateTimeScan = data['tracking']['datetime_scan'];
+        if (dateTimeScan != null) {
+          DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+          DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
+          DateTime datetime = dateFormat.parse(dateTimeScan);
+          _detailProductModel?.dateTimeScanLimit =
+              dateFormatLast.format(datetime);
+        }
+      }
       setState(() {});
     } catch (e) {
       injector<SnackBarBloc>().add(ShowSnackbarEvent(
@@ -90,28 +106,28 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
     }
   }
 
-  void _onActive() async {
-    if (injector<AppCache>().profileModel == null) {
-      Routes.instance.navigateTo(RouteName.LoginScreen, arguments: true);
-      return;
-    }
-    if (!CommonUtil.validateAndSave(_formKey)) return;
-    try {
-      injector<LoadingBloc>().add(StartLoading());
-      await injector<AppClient>()
-          .post('auth/active-product?serial_code=${_codeController.text}'
-              '&product_id=${_detailProductModel?.id}');
-      injector<SnackBarBloc>().add(ShowSnackbarEvent(
-          type: SnackBarType.success,
-          content: 'Kích hoạt sản phẩm thành công'));
-      _codeController.text = '';
-    } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e,
-          methodName: 'getThemes CourseCubit');
-    } finally {
-      injector<LoadingBloc>().add(FinishLoading());
-    }
-  }
+  // void _onActive() async {
+  //   if (injector<AppCache>().profileModel == null) {
+  //     Routes.instance.navigateTo(RouteName.LoginScreen, arguments: true);
+  //     return;
+  //   }
+  //   if (!CommonUtil.validateAndSave(_formKey)) return;
+  //   try {
+  //     injector<LoadingBloc>().add(StartLoading());
+  //     await injector<AppClient>()
+  //         .post('auth/active-product?serial_code=${_codeController.text}'
+  //             '&product_id=${_detailProductModel?.id}');
+  //     injector<SnackBarBloc>().add(ShowSnackbarEvent(
+  //         type: SnackBarType.success,
+  //         content: 'Kích hoạt sản phẩm thành công'));
+  //     _codeController.text = '';
+  //   } catch (e) {
+  //     CommonUtil.handleException(injector<SnackBarBloc>(), e,
+  //         methodName: 'getThemes CourseCubit');
+  //   } finally {
+  //     injector<LoadingBloc>().add(FinishLoading());
+  //   }
+  // }
 
   void _onContact() async {
     try {
@@ -180,6 +196,10 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     style: AppTextTheme.normalBlack,
                   ),
                   const SizedBox(height: 8),
+                  Text(
+                    '${FormatUtils.formatCurrencyDoubleToString(_detailProductModel?.unitPrice)}',
+                    style: AppTextTheme.mediumPrimary,
+                  ),
                   Row(
                     children: [
                       Image.asset(
@@ -189,16 +209,92 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    '${FormatUtils.formatCurrencyDoubleToString(_detailProductModel?.purchasePrice ?? _detailProductModel?.unitPrice)}',
-                    style: AppTextTheme.mediumBlack.copyWith(
-                      color: AppColors.primaryColor,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
                 ],
               ),
+            ),
+            const SizedBox(height: 12),
+            Column(
+              children: [
+                _detailProductModel?.dateTimeScanLimit != null
+                    ? _itemLimit(_detailProductModel?.dateTimeScanLimit ?? '')
+                    : const SizedBox(),
+                Container(
+                  height: 8,
+                  width: double.infinity,
+                  color: AppColors.grey4,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Serial: ${_detailProductModel?.serialCode ?? ''}',
+                        style: AppTextTheme.normalBlue,
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 8,
+                  width: double.infinity,
+                  color: AppColors.grey4,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: _itemRow(
+                        Icons.qr_code_scanner,
+                        _detailProductModel?.countScan ?? 0,
+                        'Số lần quét',
+                      )),
+                      Container(
+                        width: 1,
+                        height: 50,
+                        color: AppColors.grey6,
+                      ),
+                      Expanded(
+                          child: _itemRow(
+                        Icons.person,
+                        _detailProductModel?.countPersonScan ?? 0,
+                        'Số người quét',
+                      )),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 8,
+                  width: double.infinity,
+                  color: AppColors.grey4,
+                ),
+                _itemCompany(
+                  name: 'CÔNG TY TNHH Y DƯỢC TÂM HẰNG',
+                  label: 'Nhà sản xuất',
+                  address:
+                      'Số 04 lô 6 khu nhà ở Phùng Khoang, Phường Trung Văn, Quận Nam Từ Liêm, Thành Phố Hà Nội, Việt Nam, Quận Nam Từ Liêm, Hà Nội',
+                  mst: 'QAX0000009215',
+                ),
+                Container(
+                  height: 8,
+                  width: double.infinity,
+                  color: AppColors.grey4,
+                ),
+                _itemCompany(
+                  name: 'CÔNG TY TNHH SIN HAIR JAPAN',
+                  label: 'Nhà phân phối',
+                  phone: '0886986222',
+                  address:
+                      'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
+                  mst: '0109429157',
+                ),
+                Container(
+                  height: 8,
+                  width: double.infinity,
+                  color: AppColors.grey4,
+                ),
+              ],
             ),
             _detailProductModel != null
                 ? Padding(
@@ -219,31 +315,164 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     ),
                   )
                 : const SizedBox(),
-            const SizedBox(height: 12),
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: CustomTextField(
-                  hintText: 'Nhập mã kích hoạt',
-                  controller: _codeController,
-                  validator: ValidateUtil.validEmpty,
-                  keyboardType: TextInputType.number,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                  onTap: _onActive,
-                  text: 'Kích Hoạt',
-                ),
-              ],
-            ),
             const SizedBox(height: 20),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _itemCompany(
+      {required String name,
+      required String label,
+      required String address,
+      String? phone,
+      required String mst}) {
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                  child: Column(
+                children: [
+                  Text(
+                    name,
+                    style: AppTextTheme.mediumBlack
+                        .copyWith(color: Colors.blue[700]),
+                  ),
+                  Text(
+                    label,
+                    style: AppTextTheme.normalGrey,
+                  )
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              )),
+              Container(
+                decoration: BoxDecoration(color: Colors.blue.withOpacity(0.3)),
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  Icons.arrow_right,
+                  color: Colors.blue,
+                  size: 16,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 12),
+          Divider(
+            height: 1,
+            color: AppColors.grey4,
+          ),
+          const SizedBox(height: 12),
+          phone != null
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.arrow_right,
+                        color: Colors.blue,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          phone,
+                          style: AppTextTheme.normalBlack,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
+                  ),
+                )
+              : const SizedBox(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.arrow_right,
+                color: Colors.blue,
+                size: 16,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  address,
+                  style: AppTextTheme.normalBlack,
+                ),
+              ),
+              const SizedBox(width: 12),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.arrow_right,
+                color: Colors.blue,
+                size: 16,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Mã Số Thuế: $mst',
+                  style: AppTextTheme.normalBlack,
+                ),
+              ),
+              const SizedBox(width: 12),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _itemRow(IconData iconData, int number, String label) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          iconData,
+          size: 30,
+          color: AppColors.grey7,
+        ),
+        const SizedBox(width: 6),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              '${number ?? ''}',
+              style: AppTextTheme.mediumBlack.copyWith(
+                color: AppColors.blue,
+              ),
+            ),
+            Text(
+              label,
+              style: AppTextTheme.normalGrey,
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _itemLimit(String dateTime) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+      color: Colors.red,
+      child: Center(
+        child: Text(
+          'Sản phẩm này đã vượt quá giới hạn quét, được quét bởi chưa xác định vào $dateTime, xin vui lòng cân nhắc kỹ trước khi mua hoặc sử dụng',
+          style: AppTextTheme.normalWhite,
         ),
       ),
     );

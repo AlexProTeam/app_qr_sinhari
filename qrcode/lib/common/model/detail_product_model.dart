@@ -59,6 +59,11 @@ class DetailProductModel {
   String? productBuyWith;
   int? isSale;
   int? isNew;
+  String? serialCode;
+  int? countScan;
+  int? countPersonScan;
+  bool? limitScan;
+  String? dateTimeScanLimit;
 
   DetailProductModel.fromJson(Map<String?, dynamic> data) {
     id = data['id'];
@@ -71,6 +76,7 @@ class DetailProductModel {
     subcategoryId = data['subcategory_id'];
     subsubcategoryId = data['subsubcategory_id'];
     brandId = data['brand_id'];
+    serialCode = data['code_active'];
     if (data['photos'] != null) {
       photos = [];
       final test = json.decode(data['photos']);
@@ -123,5 +129,9 @@ class DetailProductModel {
     productBuyWith = data['product_buy_with'];
     isSale = data['is_sale'];
     isNew = data['is_new'];
+    if (data['tracking'] != null) {
+      countScan = data['tracking']['totalScan'];
+      countPersonScan = data['tracking']['totalUserScan'];
+    }
   }
 }
