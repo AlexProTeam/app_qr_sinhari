@@ -10,7 +10,6 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
-
 import '../../../injector_container.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -25,23 +24,34 @@ class HomeDrawer extends StatelessWidget {
       child: ListView(
         children: [
           const SizedBox(height: 16),
-          injector<AppCache>().havedLogin == true
-              ? const SizedBox()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomButton(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              injector<AppCache>().profileModel != null
+                  ? CustomButton(
+                      onTap: () {
+                        injector<LocalApp>().saveStringSharePreference(
+                            KeySaveDataLocal.keySaveAccessToken, '');
+                        Routes.instance
+                            .navigateAndRemove(RouteName.LoginScreen);
+                      },
+                      text: 'Đăng xuất',
+                      width: 140,
+                      height: 40,
+                    )
+                  : CustomButton(
                       onTap: () {
                         Routes.instance
                             .navigateAndRemove(RouteName.LoginScreen);
                       },
                       text: 'Đăng nhập',
-                      width: 120,
+                      width: 140,
+                      height: 40,
                     ),
-                  ],
-                ),
+            ],
+          ),
           const SizedBox(height: 30),
-          injector<AppCache>().havedLogin
+          injector<AppCache>().profileModel != null
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -75,33 +85,35 @@ class HomeDrawer extends StatelessWidget {
                     ),
                   ],
                 ),
-          CustomGestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-              Routes.instance.navigateTo(RouteName.ProfileScreen);
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Image.asset(
-                      IconConst.person,
-                      width: 40,
-                      height: 40,
+          injector<AppCache>().profileModel != null
+              ? CustomGestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Routes.instance.navigateTo(RouteName.ProfileScreen);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Image.asset(
+                            IconConst.person,
+                            width: 40,
+                            height: 40,
+                          ),
+                        ),
+                        Text(
+                          'Thông tin cá nhân',
+                          style: AppTextTheme.normalBlack.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Text(
-                    'Thông tin cá nhân',
-                    style: AppTextTheme.normalBlack.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+                )
+              : const SizedBox(),
           CustomGestureDetector(
             onTap: () {
               Navigator.pop(context);
@@ -151,7 +163,8 @@ class HomeDrawer extends StatelessWidget {
                             .navigateAndRemove(RouteName.LoginScreen);
                       },
                       text: 'Đăng xuất',
-                      width: 120,
+                      width: 140,
+                      height: 40,
                     ),
                   ],
                 )

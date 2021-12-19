@@ -76,8 +76,9 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
 
   Future _getProductByUrl() async {
     try {
+      final deviceId  = injector<AppCache>().deviceId;
       final data = await injector<AppClient>()
-          .get('scan-qr-code?url=${widget.argument?.url}');
+          .get('scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url}');
       _detailProductModel = DetailProductModel.fromJson(data['data']['data']);
       setState(() {});
     } catch (e) {

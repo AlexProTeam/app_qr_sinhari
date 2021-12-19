@@ -80,6 +80,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      autoDismissKeyboard: true,
       body: Form(
         key: _formKey,
         child: Column(

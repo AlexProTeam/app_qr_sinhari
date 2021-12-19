@@ -7,5 +7,4 @@ class AppCache {
   int? cacheProductId;
   String? cacheDataProduct;
   String? deviceId;
-
 }
