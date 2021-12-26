@@ -33,6 +33,10 @@ dependencies:
   device_info: ^2.0.3
   change_app_package_name: ^1.0.0
   persistent_bottom_nav_bar: ^4.0.2
+  firebase_messaging: ^10.0.7
+  flutter_local_notifications: ^8.2.0
+  firebase_core: ^1.7.0
+  rxdart: ^0.27.3
   cached_network_image: ^3.2.0
 dev_dependencies:
   flutter_test:
