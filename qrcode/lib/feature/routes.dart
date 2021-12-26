@@ -29,6 +29,7 @@ import 'package:qrcode/feature/feature/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
+import 'feature/detail_product/detail_product_contact.dart';
 import 'feature/detail_product/mua_hang_screen.dart';
 
 class Routes {
@@ -94,7 +95,11 @@ class Routes {
         );
       case RouteName.MuaHangScrene:
         return SlideLeftRoute(
-          widget: MuaHangScrene(),
+          widget: DetailProductContact(
+            argument: settings.arguments != null
+                ? settings.arguments as ArgumentContactScreen
+                : null,
+          ),
         );
       case RouteName.NotiScreen:
         return SlideLeftRoute(

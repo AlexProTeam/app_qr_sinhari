@@ -33,6 +33,7 @@ dependencies:
   device_info: ^2.0.3
   change_app_package_name: ^1.0.0
   persistent_bottom_nav_bar: ^4.0.2
+  cached_network_image: ^3.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
