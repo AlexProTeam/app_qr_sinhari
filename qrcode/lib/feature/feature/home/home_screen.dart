@@ -10,6 +10,7 @@ import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
@@ -46,6 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       injector<LoadingBloc>().add(StartLoading());
       final data = await injector<AppClient>().get('banners');
+      await injector<AppClient>().post('notifications',
+          body: {"device_id": FirebaseNotification.instance.deviceToken},
+          handleResponse: false);
       data['data'].forEach((e) {
         _bannerModel.add(BannerModel.fromJson(e));
       });
