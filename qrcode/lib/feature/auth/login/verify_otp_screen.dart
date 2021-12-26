@@ -69,7 +69,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         final data = await injector<AppClient>().get('auth/showProfile');
         ProfileModel profileModel = ProfileModel.fromJson(data['data']);
         injector<AppCache>().profileModel = profileModel;
-        Routes.instance.navigateAndRemove(RouteName.ContainerSCreen);
+        Routes.instance.navigateAndRemove(RouteName.ContainerScreen);
       }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
@@ -82,86 +82,66 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       autoDismissKeyboard: true,
-      body: Stack(
-        children: [
-          Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 34),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      IconConst.logo,
-                      width: 117,
-                      height: 117,
-                    ),
-                  ],
+      customAppBar: CustomAppBar(
+        title: 'Nhập mã OTP',
+        iconLeftTap: () {
+          Routes.instance.pop();
+        },
+      ),
+      body:  Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Padding(padding: EdgeInsets.only(left: 20),child: Text("Nhập mã OTP", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),),
+            const SizedBox(height: 20),
+            Padding(padding: EdgeInsets.only(left: 20),child:  Text("Mã OTP sẽ được gửi đến email của bạn", style: TextStyle(fontSize: 12),),)
+           ,
+            const SizedBox(height: 85),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: PinCodeTextField(
+                appContext: context,
+                length: 6,
+                obscureText: false,
+                controller: _controller,
+                autoDismissKeyboard: false,
+                focusNode: _focusNode,
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(4.0),
+                  fieldHeight: 56.0,
+                  fieldWidth: 52.0,
+                  activeColor: AppColors.grey3,
+                  inactiveFillColor: AppColors.grey3,
+                  activeFillColor: AppColors.grey3,
+                  selectedFillColor: AppColors.grey3,
+                  inactiveColor: AppColors.grey3,
+                  selectedColor: AppColors.grey3,
                 ),
-                const SizedBox(height: 85),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: PinCodeTextField(
-                    appContext: context,
-                    length: 6,
-                    obscureText: false,
-                    controller: _controller,
-                    autoDismissKeyboard: false,
-                    focusNode: _focusNode,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(4.0),
-                      fieldHeight: 56.0,
-                      fieldWidth: 52.0,
-                      activeColor: AppColors.grey3,
-                      inactiveFillColor: AppColors.grey3,
-                      activeFillColor: AppColors.grey3,
-                      selectedFillColor: AppColors.grey3,
-                      inactiveColor: AppColors.grey3,
-                      selectedColor: AppColors.grey3,
-                    ),
-                    keyboardType: TextInputType.number,
-                    enableActiveFill: true,
-                    onCompleted: (v) {},
-                    onChanged: (value) {
-                      setState(() {});
-                    },
-                  ),
-                ),
-                SizedBox(height: 12),
-                const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomButton(
-                      onTap: _onContinue,
-                      text: 'Đăng nhập',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 0,right: 0),
-            child: CustomGestureDetector(
-              onTap: () {
-                Routes.instance.pop();
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 20, horizontal: 12),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
+                keyboardType: TextInputType.number,
+                enableActiveFill: true,
+                onCompleted: (v) {},
+                onChanged: (value) {
+                  setState(() {});
+                },
               ),
             ),
-          )
-        ],
+            SizedBox(height: 12),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomButton(
+                  onTap: _onContinue,
+                  text: 'Đăng nhập',
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+          ],
+        ),
       ),
     );
   }

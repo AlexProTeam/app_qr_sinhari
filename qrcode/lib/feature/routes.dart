@@ -18,6 +18,7 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
+import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
 import 'package:qrcode/feature/feature/notification/notification_screen.dart';
 import 'package:qrcode/feature/feature/personal/gioi_thieu.dart';
 import 'package:qrcode/feature/feature/personal/huong_dan.dart';
@@ -99,7 +100,7 @@ class Routes {
         return SlideLeftRoute(
           widget: NotiScreen(),
         );
-      case RouteName.ContainerSCreen:
+      case RouteName.ContainerScreen:
         return SlideLeftRoute(
           widget: ScreenContainer(),
         );
@@ -141,6 +142,15 @@ class Routes {
           widget: DetailProductScreen(
             argument: settings.arguments != null
                 ? settings.arguments as ArgumentDetailProductScreen
+                : null,
+          ),
+        );
+        ///
+      case RouteName.DetailNewScreen:
+        return SlideLeftRoute(
+          widget: DetailNewScreen(
+            argument: settings.arguments != null
+                ? settings.arguments as ArgumentDetailNewScreen
                 : null,
           ),
         );

@@ -9,6 +9,7 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
+import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
@@ -57,11 +58,6 @@ class _NewsScreenState extends State<NewsScreen> {
       customAppBar: CustomAppBar(
         title: 'Tin tức',
         haveIconLeft: false,
-        widgetRight: Container(
-                width: 50,
-                height: 50,
-                child: Icon(Icons.notifications),
-              ),
       ),
       backgroundColor: AppColors.white,
       body: Column(
@@ -69,6 +65,7 @@ class _NewsScreenState extends State<NewsScreen> {
           Expanded(
             child: histories.isNotEmpty
                 ? ListView.builder(
+              padding: EdgeInsets.zero,
                     itemBuilder: (_, index) {
                       return _item(histories[index]);
                     },
@@ -88,10 +85,10 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget _item(NewsModel model) {
     return InkWell(
       onTap: () {
-        // Routes.instance.navigateTo(RouteName.DetailProductScreen,
-        //     arguments: ArgumentDetailProductScreen(
-        //       productId: model.productId,
-        //     ));
+        Routes.instance.navigateTo(RouteName.DetailNewScreen,
+            arguments: ArgumentDetailNewScreen(
+              news_detail: model.id,
+            ));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),

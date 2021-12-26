@@ -54,6 +54,12 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: AppColors.white,
       autoDismissKeyboard: true,
       resizeToAvoidBottomInset: false,
+      customAppBar: CustomAppBar(
+        title: 'Đăng nhập',
+        iconLeftTap: () {
+          Routes.instance.navigateAndRemove(RouteName.ContainerScreen,);
+        },
+      ),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,

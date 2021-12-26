@@ -152,29 +152,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         iconLeftTap: () {
           Routes.instance.pop();
         },
-        widgetRight: CustomGestureDetector(
-          onTap: () {
-            _onContact();
-            // if (injector<AppCache>().profileModel == null) {
-            //   Routes.instance
-            //       .navigateTo(RouteName.LoginScreen, arguments: true);
-            //   return;
-            // }
-            // CommonUtil.showAlertDialog(
-            //   context,
-            //   child: DetailProductContact(
-            //     productId: _detailProductModel?.id ?? 0,
-            //   ),
-            // );
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Text(
-              'Liên hệ',
-              style: AppTextTheme.normalBlue,
-            ),
-          ),
-        ),
       ),
       body: Stack(
         children: [

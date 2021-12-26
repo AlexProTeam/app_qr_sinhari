@@ -14,11 +14,12 @@ class RouteName {
   static const String HomeScreen = 'HomeScreen';
   static const String ListProductScreen = 'ListProductScreen';
   static const String DetailProductScreen = 'DetailProductScreen';
+  static const String DetailNewScreen = 'DetailNewScreen';
   static const String PersonalScreen = 'PersonalScreen';
   static const String ProfileScreen = 'ProfileScreen';
   static const String ScanQrScreen = 'ScanQrScreen';
   static const String WebViewScreen = 'WebViewScreen';
   static const String HistoryScanScreen = 'HistoryScanScreen';
   static const String WelcomeScreen = 'WelcomeScreen';
-  static const String ContainerSCreen = 'ContainerSCreen';
+  static const String ContainerScreen = 'ContainerSCreen';
 }

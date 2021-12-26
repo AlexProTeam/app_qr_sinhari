@@ -33,23 +33,35 @@ class _PersonalScreenState extends State<PersonalScreen> {
       ),
       body: Column(
         children: [
+          const SizedBox(height: 20,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              injector<AppCache>().profileModel == null
+                  ?  CustomButton(
+                onTap: () {
+                  Routes.instance.navigateAndRemove(RouteName.LoginScreen,
+                      arguments: true);
+                },
+                text: 'Đăng nhập',
+                width: 140,
+                height: 40,
+              ):Container(),
+            ],
+          ),
+          injector<AppCache>().profileModel != null?
           _icon(
             () {
-              if (injector<AppCache>().profileModel != null) {
-                Routes.instance.navigateTo(RouteName.ProfileScreen);
-              } else {
-                Routes.instance
-                    .navigateTo(RouteName.LoginScreen, arguments: true);
-              }
+              Routes.instance.navigateTo(RouteName.ProfileScreen);
             },
             'Thông tin cá nhân',
             Icons.person,
-          ),
+          ):Container(),
           _icon(
             () {
               Routes.instance.navigateTo(RouteName.WebViewScreen,
                   arguments:
-                      'https://za.zalo.me/v3/verifyv2/pc?token=OMVsnzbsKGnZ3VNFrn5NQsiDyRxU64fnOHBklZ8&continue=https%3A%2F%2Fsinhairvietnam.vn%2Flien-he%2F');
+                      'https://sinhairvietnam.vn/lien-he/');
             },
             'Liên hệ',
             Icons.call,
@@ -107,25 +119,18 @@ class _PersonalScreenState extends State<PersonalScreen> {
             children: [
               injector<AppCache>().profileModel != null
                   ? CustomButton(
-                      onTap: () {
-                        injector<LocalApp>().saveStringSharePreference(
-                            KeySaveDataLocal.keySaveAccessToken, '');
-                        Routes.instance
-                            .navigateAndRemove(RouteName.LoginScreen);
-                      },
-                      text: 'Đăng xuất',
-                    )
-                  : CustomButton(
-                      onTap: () {
-                        Routes.instance.navigateAndRemove(RouteName.LoginScreen,
-                            arguments: true);
-                      },
-                      text: 'Đăng nhập',
-                      width: 140,
-                      height: 40,
-                    ),
+                onTap: () {
+                  injector<LocalApp>().saveStringSharePreference(
+                      KeySaveDataLocal.keySaveAccessToken, '');
+                  Routes.instance
+                      .navigateAndRemove(RouteName.LoginScreen);
+                },
+                text: 'Đăng xuất',
+              )
+                  : Container(),
             ],
           ),
+
         ],
       ),
     );

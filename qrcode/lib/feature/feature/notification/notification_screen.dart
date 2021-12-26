@@ -70,6 +70,7 @@ class _NotiScreenState extends State<NotiScreen> {
           Expanded(
             child: histories.isNotEmpty
                 ? ListView.builder(
+              padding: EdgeInsets.zero,
                     itemBuilder: (_, index) {
                       return _item(histories[index]);
                     },

@@ -53,6 +53,7 @@ class _ScreenContainerState extends State<ScreenContainer> {
         alignment: Alignment.bottomCenter,
         children: [
           BottomNavigation(
+
             tabViews: [
               LayoutContainWidgetKeepAlive(child: HomeScreen()),
               LayoutContainWidgetKeepAlive(child: HistoryScanScreen()),
@@ -60,7 +61,9 @@ class _ScreenContainerState extends State<ScreenContainer> {
               LayoutContainWidgetKeepAlive(child: PersonalScreen()),
             ],
           ),
-          _centerIconWidget(),
+          Positioned(
+            bottom: 40,
+            child: _centerIconWidget(),)
         ],
       ),
     );

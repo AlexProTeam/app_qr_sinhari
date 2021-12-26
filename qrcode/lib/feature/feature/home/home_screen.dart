@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
-      drawer: HomeDrawer(),
+      // drawer: HomeDrawer(),
       body: Column(
         children: [
           SizedBox(
@@ -220,6 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ));
                     },
                   ),
+
                 ],
               ),
             ),
