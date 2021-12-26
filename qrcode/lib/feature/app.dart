@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_state.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
+import 'package:qrcode/common/notification/firebase_notification.dart';
+import 'package:qrcode/common/notification/local_notification.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
@@ -92,6 +94,13 @@ class _AppState extends State<App> {
         },
       );
     }
+  }
+  @override
+  void initState() {
+    FirebaseNotification.instance.initFirebaseNotification();
+    LocalNotification.instance
+        .configureDidReceiveLocalNotificationSubject(context);
+    super.initState();
   }
 
   @override
