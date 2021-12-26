@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "340863169486",
+    "project_id": "qrcode-8162b",
+    "storage_bucket": "qrcode-8162b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340863169486:android:99852f9c1ba1c5e539319f",
+        "android_client_info": {
+          "package_name": "com.qrsinhair.vn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340863169486-8dvvffu5jcpp4mvjmojbie0cr2psg0a4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnHEakfXPgeX_Egxlpz1asBSOUz4dVQiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340863169486-8dvvffu5jcpp4mvjmojbie0cr2psg0a4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

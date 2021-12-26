@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qrcode/common/notification/local_notification.dart';
 import 'package:qrcode/feature/app.dart';
 import 'package:qrcode/feature/injector_container.dart' as di;
 import 'package:qrcode/feature/themes/theme_color.dart';
@@ -22,7 +25,9 @@ Future main() async {
       systemNavigationBarColor: AppColors.white,
       statusBarColor: AppColors.primaryColor
   ));
-
+  LocalNotification.instance.setUp();
+  await Firebase.initializeApp();
+  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(App());
 }
