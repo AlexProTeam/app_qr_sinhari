@@ -87,32 +87,6 @@ class _PersonalScreenState extends State<PersonalScreen> {
             'Điều khoản chính sách',
             Icons.policy,
           ),
-          // CustomGestureDetector(
-          //   onTap: () {
-          //     Routes.instance.navigateTo(RouteName.ProfileScreen);
-          //   },
-          //   child: Padding(
-          //     padding: const EdgeInsets.symmetric(vertical: 12),
-          //     child: Row(
-          //       children: [
-          //         Padding(
-          //           padding: const EdgeInsets.symmetric(horizontal: 16),
-          //           child: Image.asset(
-          //             IconConst.person,
-          //             width: 40,
-          //             height: 40,
-          //           ),
-          //         ),
-          //         Text(
-          //           'Thông tin cá nhân',
-          //           style: AppTextTheme.normalBlack.copyWith(
-          //             fontWeight: FontWeight.w500,
-          //           ),
-          //         )
-          //       ],
-          //     ),
-          //   ),
-          // ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

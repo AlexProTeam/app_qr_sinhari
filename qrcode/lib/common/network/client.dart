@@ -40,38 +40,8 @@ class AppClient {
     LOG.w('REQUEST_GET: $fullRequets');
     return _handleData(data);
   }
+
   Future<Map> posts(
-      String endPoint, {
-        dynamic body,
-        String? contentType,
-        bool handleResponse = true,
-        bool encodeBody = true,
-      }) async {
-    await _checkConnectionAndPosition();
-    var url = Uri.parse('${Configurations.host}$endPoint');
-    Response? response = await http
-        .post(url,
-        body: body != null ? (encodeBody ? json.encode(body) : body) : null,
-        headers: header?.toJson() ?? {'Content-Type': 'application/json'})
-        .timeout(Duration(seconds: Configurations.connectTimeout),
-        onTimeout: () {
-          throw TimeOutException();
-        });
-
-    Map<String, dynamic> data = json.decode(response.body);
-
-    String fullRequets = 'endPoint: ${Configurations.host}$endPoint\n'
-       // 'Token: ${header?.accessToken}\n'
-        'body: $body\n'
-        'Response: ${response.body}';
-    LOG.w('REQUEST_POST: $fullRequets');
-    if(!handleResponse){
-      return data;
-    }
-    return _handleData(data);
-  }
-
-  Future<Map> post(
     String endPoint, {
     dynamic body,
     String? contentType,
@@ -92,16 +62,47 @@ class AppClient {
     Map<String, dynamic> data = json.decode(response.body);
 
     String fullRequets = 'endPoint: ${Configurations.host}$endPoint\n'
-        'Token: ${header?.accessToken}\n'
+        // 'Token: ${header?.accessToken}\n'
         'body: $body\n'
         'Response: ${response.body}';
     LOG.w('REQUEST_POST: $fullRequets');
-    if(!handleResponse){
+    if (!handleResponse) {
       return data;
     }
     return _handleData(data);
   }
 
+  Future<Map> post(
+    String endPoint, {
+    dynamic body,
+    String? contentType,
+    bool handleResponse = true,
+    bool encodeBody = true,
+  }) async {
+    await _checkConnectionAndPosition();
+    var url = Uri.parse('${Configurations.host}$endPoint');
+    Response? response = await http
+        .post(url,
+            body: body != null ? (encodeBody ? json.encode(body) : body) : null,
+            headers: header?.toJson(contentType: contentType) ??
+                {'Content-Type': 'application/json'})
+        .timeout(Duration(seconds: Configurations.connectTimeout),
+            onTimeout: () {
+      throw TimeOutException();
+    });
+
+    Map<String, dynamic> data = json.decode(response.body);
+
+    String fullRequets = 'endPoint: ${Configurations.host}$endPoint\n'
+        'Token: ${header?.accessToken}\n'
+        'body: $body\n'
+        'Response: ${response.body}';
+    LOG.w('REQUEST_POST: $fullRequets');
+    if (!handleResponse) {
+      return data;
+    }
+    return _handleData(data);
+  }
 
   Map<String, dynamic> _handleData(Map<String, dynamic> input) {
     if (!input['success']) {
