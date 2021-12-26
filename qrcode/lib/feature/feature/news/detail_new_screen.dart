@@ -54,7 +54,6 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
         body: {'news_id': '${widget.argument?.news_detail}'},
       );
       _data = data['data'];
-   //  _newDetailModel = NewsDetailModel.fromJson(data['data']);
       setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
@@ -64,21 +63,6 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
   }
 
 
-  // void _initData() async {
-  //   try {
-  //     injector<LoadingBloc>().add(StartLoading());
-  //     final data = await injector<AppClient>()
-  //         .get('news_detail?news_id/${widget.argument?.news_detail}');
-  //     _newDetailModel = NewsDetailModel.fromJson(data['data']);
-  //     setState(() {});
-  //   } catch (e) {
-  //     CommonUtil.handleException(injector<SnackBarBloc>(), e,
-  //         methodName: 'getThemes CourseCubit');
-  //     Routes.instance.pop();
-  //   } finally {
-  //     injector<LoadingBloc>().add(FinishLoading());
-  //   }
-  // }
 
 
 
@@ -88,7 +72,7 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
   var  image = _data['image'];
     return CustomScaffold(
       customAppBar: CustomAppBar(
-        title: 'Chi tiết sản phẩm',
+        title: 'Chi tiết tin tức',
         iconLeftTap: () {
           Routes.instance.pop();
         },
