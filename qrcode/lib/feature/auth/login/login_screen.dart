@@ -54,6 +54,12 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: AppColors.white,
       autoDismissKeyboard: true,
       resizeToAvoidBottomInset: false,
+      customAppBar: CustomAppBar(
+        title: 'Đăng nhập',
+        iconLeftTap: () {
+          Routes.instance.navigateAndRemove(RouteName.ContainerScreen);
+        },
+      ),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -62,21 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.haveBack == true
-                    ? CustomGestureDetector(
-                        onTap: () {
-                          Routes.instance.pop();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 12),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )
-                    : const SizedBox(height: 34),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

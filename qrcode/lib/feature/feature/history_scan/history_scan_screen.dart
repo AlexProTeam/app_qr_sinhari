@@ -11,6 +11,7 @@ import 'package:qrcode/feature/feature/history_scan/history_model.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
+import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/empty_widget.dart';
@@ -55,19 +56,27 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
       customAppBar: CustomAppBar(
         title: 'Lịch sử quét',
         haveIconLeft: false,
-        widgetRight: InkWell(
-          onTap: () {
-            Routes.instance.navigateTo(RouteName.NotiScreen);
-          },
-          child: Container(
-            width: 50,
-            height: 50,
-            child: Icon(
-              Icons.notifications,
-              color: AppColors.primaryColor,
-            ),
-          ),
-        ),
+        // widgetRight:  CustomGestureDetector(
+        //   onTap: _onScan,
+        //   child: Padding(
+        //     padding: const EdgeInsets.all(16.0),
+        //     child: Container(
+        //       width: 60,
+        //       height: 60,
+        //       decoration: BoxDecoration(
+        //         shape: BoxShape.circle,
+        //         color: AppColors.primaryColor,
+        //       ),
+        //       child: Center(
+        //         child: Icon(
+        //           Icons.notifications,
+        //           size: 24,
+        //           color: AppColors.white,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         // iconLeftTap: () {
         //   Routes.instance.pop();
         // },
@@ -162,6 +171,26 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _onScan() async {
+    // final deviceId = await CommonUtil.getDeviceId();
+    // LOG.w('_onScan: $deviceId');
+    // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    // LOG.w('_onScan: $data');
+    // if (data != null) {
+    //   injector<AppClient>().get(
+    //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
+    //           '&city=ha noi&region=vn&url=$data');
+    //   injector<AppCache>().cacheDataProduct = data;
+    //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
+    //       arguments: ArgumentDetailProductScreen(
+    //         url: data,
+    //       ));
+    // }
+    Routes.instance.navigateTo(
+      RouteName.NotiScreen,
     );
   }
 }

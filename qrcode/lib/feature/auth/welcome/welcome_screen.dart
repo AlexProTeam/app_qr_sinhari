@@ -86,8 +86,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   children: [
                     CustomGestureDetector(
                       onTap: () {
-                        Routes.instance
-                            .navigateAndRemove(RouteName.LoginScreen);
+                        Routes.instance.navigateTo(RouteName.ContainerScreen);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -108,8 +107,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           });
                           _pageController.jumpToPage(_currentIndex);
                         } else {
-                          Routes.instance
-                              .navigateAndRemove(RouteName.LoginScreen);
+                          Routes.instance.navigateTo(RouteName.ContainerScreen);
                         }
                       },
                       child: Padding(
@@ -147,7 +145,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            Text(welcomeModel.title ?? ''),
+            Text("Công ty TNHH Sinhair Japan", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 14
+            ),maxLines: 2,),
+            SizedBox(height: 10,),
+            Text(welcomeModel.title ?? '', style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+            ),maxLines: 2,),
           ],
         ),
       ),

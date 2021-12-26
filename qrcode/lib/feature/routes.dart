@@ -18,6 +18,7 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
+import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
 import 'package:qrcode/feature/feature/notification/notification_screen.dart';
 import 'package:qrcode/feature/feature/personal/gioi_thieu.dart';
 import 'package:qrcode/feature/feature/personal/huong_dan.dart';
@@ -28,6 +29,7 @@ import 'package:qrcode/feature/feature/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
+import 'feature/detail_product/detail_product_contact.dart';
 import 'feature/detail_product/mua_hang_screen.dart';
 
 class Routes {
@@ -93,13 +95,17 @@ class Routes {
         );
       case RouteName.MuaHangScrene:
         return SlideLeftRoute(
-          widget: MuaHangScrene(),
+          widget: DetailProductContact(
+            argument: settings.arguments != null
+                ? settings.arguments as ArgumentContactScreen
+                : null,
+          ),
         );
       case RouteName.NotiScreen:
         return SlideLeftRoute(
           widget: NotiScreen(),
         );
-      case RouteName.ContainerSCreen:
+      case RouteName.ContainerScreen:
         return SlideLeftRoute(
           widget: ScreenContainer(),
         );
@@ -141,6 +147,15 @@ class Routes {
           widget: DetailProductScreen(
             argument: settings.arguments != null
                 ? settings.arguments as ArgumentDetailProductScreen
+                : null,
+          ),
+        );
+        ///
+      case RouteName.DetailNewScreen:
+        return SlideLeftRoute(
+          widget: DetailNewScreen(
+            argument: settings.arguments != null
+                ? settings.arguments as ArgumentDetailNewScreen
                 : null,
           ),
         );

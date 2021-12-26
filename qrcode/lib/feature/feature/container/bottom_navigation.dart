@@ -2,7 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/local/app_cache.dart';
+import 'package:qrcode/common/navigation/route_names.dart';
+import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
+import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
+import 'package:qrcode/feature/injector_container.dart';
+import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
@@ -105,6 +113,7 @@ class BottomNavigationState extends State<BottomNavigation> {
           width: GScreenUtil.screenWidthDp / 5,
           height: heightItem,
           color: AppColors.primaryColor,
+          child: _centerIconWidget(),
         ));
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
@@ -132,6 +141,70 @@ class BottomNavigationState extends State<BottomNavigation> {
         return 'Tài khoản';
       default:
         return 'Trang chủ';
+    }
+  }
+
+  Widget _centerIconWidget() {
+    return InkWell(
+       onTap: _scanQr,
+      child: Container(
+        width: 60,
+        // color: AppColors.primaryColor,
+        height: 80,
+        child: Container(
+          width: 54,
+          height: 54,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Container(
+              width: 52,
+              height: 52,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.white,
+              ),
+              child: Center(
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      IconConst.scan,
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _scanQr() async {
+    final deviceId = await CommonUtil.getDeviceId();
+    LOG.w('_onScan: $deviceId');
+    final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    LOG.w('_onScan: $data');
+    if (data != null) {
+      injector<AppClient>()
+          .get('scan-qr-code?device_id=${injector<AppCache>().deviceId}'
+          '&city=ha noi&region=vn&url=$data');
+      injector<AppCache>().cacheDataProduct = data;
+      Routes.instance.navigateTo(RouteName.DetailProductScreen,
+          arguments: ArgumentDetailProductScreen(
+            url: data,
+          ));
     }
   }
 }

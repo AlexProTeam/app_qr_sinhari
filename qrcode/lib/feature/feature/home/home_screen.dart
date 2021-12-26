@@ -4,6 +4,7 @@ import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
+import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/model/banner_model.dart';
@@ -18,6 +19,8 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/feature/home/widgets/container_drawer_item.dart';
 import 'package:qrcode/feature/feature/home/widgets/home_drawer.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
+import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
+import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
@@ -41,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<ProductModel> _products = [];
   List<ProductModel> _productFeatures = [];
   List<ProductModel> _productSellers = [];
+  List<NewsModel> _newsModel = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _initData() async {
@@ -53,10 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
       data['data'].forEach((e) {
         _bannerModel.add(BannerModel.fromJson(e));
       });
-      // final dataProduct1 = await injector<AppClient>().get('list-product');
-      // dataProduct1['data']['products']['data'].forEach((e) {
-      //   _products.add(ProductModel.fromJson(e));
-      // });
+      final dataNew =
+          await injector<AppClient>().post('list_news', handleResponse: false);
+      dataNew['data'].forEach((e) {
+        _newsModel.add(NewsModel.fromJson(e));
+      });
 
       final dataSeller =
           await injector<AppClient>().get('product-seller?page=1');
@@ -125,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       key: _scaffoldKey,
-      drawer: HomeDrawer(),
+      // drawer: HomeDrawer(),
       body: Column(
         children: [
           SizedBox(
@@ -224,11 +229,87 @@ class _HomeScreenState extends State<HomeScreen> {
                           ));
                     },
                   ),
+                  const SizedBox(height: 12),
+                  _newsModel.isEmpty
+                      ? const SizedBox():  Row(
+                    children: [
+                      const SizedBox(width: 12),
+                      Text(
+                        'Tin tức mới nhất',
+                        style: AppTextTheme.mediumBlack.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  _newsModel.isEmpty
+                      ? const SizedBox()
+                      : Container(
+                          width: double.infinity,
+                          height: 250,
+                          child: ListView.builder(
+                            itemBuilder: (_, index) {
+                              return _itemNews(_newsModel[index]);
+                            },
+                            itemCount: _newsModel.length,
+                            scrollDirection: Axis.horizontal,
+                          ),
+                        ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _itemNews(NewsModel model) {
+    return InkWell(
+      onTap: () {
+        Routes.instance.navigateTo(RouteName.DetailNewScreen,
+            arguments: ArgumentDetailNewScreen(
+                news_detail: model.id,url:model.image
+            ));
+      },
+      child: Container(
+        width: GScreenUtil.screenWidthDp * 0.8,
+        margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+        decoration: BoxDecoration(
+            boxShadow: StringConst.defaultShadow,
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomImageNetwork(
+              url: model.image,
+              width: double.infinity,
+              height: 160,
+              fit: BoxFit.cover,
+              border: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.title ?? '',
+                    style: AppTextTheme.mediumBlack,
+                  ),
+                  Text(
+                    model.createdAt ?? '',
+                    style: AppTextTheme.smallGrey,
+                  ),
+                ],
+              ),
+            ),
+
+          ],
+        ),
       ),
     );
   }

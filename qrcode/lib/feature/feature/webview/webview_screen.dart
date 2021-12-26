@@ -25,25 +25,14 @@ class _WebviewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      customAppBar: CustomAppBar(
+        title: 'Liên hệ',
+        iconLeftTap: () {
+          Routes.instance.pop();
+        },
+      ),
       body: Column(
         children: [
-          Row(
-            children: [
-              CustomGestureDetector(
-                onTap: () {
-                  Routes.instance.pop();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Icon(
-                    Icons.chevron_left,
-                    color: AppColors.black,
-                  ),
-                ),
-              ),
-              const Spacer(),
-            ],
-          ),
           Expanded(
             child: Builder(builder: (BuildContext context) {
               return WebView(

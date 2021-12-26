@@ -10,13 +10,14 @@ class AppHeader {
     this.lng = lng;
   }
 
-  Map<String, String> toJson() {
+  Map<String, String> toJson({String? contentType}) {
     final Map<String, String> data = Map<String, String>();
     if (accessToken != null) {
       data['Authorization'] = 'Bearer $accessToken';
+      if (contentType != null) {
+        data['Content-Type'] = 'application/json';
+      }
     }
     return data;
   }
-
-
 }

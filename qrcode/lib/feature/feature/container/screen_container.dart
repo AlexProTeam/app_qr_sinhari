@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
+import 'package:qrcode/common/local/local_app.dart';
+import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
+import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/log_util.dart';
@@ -46,6 +50,24 @@ class _ScreenContainerState extends State<ScreenContainer> {
     }
   }
 
+
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
+  void _initData() async {
+    // injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
+    String? _accessToken = injector<LocalApp>()
+        .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
+    AppHeader appHeader = AppHeader();
+    appHeader.accessToken = _accessToken;
+    injector<AppClient>().header = appHeader;
+    final data = await injector<AppClient>().get('auth/showProfile');
+    ProfileModel profileModel = ProfileModel.fromJson(data['data']);
+    injector<AppCache>().profileModel = profileModel;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +75,7 @@ class _ScreenContainerState extends State<ScreenContainer> {
         alignment: Alignment.bottomCenter,
         children: [
           BottomNavigation(
+
             tabViews: [
               LayoutContainWidgetKeepAlive(child: HomeScreen()),
               LayoutContainWidgetKeepAlive(child: HistoryScanScreen()),
@@ -60,74 +83,54 @@ class _ScreenContainerState extends State<ScreenContainer> {
               LayoutContainWidgetKeepAlive(child: PersonalScreen()),
             ],
           ),
-          _centerIconWidget(),
+         // _centerIconWidget()
         ],
       ),
     );
   }
 
   Widget _centerIconWidget() {
-    final screenWidget = GScreenUtil.screenWidthDp;
     return InkWell(
       onTap: _scanQr,
       child: Container(
         width: 60,
         // color: AppColors.primaryColor,
         height: 80,
-        decoration: BoxDecoration(
-            color: AppColors.primaryColor,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              topLeft: Radius.circular(30),
-            )),
-        child: Column(
-          children: [
-            const SizedBox(height: 2),
-            Container(
-              width: 54,
-              height: 54,
+        child: Container(
+          width: 54,
+          height: 54,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Container(
+              width: 52,
+              height: 52,
               decoration: BoxDecoration(
-                color: Colors.black,
                 shape: BoxShape.circle,
+                color: AppColors.white,
               ),
               child: Center(
                 child: Container(
-                  width: 52,
-                  height: 52,
+                  width: 48,
+                  height: 48,
                   decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
                     shape: BoxShape.circle,
-                    color: AppColors.white,
                   ),
                   child: Center(
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          IconConst.scan,
-                          width: 20,
-                          height: 20,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                    child: Image.asset(
+                      IconConst.scan,
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Scan QR',
-              style: AppTextTheme.smallGrey.copyWith(
-                  fontWeight: FontWeight.w700, color: AppColors.white),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            )
-          ],
+          ),
         ),
       ),
     );
