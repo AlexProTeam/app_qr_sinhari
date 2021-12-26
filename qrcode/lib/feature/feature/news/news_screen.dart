@@ -87,7 +87,7 @@ class _NewsScreenState extends State<NewsScreen> {
       onTap: () {
         Routes.instance.navigateTo(RouteName.DetailNewScreen,
             arguments: ArgumentDetailNewScreen(
-              news_detail: model.id,
+              news_detail: model.id,url:model.image
             ));
       },
       child: Container(

@@ -96,6 +96,13 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            CustomImageNetwork(
+              url: '${widget.argument?.url}',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height/4,
+              border: 12,
+            ),
 
             SizedBox(height: 20,),
             Padding(
