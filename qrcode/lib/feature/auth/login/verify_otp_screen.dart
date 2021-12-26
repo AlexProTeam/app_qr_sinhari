@@ -69,7 +69,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         final data = await injector<AppClient>().get('auth/showProfile');
         ProfileModel profileModel = ProfileModel.fromJson(data['data']);
         injector<AppCache>().profileModel = profileModel;
-        Routes.instance.navigateAndRemove(RouteName.HomeScreen);
+        Routes.instance.navigateAndRemove(RouteName.ContainerSCreen);
       }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');

@@ -66,7 +66,9 @@ class AppClient {
         'body: $body\n'
         'Response: ${response.body}';
     LOG.w('REQUEST_POST: $fullRequets');
-
+    if(!handleResponse){
+      return data;
+    }
     return _handleData(data);
   }
 

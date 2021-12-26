@@ -64,6 +64,7 @@ class CustomAppBar extends StatelessWidget {
   final bool stylePrimary;
   final bool hasShadow;
   final Widget? widgetRight;
+  final bool haveIconLeft;
 
   const CustomAppBar({
     Key? key,
@@ -73,14 +74,15 @@ class CustomAppBar extends StatelessWidget {
     this.stylePrimary = false,
     this.hasShadow = true,
     this.widgetRight,
+    this.haveIconLeft = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(top: (GScreenUtil.statusBarHeight )),
-      height: defaultAppbar + (GScreenUtil.statusBarHeight ),
+      padding: EdgeInsets.only(top: (GScreenUtil.statusBarHeight)),
+      height: defaultAppbar + (GScreenUtil.statusBarHeight),
       decoration: BoxDecoration(
           // boxShadow: hasShadow
           //     ? const [
@@ -96,20 +98,24 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CustomGestureDetector(
-            onTap: () {
-              if (iconLeftTap != null) {
-                iconLeftTap!();
-              } else {
-                Routes.instance.pop();
-              }
-            },
-            child: Padding(
-              padding:
-                  EdgeInsets.only(left: 16, right: 20, top: 16, bottom: 16),
-              child: Center(child: Image.asset(IconConst.back)),
-            ),
-          ),
+          haveIconLeft
+              ? CustomGestureDetector(
+                  onTap: () {
+                    if (iconLeftTap != null) {
+                      iconLeftTap!();
+                    } else {
+                      Routes.instance.pop();
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 16, right: 20, top: 16, bottom: 16),
+                    child: Center(child: Image.asset(IconConst.back)),
+                  ),
+                )
+              : SizedBox(
+                  width: 60,
+                ),
           Expanded(
             child: Text(
               title,

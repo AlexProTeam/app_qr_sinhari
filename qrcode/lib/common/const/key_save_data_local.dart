@@ -4,4 +4,5 @@ class KeySaveDataLocal {
   static const String keySaveAccessToken = 'keySaveAccessToken1';
   static const String havedAcceptPermissionCamera = 'havedAcceptPermissionCamera';
   static const String havedAcceptPermissionPhoto = 'havedAcceptPermissionPhoto';
+  static const String showWelcomeScreen = 'showWelcomeScreen';
 }

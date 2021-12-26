@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
+import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
+import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
@@ -17,15 +19,15 @@ import 'package:qrcode/feature/widgets/empty_widget.dart';
 
 import '../../injector_container.dart';
 
-class HistoryScanScreen extends StatefulWidget {
-  const HistoryScanScreen({Key? key}) : super(key: key);
+class NewsScreen extends StatefulWidget {
+  const NewsScreen({Key? key}) : super(key: key);
 
   @override
-  _HistoryScanScreenState createState() => _HistoryScanScreenState();
+  _NewsScreenState createState() => _NewsScreenState();
 }
 
-class _HistoryScanScreenState extends State<HistoryScanScreen> {
-  List<HistoryModel> histories = [];
+class _NewsScreenState extends State<NewsScreen> {
+  List<NewsModel> histories = [];
 
   @override
   void initState() {
@@ -36,10 +38,10 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
   void _initData() async {
     try {
       injector<LoadingBloc>().add(StartLoading());
-      final data = await injector<AppClient>().get(
-          'history-scan-qr-code?device_id=${injector<AppCache>().deviceId}');
-      data['data'][0].forEach((e) {
-        histories.add(HistoryModel.fromJson(e));
+      final data = await injector<AppClient>().post(
+          'list_news',handleResponse: false);
+      data['data'].forEach((e) {
+        histories.add(NewsModel.fromJson(e));
       });
       setState(() {});
     } catch (e) {
@@ -53,57 +55,17 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
-        title: 'Lịch sử quét',
+        title: 'Tin tức',
         haveIconLeft: false,
-        widgetRight: InkWell(
-          onTap: () {
-            Routes.instance.navigateTo(RouteName.NotiScreen);
-          },
-          child: Container(
-            width: 50,
-            height: 50,
-            child: Icon(
-              Icons.notifications,
-              color: AppColors.primaryColor,
-            ),
-          ),
-        ),
-        // iconLeftTap: () {
-        //   Routes.instance.pop();
-        // },
+        widgetRight: Container(
+                width: 50,
+                height: 50,
+                child: Icon(Icons.notifications),
+              ),
       ),
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-          // DecoratedBox(
-          //   decoration: BoxDecoration(boxShadow: [
-          //     BoxShadow(
-          //         color: AppColors.grey3,
-          //         blurRadius: 0.5,
-          //         offset: Offset(0, 1),
-          //         spreadRadius: 0.5)
-          //   ], color: AppColors.white),
-          //   child: Row(
-          //     children: [
-          //       Container(
-          //         width: 50,
-          //         height: 50,
-          //       ),
-          //       Expanded(
-          //         child: Text(
-          //           'Lịch sử quét',
-          //           textAlign: TextAlign.center,
-          //           style: AppTextTheme.mediumBlack,
-          //         ),
-          //       ),
-          //       Container(
-          //         width: 50,
-          //         height: 50,
-          //         child: Icon(Icons.notifications),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Expanded(
             child: histories.isNotEmpty
                 ? ListView.builder(
@@ -123,42 +85,48 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
     );
   }
 
-  Widget _item(HistoryModel model) {
+  Widget _item(NewsModel model) {
     return InkWell(
       onTap: () {
-        Routes.instance.navigateTo(RouteName.DetailProductScreen,
-            arguments: ArgumentDetailProductScreen(
-              productId: model.productId,
-            ));
+        // Routes.instance.navigateTo(RouteName.DetailProductScreen,
+        //     arguments: ArgumentDetailProductScreen(
+        //       productId: model.productId,
+        //     ));
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
+        decoration: BoxDecoration(
+          boxShadow: StringConst.defaultShadow,
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomImageNetwork(
               url: model.image,
-              width: 70,
-              height: 70,
-              border: 8,
+              width: double.infinity,
+              height: 199,
+              fit: BoxFit.cover,
+              border: 12,
             ),
-            const SizedBox(width: 12),
-            Expanded(
+            Padding(
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 12),
                   Text(
-                    model.productName ?? '',
+                    model.title ?? '',
                     style: AppTextTheme.mediumBlack,
                   ),
                   Text(
-                    model.updatedAt ?? '',
+                    model.createdAt ?? '',
                     style: AppTextTheme.smallGrey,
                   ),
-                  const SizedBox(height: 12),
                 ],
               ),
             ),
+
           ],
         ),
       ),

@@ -80,20 +80,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onScan() async {
-    final deviceId = await CommonUtil.getDeviceId();
-    LOG.w('_onScan: $deviceId');
-    final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
-    LOG.w('_onScan: $data');
-    if (data != null) {
-      injector<AppClient>().get(
-          'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
-              '&city=ha noi&region=vn&url=$data');
-      injector<AppCache>().cacheDataProduct = data;
-      Routes.instance.navigateTo(RouteName.DetailProductScreen,
-          arguments: ArgumentDetailProductScreen(
-            url: data,
-          ));
-    }
+    // final deviceId = await CommonUtil.getDeviceId();
+    // LOG.w('_onScan: $deviceId');
+    // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    // LOG.w('_onScan: $data');
+    // if (data != null) {
+    //   injector<AppClient>().get(
+    //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
+    //           '&city=ha noi&region=vn&url=$data');
+    //   injector<AppCache>().cacheDataProduct = data;
+    //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
+    //       arguments: ArgumentDetailProductScreen(
+    //         url: data,
+    //       ));
+    // }
+    Routes.instance.navigateTo(
+      RouteName.NotiScreen,
+    );
   }
 
   void _checkAndNavigateToLastScreen() async {
@@ -155,10 +158,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: AppColors.primaryColor,
                     ),
                     child: Center(
-                      child: Image.asset(
-                        IconConst.scan,
-                        width: 24,
-                        height: 24,
+                      child: Icon(
+                        Icons.notifications,
+                        size: 24,
+                        color: AppColors.white,
                       ),
                     ),
                   ),

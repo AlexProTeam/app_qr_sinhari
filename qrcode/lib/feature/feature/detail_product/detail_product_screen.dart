@@ -176,148 +176,166 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _detailProductModel != null
-                ? DetailProductSlide(
-                    images: _detailProductModel?.photos,
-                  )
-                : const SizedBox(),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${_detailProductModel?.name ?? ''}',
-                    style: AppTextTheme.normalBlack,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '${FormatUtils.formatCurrencyDoubleToString(_detailProductModel?.unitPrice)}',
-                    style: AppTextTheme.mediumPrimary,
-                  ),
-                  Row(
-                    children: [
-                      Image.asset(
-                        IconConst.fakeStar,
-                        width: 80,
-                        height: 15,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-            Column(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _detailProductModel?.limitScan ==true
-                    ? _itemLimit(_detailProductModel?.dateTimeScanLimit ?? '')
+                _detailProductModel != null
+                    ? DetailProductSlide(
+                        images: _detailProductModel?.photos,
+                      )
                     : const SizedBox(),
-                Container(
-                  height: 8,
-                  width: double.infinity,
-                  color: AppColors.grey4,
-                ),
+                const SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Serial: ${_detailProductModel?.serialCode ?? ''}',
-                        style: AppTextTheme.normalBlue,
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 8,
-                  width: double.infinity,
-                  color: AppColors.grey4,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: _itemRow(
-                        Icons.qr_code_scanner,
-                        _detailProductModel?.countScan ?? 0,
-                        'Số lần quét',
-                      )),
-                      Container(
-                        width: 1,
-                        height: 50,
-                        color: AppColors.grey6,
+                        '${_detailProductModel?.name ?? ''}',
+                        style: AppTextTheme.normalBlack,
                       ),
-                      Expanded(
-                          child: _itemRow(
-                        Icons.person,
-                        _detailProductModel?.countPersonScan ?? 0,
-                        'Số người quét',
-                      )),
+                      const SizedBox(height: 8),
+                      Text(
+                        '${FormatUtils.formatCurrencyDoubleToString(_detailProductModel?.unitPrice)}',
+                        style: AppTextTheme.mediumPrimary,
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            IconConst.fakeStar,
+                            width: 80,
+                            height: 15,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-                Container(
-                  height: 8,
-                  width: double.infinity,
-                  color: AppColors.grey4,
+                const SizedBox(height: 12),
+                Column(
+                  children: [
+                    _detailProductModel?.limitScan == true
+                        ? _itemLimit(
+                            _detailProductModel?.dateTimeScanLimit ?? '')
+                        : const SizedBox(),
+                    Container(
+                      height: 8,
+                      width: double.infinity,
+                      color: AppColors.grey4,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Serial: ${_detailProductModel?.serialCode ?? ''}',
+                            style: AppTextTheme.normalBlue,
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 8,
+                      width: double.infinity,
+                      color: AppColors.grey4,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: _itemRow(
+                            Icons.qr_code_scanner,
+                            _detailProductModel?.countScan ?? 0,
+                            'Số lần quét',
+                          )),
+                          Container(
+                            width: 1,
+                            height: 50,
+                            color: AppColors.grey6,
+                          ),
+                          Expanded(
+                              child: _itemRow(
+                            Icons.person,
+                            _detailProductModel?.countPersonScan ?? 0,
+                            'Số người quét',
+                          )),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 8,
+                      width: double.infinity,
+                      color: AppColors.grey4,
+                    ),
+                    _itemCompany(
+                      name: 'CÔNG TY TNHH Y DƯỢC TÂM HẰNG',
+                      label: 'Nhà sản xuất',
+                      address:
+                          'Số 04 lô 6 khu nhà ở Phùng Khoang, Phường Trung Văn, Quận Nam Từ Liêm, Thành Phố Hà Nội, Việt Nam, Quận Nam Từ Liêm, Hà Nội',
+                      mst: 'QAX0000009215',
+                    ),
+                    Container(
+                      height: 8,
+                      width: double.infinity,
+                      color: AppColors.grey4,
+                    ),
+                    _itemCompany(
+                      name: 'CÔNG TY TNHH SIN HAIR JAPAN',
+                      label: 'Nhà phân phối',
+                      phone: '0886986222',
+                      address:
+                          'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
+                      mst: '0109429157',
+                    ),
+                    Container(
+                      height: 8,
+                      width: double.infinity,
+                      color: AppColors.grey4,
+                    ),
+                  ],
                 ),
-                _itemCompany(
-                  name: 'CÔNG TY TNHH Y DƯỢC TÂM HẰNG',
-                  label: 'Nhà sản xuất',
-                  address:
-                      'Số 04 lô 6 khu nhà ở Phùng Khoang, Phường Trung Văn, Quận Nam Từ Liêm, Thành Phố Hà Nội, Việt Nam, Quận Nam Từ Liêm, Hà Nội',
-                  mst: 'QAX0000009215',
-                ),
-                Container(
-                  height: 8,
-                  width: double.infinity,
-                  color: AppColors.grey4,
-                ),
-                _itemCompany(
-                  name: 'CÔNG TY TNHH SIN HAIR JAPAN',
-                  label: 'Nhà phân phối',
-                  phone: '0886986222',
-                  address:
-                      'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
-                  mst: '0109429157',
-                ),
-                Container(
-                  height: 8,
-                  width: double.infinity,
-                  color: AppColors.grey4,
-                ),
+                _detailProductModel != null
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Html(
+                          data: _detailProductModel?.description,
+                          style: {
+                            "html": Style(
+                              backgroundColor: Colors.white,
+                              color: AppColors.grey9,
+                              fontWeight: FontWeight.w500,
+                              fontSize: FontSize(14),
+                              padding: EdgeInsets.all(0),
+                              fontStyle: FontStyle.normal,
+                              wordSpacing: 1.5,
+                            ),
+                          },
+                        ),
+                      )
+                    : const SizedBox(),
+                const SizedBox(height: 50),
               ],
             ),
-            _detailProductModel != null
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Html(
-                      data: _detailProductModel?.description,
-                      style: {
-                        "html": Style(
-                          backgroundColor: Colors.white,
-                          color: AppColors.grey9,
-                          fontWeight: FontWeight.w500,
-                          fontSize: FontSize(14),
-                          padding: EdgeInsets.all(0),
-                          fontStyle: FontStyle.normal,
-                          wordSpacing: 1.5,
-                        ),
-                      },
-                    ),
-                  )
-                : const SizedBox(),
-            const SizedBox(height: 20),
-          ],
-        ),
+          ),
+          Positioned(
+            child: CustomButton(
+              onTap: () async {
+                final data =
+                    await Routes.instance.navigateTo(RouteName.MuaHangScrene);
+                _onContact();
+              },
+              text: 'Mua hàng',
+            ),
+            left: 12,
+            right: 12,
+            bottom: 16,
+          ),
+        ],
       ),
     );
   }
@@ -449,7 +467,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '${number ?? ''}',
+              '${number}',
               style: AppTextTheme.mediumBlack.copyWith(
                 color: AppColors.blue,
               ),

@@ -1,6 +1,11 @@
 class RouteName {
   static const String initial = '/';
+  static const String GioiThieuScreen = 'GioiThieuScreen';
+  static const String HuongDanScreen = 'HuongDanScreen';
   static const String splashScreen = 'splashScreen';
+  static const String MuaHangScrene = 'MuaHangScrene';
+  static const String PolicyScreen = 'PolicyScreen';
+  static const String NotiScreen = 'NotiScreen';
   static const String LoginScreen = 'LoginScreen';
   static const String RegisterScreen = 'RegisterScreen';
   static const String ForgotPassScreen = 'ForgotPassScreen';
@@ -14,4 +19,6 @@ class RouteName {
   static const String ScanQrScreen = 'ScanQrScreen';
   static const String WebViewScreen = 'WebViewScreen';
   static const String HistoryScanScreen = 'HistoryScanScreen';
+  static const String WelcomeScreen = 'WelcomeScreen';
+  static const String ContainerSCreen = 'ContainerSCreen';
 }
