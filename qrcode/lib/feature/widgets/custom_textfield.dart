@@ -7,8 +7,9 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final TextInputType? keyboardType;
   final FormFieldValidator<String>? validator;
+  final bool? texts;
   const CustomTextField(
-      {Key? key, this.controller, this.hintText, this.keyboardType,this.validator})
+      {Key? key, this.controller, this.hintText, this.keyboardType,this.validator, this.texts})
       : super(key: key);
 
   @override
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       child: TextFormField(
+        enabled: texts,
         controller: controller,
         textInputAction: TextInputAction.done,
         validator: validator,
