@@ -99,18 +99,21 @@ class _DetailProductContactState extends State<DetailProductContact> {
                   children: [
                     const SizedBox(height: 20),
                     CustomTextField(
+                      texts: false,
                       hintText: 'Họ và tên',
                       controller: _nameController,
                       validator: ValidateUtil.validEmpty,
                     ),
                     const SizedBox(height: 16),
                     CustomTextField(
+                        texts: false,
                         hintText: 'Số điện thoại',
                         validator: ValidateUtil.validPhone,
                         controller: _phoneController,
                         keyboardType: TextInputType.phone),
                     const SizedBox(height: 16),
                     CustomTextField(
+                      texts: false,
                       hintText: 'Địa chỉ',
                       controller: _adddressController,
                       validator: ValidateUtil.validEmpty,
@@ -130,7 +133,10 @@ class _DetailProductContactState extends State<DetailProductContact> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomGestureDetector(
-                    onTap: _onDone,
+                    onTap: (){
+                      _onDone();
+                      _contentController.clear();
+                    },
                     child: Container(
                       width: 200,
                       height: 40,
