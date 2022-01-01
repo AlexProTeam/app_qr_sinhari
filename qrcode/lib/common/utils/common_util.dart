@@ -303,14 +303,6 @@ class CommonUtil {
       bool logBug = true,
       String? text}) async {
     LOG.e('GstoreException: ${e.toString()} | $methodName | $exceptionName');
-    // if (e is TokenExpiredException) {
-    //   injector<SnackBarBloc>().add(ShowSnackbarEvent(
-    //     content: e.message,
-    //     type: SnackBarType.warning,
-    //   ));
-    //   Routes.instance.navigateAndRemove(RouteName.loginScreen);
-    //   return;
-    // }
     if ((e is TimeOutException || e is ConnectException) &&
         snackBarBloc != null) {
       snackBarBloc.add(ShowSnackbarEvent(

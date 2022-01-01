@@ -31,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final showWelcome =
         injector<LocalApp>().getBool(KeySaveDataLocal.showWelcomeScreen);
     if (showWelcome == null) {
+      await Future.delayed(Duration(milliseconds: 300));
       Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
       return;
     }

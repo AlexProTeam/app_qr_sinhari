@@ -106,9 +106,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             _currentIndex++;
                           });
                           _pageController.jumpToPage(_currentIndex);
-                        } else {
-                          Routes.instance.navigateTo(RouteName.ContainerScreen);
+                          return;
                         }
+                        Routes.instance.navigateTo(RouteName.ContainerScreen);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),

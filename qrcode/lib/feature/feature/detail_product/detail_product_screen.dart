@@ -77,13 +77,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
       final data = await injector<AppClient>().get(
           'scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url}');
       _detailProductModel = DetailProductModel.fromJson(data['data']['data']);
-      _detailProductModel?.serialCode = data['code_active'];
-      if (data['tracking'] != null) {
-        _detailProductModel?.countScan = data['tracking']['totalScan'];
+      _detailProductModel?.serialCode = data['data']['code_active'];
+      if (data['data']['tracking'] != null) {
+        _detailProductModel?.countScan = data['data']['tracking']['totalScan'];
         _detailProductModel?.countPersonScan =
-            data['tracking']['totalUserScan'];
-        _detailProductModel?.limitScan = data['tracking']['exceeded'];
-        String? dateTimeScan = data['tracking']['datetime_scan'];
+            data['data']['tracking']['totalUserScan'];
+        _detailProductModel?.limitScan = data['data']['tracking']['exceeded'];
+        String? dateTimeScan = data['data']['tracking']['datetime_scan'];
         if (dateTimeScan != null) {
           DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
           DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
@@ -101,7 +101,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
       Routes.instance.pop();
     }
   }
-
 
   void _onContact() async {
     try {
@@ -138,8 +137,8 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                 children: [
                   _detailProductModel != null
                       ? DetailProductSlide(
-                    images: _detailProductModel?.photos,
-                  )
+                          images: _detailProductModel?.photos,
+                        )
                       : const SizedBox(),
                   const SizedBox(height: 20),
                   Padding(
@@ -173,104 +172,114 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     children: [
                       _detailProductModel?.limitScan == true
                           ? _itemLimit(
-                          _detailProductModel?.dateTimeScanLimit ?? '')
+                              _detailProductModel?.dateTimeScanLimit ?? '')
                           : const SizedBox(),
                       Container(
                         height: 8,
                         width: double.infinity,
                         color: AppColors.grey4,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Serial: ${_detailProductModel?.serialCode ?? ''}',
-                              style: AppTextTheme.normalBlue,
+                      widget.argument?.url != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Serial: ${_detailProductModel?.serialCode ?? ''}',
+                                        style: AppTextTheme.normalBlue,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 8,
+                                  width: double.infinity,
+                                  color: AppColors.grey4,
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: _itemRow(
+                                        Icons.qr_code_scanner,
+                                        _detailProductModel?.countScan ?? 0,
+                                        'Số lần quét',
+                                      )),
+                                      Container(
+                                        width: 1,
+                                        height: 50,
+                                        color: AppColors.grey6,
+                                      ),
+                                      Expanded(
+                                          child: _itemRow(
+                                        Icons.person,
+                                        _detailProductModel?.countPersonScan ??
+                                            0,
+                                        'Số người quét',
+                                      )),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 8,
+                                  width: double.infinity,
+                                  color: AppColors.grey4,
+                                ),
+                                _itemCompany(
+                                  name: 'CÔNG TY TNHH Y DƯỢC TÂM HẰNG',
+                                  label: 'Nhà sản xuất',
+                                  address:
+                                      'Số 04 lô 6 khu nhà ở Phùng Khoang, Phường Trung Văn, Quận Nam Từ Liêm, Thành Phố Hà Nội, Việt Nam, Quận Nam Từ Liêm, Hà Nội',
+                                  mst: 'QAX0000009215',
+                                ),
+                                Container(
+                                  height: 8,
+                                  width: double.infinity,
+                                  color: AppColors.grey4,
+                                ),
+                                _itemCompany(
+                                  name: 'CÔNG TY TNHH SIN HAIR JAPAN',
+                                  label: 'Nhà phân phối',
+                                  phone: '0886986222',
+                                  address:
+                                      'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
+                                  mst: '0109429157',
+                                ),
+                                Container(
+                                  height: 8,
+                                  width: double.infinity,
+                                  color: AppColors.grey4,
+                                ),
+                              ],
                             )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 8,
-                        width: double.infinity,
-                        color: AppColors.grey4,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: _itemRow(
-                                  Icons.qr_code_scanner,
-                                  _detailProductModel?.countScan ?? 0,
-                                  'Số lần quét',
-                                )),
-                            Container(
-                              width: 1,
-                              height: 50,
-                              color: AppColors.grey6,
-                            ),
-                            Expanded(
-                                child: _itemRow(
-                                  Icons.person,
-                                  _detailProductModel?.countPersonScan ?? 0,
-                                  'Số người quét',
-                                )),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 8,
-                        width: double.infinity,
-                        color: AppColors.grey4,
-                      ),
-                      _itemCompany(
-                        name: 'CÔNG TY TNHH Y DƯỢC TÂM HẰNG',
-                        label: 'Nhà sản xuất',
-                        address:
-                        'Số 04 lô 6 khu nhà ở Phùng Khoang, Phường Trung Văn, Quận Nam Từ Liêm, Thành Phố Hà Nội, Việt Nam, Quận Nam Từ Liêm, Hà Nội',
-                        mst: 'QAX0000009215',
-                      ),
-                      Container(
-                        height: 8,
-                        width: double.infinity,
-                        color: AppColors.grey4,
-                      ),
-                      _itemCompany(
-                        name: 'CÔNG TY TNHH SIN HAIR JAPAN',
-                        label: 'Nhà phân phối',
-                        phone: '0886986222',
-                        address:
-                        'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
-                        mst: '0109429157',
-                      ),
-                      Container(
-                        height: 8,
-                        width: double.infinity,
-                        color: AppColors.grey4,
-                      ),
+                          : const SizedBox(),
                     ],
                   ),
                   _detailProductModel != null
                       ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Html(
-                      data: _detailProductModel?.description,
-                      style: {
-                        "html": Style(
-                          backgroundColor: Colors.white,
-                          color: AppColors.grey9,
-                          fontWeight: FontWeight.w500,
-                          fontSize: FontSize(14),
-                          padding: EdgeInsets.all(0),
-                          fontStyle: FontStyle.normal,
-                          wordSpacing: 1.5,
-                        ),
-                      },
-                    ),
-                  )
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Html(
+                            data: _detailProductModel?.description,
+                            style: {
+                              "html": Style(
+                                backgroundColor: Colors.white,
+                                color: AppColors.grey9,
+                                fontWeight: FontWeight.w500,
+                                fontSize: FontSize(14),
+                                padding: EdgeInsets.all(0),
+                                fontStyle: FontStyle.normal,
+                                wordSpacing: 1.5,
+                              ),
+                            },
+                          ),
+                        )
                       : const SizedBox(),
                   const SizedBox(height: 60),
                 ],
@@ -279,14 +288,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
           ),
           Positioned(
             child: CustomButton(
-              onTap: ()  {
-                injector<AppCache>().profileModel !=null?
-
-                Routes.instance.navigateTo(RouteName.MuaHangScrene,
-                    arguments: ArgumentContactScreen(
-                        productId: _detailProductModel?.id
-                    )):       Routes.instance.navigateAndRemove(RouteName.LoginScreen,
-                    arguments: true);
+              onTap: () {
+                injector<AppCache>().profileModel != null
+                    ? Routes.instance.navigateTo(RouteName.MuaHangScrene,
+                        arguments: ArgumentContactScreen(
+                            productId: _detailProductModel?.id))
+                    : Routes.instance.navigateTo(RouteName.LoginScreen,
+                        arguments: true);
               },
               text: 'Mua hàng',
             ),

@@ -57,7 +57,11 @@ class _LoginScreenState extends State<LoginScreen> {
       customAppBar: CustomAppBar(
         title: 'Đăng nhập',
         iconLeftTap: () {
-          Routes.instance.navigateAndRemove(RouteName.ContainerScreen);
+          if (widget.haveBack == false) {
+            Routes.instance.navigateAndRemove(RouteName.splashScreen);
+          } else {
+            Routes.instance.pop();
+          }
         },
       ),
       body: SingleChildScrollView(
@@ -78,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 85),
+                const SizedBox(height: 105),
                 Text(
                   'Đăng nhập',
                   style: AppTextTheme.medium20PxBlack.copyWith(

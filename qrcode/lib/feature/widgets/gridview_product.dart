@@ -48,7 +48,6 @@ class GridViewDisplayProduct extends StatelessWidget {
                 if (onMore != null) {
                   onMore!();
                 }
-                ;
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),

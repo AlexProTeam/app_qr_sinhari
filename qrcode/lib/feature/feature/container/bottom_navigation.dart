@@ -123,6 +123,7 @@ class BottomNavigationState extends State<BottomNavigation> {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
+        color:AppColors.primaryColor,
         child: Row(
           children: tabs,
           crossAxisAlignment: CrossAxisAlignment.end,

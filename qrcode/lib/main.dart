@@ -22,8 +22,9 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: AppColors.white,
+      systemNavigationBarColor: Colors.white,
       statusBarColor: AppColors.primaryColor
+
   ));
   LocalNotification.instance.setUp();
   await Firebase.initializeApp();

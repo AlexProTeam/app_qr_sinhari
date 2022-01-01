@@ -33,35 +33,38 @@ class _PersonalScreenState extends State<PersonalScreen> {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               injector<AppCache>().profileModel == null
-                  ?  CustomButton(
-                onTap: () {
-                  Routes.instance.navigateAndRemove(RouteName.LoginScreen,
-                      arguments: true);
-                },
-                text: 'Đăng nhập',
-                width: 140,
-                height: 40,
-              ):Container(),
+                  ? CustomButton(
+                      onTap: () {
+                        Routes.instance
+                            .navigateTo(RouteName.LoginScreen, arguments: true);
+                      },
+                      text: 'Đăng nhập',
+                      width: 140,
+                      height: 40,
+                    )
+                  : Container(),
             ],
           ),
-          injector<AppCache>().profileModel != null?
-          _icon(
-            () {
-              Routes.instance.navigateTo(RouteName.ProfileScreen);
-            },
-            'Thông tin cá nhân',
-            Icons.person,
-          ):Container(),
+          injector<AppCache>().profileModel != null
+              ? _icon(
+                  () {
+                    Routes.instance.navigateTo(RouteName.ProfileScreen);
+                  },
+                  'Thông tin cá nhân',
+                  Icons.person,
+                )
+              : Container(),
           _icon(
             () {
               Routes.instance.navigateTo(RouteName.WebViewScreen,
-                  arguments:
-                      'https://sinhairvietnam.vn/lien-he/');
+                  arguments: 'https://sinhairvietnam.vn/lien-he/');
             },
             'Liên hệ',
             Icons.call,
@@ -93,18 +96,19 @@ class _PersonalScreenState extends State<PersonalScreen> {
             children: [
               injector<AppCache>().profileModel != null
                   ? CustomButton(
-                onTap: () {
-                  injector<LocalApp>().saveStringSharePreference(
-                      KeySaveDataLocal.keySaveAccessToken, '');
-                  Routes.instance
-                      .navigateAndRemove(RouteName.LoginScreen);
-                },
-                text: 'Đăng xuất',
-              )
+                      onTap: () async {
+                        injector<AppCache>().profileModel = null;
+                        injector<AppCache>().havedLogin = false;
+                        await injector<LocalApp>().saveStringSharePreference(
+                            KeySaveDataLocal.keySaveAccessToken, '');
+                        Routes.instance.navigateTo(RouteName.LoginScreen,
+                            arguments: false);
+                      },
+                      text: 'Đăng xuất',
+                    )
                   : Container(),
             ],
           ),
-
         ],
       ),
     );

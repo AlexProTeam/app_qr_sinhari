@@ -71,20 +71,24 @@ class _ScreenContainerState extends State<ScreenContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          BottomNavigation(
-
-            tabViews: [
-              LayoutContainWidgetKeepAlive(child: HomeScreen()),
-              LayoutContainWidgetKeepAlive(child: HistoryScanScreen()),
-              LayoutContainWidgetKeepAlive(child: NewsScreen()),
-              LayoutContainWidgetKeepAlive(child: PersonalScreen()),
-            ],
-          ),
-         // _centerIconWidget()
-        ],
+      backgroundColor: Colors.white,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            BottomNavigation(
+              tabViews: [
+                LayoutContainWidgetKeepAlive(child: HomeScreen()),
+                LayoutContainWidgetKeepAlive(child: HistoryScanScreen()),
+                LayoutContainWidgetKeepAlive(child: NewsScreen()),
+                LayoutContainWidgetKeepAlive(child: PersonalScreen()),
+              ],
+            ),
+           // _centerIconWidget()
+          ],
+        ),
       ),
     );
   }

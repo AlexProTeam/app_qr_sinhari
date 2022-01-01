@@ -88,16 +88,27 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           Routes.instance.pop();
         },
       ),
-      body:  Form(
+      body: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            Padding(padding: EdgeInsets.only(left: 20),child: Text("Nhập mã OTP", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                "Nhập mã OTP",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
             const SizedBox(height: 20),
-            Padding(padding: EdgeInsets.only(left: 20),child:  Text("Mã OTP sẽ được gửi đến email của bạn", style: TextStyle(fontSize: 12),),)
-           ,
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                "Mã OTP sẽ được gửi đến SĐT của bạn",
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
             const SizedBox(height: 85),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

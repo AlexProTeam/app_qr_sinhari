@@ -6,18 +6,14 @@ import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/local/app_cache.dart';
-import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
-import 'package:qrcode/feature/feature/home/widgets/container_drawer_item.dart';
-import 'package:qrcode/feature/feature/home/widgets/home_drawer.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
@@ -45,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<ProductModel> _productFeatures = [];
   List<ProductModel> _productSellers = [];
   List<NewsModel> _newsModel = [];
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _initData() async {
     try {
@@ -75,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
       setState(() {});
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(null, e, methodName: '');
     } finally {
       injector<LoadingBloc>().add(FinishLoading());
     }
@@ -129,8 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      key: _scaffoldKey,
-      // drawer: HomeDrawer(),
       body: Column(
         children: [
           SizedBox(
@@ -140,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               CustomGestureDetector(
                 onTap: () {
-                  _scaffoldKey.currentState?.openDrawer();
+                  // _scaffoldKey.currentState?.openDrawer();
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
