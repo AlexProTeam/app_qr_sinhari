@@ -21,6 +21,7 @@ class PolicyScreen extends StatefulWidget {
 
 class _PolicyScreenState extends State<PolicyScreen> {
   Map _data = {};
+  bool isLoadding = false;
 
   @override
   void initState() {
@@ -30,15 +31,15 @@ class _PolicyScreenState extends State<PolicyScreen> {
 
   void _initData() async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
-      final data = await injector<AppClient>().post('policy',
-          handleResponse: false, body: {'type': 'privacy_policy'});
+      isLoadding = true;
+      final data = await injector<AppClient>().post('policy?type=terms',
+          handleResponse: false);
       _data = data['policy'];
       setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding = false;
     }
   }
 
@@ -51,70 +52,71 @@ class _PolicyScreenState extends State<PolicyScreen> {
           Routes.instance.pop();
         },
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Image.asset(
-                  IconConst.policy_background,
-                  width: double.infinity,
-                  height: 120,
-                  fit: BoxFit.cover,
-                ),
-                Positioned.fill(
-                  child: Container(
-                    margin: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 2)),
-                    child: Center(
-                      child: Text(
-                        'ĐIỀU KHOẢN BẢO MẬT &\nCHÍNH SACH ỨNG DỤNG',
-                        style: AppTextTheme.mediumBlack
-                            .copyWith(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+      body: isLoadding
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 12),
-                  Text(
-                    '${_data['name'] ?? ''}',
-                    style: AppTextTheme.mediumBlack,
-                  ),
-                  const SizedBox(height: 12),
-                  _data['content'] != null
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: Html(
-                            data: _data['content'],
-                            style: {
-                              "html": Style(
-                                backgroundColor: Colors.white,
-                                color: AppColors.grey9,
-                                fontWeight: FontWeight.w500,
-                                fontSize: FontSize(14),
-                                padding: EdgeInsets.all(0),
-                                fontStyle: FontStyle.normal,
-                                wordSpacing: 1.5,
-                              ),
-                            },
+                  Stack(
+                    children: [
+                      Image.asset(
+                        IconConst.policy_background,
+                        width: double.infinity,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned.fill(
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.white, width: 2)),
+                          child: Center(
+                            child: Text(
+                              'ĐIỀU KHOẢN BẢO MẬT &\nCHÍNH SACH ỨNG DỤNG',
+                              style: AppTextTheme.mediumBlack
+                                  .copyWith(color: Colors.white),
+                            ),
                           ),
-                        )
-                      : const SizedBox()
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 12),
+                        _data['content'] != null
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 4),
+                                child: Html(
+                                  data: _data['content'],
+                                  style: {
+                                    "html": Style(
+                                      backgroundColor: Colors.white,
+                                      color: AppColors.grey9,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: FontSize(14),
+                                      padding: EdgeInsets.all(0),
+                                      fontStyle: FontStyle.normal,
+                                      wordSpacing: 1.5,
+                                    ),
+                                  },
+                                ),
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

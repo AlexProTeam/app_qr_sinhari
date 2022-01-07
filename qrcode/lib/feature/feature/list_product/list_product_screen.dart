@@ -40,11 +40,13 @@ class _ListProductScreenState extends State<ListProductScreen> {
   ScrollController _scrollController = ScrollController();
   bool _enableContinueLoadMore = true;
   bool _loading = false;
+  bool _loadingis =false;
 
   void _initData({bool showLoading = true}) async {
     try {
       if (showLoading) {
-        injector<LoadingBloc>().add(StartLoading());
+        // injector<LoadingBloc>().add(StartLoading());
+        _loadingis=true;
       }
       final dataSeller = await injector<AppClient>()
           .get('${widget.argument?.url}?page=$_page');
@@ -65,7 +67,7 @@ class _ListProductScreenState extends State<ListProductScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      _loadingis = false;
     }
   }
 
@@ -100,7 +102,12 @@ class _ListProductScreenState extends State<ListProductScreen> {
           Routes.instance.pop();
         },
       ),
-      body: Column(
+      body: _loadingis
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : _products.isEmpty
+          ? Center(child: Text("Không có sản phẩm nào!"),): Column(
         children: [
           Expanded(
             child: GridView.builder(

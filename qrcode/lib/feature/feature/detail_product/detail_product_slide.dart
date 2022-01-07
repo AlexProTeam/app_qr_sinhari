@@ -29,7 +29,7 @@ class _DetailProductSlideState extends State<DetailProductSlide> {
       children: [
         Container(
           width: double.infinity,
-          height: 250,
+          height: MediaQuery.of(context).size.height*0.4,
           child: CarouselSlider(
             options: CarouselOptions(
               initialPage: 0,

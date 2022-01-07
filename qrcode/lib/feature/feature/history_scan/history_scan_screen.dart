@@ -27,6 +27,7 @@ class HistoryScanScreen extends StatefulWidget {
 
 class _HistoryScanScreenState extends State<HistoryScanScreen> {
   List<HistoryModel> histories = [];
+  bool isLoadding = false;
 
   @override
   void initState() {
@@ -36,100 +37,49 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
 
   void _initData() async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding = true;
       final data = await injector<AppClient>().get(
           'history-scan-qr-code?device_id=${injector<AppCache>().deviceId}');
       data['data'][0].forEach((e) {
         histories.add(HistoryModel.fromJson(e));
       });
-      setState(() {});
+      setState(() {
+
+      });
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      customAppBar: CustomAppBar(
-        title: 'Lịch sử quét',
-        haveIconLeft: false,
-        // widgetRight:  CustomGestureDetector(
-        //   onTap: _onScan,
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(16.0),
-        //     child: Container(
-        //       width: 60,
-        //       height: 60,
-        //       decoration: BoxDecoration(
-        //         shape: BoxShape.circle,
-        //         color: AppColors.primaryColor,
-        //       ),
-        //       child: Center(
-        //         child: Icon(
-        //           Icons.notifications,
-        //           size: 24,
-        //           color: AppColors.white,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // iconLeftTap: () {
-        //   Routes.instance.pop();
-        // },
-      ),
-      backgroundColor: AppColors.white,
-      body: Column(
-        children: [
-          // DecoratedBox(
-          //   decoration: BoxDecoration(boxShadow: [
-          //     BoxShadow(
-          //         color: AppColors.grey3,
-          //         blurRadius: 0.5,
-          //         offset: Offset(0, 1),
-          //         spreadRadius: 0.5)
-          //   ], color: AppColors.white),
-          //   child: Row(
-          //     children: [
-          //       Container(
-          //         width: 50,
-          //         height: 50,
-          //       ),
-          //       Expanded(
-          //         child: Text(
-          //           'Lịch sử quét',
-          //           textAlign: TextAlign.center,
-          //           style: AppTextTheme.mediumBlack,
-          //         ),
-          //       ),
-          //       Container(
-          //         width: 50,
-          //         height: 50,
-          //         child: Icon(Icons.notifications),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          Expanded(
-            child: histories.isNotEmpty
-                ? ListView.builder(
-                    itemBuilder: (_, index) {
-                      return _item(histories[index]);
-                    },
-                    itemCount: histories.length,
-                  )
-                : EmptyWidget(
-                    onReload: () {
-                      _initData();
-                    },
-                  ),
-          ),
-        ],
-      ),
-    );
+        customAppBar: CustomAppBar(
+          title: 'Lịch sử quét',
+          haveIconLeft: false,
+        ),
+        backgroundColor: AppColors.white,
+        body: isLoadding
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : histories.isEmpty
+            ? Center(child: Text("Không có lịch sử nào!"),)
+            : Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemBuilder: (_, index) {
+                  return _item(histories[index]);
+                },
+                itemCount: histories.length,
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget _item(HistoryModel model) {

@@ -29,6 +29,7 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen> {
   List<NewsModel> histories = [];
+  bool isLoadding = false;
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
   void _initData() async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding =true;
       final data = await injector<AppClient>().post(
           'list_news',handleResponse: false);
       data['data'].forEach((e) {
@@ -48,7 +49,7 @@ class _NewsScreenState extends State<NewsScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding=false;
     }
   }
 
@@ -60,7 +61,12 @@ class _NewsScreenState extends State<NewsScreen> {
         haveIconLeft: false,
       ),
       backgroundColor: AppColors.white,
-      body: Column(
+      body:isLoadding
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : histories.isEmpty
+          ? Center(child: Text("Không có tin tức nào!"),): Column(
         children: [
           Expanded(
             child: histories.isNotEmpty

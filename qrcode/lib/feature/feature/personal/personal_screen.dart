@@ -27,9 +27,6 @@ class _PersonalScreenState extends State<PersonalScreen> {
       customAppBar: CustomAppBar(
         title: 'Tài khoản',
         haveIconLeft: false,
-        // iconLeftTap: () {
-        //   Routes.instance.pop();
-        // },
       ),
       body: Column(
         children: [
