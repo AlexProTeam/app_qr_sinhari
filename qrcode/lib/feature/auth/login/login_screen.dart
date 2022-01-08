@@ -7,6 +7,7 @@ import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/auth/login/widgets/input_phone_widget.dart';
 import 'package:qrcode/feature/routes.dart';
@@ -39,6 +40,9 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       injector<LoadingBloc>().add(StartLoading());
       await injector<AppClient>().post('auth-with-otp?phone=$phoneNumber');
+      await injector<AppClient>().post('add_device', body: {
+        'device_id': FirebaseNotification.instance.deviceToken,
+      },handleResponse: false);
       Routes.instance
           .navigateTo(RouteName.VerifyOtpScreen, arguments: phoneNumber);
     } catch (e) {
