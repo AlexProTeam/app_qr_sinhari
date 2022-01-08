@@ -21,6 +21,7 @@ class GioiThieuScreen extends StatefulWidget {
 
 class _HuongDanScreenState extends State<GioiThieuScreen> {
   Map _data = {};
+  bool isLoadding = false;
 
   @override
   void initState() {
@@ -30,18 +31,17 @@ class _HuongDanScreenState extends State<GioiThieuScreen> {
 
   void _initData() async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding =true;
       final data = await injector<AppClient>().post(
-        'policy',
+        'policy?type=introduce',
         handleResponse: false,
-        body: {'type': 'introduce'},
       );
       _data = data['policy'];
       setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding = false;
     }
   }
 
@@ -54,7 +54,11 @@ class _HuongDanScreenState extends State<GioiThieuScreen> {
           Routes.instance.pop();
         },
       ),
-      body: SingleChildScrollView(
+      body:isLoadding
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -87,11 +91,6 @@ class _HuongDanScreenState extends State<GioiThieuScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 12),
-                  Text(
-                    '${_data['name'] ?? ''}',
-                    style: AppTextTheme.mediumBlack,
-                  ),
                   const SizedBox(height: 12),
                   _data['content'] != null
                       ? Padding(

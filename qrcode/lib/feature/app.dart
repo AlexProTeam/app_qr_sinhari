@@ -12,6 +12,8 @@ import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/loading_container.dart';
 
+import 'feature/news/history_model.dart';
+
 class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
@@ -28,6 +30,7 @@ class _AppState extends State<App> {
           create: (_) => injector<SnackBarBloc>(),
         ),
       ];
+
 
   void _mapListenerSnackBarState(BuildContext context, SnackBarState state) {
     if (state is ShowSnackBarState) {
@@ -101,6 +104,7 @@ class _AppState extends State<App> {
     LocalNotification.instance
         .configureDidReceiveLocalNotificationSubject(context);
     super.initState();
+
   }
 
   @override
@@ -110,7 +114,7 @@ class _AppState extends State<App> {
       child: MaterialApp(
         navigatorKey: Routes.instance.navigatorKey,
         debugShowCheckedModeBanner: false,
-        title: 'Cintex',
+        title: 'Sinhair',
         onGenerateRoute: Routes.generateRoute,
         initialRoute: RouteName.splashScreen,
         theme: ThemeData(

@@ -41,10 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
   List<ProductModel> _productFeatures = [];
   List<ProductModel> _productSellers = [];
   List<NewsModel> _newsModel = [];
+  bool isLoadding = false;
 
   void _initData() async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
+   //  injector<LoadingBloc>().add(StartLoading());
+      isLoadding = true;
       final data = await injector<AppClient>().get('banners');
       await injector<AppClient>().post('notifications',
           body: {"device_id": FirebaseNotification.instance.deviceToken},
@@ -68,11 +70,14 @@ class _HomeScreenState extends State<HomeScreen> {
       dataSeller['data']['productSellers']['data'].forEach((e) {
         _productSellers.add(ProductModel.fromJson(e));
       });
-      setState(() {});
+      setState(() {
+
+      });
     } catch (e) {
       CommonUtil.handleException(null, e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+     // injector<LoadingBloc>().add(FinishLoading());
+      isLoadding = false;
     }
   }
 
@@ -84,27 +89,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onScan() async {
-    // final deviceId = await CommonUtil.getDeviceId();
-    // LOG.w('_onScan: $deviceId');
-    // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
-    // LOG.w('_onScan: $data');
-    // if (data != null) {
-    //   injector<AppClient>().get(
-    //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
-    //           '&city=ha noi&region=vn&url=$data');
-    //   injector<AppCache>().cacheDataProduct = data;
-    //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
-    //       arguments: ArgumentDetailProductScreen(
-    //         url: data,
-    //       ));
-    // }
     Routes.instance.navigateTo(
       RouteName.NotiScreen,
     );
   }
 
   void _checkAndNavigateToLastScreen() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 2));
     if (injector<AppCache>().cacheDataProduct != null) {
       Routes.instance.navigateTo(RouteName.DetailProductScreen,
           arguments: ArgumentDetailProductScreen(
@@ -120,141 +111,143 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          SizedBox(
-            height: GScreenUtil.statusBarHeight,
-          ),
-          Row(
-            children: [
-              CustomGestureDetector(
-                onTap: () {
-                  // _scaffoldKey.currentState?.openDrawer();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      IconConst.logo,
+      body: isLoadding ? Center(
+        child: CircularProgressIndicator(),
+      ):RefreshIndicator(
+        onRefresh: () async {
+          Routes.instance.navigateTo(RouteName.ContainerScreen);
+          await Future.delayed(Duration(seconds: 2));
+        },  color: Colors.white,
+        backgroundColor: Colors.amber,
+
+        child: Column(
+          children: [
+            SizedBox(
+              height: GScreenUtil.statusBarHeight,
+            ),
+            Row(
+              children: [
+                CustomGestureDetector(
+                  onTap: () {
+                    // _scaffoldKey.currentState?.openDrawer();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        IconConst.logo,
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                CustomGestureDetector(
+                  onTap: _onScan,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
                       width: 40,
                       height: 40,
-                    ),
-                  ),
-                ),
-              ),
-              const Spacer(),
-              CustomGestureDetector(
-                onTap: _onScan,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.primaryColor,
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.notifications,
-                        size: 24,
-                        color: AppColors.white,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor,
                       ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: BannerSlideImage(
-                      height: 183,
-                      banners: _bannerModel.map((e) => e).toList(),
-                      images: _bannerModel.map((e) => e.url ?? '').toList(),
-                    ),
-                  ),
-                  // const SizedBox(height: 12),
-                  // GridViewDisplayProduct(
-                  //   label: 'Gợi ý',
-                  //   products: _products,
-                  //   notExpand: true,
-                  //   onMore: () {
-                  //     Routes.instance.navigateTo(RouteName.ListProductScreen,
-                  //         arguments: ArgumentListProductScreen(
-                  //           products: _products,
-                  //           label: 'Gợi ý',
-                  //         ));
-                  //   },
-                  // ),
-                  const SizedBox(height: 12),
-                  GridViewDisplayProduct(
-                    label: 'Sản phẩm nổi bật',
-                    products: _productFeatures,
-                    notExpand: true,
-                    onMore: () {
-                      Routes.instance.navigateTo(RouteName.ListProductScreen,
-                          arguments: ArgumentListProductScreen(
-                            url: 'product-feature',
-                            label: 'Sản phẩm nổi bật',
-                          ));
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  GridViewDisplayProduct(
-                    label: 'Sản phẩm bán chạy',
-                    products: _productSellers,
-                    notExpand: true,
-                    onMore: () {
-                      Routes.instance.navigateTo(RouteName.ListProductScreen,
-                          arguments: ArgumentListProductScreen(
-                            url: 'product-seller',
-                            label: 'Sản phẩm bán chạy',
-                          ));
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  _newsModel.isEmpty
-                      ? const SizedBox():  Row(
-                    children: [
-                      const SizedBox(width: 12),
-                      Text(
-                        'Tin tức mới nhất',
-                        style: AppTextTheme.mediumBlack.copyWith(
-                          fontWeight: FontWeight.w700,
+                      child: Center(
+                        child: Icon(
+                          Icons.notifications,
+                          size: 24,
+                          color: AppColors.white,
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                  _newsModel.isEmpty
-                      ? const SizedBox()
-                      : Container(
-                          width: double.infinity,
-                          height: 250,
-                          child: ListView.builder(
-                            itemBuilder: (_, index) {
-                              return _itemNews(_newsModel[index]);
-                            },
-                            itemCount: _newsModel.length,
-                            scrollDirection: Axis.horizontal,
+                )
+              ],
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      child:
+                      BannerSlideImage(
+                        height: MediaQuery.of(context).size.height*0.25,
+                        banners: _bannerModel.map((e) => e).toList(),
+                        images: _bannerModel.map((e) => e.url ?? '').toList(),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    GridViewDisplayProduct(
+                      label: 'Sản phẩm nổi bật',
+                      products: _productFeatures,
+                      notExpand: true,
+                      onMore: () {
+                        Routes.instance.navigateTo(RouteName.ListProductScreen,
+                            arguments: ArgumentListProductScreen(
+                              url: 'product-feature',
+                              label: 'Sản phẩm nổi bật',
+                            ));
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    GridViewDisplayProduct(
+                      label: 'Sản phẩm bán chạy',
+                      products: _productSellers,
+                      notExpand: true,
+                      onMore: () {
+                        Routes.instance.navigateTo(RouteName.ListProductScreen,
+                            arguments: ArgumentListProductScreen(
+                              url: 'product-seller',
+                              label: 'Sản phẩm bán chạy',
+                            ));
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    _newsModel.isEmpty
+                        ? const SizedBox():  Row(
+                      children: [
+                        const SizedBox(width: 12),
+                        Text(
+                          'Tin tức mới nhất',
+                          style: AppTextTheme.mediumBlack.copyWith(
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                  const SizedBox(height: 20),
-                ],
+                      ],
+                    ),
+                    _newsModel.isEmpty
+                        ? const SizedBox()
+                        : Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height*0.3,
+                      child: ListView.builder(
+                        itemBuilder: (_, index) {
+                          return _itemNews(_newsModel[index]);
+                        },
+                        itemCount: _newsModel.length,
+                        scrollDirection: Axis.horizontal,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),)
+
+
+
+      ,
     );
   }
 
@@ -267,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
       },
       child: Container(
-        width: GScreenUtil.screenWidthDp * 0.8,
+        width: GScreenUtil.screenWidthDp * 0.6,
         margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 12),
         decoration: BoxDecoration(
             boxShadow: StringConst.defaultShadow,
@@ -280,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
             CustomImageNetwork(
               url: model.image,
               width: double.infinity,
-              height: 160,
+              height: MediaQuery.of(context).size.height*0.15,
               fit: BoxFit.cover,
               border: 12,
             ),
@@ -291,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     model.title ?? '',
-                    style: AppTextTheme.mediumBlack,
+                    style: AppTextTheme.normalRoboto,
                   ),
                   Text(
                     model.createdAt ?? '',

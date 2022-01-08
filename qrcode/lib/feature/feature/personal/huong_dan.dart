@@ -22,6 +22,7 @@ class HuongDanScreen extends StatefulWidget {
 
 class _HuongDanScreenState extends State<HuongDanScreen> {
   Map _data = {};
+  bool isLoadding = false;
 
   @override
   void initState() {
@@ -31,17 +32,15 @@ class _HuongDanScreenState extends State<HuongDanScreen> {
 
   void _initData() async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding =true;
       final data =
-          await injector<AppClient>().post('policy', handleResponse: false,body: {
-            'type':'support_policy'
-          });
+          await injector<AppClient>().post('policy?type=support_policy', handleResponse: false,);
       _data = data['policy'];
       setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding =false;
     }
   }
 
@@ -54,7 +53,11 @@ class _HuongDanScreenState extends State<HuongDanScreen> {
           Routes.instance.pop();
         },
       ),
-      body: SingleChildScrollView(
+      body:isLoadding
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -87,11 +90,6 @@ class _HuongDanScreenState extends State<HuongDanScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 12),
-                  Text(
-                    '${_data['name'] ?? ''}',
-                    style: AppTextTheme.mediumBlack,
-                  ),
                   const SizedBox(height: 12),
                   _data['content'] != null
                       ? Padding(

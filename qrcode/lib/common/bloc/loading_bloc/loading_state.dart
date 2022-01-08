@@ -6,6 +6,7 @@ abstract class LoadingState {
 }
 
 class Loading extends LoadingState {
+
   Loading() : super(loading: true);
 }
 

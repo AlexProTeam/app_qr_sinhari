@@ -39,12 +39,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController _adddressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   File? _image;
+  bool isLoadding = false;
 
   void _onDone() async {
     CommonUtil.dismissKeyBoard(context);
     if (!CommonUtil.validateAndSave(_formKey)) return;
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding =true;
       await injector<AppClient>()
           .post('auth/saveProfile?name=${_nameController.text}'
               '&email=${_emailController.text}&phone=${_phoneController.text}&'
@@ -59,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding =false;
     }
   }
 
@@ -67,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     CommonUtil.dismissKeyBoard(context);
     if (!CommonUtil.validateAndSave(_formKey)) return;
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding =true;
       var headers = {
         'Authorization': 'Bearer ${injector<AppClient>().header?.accessToken}'
       };
@@ -98,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding =false;
     }
   }
 
@@ -159,7 +160,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         },
       ),
       resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
+      body: isLoadding
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          :SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(

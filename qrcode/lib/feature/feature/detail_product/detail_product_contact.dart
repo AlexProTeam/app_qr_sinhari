@@ -39,11 +39,12 @@ class _DetailProductContactState extends State<DetailProductContact> {
   TextEditingController _adddressController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool isLoadding = false;
 
   void _onDone() async {
     try {
       if (!CommonUtil.validateAndSave(_formKey)) return;
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding =true;
       await injector<AppClient>().post(
           'save-contact?product_id=${widget.argument?.productId}&content=${_contentController.text}');
       injector<SnackBarBloc>().add(ShowSnackbarEvent(
@@ -53,7 +54,7 @@ class _DetailProductContactState extends State<DetailProductContact> {
       CommonUtil.handleException(injector<SnackBarBloc>(), e,
           methodName: 'getThemes CourseCubit');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding =false;
     }
 
     print("_______");
@@ -85,7 +86,11 @@ class _DetailProductContactState extends State<DetailProductContact> {
           Routes.instance.pop();
         },
       ),
-      body: Padding(
+      body:isLoadding
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : Padding(
         padding: const EdgeInsets.all(12.0),
         child:  Form(
           key: _formKey,

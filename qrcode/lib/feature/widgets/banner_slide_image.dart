@@ -87,6 +87,7 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
                         }
                       },
                       child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
                         color: Colors.transparent,
                         child: CustomImageNetwork(
                           url: e.url,

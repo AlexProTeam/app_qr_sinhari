@@ -29,6 +29,7 @@ class NotiScreen extends StatefulWidget {
 
 class _NotiScreenState extends State<NotiScreen> {
   List<NotiModel> histories = [];
+  bool isLoadding = false;
 
   @override
   void initState() {
@@ -38,7 +39,8 @@ class _NotiScreenState extends State<NotiScreen> {
 
   void _initData() async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding =true;
+
       final data = await injector<AppClient>()
           .post('notifications', handleResponse: false);
       data['notifications'].forEach((e) {
@@ -48,7 +50,7 @@ class _NotiScreenState extends State<NotiScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding = false;
     }
   }
 
@@ -57,30 +59,24 @@ class _NotiScreenState extends State<NotiScreen> {
     return CustomScaffold(
       customAppBar: CustomAppBar(
         title: 'Thông báo',
-        // haveIconLeft: false,
-        // widgetRight: Container(
-        //   width: 50,
-        //   height: 50,
-        //   child: Icon(Icons.notifications),
-        // ),
       ),
       backgroundColor: AppColors.white,
-      body: Column(
+      body: isLoadding
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : Column(
         children: [
           Expanded(
-            child: histories.isNotEmpty
-                ? ListView.builder(
+            child: histories.isEmpty
+                ? Center(child: Text("Không có thông báo nào!"),)
+                : ListView.builder(
               padding: EdgeInsets.zero,
-                    itemBuilder: (_, index) {
-                      return _item(histories[index]);
-                    },
-                    itemCount: histories.length,
-                  )
-                : EmptyWidget(
-                    onReload: () {
-                      _initData();
-                    },
-                  ),
+              itemBuilder: (_, index) {
+                return _item(histories[index]);
+              },
+              itemCount: histories.length,
+            ),
           ),
         ],
       ),

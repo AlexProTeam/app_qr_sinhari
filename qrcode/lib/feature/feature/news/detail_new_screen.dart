@@ -38,6 +38,7 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
   NewsDetailModel? _newDetailModel;
   TextEditingController _codeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool isLoadding = false;
 
   Map _data = {};
 
@@ -49,7 +50,7 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
 
   void _initData() async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      isLoadding =true;
       var request = http.MultipartRequest(
           'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/news_detail'));
       request.fields.addAll({'news_id': '${widget.argument?.news_detail}'});
@@ -64,7 +65,7 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      isLoadding =false;
     }
   }
 
@@ -77,7 +78,11 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
             Routes.instance.pop();
           },
         ),
-        body: SingleChildScrollView(
+        body: isLoadding
+            ? Center(
+          child: CircularProgressIndicator(),
+        )
+            : SingleChildScrollView(
           child: Column(
             children: [
               CustomImageNetwork(

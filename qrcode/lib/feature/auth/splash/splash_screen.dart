@@ -28,19 +28,20 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _initData() async {
-    final showWelcome =
-        injector<LocalApp>().getBool(KeySaveDataLocal.showWelcomeScreen);
-    if (showWelcome == null) {
-      await Future.delayed(Duration(milliseconds: 300));
-      Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
-      return;
-    }
+    // final showWelcome =
+    //     injector<LocalApp>().getBool(KeySaveDataLocal.showWelcomeScreen);
+    // if (showWelcome !=null) {
+    //   await Future.delayed(Duration(milliseconds: 300));
+    //   Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
+    //   return;
+    // }
     injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
     String? _accessToken = injector<LocalApp>()
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
     if (_accessToken?.isEmpty ?? true) {
       await Future.delayed(Duration(seconds: 1));
-      Routes.instance.navigateTo(RouteName.ContainerScreen);
+      // Routes.instance.navigateTo(RouteName.ContainerScreen);
+      Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
       return;
     }
     AppHeader appHeader = AppHeader();
@@ -49,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final data = await injector<AppClient>().get('auth/showProfile');
     ProfileModel profileModel = ProfileModel.fromJson(data['data']);
     injector<AppCache>().profileModel = profileModel;
-    Routes.instance.navigateAndRemove(RouteName.ContainerScreen);
+    Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
   }
 
   @override
@@ -66,8 +67,8 @@ class _SplashScreenState extends State<SplashScreen> {
             const Spacer(),
             Image.asset(
               IconConst.logo,
-              width: 207,
-              height: 207,
+              width: MediaQuery.of(context).size.height*0.2,
+              height: MediaQuery.of(context).size.height*0.2,
             ),
             const SizedBox(height: 12),
             Text(

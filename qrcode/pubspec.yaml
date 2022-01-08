@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^1.7.0
   rxdart: ^0.27.3
   cached_network_image: ^3.2.0
+  lottie: ^1.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

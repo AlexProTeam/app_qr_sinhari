@@ -58,7 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-          const SizedBox(height: 50),
+         // const SizedBox(height: 50),
           Expanded(
             child: PageView(
               controller: _pageController,
@@ -133,8 +133,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget _pageView(WelcomeModel welcomeModel) {
     return SizedBox(
       width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+      //  padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             Expanded(
