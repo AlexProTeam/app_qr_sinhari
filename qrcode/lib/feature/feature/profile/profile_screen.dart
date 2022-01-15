@@ -140,6 +140,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     _initData();
     super.initState();
+    print("--------------");
+    print("${injector<AppCache>()
+        .profileModel
+        ?.avatar}");
   }
 
   void _initData() {
@@ -198,9 +202,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     fit: BoxFit.cover,
                                   )
                                 : CustomImageNetwork(
-                                    url: injector<AppCache>()
+                                    url:'${injector<AppCache>()
                                         .profileModel
-                                        ?.avatar,
+                                        ?.avatar}',
                                     width: 112,
                                     height: 112,
                                     fit: BoxFit.cover,

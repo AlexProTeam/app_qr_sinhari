@@ -70,21 +70,21 @@ class _PersonalScreenState extends State<PersonalScreen> {
             () {
               Routes.instance.navigateTo(RouteName.GioiThieuScreen);
             },
-            'Giới thiệu',
+            'Chính sách bán hàng',
             Icons.info,
           ),
           _icon(
             () {
               Routes.instance.navigateTo(RouteName.HuongDanScreen);
             },
-            'Hướng dẫn',
+            'Chính sách bảo mật',
             Icons.integration_instructions_rounded,
           ),
           _icon(
             () {
               Routes.instance.navigateTo(RouteName.PolicyScreen);
             },
-            'Điều khoản chính sách',
+            'Điều khoản sử dụng',
             Icons.policy,
           ),
           const SizedBox(height: 20),

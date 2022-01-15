@@ -9,6 +9,8 @@ import 'package:qrcode/common/notification/local_notification.dart';
 import 'package:qrcode/feature/app.dart';
 import 'package:qrcode/feature/injector_container.dart' as di;
 import 'package:qrcode/feature/themes/theme_color.dart';
+import 'dart:async';
+
 
 dynamic decodeIsolate(String response) => jsonDecode(response);
 

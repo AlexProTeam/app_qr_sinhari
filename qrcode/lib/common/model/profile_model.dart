@@ -27,7 +27,7 @@ String? avatar;
     address = json['address'];
     country = json['country'];
     if(json['avatar']!=null){
-      avatar = 'https://admin.sinhairvietnam.vn/api${json['avatar']}';
+      avatar = 'https://admin.sinhairvietnam.vn/${json['avatar']}';
     }
 
     city = json['city'];

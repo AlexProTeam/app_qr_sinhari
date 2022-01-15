@@ -4,6 +4,7 @@ class RouteName {
   static const String HuongDanScreen = 'HuongDanScreen';
   static const String splashScreen = 'splashScreen';
   static const String MuaHangScrene = 'MuaHangScrene';
+  static const String ActiveScrene = 'ActiveScrene';
   static const String PolicyScreen = 'PolicyScreen';
   static const String NotiScreen = 'NotiScreen';
   static const String LoginScreen = 'LoginScreen';

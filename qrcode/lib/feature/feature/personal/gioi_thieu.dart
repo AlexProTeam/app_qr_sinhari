@@ -49,7 +49,7 @@ class _HuongDanScreenState extends State<GioiThieuScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
-        title: 'Giới Thiệu',
+        title: 'Chính sách bán hàng',
         iconLeftTap: () {
           Routes.instance.pop();
         },
@@ -77,7 +77,7 @@ class _HuongDanScreenState extends State<GioiThieuScreen> {
                         border: Border.all(color: Colors.white, width: 2)),
                     child: Center(
                       child: Text(
-                        'GIỚI THIỆU',
+                        'Chính sách bán hàng',
                         style: AppTextTheme.mediumBlack
                             .copyWith(color: Colors.white),
                       ),

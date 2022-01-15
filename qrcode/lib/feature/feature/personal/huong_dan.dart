@@ -48,7 +48,7 @@ class _HuongDanScreenState extends State<HuongDanScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
-        title: 'Hướng dẫn',
+        title: 'Chính sách bảo mật',
         iconLeftTap: () {
           Routes.instance.pop();
         },
@@ -76,7 +76,7 @@ class _HuongDanScreenState extends State<HuongDanScreen> {
                         border: Border.all(color: Colors.white, width: 2)),
                     child: Center(
                       child: Text(
-                        'HƯỚNG DẪN',
+                        'Chính sách bán hàng',
                         style: AppTextTheme.mediumBlack
                             .copyWith(color: Colors.white),
                       ),
