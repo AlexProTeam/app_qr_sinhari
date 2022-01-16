@@ -23,7 +23,19 @@ class AppClient {
     this.header = header;
   }
 
-  Future<Map> get(String endPoint) async {
+  DateTime currentBackPressTime = DateTime.now();
+
+
+  Future<Map> get(String endPoint,{bool? checkRepeat}) async {
+    if(checkRepeat==true){
+      DateTime now = DateTime.now();
+      if (currentBackPressTime == null ||
+          now.difference(currentBackPressTime) > Duration(milliseconds: 200)) {
+        currentBackPressTime = now;
+        return {};
+      }
+    }
+    LOG.w('getNe :$endPoint ${DateTime.now().millisecondsSinceEpoch}');
     await _checkConnectionAndPosition();
     var url = Uri.parse('${Configurations.host}$endPoint');
     Response? response = await http

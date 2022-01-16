@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/common/bloc/event_bus/event_bus_bloc.dart';
+import 'package:qrcode/common/bloc/event_bus/event_bus_state.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
@@ -28,6 +33,7 @@ class HistoryScanScreen extends StatefulWidget {
 class _HistoryScanScreenState extends State<HistoryScanScreen> {
   List<HistoryModel> histories = [];
   bool isLoadding = false;
+  Completer<void> _refreshCompleter = Completer();
 
   @override
   void initState() {
@@ -35,17 +41,23 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
     super.initState();
   }
 
+  Future _onRefresh() async {
+    _initData();
+    return _refreshCompleter.future;
+  }
+
   void _initData() async {
     try {
       isLoadding = true;
+      histories.clear();
       final data = await injector<AppClient>().get(
           'history-scan-qr-code?device_id=${injector<AppCache>().deviceId}');
       data['data'][0].forEach((e) {
         histories.add(HistoryModel.fromJson(e));
       });
-      setState(() {
-
-      });
+      _refreshCompleter.complete();
+      _refreshCompleter = Completer();
+      setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
@@ -55,31 +67,46 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-        customAppBar: CustomAppBar(
-          title: 'Lịch sử quét',
-          haveIconLeft: false,
-        ),
-        backgroundColor: AppColors.white,
-        body: isLoadding
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : histories.isEmpty
-            ? Center(child: Text("Không có lịch sử nào!"),)
-            : Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemBuilder: (_, index) {
-                  return _item(histories[index]);
-                },
-                itemCount: histories.length,
-              ),
-            ),
-          ],
-        ));
+    return BlocListener<EventBusBloc, EventBusState>(
+      bloc: injector<EventBusBloc>(),
+      listener: (_, state) {
+        if (state is EventBusReloadHistoryState) {
+          _initData();
+        }
+      },
+      child: CustomScaffold(
+          customAppBar: CustomAppBar(
+            title: 'Lịch sử quét',
+            haveIconLeft: false,
+          ),
+          backgroundColor: AppColors.white,
+          body: isLoadding
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : histories.isEmpty
+                  ? Center(
+                      child: Text("Không có lịch sử nào!"),
+                    )
+                  : RefreshIndicator(
+                      onRefresh: _onRefresh,
+                      backgroundColor: Colors.white,
+                      color: AppColors.primaryColor,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (_, index) {
+                                return _item(histories[index]);
+                              },
+                              itemCount: histories.length,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+    );
   }
 
   Widget _item(HistoryModel model) {

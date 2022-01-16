@@ -10,3 +10,4 @@ class EventBusRequestInitDataCartEvent extends EventBusEvent {}
 class EventBusRequestInitDataNotificationEvent extends EventBusEvent {}
 
 class EventBusRequestInitDataPersonalEvent extends EventBusEvent {}
+class EventBusReloadHistoryEvent extends EventBusEvent {}

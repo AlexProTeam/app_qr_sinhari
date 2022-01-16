@@ -17,7 +17,7 @@ import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
-
+import 'package:http/http.dart' as http;
 import '../../injector_container.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,15 +40,28 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       injector<LoadingBloc>().add(StartLoading());
       await injector<AppClient>().post('auth-with-otp?phone=$phoneNumber');
-      await injector<AppClient>().post('add_device', body: {
-        'device_id': FirebaseNotification.instance.deviceToken,
-      },handleResponse: false);
+      await _addToken();
       Routes.instance
           .navigateTo(RouteName.VerifyOtpScreen, arguments: phoneNumber);
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
       injector<LoadingBloc>().add(FinishLoading());
+    }
+  }
+
+  Future _addToken() async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/add_device'));
+    request.fields
+        .addAll({'device_id': '${FirebaseNotification.instance.deviceToken}'});
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
     }
   }
 
