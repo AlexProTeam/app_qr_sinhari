@@ -47,7 +47,7 @@ class _PolicyScreenState extends State<PolicyScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
-        title: 'Điều khoản chính sách',
+        title: 'Điều khoản sử dụng',
         iconLeftTap: () {
           Routes.instance.pop();
         },

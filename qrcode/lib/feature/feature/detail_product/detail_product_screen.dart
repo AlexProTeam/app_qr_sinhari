@@ -17,6 +17,7 @@ import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
+import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_contact.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_slide.dart';
 import 'package:qrcode/feature/routes.dart';
@@ -296,13 +297,24 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                 Positioned(
                   child: CustomButton(
                     onTap: () {
-                      injector<AppCache>().profileModel != null
-                          ? Routes.instance.navigateTo(RouteName.MuaHangScrene,
-                              arguments: ArgumentContactScreen(
-                                  productId: _detailProductModel?.id))
-                          : Routes.instance.navigateTo(RouteName.LoginScreen,
-                              arguments: true);
-                    },
+                      if(widget.argument?.url != null) {
+                        injector<AppCache>().profileModel != null
+                            ? Routes.instance.navigateTo(
+                            RouteName.ActiveScrene,
+                            arguments: ArgumentActiveScreen(
+                                productId: _detailProductModel?.id))
+                            : Routes.instance.navigateTo(RouteName.LoginScreen,
+                            arguments: true);
+                      }else{
+                        injector<AppCache>().profileModel != null
+                            ? Routes.instance.navigateTo(
+                            RouteName.MuaHangScrene,
+                            arguments: ArgumentContactScreen(
+                                productId: _detailProductModel?.id))
+                            : Routes.instance.navigateTo(RouteName.LoginScreen,
+                            arguments: true);
+                      }
+                      },
                     text:
                         widget.argument?.url != null ? 'Kích hoạt' : 'Mua hàng',
                   ),
@@ -464,7 +476,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
       color: Colors.red,
       child: Center(
         child: Text(
-          'Sản phẩm này đã vượt quá giới hạn quét, được quét bởi chưa xác định vào $dateTime, xin vui lòng cân nhắc kỹ trước khi mua hoặc sử dụng',
+          'Sản phẩm này đã vượt quá giới hạn quét, được quét vào $dateTime, xin vui lòng cân nhắc kỹ trước khi mua hoặc sử dụng',
           style: AppTextTheme.normalWhite,
         ),
       ),

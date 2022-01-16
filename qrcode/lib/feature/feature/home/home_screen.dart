@@ -22,7 +22,6 @@ import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/banner_slide_image.dart';
-import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
@@ -84,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _initData();
-    _checkAndNavigateToLastScreen();
+   // _checkAndNavigateToLastScreen();
     super.initState();
   }
 

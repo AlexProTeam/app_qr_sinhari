@@ -14,6 +14,7 @@ import 'package:qrcode/feature/auth/splash/splash_screen.dart';
 import 'package:qrcode/feature/auth/verify_otp/verify_otp_screen.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_screen.dart';
 import 'package:qrcode/feature/feature/container/screen_container.dart';
+import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
@@ -98,6 +99,14 @@ class Routes {
           widget: DetailProductContact(
             argument: settings.arguments != null
                 ? settings.arguments as ArgumentContactScreen
+                : null,
+          ),
+        );
+      case RouteName.ActiveScrene:
+        return SlideLeftRoute(
+          widget: DetailProductActive(
+            argument: settings.arguments != null
+                ? settings.arguments as ArgumentActiveScreen
                 : null,
           ),
         );
@@ -196,7 +205,7 @@ class Routes {
         );
       case RouteName.splashScreen:
         return SlideLeftRoute(
-          widget: SplashScreen(),
+          widget: SplashPage(),
         );
 
       default:
