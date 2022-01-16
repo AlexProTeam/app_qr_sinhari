@@ -54,7 +54,7 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
     return Column(
       children: [
         Container(
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width,
           height: widget.height ?? 248.0,
           child: CarouselSlider(
             options: CarouselOptions(
@@ -93,7 +93,7 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
                           url: e.url,
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           border: 12,
                         ),
                       ),
