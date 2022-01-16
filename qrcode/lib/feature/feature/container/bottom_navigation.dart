@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:qrcode/common/bloc/event_bus/event_bus_bloc.dart';
+import 'package:qrcode/common/bloc/event_bus/event_bus_event.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -13,7 +15,6 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
-
 
 const heightItem = 58.0;
 
@@ -91,10 +92,10 @@ class BottomNavigationState extends State<BottomNavigation> {
                             style: isSelected
                                 ? AppTextTheme.normalGrey.copyWith(
                                     fontWeight: FontWeight.w300,
-                                    color: AppColors.white,fontSize: 12)
-                                : AppTextTheme.smallGrey.copyWith(
-                              color: AppColors.grey6
-                            ),
+                                    color: AppColors.white,
+                                    fontSize: 12)
+                                : AppTextTheme.smallGrey
+                                    .copyWith(color: AppColors.grey6),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -123,7 +124,7 @@ class BottomNavigationState extends State<BottomNavigation> {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
-        color:AppColors.primaryColor,
+        color: AppColors.primaryColor,
         child: Row(
           children: tabs,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -147,7 +148,7 @@ class BottomNavigationState extends State<BottomNavigation> {
 
   Widget _centerIconWidget() {
     return InkWell(
-       onTap: _scanQr,
+      onTap: _scanQr,
       child: Container(
         width: 60,
         // color: AppColors.primaryColor,
@@ -198,14 +199,18 @@ class BottomNavigationState extends State<BottomNavigation> {
     final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
     LOG.w('_onScan: $data');
     if (data != null) {
-      injector<AppClient>()
-          .get('scan-qr-code?device_id=${injector<AppCache>().deviceId}'
-          '&city=ha noi&region=vn&url=$data');
-      injector<AppCache>().cacheDataProduct = data;
+      LOG.w('_onScan: requestNe');
       Routes.instance.navigateTo(RouteName.DetailProductScreen,
           arguments: ArgumentDetailProductScreen(
             url: data,
           ));
+      await injector<AppClient>().get(
+          'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
+          '&city=ha noi&region=vn&url=$data',
+          checkRepeat: true);
+      injector<EventBusBloc>().add(EventBusReloadHistoryEvent());
+      LOG.w('_onScan: hello');
+      injector<AppCache>().cacheDataProduct = data;
     }
   }
 }

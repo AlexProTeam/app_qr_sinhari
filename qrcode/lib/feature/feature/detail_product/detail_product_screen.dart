@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
+import 'package:qrcode/common/bloc/event_bus/event_bus_bloc.dart';
+import 'package:qrcode/common/bloc/event_bus/event_bus_event.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
@@ -57,6 +59,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
     try {
       isLoadding = true;
       if (widget.argument?.url?.isNotEmpty ?? false) {
+
         await _getProductByUrl();
         return;
       }

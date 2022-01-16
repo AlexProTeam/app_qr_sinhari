@@ -11,3 +11,4 @@ class EventBusRequestInitDataCartState extends EventBusState {}
 class EventBusRequestInitDataNotificationState extends EventBusState {}
 
 class EventBusRequestInitDataPersonalState extends EventBusState {}
+class EventBusReloadHistoryState extends EventBusState {}

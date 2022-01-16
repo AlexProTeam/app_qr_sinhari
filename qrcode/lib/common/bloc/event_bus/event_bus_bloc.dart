@@ -23,6 +23,9 @@ class EventBusBloc extends Bloc<EventBusEvent, EventBusState> {
       case EventBusRequestInitDataPersonalEvent:
         yield EventBusRequestInitDataPersonalState();
         break;
+      case EventBusReloadHistoryEvent:
+        yield EventBusReloadHistoryState();
+        break;
     }
   }
 }
