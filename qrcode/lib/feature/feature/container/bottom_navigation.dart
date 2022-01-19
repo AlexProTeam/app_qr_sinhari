@@ -200,7 +200,6 @@ class BottomNavigationState extends State<BottomNavigation> {
     LOG.w('_onScan: $data');
     if (data != null) {
       LOG.w('_onScan: requestNe');
-      data = 'http://qcheck.vn/5pmzq2ngv4';
       if (data.contains('http://qcheck.vn/')) {
         CommonUtil.runUrl(data);
       } else {
