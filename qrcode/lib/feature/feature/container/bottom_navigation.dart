@@ -196,14 +196,20 @@ class BottomNavigationState extends State<BottomNavigation> {
   void _scanQr() async {
     final deviceId = await CommonUtil.getDeviceId();
     LOG.w('_onScan: $deviceId');
-    final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    var data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
     LOG.w('_onScan: $data');
     if (data != null) {
       LOG.w('_onScan: requestNe');
-      Routes.instance.navigateTo(RouteName.DetailProductScreen,
-          arguments: ArgumentDetailProductScreen(
-            url: data,
-          ));
+      data = 'http://qcheck.vn/5pmzq2ngv4';
+      if (data.contains('http://qcheck.vn/')) {
+        CommonUtil.runUrl(data);
+      } else {
+        Routes.instance.navigateTo(RouteName.DetailProductScreen,
+            arguments: ArgumentDetailProductScreen(
+              url: data,
+            ));
+      }
+
       await injector<AppClient>().get(
           'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
           '&city=ha noi&region=vn&url=$data',

@@ -19,24 +19,26 @@ import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/alert_dialog_container.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CommonUtil {
-  static Future<String> getDeviceId()async{
-    final DeviceInfoPlugin deviceInfoPlugin =   DeviceInfoPlugin();
+  static Future<String> getDeviceId() async {
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     String identifier = '';
     try {
       if (Platform.isAndroid) {
         var build = await deviceInfoPlugin.androidInfo;
-        identifier = build.androidId;  //UUID for Android
+        identifier = build.androidId; //UUID for Android
       } else if (Platform.isIOS) {
         var data = await deviceInfoPlugin.iosInfo;
-        identifier = data.identifierForVendor;  //UUID for iOS
+        identifier = data.identifierForVendor; //UUID for iOS
       }
-    } catch(e) {
+    } catch (e) {
       return '';
     }
     return identifier;
   }
+
   static int countNumberRowOfGridview(List? data) {
     if (data?.isEmpty ?? true) {
       return 1;
@@ -45,6 +47,15 @@ class CommonUtil {
       return data.length ~/ 2;
     }
     return (data.length + 1) ~/ 2;
+  }
+
+  static Future runUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+      LOG.e('runUrlrunUrl: $url');
+    } else {
+      LOG.e('Exception: runUrl: $url');
+    }
   }
 
   static void showCustomBottomSheet({
