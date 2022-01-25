@@ -35,7 +35,6 @@ class AppClient {
         return {};
       }
     }
-    LOG.w('getNe :$endPoint ${DateTime.now().millisecondsSinceEpoch}');
     await _checkConnectionAndPosition();
     var url = Uri.parse('${Configurations.host}$endPoint');
     Response? response = await http
