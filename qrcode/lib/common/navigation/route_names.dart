@@ -20,6 +20,7 @@ class RouteName {
   static const String ProfileScreen = 'ProfileScreen';
   static const String ScanQrScreen = 'ScanQrScreen';
   static const String WebViewScreen = 'WebViewScreen';
+  static const String WebViewDetailScreen = 'WebViewDetailScreen';
   static const String HistoryScanScreen = 'HistoryScanScreen';
   static const String WelcomeScreen = 'WelcomeScreen';
   static const String ContainerScreen = 'ContainerSCreen';

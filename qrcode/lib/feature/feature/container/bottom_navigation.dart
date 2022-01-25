@@ -57,54 +57,54 @@ class BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     final tabs = _icon.asMap().entries.map(
-      (entry) {
+          (entry) {
         final index = entry.key;
         final source = entry.value;
         final isSelected = index == selectedIndex;
         return source != null
             ? Expanded(
-                child: Material(
-                  color: AppColors.primaryColor,
-                  child: InkWell(
-                    highlightColor: AppColors.grey6,
-                    splashColor: AppColors.grey6,
-                    onTap: () {
-                      if (!isSelected) {
-                        changeToTabIndex(index);
-                      }
-                    },
-                    child: Container(
-                      height: heightItem,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            '$source',
-                            width: 20,
-                            height: 20,
-                            fit: BoxFit.cover,
-                            color: isSelected
-                                ? AppColors.white
-                                : widget.inActiveColor,
-                          ),
-                          Text(
-                            _mapIndexToString(index),
-                            style: isSelected
-                                ? AppTextTheme.normalGrey.copyWith(
-                                    fontWeight: FontWeight.w300,
-                                    color: AppColors.white,
-                                    fontSize: 12)
-                                : AppTextTheme.smallGrey
-                                    .copyWith(color: AppColors.grey6),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
+          child: Material(
+            color: AppColors.primaryColor,
+            child: InkWell(
+              highlightColor: AppColors.grey6,
+              splashColor: AppColors.grey6,
+              onTap: () {
+                if (!isSelected) {
+                  changeToTabIndex(index);
+                }
+              },
+              child: Container(
+                height: heightItem,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      '$source',
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.cover,
+                      color: isSelected
+                          ? AppColors.white
+                          : widget.inActiveColor,
                     ),
-                  ),
+                    Text(
+                      _mapIndexToString(index),
+                      style: isSelected
+                          ? AppTextTheme.normalGrey.copyWith(
+                          fontWeight: FontWeight.w300,
+                          color: AppColors.white,
+                          fontSize: 12)
+                          : AppTextTheme.smallGrey
+                          .copyWith(color: AppColors.grey6),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-              )
+              ),
+            ),
+          ),
+        )
             : const Spacer();
       },
     ).toList();
@@ -201,17 +201,25 @@ class BottomNavigationState extends State<BottomNavigation> {
     if (data != null) {
       LOG.w('_onScan: requestNe');
       if (data.contains('http://qcheck.vn/')) {
-        CommonUtil.runUrl(data);
-      } else {
+        Routes.instance.navigateTo(RouteName.WebViewScreen,
+            arguments: data);
+      }
+      else if (data.contains('https://qrcheck.sinhairvietnam.vn/')) {
+        Routes.instance.navigateTo(RouteName.WebViewScreen,
+            arguments: data);
+        print('$data');
+      }
+      else {
         Routes.instance.navigateTo(RouteName.DetailProductScreen,
             arguments: ArgumentDetailProductScreen(
               url: data,
             ));
+        print('$data');
       }
 
       await injector<AppClient>().get(
           'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
-          '&city=ha noi&region=vn&url=$data',
+              '&city=ha noi&region=vn&url=$data',
           checkRepeat: true);
       injector<EventBusBloc>().add(EventBusReloadHistoryEvent());
       LOG.w('_onScan: hello');

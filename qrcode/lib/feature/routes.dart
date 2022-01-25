@@ -27,6 +27,7 @@ import 'package:qrcode/feature/feature/personal/policy_screen.dart';
 import 'package:qrcode/feature/feature/personal/personal_screen.dart';
 import 'package:qrcode/feature/feature/profile/profile_screen.dart';
 import 'package:qrcode/feature/feature/scan_qr.dart';
+import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
@@ -59,7 +60,7 @@ class Routes {
       {dynamic arguments}) async {
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
       routeName,
-      (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
       arguments: arguments,
     );
   }
@@ -126,7 +127,7 @@ class Routes {
         return SlideLeftRoute(
           widget: VerifyOtpScreen(
             phone:
-                settings.arguments != null ? settings.arguments as String : '',
+            settings.arguments != null ? settings.arguments as String : '',
           ),
         );
       case RouteName.HistoryScanScreen:
@@ -140,6 +141,12 @@ class Routes {
       case RouteName.WebViewScreen:
         return SlideLeftRoute(
           widget: WebViewScreen(
+            url: settings.arguments != null ? settings.arguments as String : '',
+          ),
+        );
+      case RouteName.WebViewDetailScreen:
+        return SlideLeftRoute(
+          widget: WebViewDetailScreen(
             url: settings.arguments != null ? settings.arguments as String : '',
           ),
         );
@@ -159,7 +166,7 @@ class Routes {
                 : null,
           ),
         );
-        ///
+    ///
       case RouteName.DetailNewScreen:
         return SlideLeftRoute(
           widget: DetailNewScreen(
@@ -188,10 +195,10 @@ class Routes {
         return SlideLeftRoute(
           widget: RegisterScreen(),
         );
-      // case RouteName.VerifyOtpScreen:
-      //   return CupertinoPageRoute(
-      //     widget: VerifyOtpScreen(),
-      //   );
+    // case RouteName.VerifyOtpScreen:
+    //   return CupertinoPageRoute(
+    //     widget: VerifyOtpScreen(),
+    //   );
       case RouteName.ForgotPassScreen:
         return SlideLeftRoute(
           widget: ForgotPassScreen(),
@@ -200,7 +207,7 @@ class Routes {
         return SlideLeftRoute(
           widget: LoginScreen(
             haveBack:
-                settings.arguments != null ? settings.arguments as bool : null,
+            settings.arguments != null ? settings.arguments as bool : null,
           ),
         );
       case RouteName.splashScreen:

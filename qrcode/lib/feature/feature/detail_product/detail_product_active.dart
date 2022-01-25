@@ -46,7 +46,7 @@ class _DetailProductActiveState extends State<DetailProductActive> {
       if (!CommonUtil.validateAndSave(_formKey)) return;
       isLoadding =true;
       await injector<AppClient>().post(
-          'save-contact?product_id=${widget.argument?.productId}&content=${_contentController.text}');
+          'save-contact?product_id=${widget.argument?.productId}&content=${_contentController.text}&type=1');
       injector<SnackBarBloc>().add(ShowSnackbarEvent(
           type: SnackBarType.success, content: 'Kích hoạt thành công'));
       Navigator.pop(context);
@@ -104,7 +104,6 @@ class _DetailProductActiveState extends State<DetailProductActive> {
                   children: [
                     const SizedBox(height: 20),
                     CustomTextField(
-                      texts: false,
                       hintText: 'Họ và tên',
                       controller: _nameController,
                       validator: ValidateUtil.validEmpty,
@@ -118,7 +117,6 @@ class _DetailProductActiveState extends State<DetailProductActive> {
                         keyboardType: TextInputType.phone),
                     const SizedBox(height: 16),
                     CustomTextField(
-                      texts: false,
                       hintText: 'Địa chỉ',
                       controller: _adddressController,
                       validator: ValidateUtil.validEmpty,
