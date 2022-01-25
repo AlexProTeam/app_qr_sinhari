@@ -202,13 +202,7 @@ class BottomNavigationState extends State<BottomNavigation> {
     if (data != null) {
       LOG.w('_onScan: requestNe');
       if (data.contains('http://qcheck.vn/')) {
-        Routes.instance.navigateTo(RouteName.WebViewScreen,
-            arguments: data);
-      }
-      else if (data.contains('https://qrcheck.sinhairvietnam.vn/')) {
-        Routes.instance.navigateTo(RouteName.WebViewScreen,
-            arguments: data);
-        print('$data');
+        CommonUtil.runUrl(data);
       }
       else {
         Routes.instance.navigateTo(RouteName.DetailProductScreen,
