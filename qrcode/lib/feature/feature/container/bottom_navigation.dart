@@ -7,6 +7,7 @@ import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
@@ -194,8 +195,8 @@ class BottomNavigationState extends State<BottomNavigation> {
   }
 
   void _scanQr() async {
-    final deviceId = await CommonUtil.getDeviceId();
-    LOG.w('_onScan: $deviceId');
+    // final deviceId = await CommonUtil.getDeviceId();
+    // LOG.w('_onScan: $deviceId');
     var data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
     LOG.w('_onScan: $data');
     if (data != null) {
@@ -218,7 +219,7 @@ class BottomNavigationState extends State<BottomNavigation> {
       }
 
       await injector<AppClient>().get(
-          'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
+          'scan-qr-code?device_id=${FirebaseNotification.instance.deviceToken}'
               '&city=ha noi&region=vn&url=$data',
           checkRepeat: true);
       injector<EventBusBloc>().add(EventBusReloadHistoryEvent());
