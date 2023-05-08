@@ -1,10 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
+import 'package:qrcode/feature/feature/scan/qrcode_scanner_controller.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 class ScanQrScreen extends StatefulWidget {
   @override
@@ -12,28 +12,26 @@ class ScanQrScreen extends StatefulWidget {
 }
 
 class _QRViewExampleState extends State<ScanQrScreen> {
-  Barcode? result;
   QRViewController? controller;
+  final GlobalKey qrKeyView = GlobalKey(debugLabel: 'QR_view');
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      controller?.pauseCamera();
-    }
-    controller?.resumeCamera();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomScaffold(
+      customAppBar: CustomAppBar(
+        title: 'Quét QR',
+        iconLeftTap: () {
+          Routes.instance.pop();
+        },
+      ),
+
       body: Stack(
         children: [
           Column(
             children: <Widget>[
               Expanded(
                 child: _buildQrView(context),
+
               ),
             ],
           ),
@@ -62,36 +60,33 @@ class _QRViewExampleState extends State<ScanQrScreen> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
-        ? 150.0
-        : 300.0;
-    return QRView(
-      key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(
-          borderColor: Colors.red,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ElevatedButton(
+            onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>  QrcodeScannerWithController(key: qrKey,),
+              ),
+            );
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                  icon: Icon(Icons.qr_code), onPressed: () {  },),
+              Text("Scan QRcode")
+            ],
+          ),
+        ),
+       ]),
     );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    setState(() {
-      this.controller = controller;
-    });
-    controller.scannedDataStream.listen((scanData) {
-      controller.pauseCamera();
-      controller.stopCamera();
-      Routes.instance.pop(result: scanData.code ?? '');
-    });
-  }
-
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    if (!p) {}
   }
 
   @override

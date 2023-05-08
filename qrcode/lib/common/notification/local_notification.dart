@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -26,7 +28,8 @@ final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
 
 final BehaviorSubject<String> selectNotificationSubject =
     BehaviorSubject<String>();
-
+final StreamController<String?> selectNotificationStream =
+StreamController<String?>.broadcast();
 NotificationAppLaunchDetails? notificationAppLaunchDetails;
 
 class LocalNotification {
@@ -44,7 +47,7 @@ class LocalNotification {
 
     const initializationSettingsAndroid =
         AndroidInitializationSettings('app_icon');
-    final initializationSettingsIOS = IOSInitializationSettings(
+    final initializationSettingsIOS = DarwinInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
         requestSoundPermission: true,
@@ -63,14 +66,18 @@ class LocalNotification {
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String? payload) async {
-      FirebaseNotification.instance.mapTypeMessageToNavigateTo(
-        FirebaseNotification.instance.currentMessage,
-      );
-      if (payload != null) {}
-      selectNotificationSubject.add(payload ?? '');
-    });
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) {
+        switch (notificationResponse.notificationResponseType) {
+          default:
+            selectNotificationStream.add(notificationResponse.payload);
+            break;
+        }
+      },
+      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
+    );
   }
 
   void requestIOSPermissions() {
@@ -115,7 +122,7 @@ class LocalNotification {
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your channel id',
       'your channel name',
-      'your channel description',
+      channelDescription: 'your channel description',
       importance: Importance.max,
       priority: Priority.high,
       ongoing: true,
@@ -125,7 +132,7 @@ class LocalNotification {
       // sound: RawResourceAndroidNotificationSound('alarm'),
       styleInformation: BigTextStyleInformation(''),
     );
-    final iOSPlatformChannelSpecifics = IOSNotificationDetails(
+    final iOSPlatformChannelSpecifics = DarwinNotificationDetails(
       // sound: 'alarm.wav',
       presentSound: true,
       presentAlert: true,
@@ -142,5 +149,17 @@ class LocalNotification {
 
   Future<void> cancelNotification() async {
     await flutterLocalNotificationsPlugin.cancel(0);
+  }
+  @pragma('vm:entry-point')
+  void notificationTapBackground(NotificationResponse notificationResponse) {
+    // ignore: avoid_print
+    print('notification(${notificationResponse.id}) action tapped: '
+        '${notificationResponse.actionId} with'
+        ' payload: ${notificationResponse.payload}');
+    if (notificationResponse.input?.isNotEmpty ?? false) {
+      // ignore: avoid_print
+      print(
+          'notification action tapped with input: ${notificationResponse.input}');
+    }
   }
 }

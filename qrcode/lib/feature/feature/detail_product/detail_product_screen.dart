@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
-import 'package:qrcode/common/bloc/event_bus/event_bus_bloc.dart';
-import 'package:qrcode/common/bloc/event_bus/event_bus_event.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
@@ -25,6 +21,7 @@ import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
+
 import '../../injector_container.dart';
 
 class ArgumentDetailProductScreen {
@@ -59,7 +56,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
     try {
       isLoadding = true;
       if (widget.argument?.url?.isNotEmpty ?? false) {
-
         await _getProductByUrl();
         return;
       }
@@ -88,6 +84,8 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         _detailProductModel?.countPersonScan =
             data['data']['tracking']['totalUserScan'];
         _detailProductModel?.limitScan = data['data']['tracking']['exceeded'];
+        _detailProductModel?.exceedingScan =
+            data['data']['tracking']['exceeding_scan'];
         String? dateTimeScan = data['data']['tracking']['datetime_scan'];
         if (dateTimeScan != null) {
           DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
@@ -183,9 +181,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                 ? Container(
                                     child:
                                         _detailProductModel?.limitScan == true
-                                            ? _itemLimit(_detailProductModel
-                                                    ?.dateTimeScanLimit ??
-                                                '')
+                                            ? _itemLimit(
+                                                _detailProductModel
+                                                        ?.dateTimeScanLimit ??
+                                                    '',
+                                                _detailProductModel
+                                                        ?.exceedingScan ??
+                                                    '')
                                             : _itemApccept(),
                                   )
                                 : Container(),
@@ -274,7 +276,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 4),
                                 child: Html(
-                                  data: _detailProductModel?.description,
+                                  data: _detailProductModel?.description??"",
                                   style: {
                                     "html": Style(
                                       backgroundColor: Colors.white,
@@ -297,24 +299,23 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                 Positioned(
                   child: CustomButton(
                     onTap: () {
-                      if(widget.argument?.url != null) {
+                      if (widget.argument?.url != null) {
+                        injector<AppCache>().profileModel != null
+                            ? Routes.instance.navigateTo(RouteName.ActiveScrene,
+                                arguments: ArgumentActiveScreen(
+                                    productId: _detailProductModel?.id))
+                            : Routes.instance.navigateTo(RouteName.LoginScreen,
+                                arguments: true);
+                      } else {
                         injector<AppCache>().profileModel != null
                             ? Routes.instance.navigateTo(
-                            RouteName.ActiveScrene,
-                            arguments: ArgumentActiveScreen(
-                                productId: _detailProductModel?.id))
+                                RouteName.MuaHangScrene,
+                                arguments: ArgumentContactScreen(
+                                    productId: _detailProductModel?.id))
                             : Routes.instance.navigateTo(RouteName.LoginScreen,
-                            arguments: true);
-                      }else{
-                        injector<AppCache>().profileModel != null
-                            ? Routes.instance.navigateTo(
-                            RouteName.MuaHangScrene,
-                            arguments: ArgumentContactScreen(
-                                productId: _detailProductModel?.id))
-                            : Routes.instance.navigateTo(RouteName.LoginScreen,
-                            arguments: true);
+                                arguments: true);
                       }
-                      },
+                    },
                     text:
                         widget.argument?.url != null ? 'Kích hoạt' : 'Mua hàng',
                   ),
@@ -469,14 +470,14 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
     );
   }
 
-  Widget _itemLimit(String dateTime) {
+  Widget _itemLimit(String dateTime, String notify) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       color: Colors.red,
       child: Center(
         child: Text(
-          'Sản phẩm này đã vượt quá giới hạn quét, được quét vào $dateTime, xin vui lòng cân nhắc kỹ trước khi mua hoặc sử dụng',
+          'Sản phẩm này đã vượt quá giới hạn quét, được quét vào $dateTime. $notify',
           style: AppTextTheme.normalWhite,
         ),
       ),

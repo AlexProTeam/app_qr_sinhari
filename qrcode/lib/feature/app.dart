@@ -12,8 +12,6 @@ import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/loading_container.dart';
 
-import 'feature/news/history_model.dart';
-
 class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
@@ -30,7 +28,6 @@ class _AppState extends State<App> {
           create: (_) => injector<SnackBarBloc>(),
         ),
       ];
-
 
   void _mapListenerSnackBarState(BuildContext context, SnackBarState state) {
     if (state is ShowSnackBarState) {
@@ -68,43 +65,39 @@ class _AppState extends State<App> {
         context: Routes.instance.navigatorKey.currentContext!,
         duration: state.duration ?? Duration(milliseconds: 3000),
         builder: (context, controller) {
-          return Flash.bar(
+          return FlashBar(
             controller: controller,
             backgroundColor: color,
             position: FlashPosition.top,
-            horizontalDismissDirection: HorizontalDismissDirection.startToEnd,
             margin: const EdgeInsets.all(8),
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
             forwardAnimationCurve: Curves.easeOutBack,
             reverseAnimationCurve: Curves.easeInCubic,
-            child: FlashBar(
-              title: Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .copyWith(color: Colors.white),
-              ),
-              content: Text(
-                state.mess!,
-                style: TextStyle(color: Colors.white),
-              ),
-              icon: icon,
-              shouldIconPulse: true,
-              showProgressIndicator: false,
+            title: Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6!
+                  .copyWith(color: Colors.white),
             ),
+            content: Text(
+              state.mess!,
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: icon,
+            shouldIconPulse: true,
+            showProgressIndicator: false,
           );
         },
       );
     }
   }
+
   @override
   void initState() {
     FirebaseNotification.instance.initFirebaseNotification();
     LocalNotification.instance
         .configureDidReceiveLocalNotificationSubject(context);
     super.initState();
-
   }
 
   @override

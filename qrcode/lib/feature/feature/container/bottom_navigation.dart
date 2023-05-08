@@ -195,30 +195,9 @@ class BottomNavigationState extends State<BottomNavigation> {
   }
 
   void _scanQr() async {
-    // final deviceId = await CommonUtil.getDeviceId();
-    // LOG.w('_onScan: $deviceId');
-    var data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
-    LOG.w('_onScan: $data');
-    if (data != null) {
-      LOG.w('_onScan: requestNe');
-      if (data.contains('http://qcheck.vn/')) {
-        CommonUtil.runUrl(data);
-      }
-      else {
-        Routes.instance.navigateTo(RouteName.DetailProductScreen,
-            arguments: ArgumentDetailProductScreen(
-              url: data,
-            ));
-        print('$data');
-      }
+     final deviceId = await CommonUtil.getDeviceId();
+     LOG.w('_onScan: $deviceId');
+     await Routes.instance.navigateTo(RouteName.ScanQrScreen);
 
-      await injector<AppClient>().get(
-          'scan-qr-code?device_id=${FirebaseNotification.instance.deviceToken}'
-              '&city=ha noi&region=vn&url=$data',
-          checkRepeat: true);
-      injector<EventBusBloc>().add(EventBusReloadHistoryEvent());
-      LOG.w('_onScan: hello');
-      injector<AppCache>().cacheDataProduct = data;
-    }
   }
 }

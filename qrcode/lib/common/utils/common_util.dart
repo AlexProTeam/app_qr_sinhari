@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,10 +28,10 @@ class CommonUtil {
     try {
       if (Platform.isAndroid) {
         var build = await deviceInfoPlugin.androidInfo;
-        identifier = build.androidId; //UUID for Android
+        identifier = build.id; //UUID for Android
       } else if (Platform.isIOS) {
         var data = await deviceInfoPlugin.iosInfo;
-        identifier = data.identifierForVendor; //UUID for iOS
+        identifier = data.isPhysicalDevice as String; //UUID for iOS
       }
     } catch (e) {
       return '';
@@ -135,31 +135,27 @@ class CommonUtil {
         context: Routes.instance.navigatorKey.currentContext!,
         duration: state.duration ?? Duration(milliseconds: 3000),
         builder: (context, controller) {
-          return Flash.bar(
+          return FlashBar(
             controller: controller,
             backgroundColor: color,
             position: FlashPosition.top,
-            horizontalDismissDirection: HorizontalDismissDirection.startToEnd,
             margin: const EdgeInsets.all(8),
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
             forwardAnimationCurve: Curves.easeOutBack,
             reverseAnimationCurve: Curves.easeInCubic,
-            child: FlashBar(
-              title: Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    ?.copyWith(color: Colors.white),
-              ),
-              content: Text(
-                state.mess ?? '',
-                style: TextStyle(color: Colors.white),
-              ),
-              icon: icon,
-              shouldIconPulse: true,
-              showProgressIndicator: false,
+            title: Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(color: Colors.white),
             ),
+            content: Text(
+              state.mess ?? '',
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: icon,
+            shouldIconPulse: true,
+            showProgressIndicator: false,
           );
         },
       );

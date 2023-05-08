@@ -64,6 +64,7 @@ class DetailProductModel {
   int? countPersonScan;
   bool? limitScan;
   String? dateTimeScanLimit;
+  String? exceedingScan;
 
   DetailProductModel.fromJson(Map<String?, dynamic> data) {
     id = data['id'];
@@ -132,6 +133,7 @@ class DetailProductModel {
     if (data['tracking'] != null) {
       countScan = data['tracking']['totalScan'];
       countPersonScan = data['tracking']['totalUserScan'];
+      exceedingScan = data['tracking']['exceeding_scan'];
     }
   }
 }
