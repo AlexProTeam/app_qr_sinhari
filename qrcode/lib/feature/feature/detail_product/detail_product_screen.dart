@@ -55,7 +55,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   void _initData() async {
     try {
       isLoadding = true;
-      if (widget.argument?.url?.isNotEmpty ?? false) {
+      if (widget.argument?.url != "") {
         await _getProductByUrl();
         return;
       }
@@ -276,7 +276,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 4),
                                 child: Html(
-                                  data: _detailProductModel?.description??"",
+                                  data: _detailProductModel?.description ?? "",
                                   style: {
                                     "html": Style(
                                       backgroundColor: Colors.white,

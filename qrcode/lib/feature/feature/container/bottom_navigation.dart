@@ -195,9 +195,9 @@ class BottomNavigationState extends State<BottomNavigation> {
   }
 
   void _scanQr() async {
-     final deviceId = await CommonUtil.getDeviceId();
-     LOG.w('_onScan: $deviceId');
-     await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+    // final deviceId = await CommonUtil.getDeviceId();
+    // LOG.w('_onScan: $deviceId');
+    await Routes.instance.navigateTo(RouteName.ScanQrScreen);
 
   }
 }
