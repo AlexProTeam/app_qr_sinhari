@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/dangtung/Documents/Freelancer/app_qr_sinhari-master/qrcode/build/android_intent_plus/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/android_intent_plus/intermediates/res/merged/debug/values/values.xml",
             "map": [
                 {
                     "source": "/Users/dangtung/.gradle/caches/transforms-3/2c9c95ad8985b3e186aa5139dd38e201/transformed/jetified-window-1.0.0-beta04/res/values/values.xml",
@@ -44,7 +44,7 @@
             ]
         },
         {
-            "outputFile": "/Users/dangtung/Documents/Freelancer/app_qr_sinhari-master/qrcode/build/android_intent_plus/intermediates/res/merged/debug/values/values.xml",
+            "outputFile": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/android_intent_plus/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
                     "source": "/Users/dangtung/.gradle/caches/transforms-3/2c9c95ad8985b3e186aa5139dd38e201/transformed/jetified-window-1.0.0-beta04/res/values/values.xml",
