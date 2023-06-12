@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/webview_flutter_android/intermediates/res/merged/debug/drawable/notification_bg.xml",
+        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/webview_flutter_android/intermediates/res/merged/debug/drawable/notification_tile_bg.xml",
+        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/webview_flutter_android/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
+        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/webview_flutter_android/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
+        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/drawable/notification_icon_background.xml"
+    }
+]
