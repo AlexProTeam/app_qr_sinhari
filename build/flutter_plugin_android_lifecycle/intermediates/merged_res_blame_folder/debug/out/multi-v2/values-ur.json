@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/incremental/mergeDebugResources/merged.dir/values-ur/values-ur.xml",
+            "map": [
+                {
+                    "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/values-ur/values-ur.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/values-ur/values-ur.xml",
+            "map": [
+                {
+                    "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/values-ur/values-ur.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}
