@@ -1,2 +1,0 @@
-dev/steenbakker/mobile_scanner/BuildConfig.java
- dev.steenbakker.mobile_scanner.BuildConfig
