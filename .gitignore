@@ -62,6 +62,7 @@ fastlane/app_store_connect_token.json
 assets/pem/public.pem
 android/app/build/intermediates/res/merged/debug/
 
+
 .firebase
 Gemfile.lock
 fastlane/report.xml
