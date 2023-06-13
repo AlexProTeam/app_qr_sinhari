@@ -1,26 +1,26 @@
 [
     {
-        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_template_icon_group.xml",
-        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/layout/notification_template_icon_group.xml"
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_action_tombstone.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/b32b0611c45ee8a6a4d9d10b691c50c0/transformed/core-1.6.0/res/layout/notification_action_tombstone.xml"
     },
     {
-        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_action_tombstone.xml",
-        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/layout/notification_action_tombstone.xml"
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/b32b0611c45ee8a6a4d9d10b691c50c0/transformed/core-1.6.0/res/layout/notification_template_part_chronometer.xml"
     },
     {
-        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
-        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/layout/notification_template_part_chronometer.xml"
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_action.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/b32b0611c45ee8a6a4d9d10b691c50c0/transformed/core-1.6.0/res/layout/notification_action.xml"
     },
     {
-        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
-        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/layout/notification_template_part_time.xml"
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_template_icon_group.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/b32b0611c45ee8a6a4d9d10b691c50c0/transformed/core-1.6.0/res/layout/notification_template_icon_group.xml"
     },
     {
-        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/custom_dialog.xml",
-        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/layout/custom_dialog.xml"
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/b32b0611c45ee8a6a4d9d10b691c50c0/transformed/core-1.6.0/res/layout/notification_template_part_time.xml"
     },
     {
-        "merged": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/notification_action.xml",
-        "source": "/Users/dangtung/.gradle/caches/transforms-3/d118f5ede0bdac04c26023259476b502/transformed/core-1.6.0/res/layout/notification_action.xml"
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/flutter_plugin_android_lifecycle/intermediates/res/merged/debug/layout/custom_dialog.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/b32b0611c45ee8a6a4d9d10b691c50c0/transformed/core-1.6.0/res/layout/custom_dialog.xml"
     }
 ]

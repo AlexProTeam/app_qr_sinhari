@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/dangtung/Documents/GitHub/app_qr_sinhari/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-sw/values-sw.xml",
+            "outputFile": "/Users/macbook2020/app_qr_sinhari/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-sw/values-sw.xml",
             "map": [
                 {
-                    "source": "/Users/dangtung/.gradle/caches/transforms-3/ae2fb35d0e16546a675c2f3a08dcf283/transformed/jetified-play-services-base-18.1.0/res/values-sw/values.xml",
+                    "source": "/Users/macbook2020/.gradle/caches/transforms-3/26c99f5b1ae9db05c8cef3dffa167b1e/transformed/jetified-play-services-base-18.1.0/res/values-sw/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -21,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "/Users/dangtung/.gradle/caches/transforms-3/6584a5314636369636b83103aaa72b4e/transformed/appcompat-1.4.2/res/values-sw/values-sw.xml",
+                    "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/values-sw/values-sw.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,149,251,348,449,556,663,778",
+                        "endColumns": "93,101,96,100,106,106,114,100",
+                        "endOffsets": "144,246,343,444,551,658,773,874"
+                    },
+                    "to": {
+                        "startLines": "29,30,31,32,33,34,35,55",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "2801,2895,2997,3094,3195,3302,3409,5868",
+                        "endColumns": "93,101,96,100,106,106,114,100",
+                        "endOffsets": "2890,2992,3089,3190,3297,3404,3519,5964"
+                    }
+                },
+                {
+                    "source": "/Users/macbook2020/.gradle/caches/transforms-3/c31ca56f5c75d9fa2fb9527d5c590dd2/transformed/appcompat-1.4.2/res/values-sw/values-sw.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "/Users/dangtung/.gradle/caches/transforms-3/ca2354612dfa1405cb61cdeb42dd8335/transformed/jetified-play-services-basement-18.1.0/res/values-sw/values.xml",
+                    "source": "/Users/macbook2020/.gradle/caches/transforms-3/fef9e18fe726b3f0d66512c04c517c61/transformed/jetified-play-services-basement-18.1.0/res/values-sw/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -52,23 +69,6 @@
                         "startOffsets": "4539",
                         "endColumns": "145",
                         "endOffsets": "4680"
-                    }
-                },
-                {
-                    "source": "/Users/dangtung/.gradle/caches/transforms-3/4785ab85baab279544cc93ec93789a92/transformed/core-1.10.1/res/values-sw/values-sw.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,149,251,348,449,556,663,778",
-                        "endColumns": "93,101,96,100,106,106,114,100",
-                        "endOffsets": "144,246,343,444,551,658,773,874"
-                    },
-                    "to": {
-                        "startLines": "29,30,31,32,33,34,35,55",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "2801,2895,2997,3094,3195,3302,3409,5868",
-                        "endColumns": "93,101,96,100,106,106,114,100",
-                        "endOffsets": "2890,2992,3089,3190,3297,3404,3519,5964"
                     }
                 }
             ]
