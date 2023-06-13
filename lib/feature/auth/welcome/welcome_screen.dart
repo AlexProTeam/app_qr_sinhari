@@ -12,9 +12,9 @@ import 'package:qrcode/feature/auth/welcome/welcome_model.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
-import 'package:qrcode/feature/widgets/custom_image_network.dart';
+
+import '../../widgets/custom_image_network.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -56,104 +56,133 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Column(
+      body: Stack(
         children: [
-         // const SizedBox(height: 50),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (int index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              children: _welcomeModel.isNotEmpty
-                  ? _welcomeModel.map((e) => _pageView(e)).toList()
-                  : [],
-            ),
+          PageView(
+            controller: _pageController,
+            onPageChanged: (int index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            children: _welcomeModel.isNotEmpty
+                ? _welcomeModel.map((e) => _pageView(e)).toList()
+                : [],
           ),
-          const SizedBox(height: 20),
-          Container(
-            height: 120,
-            width: double.infinity,
-            child: Column(
-              children: [
-                Welcome3Point(
-                  currentIndex: _currentIndex,
-                ),
-                const SizedBox(height: 12),
-                Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                height: 120,
+                width: double.infinity,
+                child: Column(
                   children: [
-                    CustomGestureDetector(
-                      onTap: () {
-                        Routes.instance.navigateTo(RouteName.ContainerScreen);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          'Bỏ qua',
-                          style: AppTextTheme.mediumBlack.copyWith(
-                            color: AppColors.grey7,
-                          ),
-                        ),
-                      ),
+                    Welcome3Point(
+                      currentIndex: _currentIndex,
                     ),
-                    const Spacer(),
-                    CustomGestureDetector(
-                      onTap: () {
-                        if (_currentIndex < 2) {
-                          setState(() {
-                            _currentIndex++;
-                          });
-                          _pageController.jumpToPage(_currentIndex);
-                          return;
-                        }
-                        Routes.instance.navigateTo(RouteName.ContainerScreen);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          'Tiếp theo',
-                          style: AppTextTheme.mediumBlack.copyWith(
-                            color: AppColors.primaryColor,
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        CustomGestureDetector(
+                          onTap: () {
+                            Routes.instance
+                                .navigateTo(RouteName.ContainerScreen);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(22.0),
+                            child: Text('Skip',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.white,
+                                    decoration: TextDecoration.underline)),
                           ),
                         ),
-                      ),
+                        const Spacer(),
+                        CustomGestureDetector(
+                          onTap: () {
+                            if (_currentIndex < 2) {
+                              setState(() {
+                                _currentIndex++;
+                              });
+                              _pageController.jumpToPage(_currentIndex);
+                              return;
+                            }
+                            Routes.instance
+                                .navigateTo(RouteName.ContainerScreen);
+                          },
+                          child: Padding(
+                              padding: const EdgeInsets.all(22.0),
+                              child: Container(
+                                width: 45,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFFEF4948),
+                                ),
+                                child: Icon(
+                                  Icons.keyboard_arrow_right,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
+                              )),
+                        )
+                      ],
                     )
                   ],
-                )
-              ],
-            ),
-          ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
   }
 
   Widget _pageView(WelcomeModel welcomeModel) {
-    return SizedBox(
-      width: double.infinity,
-      child: Container(
-      //  padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            Expanded(
-              child: CustomImageNetwork(
+    return Container(
+      child: Stack(children: [
+        welcomeModel.image == null
+            ? CustomImageNetwork(
                 url: welcomeModel.image,
                 width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+              )
+            :
+        Image.asset(
+                'assets/images/welcome.png',
+                width: double.maxFinite,
+                height: double.infinity,
                 fit: BoxFit.cover,
               ),
-            ),
-            const SizedBox(height: 20),
-            Text("Công ty TNHH Sinhair Japan", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 14
-            ),maxLines: 2,),
-            SizedBox(height: 10,),
-            Text(welcomeModel.title ?? '', style: TextStyle(
-              overflow: TextOverflow.ellipsis,
-            ),maxLines: 2,),
-          ],
-        ),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 400),
+              Text(
+                "Sinhair Japan",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 22),
+                maxLines: 2,
+              ),
+              SizedBox(height: 19),
+              Text(
+                'Mua sắm trực tuyến và hỗ trợ\n'
+                ' đồng hành cùng mọi khách hàng ',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                maxLines: 2,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        )
+      ]),
     );
   }
 }
