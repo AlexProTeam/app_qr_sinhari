@@ -75,3 +75,4 @@ node_modules
 *.jks
 .flutter-plugins-dependencies
 .fvm/flutter_sdk
+android/app/build
