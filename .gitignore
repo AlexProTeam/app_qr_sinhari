@@ -76,3 +76,4 @@ node_modules
 .flutter-plugins-dependencies
 .fvm/flutter_sdk
 android/app/build
+.fvm/flutter_sdk
