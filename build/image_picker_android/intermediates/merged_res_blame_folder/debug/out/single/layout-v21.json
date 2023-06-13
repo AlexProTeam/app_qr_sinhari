@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/layout-v21/notification_action_tombstone.xml"
+    }
+]

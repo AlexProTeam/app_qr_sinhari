@@ -1,0 +1,578 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.qrsinhair.vn"
+4    android:versionCode="2"
+5    android:versionName="1.0.1" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="33" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:3:5-67
+14-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:3:22-64
+15    <uses-permission android:name="android.permission.CAMERA" />
+15-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:4:5-65
+15-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:4:22-62
+16    <uses-permission android:name="android.permission.WAKE_LOCK" />
+16-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:8:5-68
+16-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:8:22-65
+17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permissions options for the `notification` group -->
+17-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-79
+17-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-76
+18    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+18-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-77
+18-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-74
+19    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+19-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-81
+19-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:7:22-78
+20    <uses-permission android:name="android.permission.VIBRATE" />
+20-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:8:5-66
+20-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:8:22-63
+21    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+21-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-81
+21-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-78
+22    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+22-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-79
+22-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-76
+23    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+23-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:28:5-82
+23-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:28:22-79
+24
+25    <permission
+25-->[androidx.core:core:1.10.1] /Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/AndroidManifest.xml:22:5-24:47
+26        android:name="com.qrsinhair.vn.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+26-->[androidx.core:core:1.10.1] /Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/AndroidManifest.xml:23:9-81
+27        android:protectionLevel="signature" />
+27-->[androidx.core:core:1.10.1] /Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/AndroidManifest.xml:24:9-44
+28
+29    <uses-permission android:name="com.qrsinhair.vn.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+29-->[androidx.core:core:1.10.1] /Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/AndroidManifest.xml:26:5-97
+29-->[androidx.core:core:1.10.1] /Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/AndroidManifest.xml:26:22-94
+30    <uses-feature
+30-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:25:5-27:36
+31        android:name="android.hardware.camera"
+31-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:26:9-47
+32        android:required="false" />
+32-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:27:9-33
+33    <uses-feature
+33-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:28:5-30:36
+34        android:name="android.hardware.camera.front"
+34-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:29:9-53
+35        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+35-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:30:9-33
+36    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+37    <uses-feature
+37-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:33:5-35:36
+38        android:name="android.hardware.camera.autofocus"
+38-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:34:9-57
+39        android:required="false" />
+39-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:35:9-33
+40    <uses-feature
+40-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:36:5-38:36
+41        android:name="android.hardware.camera.flash"
+41-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:37:9-53
+42        android:required="false" />
+42-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:38:9-33
+43    <uses-feature
+43-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:39:5-41:36
+44        android:name="android.hardware.screen.landscape"
+44-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:40:9-57
+45        android:required="false" />
+45-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:41:9-33
+46    <uses-feature
+46-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:42:5-44:36
+47        android:name="android.hardware.wifi"
+47-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:43:9-45
+48        android:required="false" />
+48-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:44:9-33
+49
+50    <application
+50-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:5:4-48:19
+51        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+51-->[androidx.core:core:1.10.1] /Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/AndroidManifest.xml:28:18-86
+52        android:debuggable="true"
+53        android:icon="@mipmap/launcher_icon"
+53-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:7:9-45
+54        android:label="Sinhair" >
+54-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:6:9-32
+55        <activity
+55-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:8:9-36:20
+56            android:name="com.qrsinhair.vn.MainActivity"
+56-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:9:17-45
+57            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+57-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:12:17-167
+58            android:exported="true"
+58-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:14:60-83
+59            android:hardwareAccelerated="true"
+59-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:13:17-51
+60            android:launchMode="singleTop"
+60-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:10:17-47
+61            android:theme="@style/LaunchTheme"
+61-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:11:17-51
+62            android:windowSoftInputMode="adjustResize" >
+62-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:14:17-59
+63
+64            <!--
+65                 Specifies an Android theme to apply to this Activity as soon as
+66                 the Android process has started. This theme is visible to the user
+67                 while the Flutter UI initializes. After that, this theme continues
+68                 to determine the Window background behind the Flutter UI.
+69            -->
+70            <meta-data
+70-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:19:13-22:17
+71                android:name="io.flutter.embedding.android.NormalTheme"
+71-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:20:15-70
+72                android:resource="@style/NormalTheme" />
+72-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:21:15-52
+73            <!--
+74                 Displays an Android View that continues showing the launch screen
+75                 Drawable until Flutter paints its first frame, then this splash
+76                 screen fades out. A splash screen is useful to avoid any visual
+77                 gap between the end of Android's launch screen and the painting of
+78                 Flutter's first frame.
+79            -->
+80            <meta-data
+80-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:28:13-31:17
+81                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+81-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:29:15-79
+82                android:resource="@drawable/launch_background" />
+82-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:30:15-61
+83
+84            <intent-filter>
+84-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:32:13-35:29
+85                <action android:name="android.intent.action.MAIN" />
+85-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:33:17-68
+85-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:33:25-66
+86
+87                <category android:name="android.intent.category.LAUNCHER" />
+87-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:34:17-76
+87-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:34:27-74
+88            </intent-filter>
+89        </activity>
+90        <!--
+91             Don't delete the meta-data below.
+92             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+93        -->
+94        <meta-data
+94-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:39:9-41:33
+95            android:name="flutterEmbedding"
+95-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:40:13-44
+96            android:value="2" />
+96-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:41:13-30
+97        <meta-data
+97-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:42:8-44:52
+98            android:name="com.google.firebase.messaging.default_notification_icon"
+98-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:43:12-82
+99            android:resource="@drawable/app_icon" />
+99-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:44:12-49
+100        <meta-data
+100-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:45:8-47:70
+101            android:name="com.google.firebase.messaging.default_notification_channel_id"
+101-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:46:12-88
+102            android:value="@string/default_notification_channel_id" />
+102-->/Users/macbook2020/app_qr_sinhari/android/app/src/main/AndroidManifest.xml:47:12-67
+103
+104        <service
+104-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:14:9-17:72
+105            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
+105-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-107
+106            android:exported="false"
+106-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-37
+107            android:permission="android.permission.BIND_JOB_SERVICE" />
+107-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-69
+108        <service
+108-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:18:9-24:19
+109            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
+109-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-97
+110            android:exported="false" >
+110-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-37
+111            <intent-filter>
+111-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-23:29
+112                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+112-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:22:17-78
+112-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:22:25-75
+113            </intent-filter>
+114        </service>
+115
+116        <receiver
+116-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:26:9-33:20
+117            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+117-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:27:13-98
+118            android:exported="true"
+118-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:28:13-36
+119            android:permission="com.google.android.c2dm.permission.SEND" >
+119-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-73
+120            <intent-filter>
+120-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-32:29
+121                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+121-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:31:17-81
+121-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:31:25-78
+122            </intent-filter>
+123        </receiver>
+124
+125        <service
+125-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:35:9-39:19
+126            android:name="com.google.firebase.components.ComponentDiscoveryService"
+126-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:35:18-89
+127            android:directBootAware="true"
+127-->[com.google.firebase:firebase-common:20.3.2] /Users/macbook2020/.gradle/caches/transforms-3/bdb4b28061e06d6d910ed270c3513a28/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:34:13-43
+128            android:exported="false" >
+128-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:54:13-37
+129            <meta-data
+129-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:36:13-38:85
+130                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
+130-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:37:17-128
+131                android:value="com.google.firebase.components.ComponentRegistrar" />
+131-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:38:17-82
+132            <meta-data
+132-->[:firebase_core] /Users/macbook2020/app_qr_sinhari/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-11:85
+133                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+133-->[:firebase_core] /Users/macbook2020/app_qr_sinhari/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:10:17-124
+134                android:value="com.google.firebase.components.ComponentRegistrar" />
+134-->[:firebase_core] /Users/macbook2020/app_qr_sinhari/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:17-82
+135            <meta-data
+135-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:55:13-57:85
+136                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+136-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:56:17-119
+137                android:value="com.google.firebase.components.ComponentRegistrar" />
+137-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:57:17-82
+138            <meta-data
+138-->[com.google.firebase:firebase-iid:21.1.0] /Users/macbook2020/.gradle/caches/transforms-3/d8c4d20e3c155ee0dd0e8b86f1d14018/transformed/jetified-firebase-iid-21.1.0/AndroidManifest.xml:32:13-34:85
+139                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+139-->[com.google.firebase:firebase-iid:21.1.0] /Users/macbook2020/.gradle/caches/transforms-3/d8c4d20e3c155ee0dd0e8b86f1d14018/transformed/jetified-firebase-iid-21.1.0/AndroidManifest.xml:33:17-96
+140                android:value="com.google.firebase.components.ComponentRegistrar" />
+140-->[com.google.firebase:firebase-iid:21.1.0] /Users/macbook2020/.gradle/caches/transforms-3/d8c4d20e3c155ee0dd0e8b86f1d14018/transformed/jetified-firebase-iid-21.1.0/AndroidManifest.xml:34:17-82
+141            <meta-data
+141-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/macbook2020/.gradle/caches/transforms-3/8efb99428888ed7ae678b8ddeda5be62/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:27:13-29:85
+142                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+142-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/macbook2020/.gradle/caches/transforms-3/8efb99428888ed7ae678b8ddeda5be62/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:28:17-115
+143                android:value="com.google.firebase.components.ComponentRegistrar" />
+143-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/macbook2020/.gradle/caches/transforms-3/8efb99428888ed7ae678b8ddeda5be62/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:29:17-82
+144            <meta-data
+144-->[com.google.firebase:firebase-installations:17.1.3] /Users/macbook2020/.gradle/caches/transforms-3/547c41432258b9b342dc78117a7a1d13/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:17:13-19:85
+145                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+145-->[com.google.firebase:firebase-installations:17.1.3] /Users/macbook2020/.gradle/caches/transforms-3/547c41432258b9b342dc78117a7a1d13/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:18:17-127
+146                android:value="com.google.firebase.components.ComponentRegistrar" />
+146-->[com.google.firebase:firebase-installations:17.1.3] /Users/macbook2020/.gradle/caches/transforms-3/547c41432258b9b342dc78117a7a1d13/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:19:17-82
+147        </service>
+148
+149        <provider
+149-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:41:9-45:38
+150            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
+150-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:42:13-102
+151            android:authorities="com.qrsinhair.vn.flutterfirebasemessaginginitprovider"
+151-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:43:13-88
+152            android:exported="false"
+152-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:44:13-37
+153            android:initOrder="99" />
+153-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:45:13-35
+154        <provider
+154-->[:image_picker_android] /Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-16:20
+155            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+155-->[:image_picker_android] /Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-82
+156            android:authorities="com.qrsinhair.vn.flutter.image_provider"
+156-->[:image_picker_android] /Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-74
+157            android:exported="false"
+157-->[:image_picker_android] /Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-37
+158            android:grantUriPermissions="true" >
+158-->[:image_picker_android] /Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-47
+159            <meta-data
+159-->[:image_picker_android] /Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-15:75
+160                android:name="android.support.FILE_PROVIDER_PATHS"
+160-->[:image_picker_android] /Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:14:17-67
+161                android:resource="@xml/flutter_image_picker_file_paths" />
+161-->[:image_picker_android] /Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:15:17-72
+162        </provider>
+163
+164        <receiver
+164-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:14:9-16:40
+165            android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver"
+165-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-91
+166            android:exported="false" />
+166-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-37
+167        <receiver
+167-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:17:9-19:40
+168            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
+168-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:18:13-97
+169            android:exported="false" />
+169-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-37
+170        <receiver
+170-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:20:9-29:20
+171            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+171-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-101
+172            android:exported="false" >
+172-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-37
+173            <intent-filter>
+173-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-28:29
+174                <action android:name="android.intent.action.BOOT_COMPLETED" />
+174-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-79
+174-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-76
+175                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+175-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-84
+175-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:25:25-81
+176                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+176-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:26:17-82
+176-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:26:25-79
+177                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+177-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:27:17-82
+177-->[:flutter_local_notifications] /Users/macbook2020/app_qr_sinhari/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:27:25-79
+178            </intent-filter>
+179        </receiver>
+180
+181        <activity
+181-->[:url_launcher_android] /Users/macbook2020/app_qr_sinhari/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-11:74
+182            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+182-->[:url_launcher_android] /Users/macbook2020/app_qr_sinhari/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-74
+183            android:exported="false"
+183-->[:url_launcher_android] /Users/macbook2020/app_qr_sinhari/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-37
+184            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+184-->[:url_launcher_android] /Users/macbook2020/app_qr_sinhari/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-71
+185
+186        <receiver
+186-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:31:9-38:20
+187            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+187-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:32:13-78
+188            android:exported="true"
+188-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:33:13-36
+189            android:permission="com.google.android.c2dm.permission.SEND" >
+189-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:34:13-73
+190            <intent-filter>
+190-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-32:29
+191                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+191-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:31:17-81
+191-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:31:25-78
+192            </intent-filter>
+193        </receiver>
+194        <!--
+195             FirebaseMessagingService performs security checks at runtime,
+196             but set to not exported to explicitly avoid allowing another app to call it.
+197        -->
+198        <service
+198-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:44:9-51:19
+199            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+199-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:45:13-82
+200            android:directBootAware="true"
+200-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:46:13-43
+201            android:exported="false" >
+201-->[com.google.firebase:firebase-messaging:23.1.2] /Users/macbook2020/.gradle/caches/transforms-3/51cf1b725ec2800b9ca4ab67179c3ceb/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:47:13-37
+202            <intent-filter android:priority="-500" >
+202-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-23:29
+203                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+203-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:22:17-78
+203-->[:firebase_messaging] /Users/macbook2020/app_qr_sinhari/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:22:25-75
+204            </intent-filter>
+205        </service>
+206
+207        <provider
+207-->[com.google.firebase:firebase-common:20.3.2] /Users/macbook2020/.gradle/caches/transforms-3/bdb4b28061e06d6d910ed270c3513a28/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:25:9-30:39
+208            android:name="com.google.firebase.provider.FirebaseInitProvider"
+208-->[com.google.firebase:firebase-common:20.3.2] /Users/macbook2020/.gradle/caches/transforms-3/bdb4b28061e06d6d910ed270c3513a28/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:26:13-77
+209            android:authorities="com.qrsinhair.vn.firebaseinitprovider"
+209-->[com.google.firebase:firebase-common:20.3.2] /Users/macbook2020/.gradle/caches/transforms-3/bdb4b28061e06d6d910ed270c3513a28/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:27:13-72
+210            android:directBootAware="true"
+210-->[com.google.firebase:firebase-common:20.3.2] /Users/macbook2020/.gradle/caches/transforms-3/bdb4b28061e06d6d910ed270c3513a28/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:28:13-43
+211            android:exported="false"
+211-->[com.google.firebase:firebase-common:20.3.2] /Users/macbook2020/.gradle/caches/transforms-3/bdb4b28061e06d6d910ed270c3513a28/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:29:13-37
+212            android:initOrder="100" />
+212-->[com.google.firebase:firebase-common:20.3.2] /Users/macbook2020/.gradle/caches/transforms-3/bdb4b28061e06d6d910ed270c3513a28/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:30:13-36
+213
+214        <service
+214-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0] /Users/macbook2020/.gradle/caches/transforms-3/96c834a063b1cd06e81383c0ac610f61/transformed/jetified-play-services-mlkit-barcode-scanning-18.2.0/AndroidManifest.xml:9:9-15:19
+215            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+215-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0] /Users/macbook2020/.gradle/caches/transforms-3/96c834a063b1cd06e81383c0ac610f61/transformed/jetified-play-services-mlkit-barcode-scanning-18.2.0/AndroidManifest.xml:10:13-91
+216            android:directBootAware="true"
+216-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:17:13-43
+217            android:exported="false" >
+217-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0] /Users/macbook2020/.gradle/caches/transforms-3/96c834a063b1cd06e81383c0ac610f61/transformed/jetified-play-services-mlkit-barcode-scanning-18.2.0/AndroidManifest.xml:11:13-37
+218            <meta-data
+218-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0] /Users/macbook2020/.gradle/caches/transforms-3/96c834a063b1cd06e81383c0ac610f61/transformed/jetified-play-services-mlkit-barcode-scanning-18.2.0/AndroidManifest.xml:12:13-14:85
+219                android:name="com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar"
+219-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0] /Users/macbook2020/.gradle/caches/transforms-3/96c834a063b1cd06e81383c0ac610f61/transformed/jetified-play-services-mlkit-barcode-scanning-18.2.0/AndroidManifest.xml:13:17-120
+220                android:value="com.google.firebase.components.ComponentRegistrar" />
+220-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0] /Users/macbook2020/.gradle/caches/transforms-3/96c834a063b1cd06e81383c0ac610f61/transformed/jetified-play-services-mlkit-barcode-scanning-18.2.0/AndroidManifest.xml:14:17-82
+221            <meta-data
+221-->[com.google.mlkit:vision-common:17.3.0] /Users/macbook2020/.gradle/caches/transforms-3/3c59a7927b52e68b94fe218292f1d402/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:12:13-14:85
+222                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+222-->[com.google.mlkit:vision-common:17.3.0] /Users/macbook2020/.gradle/caches/transforms-3/3c59a7927b52e68b94fe218292f1d402/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:13:17-124
+223                android:value="com.google.firebase.components.ComponentRegistrar" />
+223-->[com.google.mlkit:vision-common:17.3.0] /Users/macbook2020/.gradle/caches/transforms-3/3c59a7927b52e68b94fe218292f1d402/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:14:17-82
+224            <meta-data
+224-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:20:13-22:85
+225                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+225-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:21:17-120
+226                android:value="com.google.firebase.components.ComponentRegistrar" />
+226-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:22:17-82
+227        </service>
+228
+229        <provider
+229-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:9:9-13:38
+230            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+230-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:10:13-78
+231            android:authorities="com.qrsinhair.vn.mlkitinitprovider"
+231-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:11:13-69
+232            android:exported="false"
+232-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:12:13-37
+233            android:initOrder="99" />
+233-->[com.google.mlkit:common:18.7.0] /Users/macbook2020/.gradle/caches/transforms-3/e1bdd5ff449efd9483d019e632a4feab/transformed/jetified-common-18.7.0/AndroidManifest.xml:13:13-35
+234
+235        <activity
+235-->[com.google.android.gms:play-services-base:18.1.0] /Users/macbook2020/.gradle/caches/transforms-3/26c99f5b1ae9db05c8cef3dffa167b1e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:9-22:45
+236            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+236-->[com.google.android.gms:play-services-base:18.1.0] /Users/macbook2020/.gradle/caches/transforms-3/26c99f5b1ae9db05c8cef3dffa167b1e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:19-85
+237            android:exported="false"
+237-->[com.google.android.gms:play-services-base:18.1.0] /Users/macbook2020/.gradle/caches/transforms-3/26c99f5b1ae9db05c8cef3dffa167b1e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:22:19-43
+238            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+238-->[com.google.android.gms:play-services-base:18.1.0] /Users/macbook2020/.gradle/caches/transforms-3/26c99f5b1ae9db05c8cef3dffa167b1e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:21:19-78
+239
+240        <meta-data
+240-->[com.google.android.gms:play-services-basement:18.1.0] /Users/macbook2020/.gradle/caches/transforms-3/fef9e18fe726b3f0d66512c04c517c61/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
+241            android:name="com.google.android.gms.version"
+241-->[com.google.android.gms:play-services-basement:18.1.0] /Users/macbook2020/.gradle/caches/transforms-3/fef9e18fe726b3f0d66512c04c517c61/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
+242            android:value="@integer/google_play_services_version" />
+242-->[com.google.android.gms:play-services-basement:18.1.0] /Users/macbook2020/.gradle/caches/transforms-3/fef9e18fe726b3f0d66512c04c517c61/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
+243
+244        <service
+244-->[androidx.camera:camera-camera2:1.2.2] /Users/macbook2020/.gradle/caches/transforms-3/59623e7434b1c82a86568e4d0bff1927/transformed/jetified-camera-camera2-1.2.2/AndroidManifest.xml:24:9-33:19
+245            android:name="androidx.camera.core.impl.MetadataHolderService"
+245-->[androidx.camera:camera-camera2:1.2.2] /Users/macbook2020/.gradle/caches/transforms-3/59623e7434b1c82a86568e4d0bff1927/transformed/jetified-camera-camera2-1.2.2/AndroidManifest.xml:25:13-75
+246            android:enabled="false"
+246-->[androidx.camera:camera-camera2:1.2.2] /Users/macbook2020/.gradle/caches/transforms-3/59623e7434b1c82a86568e4d0bff1927/transformed/jetified-camera-camera2-1.2.2/AndroidManifest.xml:26:13-36
+247            android:exported="false" >
+247-->[androidx.camera:camera-camera2:1.2.2] /Users/macbook2020/.gradle/caches/transforms-3/59623e7434b1c82a86568e4d0bff1927/transformed/jetified-camera-camera2-1.2.2/AndroidManifest.xml:27:13-37
+248            <meta-data
+248-->[androidx.camera:camera-camera2:1.2.2] /Users/macbook2020/.gradle/caches/transforms-3/59623e7434b1c82a86568e4d0bff1927/transformed/jetified-camera-camera2-1.2.2/AndroidManifest.xml:30:13-32:89
+249                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+249-->[androidx.camera:camera-camera2:1.2.2] /Users/macbook2020/.gradle/caches/transforms-3/59623e7434b1c82a86568e4d0bff1927/transformed/jetified-camera-camera2-1.2.2/AndroidManifest.xml:31:17-103
+250                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+250-->[androidx.camera:camera-camera2:1.2.2] /Users/macbook2020/.gradle/caches/transforms-3/59623e7434b1c82a86568e4d0bff1927/transformed/jetified-camera-camera2-1.2.2/AndroidManifest.xml:32:17-86
+251        </service>
+252
+253        <provider
+253-->[androidx.emoji2:emoji2:1.0.0] /Users/macbook2020/.gradle/caches/transforms-3/2ccd5401ef48d90121419a3a8fc5256a/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+254            android:name="androidx.startup.InitializationProvider"
+254-->[androidx.emoji2:emoji2:1.0.0] /Users/macbook2020/.gradle/caches/transforms-3/2ccd5401ef48d90121419a3a8fc5256a/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+255            android:authorities="com.qrsinhair.vn.androidx-startup"
+255-->[androidx.emoji2:emoji2:1.0.0] /Users/macbook2020/.gradle/caches/transforms-3/2ccd5401ef48d90121419a3a8fc5256a/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+256            android:exported="false" >
+256-->[androidx.emoji2:emoji2:1.0.0] /Users/macbook2020/.gradle/caches/transforms-3/2ccd5401ef48d90121419a3a8fc5256a/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+257            <meta-data
+257-->[androidx.emoji2:emoji2:1.0.0] /Users/macbook2020/.gradle/caches/transforms-3/2ccd5401ef48d90121419a3a8fc5256a/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+258                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+258-->[androidx.emoji2:emoji2:1.0.0] /Users/macbook2020/.gradle/caches/transforms-3/2ccd5401ef48d90121419a3a8fc5256a/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+259                android:value="androidx.startup" />
+259-->[androidx.emoji2:emoji2:1.0.0] /Users/macbook2020/.gradle/caches/transforms-3/2ccd5401ef48d90121419a3a8fc5256a/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+260            <meta-data
+260-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook2020/.gradle/caches/transforms-3/c85a54671918bbafcac8869ff8615713/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+261                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+261-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook2020/.gradle/caches/transforms-3/c85a54671918bbafcac8869ff8615713/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+262                android:value="androidx.startup" />
+262-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/macbook2020/.gradle/caches/transforms-3/c85a54671918bbafcac8869ff8615713/transformed/jetified-lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+263            <meta-data
+263-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+264                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+264-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+265                android:value="androidx.startup" />
+265-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+266        </provider>
+267
+268        <uses-library
+268-->[androidx.window:window:1.0.0-beta04] /Users/macbook2020/.gradle/caches/transforms-3/e6134c69b995ecff4dd6b8c6140bc50e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+269            android:name="androidx.window.extensions"
+269-->[androidx.window:window:1.0.0-beta04] /Users/macbook2020/.gradle/caches/transforms-3/e6134c69b995ecff4dd6b8c6140bc50e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+270            android:required="false" />
+270-->[androidx.window:window:1.0.0-beta04] /Users/macbook2020/.gradle/caches/transforms-3/e6134c69b995ecff4dd6b8c6140bc50e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+271        <uses-library
+271-->[androidx.window:window:1.0.0-beta04] /Users/macbook2020/.gradle/caches/transforms-3/e6134c69b995ecff4dd6b8c6140bc50e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+272            android:name="androidx.window.sidecar"
+272-->[androidx.window:window:1.0.0-beta04] /Users/macbook2020/.gradle/caches/transforms-3/e6134c69b995ecff4dd6b8c6140bc50e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+273            android:required="false" />
+273-->[androidx.window:window:1.0.0-beta04] /Users/macbook2020/.gradle/caches/transforms-3/e6134c69b995ecff4dd6b8c6140bc50e/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+274
+275        <service
+275-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/88d0ab06a58d323150a5dd758ad86a64/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:28:9-34:19
+276            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+276-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/88d0ab06a58d323150a5dd758ad86a64/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:29:13-103
+277            android:exported="false" >
+277-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/88d0ab06a58d323150a5dd758ad86a64/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:30:13-37
+278            <meta-data
+278-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/88d0ab06a58d323150a5dd758ad86a64/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:31:13-33:39
+279                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+279-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/88d0ab06a58d323150a5dd758ad86a64/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:32:17-94
+280                android:value="cct" />
+280-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/88d0ab06a58d323150a5dd758ad86a64/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:33:17-36
+281        </service>
+282        <service
+282-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/f22a14c3a0ecfa28ab7d0586010fcbed/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:26:9-30:19
+283            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+283-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/f22a14c3a0ecfa28ab7d0586010fcbed/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:27:13-117
+284            android:exported="false"
+284-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/f22a14c3a0ecfa28ab7d0586010fcbed/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:28:13-37
+285            android:permission="android.permission.BIND_JOB_SERVICE" >
+285-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/f22a14c3a0ecfa28ab7d0586010fcbed/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:29:13-69
+286        </service>
+287
+288        <receiver
+288-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/f22a14c3a0ecfa28ab7d0586010fcbed/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
+289            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+289-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/f22a14c3a0ecfa28ab7d0586010fcbed/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
+290            android:exported="false" />
+290-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/macbook2020/.gradle/caches/transforms-3/f22a14c3a0ecfa28ab7d0586010fcbed/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
+291        <receiver
+291-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+292            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+292-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+293            android:directBootAware="false"
+293-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+294            android:enabled="true"
+294-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+295            android:exported="true"
+295-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+296            android:permission="android.permission.DUMP" >
+296-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+297            <intent-filter>
+297-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+298                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+298-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+298-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+299            </intent-filter>
+300            <intent-filter>
+300-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+301                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+301-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+301-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+302            </intent-filter>
+303            <intent-filter>
+303-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+304                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+304-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+304-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+305            </intent-filter>
+306            <intent-filter>
+306-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+307                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+307-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+307-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/macbook2020/.gradle/caches/transforms-3/aa42149e5a02106f2045da6582b20ad7/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+308            </intent-filter>
+309        </receiver>
+310
+311        <activity
+311-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:47:9-53:63
+312            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+312-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:48:13-74
+313            android:clearTaskOnLaunch="true"
+313-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:49:13-45
+314            android:screenOrientation="sensorLandscape"
+314-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:50:13-56
+315            android:stateNotNeeded="true"
+315-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:51:13-42
+316            android:theme="@style/zxing_CaptureTheme"
+316-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:52:13-54
+317            android:windowSoftInputMode="stateAlwaysHidden" />
+317-->[com.journeyapps:zxing-android-embedded:4.3.0] /Users/macbook2020/.gradle/caches/transforms-3/53d5ec6d9fd14a7c377e1c3f48e51831/transformed/jetified-zxing-android-embedded-4.3.0/AndroidManifest.xml:53:13-60
+318    </application>
+319
+320</manifest>

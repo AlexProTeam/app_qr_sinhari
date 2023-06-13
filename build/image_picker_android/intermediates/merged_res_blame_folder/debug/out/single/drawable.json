@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/res/merged/debug/drawable/notification_bg.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/Users/macbook2020/app_qr_sinhari/build/image_picker_android/intermediates/res/merged/debug/drawable/notification_tile_bg.xml",
+        "source": "/Users/macbook2020/.gradle/caches/transforms-3/c59c9c60078cd6fd01c1ff13d189f2e5/transformed/core-1.10.1/res/drawable/notification_tile_bg.xml"
+    }
+]

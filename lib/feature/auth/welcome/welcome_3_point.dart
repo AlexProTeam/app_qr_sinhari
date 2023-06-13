@@ -31,7 +31,7 @@ class Welcome3Point extends StatelessWidget {
       height: 8,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: currentIndex == index ? AppColors.primaryColor : AppColors.grey4,
+        color: currentIndex == index ? AppColors.white : AppColors.grey4,
       ),
     );
   }
