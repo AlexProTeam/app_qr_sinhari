@@ -74,3 +74,4 @@ fastlane/.env.
 node_modules
 *.jks
 .flutter-plugins-dependencies
+.fvm/flutter_sdk
