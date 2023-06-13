@@ -12,4 +12,6 @@ class IconConst {
   static const String lich_su_quet = '${_path}lich_su_quet.png';
   static const String tin_tuc = '${_path}tin_tuc.png';
   static const String policy_background = '${_path}policy_background.png';
+  static const String iconScanHome = '${_path}icon_scan_home.png';
+  static const String backGroupBottomBar = '${_path}backGroupBottomBar.png';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
@@ -6,14 +7,14 @@ import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
-import 'package:qrcode/feature/feature/container/bottom_navigation.dart';
-import 'package:qrcode/feature/feature/container/layout_keep_align.dart';
 import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/news/news_screen.dart';
 import 'package:qrcode/feature/feature/personal/personal_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
-import 'package:http/http.dart' as http;
+
+import '../BottomBar/bottom_navigation.dart';
+import '../BottomBar/layout_keep_align.dart';
 
 class ScreenContainer extends StatefulWidget {
   const ScreenContainer({Key? key}) : super(key: key);
@@ -23,7 +24,6 @@ class ScreenContainer extends StatefulWidget {
 }
 
 class _ScreenContainerState extends State<ScreenContainer> {
-
   void initState() {
     _initData();
     super.initState();
@@ -70,6 +70,7 @@ class _ScreenContainerState extends State<ScreenContainer> {
               tabViews: [
                 LayoutContainWidgetKeepAlive(child: HomeScreen()),
                 LayoutContainWidgetKeepAlive(child: HistoryScanScreen()),
+                SizedBox.shrink(),
                 LayoutContainWidgetKeepAlive(child: NewsScreen()),
                 LayoutContainWidgetKeepAlive(child: PersonalScreen()),
               ],

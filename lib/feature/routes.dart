@@ -11,7 +11,6 @@ import 'package:qrcode/feature/auth/login/verify_otp_screen.dart';
 import 'package:qrcode/feature/auth/register/register_screen.dart';
 import 'package:qrcode/feature/auth/splash/splash_screen.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_screen.dart';
-import 'package:qrcode/feature/feature/container/screen_container.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
@@ -29,6 +28,7 @@ import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
+import 'feature/BottomBar/screen_container.dart';
 import 'feature/detail_product/detail_product_contact.dart';
 
 class Routes {
