@@ -36,4 +36,7 @@ class IconConst {
   static const String Gmail = '${_path}Gmail.png';
   static const String Facebook = '${_path}Facebook.png';
   static const String Zalo = '${_path}Zalo.png';
+
+  //icon login page
+  static const String Logo = '${_path}Logologin.png';
 }
