@@ -51,7 +51,8 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      alignment: Alignment.bottomCenter,
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
@@ -101,28 +102,31 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
                 .toList(),
           ),
         ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: map<Widget>(widget.images ?? [], (index, obj) {
-                return Container(
-                  width: 8.0,
-                  height: 8.0,
-                  margin: EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentSlideIndex == index
-                        ? AppColors.primaryColor
-                        : AppColors.grey4,
-                  ),
-                );
-              }),
-            ),
-            Spacer(),
-          ],
+        // const SizedBox(height: 12),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 11),
+          child: Row(
+            children: [
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: map<Widget>(widget.images ?? [], (index, obj) {
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: EdgeInsets.symmetric(horizontal: 4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentSlideIndex == index
+                          ? AppColors.white
+                          : AppColors.grey4,
+                    ),
+                  );
+                }),
+              ),
+              Spacer(),
+            ],
+          ),
         )
       ],
     );

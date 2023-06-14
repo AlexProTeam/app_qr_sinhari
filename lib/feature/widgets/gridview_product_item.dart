@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
+import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
-import 'package:qrcode/feature/themes/theme_color.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
 class CategoryDetailWidgetItemProduct extends StatelessWidget {
@@ -23,10 +20,10 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _sizeImage = itemWidth - 10;
+    final _sizeImage = itemWidth + 10;
     return InkWell(
       onTap: () {
-        if(injector<AppCache>().profileModel==null){
+        if (injector<AppCache>().profileModel == null) {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
         Routes.instance.navigateTo(RouteName.DetailProductScreen,
@@ -34,63 +31,48 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
               productId: productModel?.id,
             ));
       },
-      child: Container(
-        width: itemWidth,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.07),
-              spreadRadius: 2,
-              blurRadius: 2,
-            )
-          ],
-        ),
+      child: Expanded(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomImageNetwork(
-              url: '${productModel?.thumbnailImg}',
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: _sizeImage,
-              border: 12,
-            ),
-            SizedBox(height: 4.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    child: Text(
-                      '${productModel?.name}',
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextTheme.smallGrey
-                          .copyWith(color: AppColors.black),
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                    ),
-                    width: double.infinity,
-                    height: 38,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
-                        style: AppTextTheme.normalPrimary,
-                      ),
-                      const Spacer(),
-                      Image.asset(
-                        IconConst.fakeStar,
-                        width: 60,
-                        height: 10,
-                      ),
-                    ],
-                  )
-                ],
+            Container(
+                height: _sizeImage + 28,
+                width: _sizeImage - 15,
+                child: CustomImageNetwork(
+                  url: '${productModel?.thumbnailImg}',
+                  fit: BoxFit.cover,
+                  // width: double.infinity,
+                  border: 12,
+                ),
               ),
+            SizedBox(height: 10),
+            Text('${productModel?.name}',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: Colors.black)),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Text(
+                  '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFFFFC700)),
+                ),
+                // const Spacer(),
+                SizedBox(width: 5),
+                Text(
+                  '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFFACACAC)),
+                ),
+              ],
             ),
           ],
         ),

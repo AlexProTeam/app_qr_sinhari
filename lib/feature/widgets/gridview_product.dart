@@ -29,18 +29,18 @@ class GridViewDisplayProduct extends StatelessWidget {
     final _itemHeight = _itemWidth + 50;
     final numberRow = CommonUtil.countNumberRowOfGridview(products);
     final heightList =
-        (notExpand ? min(numberRow, 2) : numberRow) * (_itemHeight + 25);
+        (notExpand ? min(numberRow, 2) : numberRow) * (_itemHeight + 20);
     return Column(
       children: [
         Row(
           children: [
-            const SizedBox(width: 12),
+            const SizedBox(width: 16),
             Text(
               label,
-              style: AppTextTheme.mediumBlack.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+              style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                    color: Color(0xFFEF4948))),
             const Spacer(),
             InkWell(
               onTap: () {
@@ -58,24 +58,27 @@ class GridViewDisplayProduct extends StatelessWidget {
             )
           ],
         ),
+        // SizedBox(height: 10),
         Container(
           width: double.infinity,
-          height: heightList,
+          height: heightList + 50,
           child: GridView.builder(
             itemCount:
                 notExpand ? min(products?.length ?? 0, 4) : products?.length,
             physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 8.0,
-              mainAxisSpacing: 12.0,
+              mainAxisSpacing: 100.0,
               childAspectRatio: _itemWidth / _itemHeight,
             ),
             itemBuilder: (context, index) {
-              return CategoryDetailWidgetItemProduct(
-                itemWidth: _itemWidth,
-                productModel: products?[index],
+              return Expanded(
+                child: CategoryDetailWidgetItemProduct(
+                  itemWidth: _itemWidth,
+                  productModel: products?[index],
+                ),
               );
             },
           ),

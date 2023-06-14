@@ -25,8 +25,7 @@ Future main() async {
   await di.init();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.transparent,
-      statusBarColor: Colors.transparent
-
+      statusBarColor: Colors.black
   ));
   LocalNotification.instance.setUp();
   await Firebase.initializeApp();
