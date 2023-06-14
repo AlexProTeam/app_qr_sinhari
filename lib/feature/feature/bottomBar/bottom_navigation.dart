@@ -120,9 +120,13 @@ class BottomNavigationState extends State<BottomNavigation> {
               Image.asset(
                 BottomBarEnum.values[index].getIcon,
                 width: index == _indexCenterIcon ? 0 : 18,
-                height: index == _indexCenterIcon ? 0 : 18,
+                height: index == _indexCenterIcon
+                    ? 0
+                    : 19 & index == 3
+                        ? 21
+                        : 18,
                 fit: BoxFit.cover,
-                color: isSelected ? AppColors.black : widget.inActiveColor,
+                color: isSelected ? AppColors.red2 : widget.inActiveColor,
               ),
             ],
           ),
