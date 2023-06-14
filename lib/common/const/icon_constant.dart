@@ -26,4 +26,14 @@ class IconConst {
   static const String Icon_3 = '${_pathimg}Icon3.png';
   static const String Icon_4 = '${_pathimg}Icon4.png';
   static const String Icon_5 = '${_pathimg}Icon5.png';
+
+  //icon account page
+  static const String Info = '${_path}User.png';
+  static const String Contact = '${_path}contact_support.png';
+  static const String ProvisionOrder = '${_path}adjust.png';
+  static const String Adjust = '${_path}3p.png';
+  static const String ProvisionSecurity = '${_path}gpp_maybe.png';
+  static const String Gmail = '${_path}Gmail.png';
+  static const String Facebook = '${_path}Facebook.png';
+  static const String Zalo = '${_path}Zalo.png';
 }
