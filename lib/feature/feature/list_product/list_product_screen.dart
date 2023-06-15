@@ -4,7 +4,6 @@ import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/gridview_product_item.dart';
 
@@ -93,40 +92,76 @@ class _ListProductScreenState extends State<ListProductScreen> {
     final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
     final _itemHeight = _itemWidth + 50;
     return CustomScaffold(
-      customAppBar: CustomAppBar(
-        title: '${widget.argument?.label}',
-        iconLeftTap: () {
-          Routes.instance.pop();
-        },
-      ),
-      body: _loadingis
-          ? Center(
-        child: CircularProgressIndicator(),
-      )
-          : _products.isEmpty
-          ? Center(child: Text("Không có sản phẩm nào!"),): Column(
+      // customAppBar: CustomAppBar(
+      //   title: '${widget.argument?.label}',
+      //   iconLeftTap: () {
+      //     Routes.instance.pop();
+      //   },
+      // ),
+      ///todo: product error gridview
+      body: Column(
         children: [
-          Expanded(
-            child: GridView.builder(
-              itemCount: _products.length,
-              controller: _scrollController,
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 12.0,
-                childAspectRatio: _itemWidth / _itemHeight,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: 18,
+                    color: Color(0xFFACACAC),
+                  )),
+              Text(
+                '${widget.argument?.label}',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
               ),
-              itemBuilder: (context, index) {
-                return CategoryDetailWidgetItemProduct(
-                  itemWidth: _itemWidth,
-                  productModel: _products[index],
-                );
-              },
-            ),
+              SizedBox(width: 40),
+            ],
           ),
-          _loading ? CircularProgressIndicator() : const SizedBox(),
+          SizedBox(height: 16.75),
+          Expanded(
+            child: _loadingis
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : _products.isEmpty
+                    ? Center(
+                        child: Text("Không có sản phẩm nào!"),
+                      )
+                    : Column(
+                        children: [
+                         GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: _products.length,
+                              controller: _scrollController,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 12.0),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 8.0,
+                                mainAxisSpacing: 12.0,
+                                childAspectRatio: _itemWidth / _itemHeight,
+                              ),
+                              itemBuilder: (context, index) {
+                                return CategoryDetailWidgetItemProduct(
+                                  itemWidth: _itemWidth,
+                                  productModel: _products[index],
+                                );
+                              },
+                            ),
+                          _loading
+                              ? CircularProgressIndicator()
+                              : const SizedBox(),
+                        ],
+                      ),
+          ),
         ],
       ),
     );
