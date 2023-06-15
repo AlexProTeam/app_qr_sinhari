@@ -39,4 +39,9 @@ class IconConst {
 
   //icon login page
   static const String Logo = '${_path}Logologin.png';
+
+  //icon contact
+  static const String Location = '${_path}location.png';
+  static const String Hotline = '${_path}hotline.png';
+  static const String Mail = '${_path}mail.png';
 }
