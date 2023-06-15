@@ -35,7 +35,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
         child: Column(
           children: [
             Container(
-                height: _sizeImage + 28,
+                // height: _sizeImage + 28,
                 width: _sizeImage - 15,
                 child: CustomImageNetwork(
                   url: '${productModel?.thumbnailImg}',
