@@ -4,8 +4,8 @@ import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
+import 'package:qrcode/feature/widgets/category_product_item.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
-import 'package:qrcode/feature/widgets/gridview_product_item.dart';
 
 import '../../injector_container.dart';
 
@@ -98,7 +98,6 @@ class _ListProductScreenState extends State<ListProductScreen> {
       //     Routes.instance.pop();
       //   },
       // ),
-      ///todo: product error gridview
       body: Column(
         children: [
           Row(
@@ -136,26 +135,26 @@ class _ListProductScreenState extends State<ListProductScreen> {
                     : Column(
                         children: [
                          GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: _products.length,
-                              controller: _scrollController,
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 12.0),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 8.0,
-                                mainAxisSpacing: 12.0,
-                                childAspectRatio: _itemWidth / _itemHeight,
-                              ),
-                              itemBuilder: (context, index) {
-                                return CategoryDetailWidgetItemProduct(
-                                  itemWidth: _itemWidth,
-                                  productModel: _products[index],
-                                );
-                              },
+                           shrinkWrap: true,
+                            itemCount: _products.length,
+                            controller: _scrollController,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 12.0),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16.0,
+                              mainAxisSpacing: 12.0,
+                              childAspectRatio: 164 / 269,
                             ),
+                            itemBuilder: (context, index) {
+                              return CategoryItemProduct(
+                                itemWidth: _itemWidth,
+                                productModel: _products[index],
+                              );
+                            },
+                          ),
                           _loading
                               ? CircularProgressIndicator()
                               : const SizedBox(),
