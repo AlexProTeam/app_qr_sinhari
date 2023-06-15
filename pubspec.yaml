@@ -68,6 +68,7 @@ dependencies:
   retrofit_generator: ^6.0.0+3
   meta: ^1.7.0
   mobile_scanner: ^3.2.0
+  timeago: ^3.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
