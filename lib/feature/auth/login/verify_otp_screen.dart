@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
@@ -79,34 +78,51 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       autoDismissKeyboard: true,
-      customAppBar: CustomAppBar(
-        title: 'Nhập mã OTP',
-        iconLeftTap: () {
-          Routes.instance.pop();
-        },
-      ),
+      backgroundColor: Color(0xFFF2F2F2),
+      // customAppBar: CustomAppBar(
+      //   title: 'Nhập mã OTP',
+      //   iconLeftTap: () {
+      //     Routes.instance.pop();
+      //   },
+      // ),
       body: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                "Nhập mã OTP",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                      size: 18,
+                      color: Color(0xFFACACAC),
+                    )),
+                SizedBox(width: 90),
+                Text(
+                  'Nhập mã OTP',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                )
+              ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 25),
             Padding(
               padding: EdgeInsets.only(left: 20),
               child: Text(
                 "Mã OTP sẽ được gửi đến SĐT của bạn",
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black),
               ),
             ),
-            const SizedBox(height: 85),
+            const SizedBox(height: 38),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: PinCodeTextField(
@@ -121,12 +137,12 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   borderRadius: BorderRadius.circular(4.0),
                   fieldHeight: 56.0,
                   fieldWidth: 52.0,
-                  activeColor: AppColors.grey3,
-                  inactiveFillColor: AppColors.grey3,
-                  activeFillColor: AppColors.grey3,
-                  selectedFillColor: AppColors.grey3,
-                  inactiveColor: AppColors.grey3,
-                  selectedColor: AppColors.grey3,
+                  activeColor: AppColors.white,
+                  inactiveFillColor: AppColors.white,
+                  activeFillColor: AppColors.white,
+                  selectedFillColor: AppColors.white,
+                  inactiveColor: AppColors.white,
+                  selectedColor: AppColors.white,
                 ),
                 keyboardType: TextInputType.number,
                 enableActiveFill: true,
@@ -136,18 +152,18 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 },
               ),
             ),
-            SizedBox(height: 12),
-            const Spacer(),
+            SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButton(
+                  width: 128,
+                  height: 45,
                   onTap: _onContinue,
                   text: 'Đăng nhập',
                 ),
               ],
             ),
-            const SizedBox(height: 30),
           ],
         ),
       ),
