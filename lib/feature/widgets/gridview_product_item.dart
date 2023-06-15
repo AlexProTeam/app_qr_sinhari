@@ -31,52 +31,59 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
               productId: productModel?.id,
             ));
       },
-      child: Expanded(
-        child: Column(
-          children: [
-            Container(
-                // height: _sizeImage + 28,
-                width: _sizeImage - 15,
-                child: CustomImageNetwork(
-                  url: '${productModel?.thumbnailImg}',
-                  fit: BoxFit.cover,
-                  // width: double.infinity,
-                  border: 12,
-                ),
-              ),
-            SizedBox(height: 10),
-            Text('${productModel?.name}',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomImageNetwork(
+            url: '${productModel?.thumbnailImg}',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: 200,
+            border: 12,
+          ),
+          SizedBox(height: 10),
+          SizedBox(
+            height: 36,
+            child: Text('${productModel?.name}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                     fontSize: 14,
                     color: Colors.black)),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Text(
-                  '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
+          ),
+          SizedBox(height: 10),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFFFFC700)),
+              ),
+              // const Spacer(),
+              SizedBox(width: 5),
+              RichText(
+                text: TextSpan(
+                  text:
+                      '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
                   style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFFFFC700)),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFFACACAC),
+                    decoration: TextDecoration.lineThrough,
+                    decorationColor:
+                        Color(0xFFACACAC), // Màu của đường gạch ngang),
+                  ),
                 ),
-                // const Spacer(),
-                SizedBox(width: 5),
-                Text(
-                  '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFFACACAC)),
-                ),
-              ],
-            ),
-          ],
+              )
+            ],
+          ),
+        ],
         ),
-      ),
     );
   }
 }

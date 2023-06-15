@@ -29,7 +29,7 @@ class GridViewDisplayProduct extends StatelessWidget {
     final _itemHeight = _itemWidth + 50;
     final numberRow = CommonUtil.countNumberRowOfGridview(products);
     final heightList =
-        (notExpand ? min(numberRow, 2) : numberRow) * (_itemHeight + 20);
+        (notExpand ? min(numberRow, 2) : numberRow) * (_itemHeight + 70);
     return Column(
       children: [
         Row(
@@ -38,7 +38,7 @@ class GridViewDisplayProduct extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     fontSize: 18,
                     color: Color(0xFFEF4948))),
             const Spacer(),
@@ -61,7 +61,7 @@ class GridViewDisplayProduct extends StatelessWidget {
         // SizedBox(height: 10),
         Container(
           width: double.infinity,
-          height: heightList + 50,
+          height: heightList,
           child: GridView.builder(
             itemCount:
                 notExpand ? min(products?.length ?? 0, 4) : products?.length,
@@ -69,9 +69,9 @@ class GridViewDisplayProduct extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 8.0,
-              mainAxisSpacing: 100.0,
-              childAspectRatio: _itemWidth / _itemHeight,
+              crossAxisSpacing: 16.0,
+              mainAxisSpacing: 12.0,
+              childAspectRatio: 164 / 269,
             ),
             itemBuilder: (context, index) {
               return Expanded(

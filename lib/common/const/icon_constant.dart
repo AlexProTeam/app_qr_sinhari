@@ -47,4 +47,11 @@ class IconConst {
 
   // icon info page
   static const String Camera = '${_path}camera.png';
+
+  //icon news page
+  static const String MiniClock = '${_path}miniClock.png';
+
+  //icon details product
+  static const String Star = '${_path}Star.png';
+  static const String Heart = '${_path}Heart.png';
 }
