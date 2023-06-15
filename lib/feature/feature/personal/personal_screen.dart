@@ -91,7 +91,8 @@ class _PersonalScreenState extends State<PersonalScreen> {
                   ),
                   _icon(
                     () {
-                      Routes.instance.navigateTo(RouteName.GioiThieuScreen);
+                      Routes.instance.navigateTo(RouteName.ProfileScreen);
+                      // Routes.instance.navigateTo(RouteName.GioiThieuScreen);
                     },
                     'Chính sách bán hàng',
                     IconConst.ProvisionOrder,

@@ -153,100 +153,178 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      customAppBar: CustomAppBar(
-        title: 'Thông tin cá nhân',
-        iconLeftTap: () {
-          Routes.instance.pop();
-        },
-      ),
+      // customAppBar: CustomAppBar(
+      //   title: 'Thông tin cá nhân',
+      //   iconLeftTap: () {
+      //     Routes.instance.pop();
+      //   },
+      // ),
       resizeToAvoidBottomInset: false,
       body: isLoadding
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 12),
-                      InkWell(
-                        onTap: _chooseTypeImage,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+          : Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 18,
+                          color: Color(0xFFACACAC),
+                        )),
+                    Text(
+                      'Thông tin cá nhân',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black),
+                    ),
+                    SizedBox(width: 40),
+                  ],
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(56),
-                              child: _image != null
-                                  ? Image.file(
-                                      _image!,
-                                      width: 112,
-                                      height: 112,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : ((injector<AppCache>()
-                                              .profileModel
-                                              ?.avatar
-                                              ?.isEmpty ??
-                                          true)
-                                      ? Image.asset(
-                                          IconConst.logo,
-                                          width: 112,
-                                          height: 112,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : CustomImageNetwork(
-                                          url:
-                                              '${injector<AppCache>().profileModel?.avatar}',
-                                          width: 112,
-                                          height: 112,
-                                          fit: BoxFit.cover,
-                                        )),
-                            )
+                            const SizedBox(height: 12),
+                            InkWell(
+                              onTap: _chooseTypeImage,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 164,
+                                    height: 164,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: Color(0xFFD9D9D9)),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(
+                                        12,
+                                      )),
+                                    ),
+                                    child: _image != null
+                                        ? Container(
+                                            width: 164,
+                                            height: 164,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  width: 1,
+                                                  color: Color(0xFFD9D9D9)),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                12,
+                                              )),
+                                            ),
+                                            child: Image.file(
+                                              _image!,
+                                              width: 112,
+                                              height: 112,
+                                              fit: BoxFit.contain,
+                                            ))
+                                        : ((injector<AppCache>()
+                                                    .profileModel
+                                                    ?.avatar
+                                                    ?.isEmpty ??
+                                                true)
+                                            ? Stack(
+                                                children: [
+                                                  Center(
+                                                    child: Image.asset(
+                                                      IconConst.Logo,
+                                                      width: 145,
+                                                      height: 145,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Image.asset(
+                                                          IconConst.Camera,
+                                                          width: 24,
+                                                          height: 24,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            : CustomImageNetwork(
+                                                url:
+                                                    '${injector<AppCache>().profileModel?.avatar}',
+                                                width: 112,
+                                                height: 112,
+                                                fit: BoxFit.cover,
+                                              )),
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 27),
+                            CustomTextField(
+                              height: 45,
+                              hintText: 'Họ và tên',
+                              controller: _nameController,
+                              validator: ValidateUtil.validEmpty,
+                            ),
+                            const SizedBox(height: 8),
+                            CustomTextField(
+                              height: 45,
+                              hintText: 'Email',
+                              validator: ValidateUtil.validEmail,
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            const SizedBox(height: 8),
+                            CustomTextField(
+                                height: 45,
+                                hintText: 'Só điện thoại',
+                                validator: ValidateUtil.validPhone,
+                                controller: _phoneController,
+                                keyboardType: TextInputType.phone),
+                            const SizedBox(height: 8),
+                            CustomTextField(
+                              height: 45,
+                              hintText: 'Địa chỉ',
+                              controller: _adddressController,
+                              validator: ValidateUtil.validEmpty,
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomButton(
+                                  width: 100.44,
+                                  height: 45,
+                                  onTap: _onDoneNew,
+                                  text: 'Lưu lại',
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      CustomTextField(
-                        hintText: 'Họ và tên',
-                        controller: _nameController,
-                        validator: ValidateUtil.validEmpty,
-                      ),
-                      const SizedBox(height: 16),
-                      CustomTextField(
-                        hintText: 'Email',
-                        validator: ValidateUtil.validEmail,
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(height: 16),
-                      CustomTextField(
-                          hintText: 'Só điện thoại',
-                          validator: ValidateUtil.validPhone,
-                          controller: _phoneController,
-                          keyboardType: TextInputType.phone),
-                      const SizedBox(height: 16),
-                      CustomTextField(
-                        hintText: 'Địa chỉ',
-                        controller: _adddressController,
-                        validator: ValidateUtil.validEmpty,
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomButton(
-                            onTap: _onDoneNew,
-                            text: 'Lưu lại',
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
     );
   }

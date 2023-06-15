@@ -44,4 +44,7 @@ class IconConst {
   static const String Location = '${_path}location.png';
   static const String Hotline = '${_path}hotline.png';
   static const String Mail = '${_path}mail.png';
+
+  // icon info page
+  static const String Camera = '${_path}camera.png';
 }
