@@ -44,7 +44,6 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
                   border: 12,
                 ),
               ),
-            ),
             SizedBox(height: 10),
             Text('${productModel?.name}',
                 overflow: TextOverflow.ellipsis,
