@@ -35,13 +35,14 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 150,
-              width: _sizeImage - 15,
-              child: CustomImageNetwork(
-                url: '${productModel?.thumbnailImg}',
-                fit: BoxFit.cover,
-                // width: double.infinity,
-                border: 12,
+                // height: _sizeImage + 28,
+                width: _sizeImage - 15,
+                child: CustomImageNetwork(
+                  url: '${productModel?.thumbnailImg}',
+                  fit: BoxFit.cover,
+                  // width: double.infinity,
+                  border: 12,
+                ),
               ),
             ),
             SizedBox(height: 10),
