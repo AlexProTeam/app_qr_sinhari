@@ -27,133 +27,135 @@ class _PersonalScreenState extends State<PersonalScreen> {
       //   haveIconLeft: false,
       // ),
       backgroundColor: Color(0xFFF2F2F2),
-      body: Column(
-        children: [
-          SizedBox(height: 30),
-          Text(
-            'Tài khoản',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF000000)),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              injector<AppCache>().profileModel == null
-                  ? CustomButton(
-                      onTap: () {
-                        Routes.instance
-                            .navigateTo(RouteName.LoginScreen, arguments: true);
-                      },
-                      text: 'Đăng nhập',
-                      width: 128,
-                      height: 45,
-                    )
-                  : Container(),
-            ],
-          ),
-          SizedBox(
-            height: 18,
-          ),
-          Container(
-            width: 343,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(width: 1, color: Colors.white),
-              borderRadius: BorderRadius.all(Radius.circular(
-                8,
-              )),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 30),
+            Text(
+              'Tài khoản',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF000000)),
             ),
-            child: Padding(
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                injector<AppCache>().profileModel == null
+                    ? CustomButton(
+                        onTap: () {
+                          Routes.instance
+                              .navigateTo(RouteName.LoginScreen, arguments: true);
+                        },
+                        text: 'Đăng nhập',
+                        width: 128,
+                        height: 45,
+                      )
+                    : Container(),
+              ],
+            ),
+            SizedBox(
+              height: 18,
+            ),
+            Container(
+              width: 343,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 1, color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(
+                  8,
+                )),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    injector<AppCache>().profileModel != null
+                        ? _icon(
+                            () {
+                              Routes.instance.navigateTo(RouteName.ProfileScreen);
+                            },
+                            'Thông tin cá nhân',
+                            IconConst.Info,
+                          )
+                        : Container(),
+                    _icon(
+                      () {
+                        Routes.instance.navigateTo(RouteName.WebViewScreen,
+                            arguments: 'https://sinhairvietnam.vn/lien-he/');
+                      },
+                      'Liên hệ',
+                      IconConst.Contact,
+                    ),
+                    _icon(
+                      () {
+                        Routes.instance.navigateTo(RouteName.ProfileScreen);
+                        // Routes.instance.navigateTo(RouteName.GioiThieuScreen);
+                      },
+                      'Chính sách bán hàng',
+                      IconConst.ProvisionOrder,
+                    ),
+                    _icon(
+                      () {
+                        Routes.instance.navigateTo(RouteName.HuongDanScreen);
+                      },
+                      'Chính sách bảo mật',
+                      IconConst.ProvisionSecurity,
+                    ),
+                    _icon(
+                      () {
+                        Routes.instance.navigateTo(RouteName.VerifyOtpScreen);
+                      },
+                      'Điều khoản sử dụng',
+                      IconConst.Adjust,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 31),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  injector<AppCache>().profileModel != null
-                      ? _icon(
-                          () {
-                            Routes.instance.navigateTo(RouteName.ProfileScreen);
-                          },
-                          'Thông tin cá nhân',
-                          IconConst.Info,
-                        )
-                      : Container(),
-                  _icon(
-                    () {
-                      Routes.instance.navigateTo(RouteName.WebViewScreen,
-                          arguments: 'https://sinhairvietnam.vn/lien-he/');
-                    },
-                    'Liên hệ',
-                    IconConst.Contact,
+                  Text(
+                    'Kết nối với Sinhair:',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: Colors.black),
                   ),
-                  _icon(
-                    () {
-                      Routes.instance.navigateTo(RouteName.ProfileScreen);
-                      // Routes.instance.navigateTo(RouteName.GioiThieuScreen);
-                    },
-                    'Chính sách bán hàng',
-                    IconConst.ProvisionOrder,
-                  ),
-                  _icon(
-                    () {
-                      Routes.instance.navigateTo(RouteName.HuongDanScreen);
-                    },
-                    'Chính sách bảo mật',
-                    IconConst.ProvisionSecurity,
-                  ),
-                  _icon(
-                    () {
-                      Routes.instance.navigateTo(RouteName.PolicyScreen);
-                    },
-                    'Điều khoản sử dụng',
-                    IconConst.Adjust,
-                  ),
+                  _icon(() => {}, 'Gmail', IconConst.Gmail),
+                  _icon(() => {}, 'Facebook', IconConst.Facebook),
+                  _icon(() => {}, 'Zalo', IconConst.Zalo)
                 ],
               ),
             ),
-          ),
-          SizedBox(height: 31),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Kết nối với Sinhair:',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      color: Colors.black),
-                ),
-                _icon(() => {}, 'Gmail', IconConst.Gmail),
-                _icon(() => {}, 'Facebook', IconConst.Facebook),
-                _icon(() => {}, 'Zalo', IconConst.Zalo)
+                injector<AppCache>().profileModel != null
+                    ? CustomButton(
+                        onTap: () async {
+                          injector<AppCache>().profileModel = null;
+                          injector<AppCache>().havedLogin = false;
+                          await injector<LocalApp>().saveStringSharePreference(
+                              KeySaveDataLocal.keySaveAccessToken, '');
+                          Routes.instance.navigateTo(RouteName.LoginScreen,
+                              arguments: false);
+                        },
+                        text: 'Đăng xuất',
+                      )
+                    : Container(),
               ],
             ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              injector<AppCache>().profileModel != null
-                  ? CustomButton(
-                      onTap: () async {
-                        injector<AppCache>().profileModel = null;
-                        injector<AppCache>().havedLogin = false;
-                        await injector<LocalApp>().saveStringSharePreference(
-                            KeySaveDataLocal.keySaveAccessToken, '');
-                        Routes.instance.navigateTo(RouteName.LoginScreen,
-                            arguments: false);
-                      },
-                      text: 'Đăng xuất',
-                    )
-                  : Container(),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

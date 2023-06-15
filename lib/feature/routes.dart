@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
@@ -193,10 +194,10 @@ class Routes {
         return SlideLeftRoute(
           widget: RegisterScreen(),
         );
-      // case RouteName.VerifyOtpScreen:
-      //   return CupertinoPageRoute(
-      //     widget: VerifyOtpScreen(),
-      //   );
+      case RouteName.VerifyOtpScreen:
+        return SlideLeftRoute(
+          widget: VerifyOtpScreen(phone: '',),
+        );
       case RouteName.ForgotPassScreen:
         return SlideLeftRoute(
           widget: ForgotPassScreen(),
