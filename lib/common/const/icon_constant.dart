@@ -54,4 +54,10 @@ class IconConst {
   //icon details product
   static const String Star = '${_path}Star.png';
   static const String Heart = '${_path}Heart.png';
+
+  //icon scanQR
+  static const String Flash = '${_path}Flash.png';
+  static const String ScanImage = '${_path}ScanImage.png';
+  static const String ScanInvoice = '${_path}ScanInvoice.png';
+  static const String ScanProduct = '${_path}ScanProduct.png';
 }

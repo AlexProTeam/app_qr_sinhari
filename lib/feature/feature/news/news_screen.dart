@@ -64,7 +64,7 @@ class _NewsScreenState extends State<NewsScreen> {
           Text(
             'Tin tức',
             style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
+                fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
           ),
           SizedBox(height: 17),
           isLoadding
