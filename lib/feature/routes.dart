@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
@@ -11,7 +12,6 @@ import 'package:qrcode/feature/auth/login/verify_otp_screen.dart';
 import 'package:qrcode/feature/auth/register/register_screen.dart';
 import 'package:qrcode/feature/auth/splash/splash_screen.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_screen.dart';
-import 'package:qrcode/feature/feature/container/screen_container.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
@@ -24,11 +24,13 @@ import 'package:qrcode/feature/feature/personal/huong_dan.dart';
 import 'package:qrcode/feature/feature/personal/personal_screen.dart';
 import 'package:qrcode/feature/feature/personal/policy_screen.dart';
 import 'package:qrcode/feature/feature/profile/profile_screen.dart';
+import 'package:qrcode/feature/feature/scan/check_bill_screen.dart';
 import 'package:qrcode/feature/feature/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
+import 'feature/BottomBar/screen_container.dart';
 import 'feature/detail_product/detail_product_contact.dart';
 
 class Routes {
@@ -193,10 +195,10 @@ class Routes {
         return SlideLeftRoute(
           widget: RegisterScreen(),
         );
-      // case RouteName.VerifyOtpScreen:
-      //   return CupertinoPageRoute(
-      //     widget: VerifyOtpScreen(),
-      //   );
+      case RouteName.VerifyOtpScreen:
+        return SlideLeftRoute(
+          widget: VerifyOtpScreen(phone: '',),
+        );
       case RouteName.ForgotPassScreen:
         return SlideLeftRoute(
           widget: ForgotPassScreen(),
@@ -211,6 +213,10 @@ class Routes {
       case RouteName.splashScreen:
         return SlideLeftRoute(
           widget: SplashPage(),
+        );
+      case RouteName.CheckBillScreen:
+        return SlideLeftRoute(
+          widget: CheckBillScreen(),
         );
 
       default:

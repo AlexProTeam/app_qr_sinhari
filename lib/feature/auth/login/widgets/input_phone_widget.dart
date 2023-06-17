@@ -5,8 +5,8 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 
 class TypePhoneNumber extends StatelessWidget {
   final TextEditingController? controller;
-
-  const TypePhoneNumber({Key? key, this.controller}) : super(key: key);
+  double? height;
+  TypePhoneNumber({Key? key, this.controller, this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class TypePhoneNumber extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: 16.0),
             hintText: 'Số điện thoại'),
         cursorColor: AppColors.grey8,
-        style: AppTextTheme.normalGrey8.copyWith(fontSize: 20),
+        style: AppTextTheme.normalGrey8.copyWith(fontSize: 14),
         validator: ValidateUtil.validPhone,
         autofocus: true,
         keyboardType: TextInputType.phone,
@@ -38,14 +38,14 @@ class TypePhoneNumber extends StatelessWidget {
   }) =>
       Container(
         width: width,
-        height: 56,
+        height: height,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
             color: AppColors.colorBorder,
           ),
           borderRadius: BorderRadius.all(Radius.circular(
-            8,
+            3,
           )),
         ),
         child: Center(child: child),

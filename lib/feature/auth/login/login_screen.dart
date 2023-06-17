@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
@@ -11,10 +11,9 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/auth/login/widgets/input_phone_widget.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
-import 'package:http/http.dart' as http;
+
 import '../../injector_container.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -68,105 +67,121 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: AppColors.white,
       autoDismissKeyboard: true,
       resizeToAvoidBottomInset: false,
-      customAppBar: CustomAppBar(
-        title: 'Đăng nhập',
-        iconLeftTap: () {
-          if (widget.haveBack == false) {
-            Routes.instance.navigateAndRemove(RouteName.splashScreen);
-          } else {
-            Routes.instance.pop();
-          }
-        },
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      IconConst.logo,
-                      width: 117,
-                      height: 117,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 105),
-                Text(
-                  'Đăng nhập',
-                  style: AppTextTheme.medium20PxBlack.copyWith(
-                    fontWeight: FontWeight.w700,
+      // customAppBar: CustomAppBar(
+      //   title: 'Đăng nhập',
+      //   iconLeftTap: () {
+      //     if (widget.haveBack == false) {
+      //       Routes.instance.navigateAndRemove(RouteName.splashScreen);
+      //     } else {
+      //       Routes.instance.pop();
+      //     }
+      //   },
+      // ),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: 18,
+                    color: Color(0xFFACACAC),
+                  )),
+              SizedBox(width: 90),
+              Text(
+                'Đăng nhập',
+                style: TextStyle(
                     fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black),
+              )
+            ],
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 70),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            IconConst.Logo,
+                            width: 232,
+                            height: 232,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      TypePhoneNumber(
+                        height: 45,
+                        controller: _phoneController,
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomButton(
+                            width: 128,
+                            onTap: _onContinue,
+                            text: 'Đăng nhập',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      Center(
+                        child: Text(
+                          'Hoặc',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12,
+                              color: Colors.black),
+                        ),
+                      ),
+                      SizedBox(height: 11),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            IconConst.Gmail,
+                            width: 30,
+                            height: 30,
+                          ),
+                          SizedBox(width: 35),
+                          Image.asset(
+                            IconConst.Facebook,
+                            width: 30,
+                            height: 30,
+                          ),
+                          SizedBox(width: 35),
+                          Image.asset(
+                            IconConst.Zalo,
+                            width: 30,
+                            height: 30,
+                          ),
+                          SizedBox(width: 35),
+                          Image.asset(
+                            IconConst.Apple,
+                            width: 30,
+                            height: 30,
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                const SizedBox(height: 12),
-                TypePhoneNumber(
-                  controller: _phoneController,
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomButton(
-                      onTap: _onContinue,
-                      text: 'Tiếp Tục',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     const Spacer(),
-                //     CustomGestureDetector(
-                //       onTap: () {
-                //         Routes.instance.navigateTo(RouteName.ForgotPassScreen);
-                //       },
-                //       child: Padding(
-                //         padding:
-                //             const EdgeInsets.only(top: 16, left: 16, bottom: 16),
-                //         child: Text(
-                //           'Bạn quên mật khẩu ?',
-                //           style: AppTextTheme.normalGrey,
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ),
-                // const Spacer(),
-                // CustomGestureDetector(
-                //   onTap: () {
-                //     Routes.instance.navigateTo(RouteName.RegisterScreen);
-                //   },
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(vertical: 16),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Text.rich(TextSpan(children: [
-                //           TextSpan(
-                //               text: 'Bạn đã có tài khoản chưa? ',
-                //               style: AppTextTheme.normalGrey),
-                //           TextSpan(
-                //               text: 'Đăng ký',
-                //               style: AppTextTheme.normalPrimary.copyWith(
-                //                 fontWeight: FontWeight.w700,
-                //                 decoration: TextDecoration.underline,
-                //               ))
-                //         ]))
-                //       ],
-                //     ),
-                //   ),
-                // )
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

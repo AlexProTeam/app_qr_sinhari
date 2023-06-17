@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/bloc/event_bus/event_bus_bloc.dart';
 import 'package:qrcode/common/bloc/event_bus/event_bus_state.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
+import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -12,10 +13,7 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
 import 'package:qrcode/feature/routes.dart';
-import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
-import 'package:qrcode/feature/widgets/custom_image_network.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 
@@ -70,79 +68,171 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
           _initData();
         }
       },
-      child: CustomScaffold(
-          customAppBar: CustomAppBar(
-            title: 'Lịch sử quét',
-            haveIconLeft: false,
-          ),
-          backgroundColor: AppColors.white,
-          body: isLoadding
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : histories.isEmpty
-                  ? Center(
-                      child: Text("Không có lịch sử nào!"),
-                    )
-                  : RefreshIndicator(
-                      onRefresh: _onRefresh,
-                      backgroundColor: Colors.white,
-                      color: AppColors.primaryColor,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemBuilder: (_, index) {
-                                return _item(histories[index]);
-                              },
-                              itemCount: histories.length,
-                            ),
-                          ),
-                        ],
+      child: SafeArea(
+        child: Scaffold(
+            // customAppBar: CustomAppBar(
+            //   title: 'Lịch sử quét',
+            //   haveIconLeft: false,
+            // ),
+            backgroundColor: Color(0xFFF2F2F2),
+            body: Column(
+              children: [
+                SizedBox(height: 39),
+                Center(
+                  child: Text(
+                    'Lịch sử QR',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF000000)),
+                  ),
+                ),
+                // isLoadding
+                //     ? Center(
+                //         child: CircularProgressIndicator(),
+                //       )
+                //     : histories.isEmpty
+                //         ? Padding(
+                //             padding: const EdgeInsets.symmetric(vertical: 320),
+                //             child: Text("Không có lịch sử nào!"),
+                //           )
+                //         :
+                // RefreshIndicator(
+                //   onRefresh: _onRefresh,
+                //   backgroundColor: Colors.white,
+                //   color: AppColors.primaryColor,
+                //   child:
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 16),
+                      Text(
+                        '10 sản phẩm',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.red),
                       ),
-                    )),
+                      SizedBox(height: 16),
+                      ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (_, index) {
+                            return _item();
+                          },
+                          // itemCount: histories.length,
+                          itemCount: 5),
+                    ],
+                  ),
+                ),
+              ],
+            )),
+      ),
     );
   }
 
-  Widget _item(HistoryModel model) {
+  // Widget _item(HistoryModel model) {
+  //   return InkWell(
+  //     onTap: () {
+  //       Routes.instance.navigateTo(RouteName.DetailProductScreen,
+  //           arguments: ArgumentDetailProductScreen(
+  //             productId: model.productId,
+  //           ));
+  //     },
+  //     child: Padding(
+  //       padding: const EdgeInsets.symmetric(horizontal: 16),
+  //       child: Row(
+  //         children: [
+  //           CustomImageNetwork(
+  //             url: model.image,
+  //             width: 74,
+  //             height: 74,
+  //             border: 5,
+  //           ),
+  //           const SizedBox(width: 12),
+  //           Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               const SizedBox(height: 12),
+  //               Text(
+  //                 model.productName ?? 'Dầu gội đầu nước hoa - Hương hoa sen',
+  //                 style: AppTextTheme.mediumBlack,
+  //               ),
+  //               Text(
+  //                 model.updatedAt ?? 'Mã Code: SIN-1073250',
+  //                 style: AppTextTheme.smallGrey,
+  //               ),
+  //                 const SizedBox(height: 12),
+  //               ],
+  //             ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+  Widget _item() {
     return InkWell(
       onTap: () {
         Routes.instance.navigateTo(RouteName.DetailProductScreen,
             arguments: ArgumentDetailProductScreen(
-              productId: model.productId,
-            ));
+                // productId: model.productId,
+                ));
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          children: [
-            CustomImageNetwork(
-              url: model.image,
-              width: 70,
-              height: 70,
-              border: 8,
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 12),
-                  Text(
-                    model.productName ?? '',
-                    style: AppTextTheme.mediumBlack,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              child: Image.asset(
+                IconConst.logo,
+                width: 74,
+                height: 74,
+              )),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 12),
+              SizedBox(
+                width: 164,
+                child: Text(
+                  'Dầu gội đầu nước hoa - Hương hoa sen',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
                   ),
-                  Text(
-                    model.updatedAt ?? '',
-                    style: AppTextTheme.smallGrey,
-                  ),
-                  const SizedBox(height: 12),
-                ],
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
+              Text(
+                'Mã Code: SIN-1073250',
+                style: AppTextTheme.smallGrey,
+              ),
+              Text(
+                'Số Seri: L8O977V',
+                style: AppTextTheme.smallGrey,
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+          SizedBox(width: 20),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              '5 lần',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF0085FF)),
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
