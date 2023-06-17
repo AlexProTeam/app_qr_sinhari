@@ -1,16 +1,25 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/notification/local_notification.dart';
-import 'package:qrcode/feature/app.dart';
 import 'package:qrcode/feature/injector_container.dart' as di;
-import 'package:qrcode/feature/themes/theme_color.dart';
-import 'dart:async';
 
+import 'common/bloc/snackbar_bloc/snackbar_bloc.dart';
+import 'common/bloc/snackbar_bloc/snackbar_state.dart';
+import 'common/navigation/route_names.dart';
+import 'common/notification/firebase_notification.dart';
+import 'common/utils/screen_utils.dart';
+import 'feature/injector_container.dart';
+import 'feature/routes.dart';
+import 'feature/themes/theme_color.dart';
+import 'feature/widgets/loading_container.dart';
 
 dynamic decodeIsolate(String response) => jsonDecode(response);
 
@@ -23,13 +32,133 @@ dynamic endCodeJson(dynamic json) => compute(endCodeIsolate, json);
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-      statusBarColor: Colors.black
-  ));
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+
   LocalNotification.instance.setUp();
   await Firebase.initializeApp();
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(App());
+}
+
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  List<BlocListener> _getBlocListener(context) => [
+        BlocListener<SnackBarBloc, SnackBarState>(
+            listener: _mapListenerSnackBarState),
+      ];
+
+  List<BlocProvider> _getProviders() => [
+        BlocProvider<SnackBarBloc>(
+          create: (_) => injector<SnackBarBloc>(),
+        ),
+      ];
+
+  void _mapListenerSnackBarState(BuildContext context, SnackBarState state) {
+    if (state is ShowSnackBarState) {
+      var icon;
+      var color;
+      var title;
+      switch (state.type) {
+        case SnackBarType.success:
+          icon = Icon(
+            Icons.check_circle_outline,
+            color: Colors.white,
+          );
+          color = Color(0xff33B44A);
+          title = "Success";
+          break;
+        case SnackBarType.warning:
+          icon = Icon(
+            Icons.error_outline,
+            color: Colors.white,
+          );
+          color = Colors.orange;
+          title = "Warning";
+          break;
+        default:
+          icon = Icon(
+            Icons.error_outline,
+            color: Colors.white,
+          );
+          color = Color(0xffF63E43);
+          title = "Failed";
+          break;
+      }
+
+      showFlash(
+        context: Routes.instance.navigatorKey.currentContext!,
+        duration: state.duration ?? Duration(milliseconds: 3000),
+        builder: (context, controller) {
+          return FlashBar(
+            controller: controller,
+            backgroundColor: color,
+            position: FlashPosition.top,
+            margin: const EdgeInsets.all(8),
+            forwardAnimationCurve: Curves.easeOutBack,
+            reverseAnimationCurve: Curves.easeInCubic,
+            title: Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Colors.white),
+            ),
+            content: Text(
+              state.mess!,
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: icon,
+            shouldIconPulse: true,
+            showProgressIndicator: false,
+          );
+        },
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    FirebaseNotification.instance.initFirebaseNotification();
+    LocalNotification.instance
+        .configureDidReceiveLocalNotificationSubject(context);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: _getProviders(),
+      child: MaterialApp(
+        navigatorKey: Routes.instance.navigatorKey,
+        debugShowCheckedModeBanner: false,
+        title: 'Sinhair',
+        onGenerateRoute: Routes.generateRoute,
+        initialRoute: RouteName.splashScreen,
+        theme: ThemeData(
+          primaryColor: AppColors.primaryColor,
+          fontFamily: 'Montserrat',
+          canvasColor: Colors.transparent,
+          platform: TargetPlatform.iOS,
+          bottomAppBarTheme: BottomAppBarTheme(color: Color(0xff989898)),
+        ),
+        builder: (context, widget) {
+          GScreenUtil.init(context);
+          return LoadingContainer(
+            child: MultiBlocListener(
+              listeners: _getBlocListener(context),
+              child: GestureDetector(
+                child: widget ?? SizedBox(),
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }

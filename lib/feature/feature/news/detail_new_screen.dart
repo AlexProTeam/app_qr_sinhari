@@ -5,7 +5,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/feature/news/new_deyail_model.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
@@ -30,9 +29,6 @@ class DetailNewScreen extends StatefulWidget {
 }
 
 class _DetailNewScreenState extends State<DetailNewScreen> {
-  NewsDetailModel? _newDetailModel;
-  TextEditingController _codeController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   bool isLoadding = false;
 
   Map _data = {};

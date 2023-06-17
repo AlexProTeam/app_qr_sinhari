@@ -42,8 +42,6 @@ class DetailProductScreen extends StatefulWidget {
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
   DetailProductModel? _detailProductModel;
-  TextEditingController _codeController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   bool isLoadding = false;
 
   @override
