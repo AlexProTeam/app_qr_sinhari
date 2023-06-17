@@ -5,7 +5,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
@@ -13,10 +12,10 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import '../../injector_container.dart';
 
 class ArgumentDetailNewScreen {
-  final int? news_detail;
+  final int? newsDetail;
   final String? url;
 
-  ArgumentDetailNewScreen({this.news_detail, this.url});
+  ArgumentDetailNewScreen({this.newsDetail, this.url});
 }
 
 class DetailNewScreen extends StatefulWidget {
@@ -25,10 +24,10 @@ class DetailNewScreen extends StatefulWidget {
   const DetailNewScreen({Key? key, this.argument}) : super(key: key);
 
   @override
-  _DetailNewScreenState createState() => _DetailNewScreenState();
+  DetailNewScreenState createState() => DetailNewScreenState();
 }
 
-class _DetailNewScreenState extends State<DetailNewScreen> {
+class DetailNewScreenState extends State<DetailNewScreen> {
   bool isLoadding = false;
 
   Map _data = {};
@@ -44,7 +43,7 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
       isLoadding = true;
       var request = http.MultipartRequest(
           'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/news_detail'));
-      request.fields.addAll({'news_id': '${widget.argument?.news_detail}'});
+      request.fields.addAll({'news_id': '${widget.argument?.newsDetail}'});
 
       http.StreamedResponse response = await request.send();
 
@@ -65,12 +64,10 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
     return CustomScaffold(
         customAppBar: CustomAppBar(
           title: 'Chi tiết tin tức',
-          iconLeftTap: () {
-            Routes.instance.pop();
-          },
+          iconLeftTap: () => Navigator.pop(context),
         ),
         body: isLoadding
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : SingleChildScrollView(
@@ -83,29 +80,30 @@ class _DetailNewScreenState extends State<DetailNewScreen> {
                       height: MediaQuery.of(context).size.height / 4,
                       border: 12,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             _data['title'] ?? '',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
                             _data['created_at'] ?? '',
-                            style: TextStyle(color: Colors.amber, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.amber, fontSize: 12),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           _data['content'] != null

@@ -12,17 +12,16 @@ import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/empty_widget.dart';
 
-import '../../../common/utils/screen_utils.dart';
 import '../../injector_container.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({Key? key}) : super(key: key);
 
   @override
-  _NewsScreenState createState() => _NewsScreenState();
+  NewsScreenState createState() => NewsScreenState();
 }
 
-class _NewsScreenState extends State<NewsScreen> {
+class NewsScreenState extends State<NewsScreen> {
   List<NewsModel> histories = [];
   bool isLoadding = false;
 
@@ -50,53 +49,41 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
-    final _itemHeight = _itemWidth + 50;
     return CustomScaffold(
       // customAppBar: CustomAppBar(
       //   title: 'Tin tức',
       //   haveIconLeft: false,
       // ),
-      backgroundColor: Color(0xFFF2F2F2),
+      backgroundColor: const Color(0xFFF2F2F2),
       body: Column(
         children: [
-          SizedBox(height: 20),
-          Text(
+          const SizedBox(height: 20),
+          const Text(
             'Tin tức',
             style: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
           ),
-          SizedBox(height: 17),
+          const SizedBox(height: 17),
           isLoadding
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : histories.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: Text("Không có tin tức nào!"),
                     )
                   : Column(
                       children: [
                         histories.isNotEmpty
-                            ?
-                            //                   ListView.builder(
-                            //                       shrinkWrap: true,
-                            //                       physics: NeverScrollableScrollPhysics(),
-                            //                       padding: EdgeInsets.zero,
-                            //                       itemBuilder: (_, index) {
-                            //                         return _item(histories[index]);
-                            //                       },
-                            //                       itemCount: histories.length,
-                            //                     )
-                            GridView.builder(
+                            ? GridView.builder(
                                 shrinkWrap: true,
                                 itemCount: histories.length,
                                 // controller: _scrollController,
                                 physics: const NeverScrollableScrollPhysics(),
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0, vertical: 12.0),
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 8.0,
                                   mainAxisSpacing: 8.0,
@@ -121,9 +108,9 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget _item(NewsModel model) {
     return InkWell(
       onTap: () {
-        Routes.instance.navigateTo(RouteName.DetailNewScreen,
+        Routes.instance.navigateTo(RouteName.detailNewScreen,
             arguments: ArgumentDetailNewScreen(
-                news_detail: model.id, url: model.image));
+                newsDetail: model.id, url: model.image));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +122,7 @@ class _NewsScreenState extends State<NewsScreen> {
             fit: BoxFit.cover,
             border: 12,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16.45,
           ),
           Padding(
@@ -148,20 +135,20 @@ class _NewsScreenState extends State<NewsScreen> {
                   model.title ?? '',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       color: Colors.black),
                 ),
-                SizedBox(height: 7),
+                const SizedBox(height: 7),
                 Row(
                   children: [
                     Image.asset(
-                      IconConst.MiniClock,
+                      IconConst.miniClock,
                       width: 14,
                       height: 14,
                     ),
-                    SizedBox(width: 4),
+                    const SizedBox(width: 4),
                     Text(
                       model.createdAt ?? '',
                       style: AppTextTheme.smallGrey,

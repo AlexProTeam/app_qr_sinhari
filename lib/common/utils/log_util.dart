@@ -9,9 +9,9 @@ class LoggerUtil extends Logger {
     required this.printer,
     required this.level,
   }) : super(
-    printer: printer,
-    level: level,
-  );
+          printer: printer,
+          level: level,
+        );
 
   void error(dynamic message, [dynamic error, StackTrace? stackTrace]) =>
       e('[ERROR] $message', error, stackTrace);
@@ -34,7 +34,7 @@ class LoggerUtil extends Logger {
   }
 }
 
-LoggerUtil LOG = LoggerUtil(
+LoggerUtil lOG = LoggerUtil(
   printer: PrettyPrinter(
     methodCount: 0,
     lineLength: 150,

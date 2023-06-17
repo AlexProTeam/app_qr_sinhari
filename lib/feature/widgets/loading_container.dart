@@ -14,7 +14,7 @@ class LoadingContainer extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          child ?? SizedBox(),
+          child ?? const SizedBox(),
           BlocBuilder<LoadingBloc, LoadingState>(
             bloc: injector<LoadingBloc>(),
             builder: (context, state) {
@@ -24,7 +24,7 @@ class LoadingContainer extends StatelessWidget {
                   width: double.infinity,
                   height: double.infinity,
                   color: Colors.black.withOpacity(0.1),
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator(
                       strokeWidth: 3,
                     ),

@@ -9,10 +9,10 @@ class DetailProductSlide extends StatefulWidget {
   const DetailProductSlide({Key? key, this.images}) : super(key: key);
 
   @override
-  _DetailProductSlideState createState() => _DetailProductSlideState();
+  DetailProductSlideState createState() => DetailProductSlideState();
 }
 
-class _DetailProductSlideState extends State<DetailProductSlide> {
+class DetailProductSlideState extends State<DetailProductSlide> {
   int _currentSlideIndex = 0;
 
   List<T> map<T>(List list, Function handler) {
@@ -27,15 +27,15 @@ class _DetailProductSlideState extends State<DetailProductSlide> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height*0.4,
+          height: MediaQuery.of(context).size.height * 0.4,
           child: CarouselSlider(
             options: CarouselOptions(
               initialPage: 0,
               height: double.infinity,
               autoPlay: true,
-              autoPlayAnimationDuration: Duration(seconds: 4),
+              autoPlayAnimationDuration: const Duration(seconds: 4),
               viewportFraction: 1.0,
               reverse: false,
               enableInfiniteScroll: true,
@@ -45,7 +45,8 @@ class _DetailProductSlideState extends State<DetailProductSlide> {
                 });
               },
             ),
-            items: widget.images?.map((e) => InkWell(
+            items: widget.images
+                ?.map((e) => InkWell(
                       onTap: () {},
                       child: Container(
                         color: Colors.transparent,
@@ -66,14 +67,14 @@ class _DetailProductSlideState extends State<DetailProductSlide> {
           left: 0,
           child: Row(
             children: [
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: map<Widget>(widget.images??[], (index, obj) {
+                children: map<Widget>(widget.images ?? [], (index, obj) {
                   return Container(
                     width: 8.0,
                     height: 8.0,
-                    margin: EdgeInsets.symmetric(horizontal: 4),
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _currentSlideIndex == index
@@ -83,7 +84,7 @@ class _DetailProductSlideState extends State<DetailProductSlide> {
                   );
                 }),
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),

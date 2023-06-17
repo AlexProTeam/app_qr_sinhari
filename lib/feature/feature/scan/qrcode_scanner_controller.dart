@@ -13,11 +13,11 @@ class QrcodeScannerWithController extends StatefulWidget {
   const QrcodeScannerWithController({Key? key}) : super(key: key);
 
   @override
-  _QrcodeScannerWithControllerState createState() =>
-      _QrcodeScannerWithControllerState();
+  QrcodeScannerWithControllerState createState() =>
+      QrcodeScannerWithControllerState();
 }
 
-class _QrcodeScannerWithControllerState
+class QrcodeScannerWithControllerState
     extends State<QrcodeScannerWithController>
     with SingleTickerProviderStateMixin {
   BarcodeCapture? barcode;
@@ -54,17 +54,16 @@ class _QrcodeScannerWithControllerState
   }
 
   Future<void> _scanDetailQr(String url) async {
-    LOG.w('_onScan: $url');
+    lOG.w('_onScan: $url');
 
-    LOG.w('_onScan: requestNe');
+    lOG.w('_onScan: requestNe');
     if (url.contains('http://qcheck.vn/') || url.contains('http://qrco.de')) {
       CommonUtil.runUrl(url);
     } else {
-      Routes.instance.navigateTo(RouteName.DetailProductScreen,
+      Routes.instance.navigateTo(RouteName.detailProductScreen,
           arguments: ArgumentDetailProductScreen(
             url: url,
           ));
-      print('$url');
     }
   }
 
@@ -74,7 +73,7 @@ class _QrcodeScannerWithControllerState
       customAppBar: CustomAppBar(
         title: 'Quét QR',
         iconLeftTap: () {
-          Routes.instance.pop();
+          Navigator.pop(context);
         },
       ),
       body: Stack(
@@ -195,9 +194,10 @@ class _QrcodeScannerWithControllerState
                         if (await controller.analyzeImage(image.path)) {
                           if (!mounted) return;
                           await _scanDetailQr(
-                              this.barcode?.barcodes.first.rawValue ?? '');
+                              barcode?.barcodes.first.rawValue ?? '');
                           debugPrint(
-                              'qrcode images ${this.barcode?.barcodes.first.rawValue}');
+                              'qrcode images ${barcode?.barcodes.first.rawValue}');
+                          if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Barcode found!'),

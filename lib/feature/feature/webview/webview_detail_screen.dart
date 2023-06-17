@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-// Import for Android features.
+// ignore: depend_on_referenced_packages
 import 'package:webview_flutter_android/webview_flutter_android.dart';
-// Import for iOS features.
+// ignore: depend_on_referenced_packages
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class WebViewDetailScreen extends StatefulWidget {
@@ -16,10 +15,10 @@ class WebViewDetailScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _WebViewDetailScreenState createState() => _WebViewDetailScreenState();
+  WebViewDetailScreenState createState() => WebViewDetailScreenState();
 }
 
-class _WebViewDetailScreenState extends State<WebViewDetailScreen> {
+class WebViewDetailScreenState extends State<WebViewDetailScreen> {
   @override
   Widget build(BuildContext context) {
     late final PlatformWebViewControllerCreationParams params;
@@ -77,7 +76,7 @@ Page resource error:
           );
         },
       )
-      ..loadRequest(Uri.parse('${widget.url}'));
+      ..loadRequest(Uri.parse(widget.url));
 
     // #docregion platform_features
     if (controller.platform is AndroidWebViewController) {
@@ -88,9 +87,7 @@ Page resource error:
     return CustomScaffold(
       customAppBar: CustomAppBar(
         title: 'Chi tiết sản phẩm',
-        iconLeftTap: () {
-          Routes.instance.pop();
-        },
+        iconLeftTap: () => Navigator.pop(context),
       ),
       body: Column(
         children: [

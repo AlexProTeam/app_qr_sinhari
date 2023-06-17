@@ -9,32 +9,30 @@ class ChangePassScreen extends StatefulWidget {
   const ChangePassScreen({Key? key}) : super(key: key);
 
   @override
-  _ChangePassScreenState createState() => _ChangePassScreenState();
+  ChangePassScreenState createState() => ChangePassScreenState();
 }
 
-class _ChangePassScreenState extends State<ChangePassScreen> {
+class ChangePassScreenState extends State<ChangePassScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
         title: 'Đổi mật khẩu',
-        iconLeftTap: () {
-          Routes.instance.pop();
-        },
+        iconLeftTap: () => Navigator.pop(context),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
           children: [
-            CustomTextField(
+            const CustomTextField(
               hintText: 'Mật khẩu cũ',
             ),
             const SizedBox(height: 16),
-            CustomTextField(
+            const CustomTextField(
               hintText: 'Mật khẩu mới',
             ),
             const SizedBox(height: 16),
-            CustomTextField(
+            const CustomTextField(
               hintText: 'Nhập lại mật khẩu mới',
             ),
             const SizedBox(height: 30),
@@ -43,7 +41,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
               children: [
                 CustomButton(
                   onTap: () {
-                    Routes.instance.navigateAndRemove(RouteName.LoginScreen);
+                    Routes.instance.navigateAndRemove(RouteName.loginScreen);
                   },
                   text: 'Lưu lại',
                 ),

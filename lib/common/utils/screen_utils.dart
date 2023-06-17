@@ -4,8 +4,8 @@ const defaultAppBarHeight = 48.0;
 
 class GScreenUtil {
   static late GScreenUtil _instance;
-  static const int? defaultWidth = 414;
-  static const int? defaultHeight = 896;
+  static const int defaultWidth = 414;
+  static const int defaultHeight = 896;
 
   /// Size of the screen phone in UI Design , px
   num? uiWidthPx;
@@ -30,8 +30,8 @@ class GScreenUtil {
   GScreenUtil._();
 
   static void init(BuildContext context,
-      {num width = defaultWidth ?? 0,
-      num height = defaultHeight ?? 0,
+      {num width = defaultWidth,
+      num height = defaultHeight,
       bool allowFontScaling = false}) {
     _instance = GScreenUtil._();
     _instance.uiWidthPx = width;
@@ -74,9 +74,11 @@ class GScreenUtil {
       screenHeight - (statusBarHeight) - (bottomBarHeight);
 
   /// The vertical extent of this size. px
+  // ignore: recursive_getters
   static double get screenWidth => screenWidth * pixelRatio;
 
   /// The vertical extent of this size. px
+  // ignore: recursive_getters
   static double get screenHeight => screenHeight * pixelRatio;
 
   /// The ratio of the actual dp to the design draft px

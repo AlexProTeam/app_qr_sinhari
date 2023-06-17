@@ -5,7 +5,6 @@ import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/injector_container.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
@@ -14,10 +13,10 @@ class GioiThieuScreen extends StatefulWidget {
   const GioiThieuScreen({Key? key}) : super(key: key);
 
   @override
-  _HuongDanScreenState createState() => _HuongDanScreenState();
+  HuongDanScreenState createState() => HuongDanScreenState();
 }
 
-class _HuongDanScreenState extends State<GioiThieuScreen> {
+class HuongDanScreenState extends State<GioiThieuScreen> {
   Map _data = {};
   bool isLoadding = false;
 
@@ -49,11 +48,11 @@ class _HuongDanScreenState extends State<GioiThieuScreen> {
       customAppBar: CustomAppBar(
         title: 'Chính sách bán hàng',
         iconLeftTap: () {
-          Routes.instance.pop();
+          Navigator.pop(context);
         },
       ),
       body: isLoadding
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
@@ -63,14 +62,14 @@ class _HuongDanScreenState extends State<GioiThieuScreen> {
                   Stack(
                     children: [
                       Image.asset(
-                        IconConst.policy_background,
+                        IconConst.policyBackground,
                         width: double.infinity,
                         height: 120,
                         fit: BoxFit.cover,
                       ),
                       Positioned.fill(
                         child: Container(
-                          margin: EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                               border:
                                   Border.all(color: Colors.white, width: 2)),

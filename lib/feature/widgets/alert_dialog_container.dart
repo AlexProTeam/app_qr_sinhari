@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
-
 class AlertDialogContainer extends StatelessWidget {
   final Function? confirm;
   final Function? cancel;
@@ -12,7 +11,7 @@ class AlertDialogContainer extends StatelessWidget {
   final String? textCancel;
   final String? textOk;
 
-  AlertDialogContainer(
+  const AlertDialogContainer(
       {Key? key,
       this.confirm,
       this.cancel,
@@ -44,7 +43,7 @@ class AlertDialogContainer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 20, left: 15, right: 15),
             child: Text(
-              message ,
+              message,
               style: AppTextTheme.normalBlack.copyWith(fontSize: 16),
               textAlign: TextAlign.start,
             ),
@@ -67,14 +66,12 @@ class AlertDialogContainer extends StatelessWidget {
                               Navigator.pop(context);
                             }
                           },
-                          child: Container(
-                            child: Center(
-                              child: Text(
-                                textCancel ?? 'Hủy',
-                                style: AppTextTheme.normalBlue.copyWith(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                                textAlign: TextAlign.center,
-                              ),
+                          child: Center(
+                            child: Text(
+                              textCancel ?? 'Hủy',
+                              style: AppTextTheme.normalBlue.copyWith(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
@@ -89,14 +86,12 @@ class AlertDialogContainer extends StatelessWidget {
                     onTap: () {
                       confirm!();
                     },
-                    child: Container(
-                      child: Center(
-                        child: Text(
-                          textOk ?? 'OK',
-                          textAlign: TextAlign.center,
-                          style: AppTextTheme.normalBlue.copyWith(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        ),
+                    child: Center(
+                      child: Text(
+                        textOk ?? 'OK',
+                        textAlign: TextAlign.center,
+                        style: AppTextTheme.normalBlue.copyWith(
+                            fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),

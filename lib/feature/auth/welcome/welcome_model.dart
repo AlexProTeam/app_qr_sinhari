@@ -1,12 +1,12 @@
 class WelcomeModel {
   int? id;
-  String? Url;
+  String? url;
   String? title;
 
   WelcomeModel.fromJson(Map<String, dynamic> data) {
-    this.id = data['id'];
-    this.Url = data['photo'];
-    this.title = data['title'];
+    id = data['id'];
+    url = data['photo'];
+    title = data['title'];
   }
 // {
 // "id": 3,

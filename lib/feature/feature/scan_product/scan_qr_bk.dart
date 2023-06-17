@@ -7,6 +7,8 @@ import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 
 class ScanQrScreen extends StatefulWidget {
+  const ScanQrScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _QRViewExampleState();
 }
@@ -45,10 +47,10 @@ class _QRViewExampleState extends State<ScanQrScreen> {
                   // await controller?.pauseCamera();
                   // await controller?.stopCamera();
                   // controller?.dispose();
-                  Routes.instance.pop();
+                  Navigator.pop(context);
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Icon(
                     Icons.arrow_back,
                     size: 30,

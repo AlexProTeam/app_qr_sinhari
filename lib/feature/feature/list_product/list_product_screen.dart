@@ -27,22 +27,22 @@ class ListProductScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ListProductScreenState createState() => _ListProductScreenState();
+  ListProductScreenState createState() => ListProductScreenState();
 }
 
-class _ListProductScreenState extends State<ListProductScreen> {
-  List<ProductModel> _products = [];
+class ListProductScreenState extends State<ListProductScreen> {
+  final List<ProductModel> _products = [];
   int _page = 1;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   bool _enableContinueLoadMore = true;
   bool _loading = false;
-  bool _loadingis =false;
+  bool _loadingis = false;
 
   void _initData({bool showLoading = true}) async {
     try {
       if (showLoading) {
         // injector<LoadingBloc>().add(StartLoading());
-        _loadingis=true;
+        _loadingis = true;
       }
       final dataSeller = await injector<AppClient>()
           .get('${widget.argument?.url}?page=$_page');
@@ -89,9 +89,9 @@ class _ListProductScreenState extends State<ListProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
-    final _itemHeight = _itemWidth + 50;
+    final itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
     return CustomScaffold(
+      ///todo: remove later
       // customAppBar: CustomAppBar(
       //   title: '${widget.argument?.label}',
       //   iconLeftTap: () {
@@ -107,42 +107,42 @@ class _ListProductScreenState extends State<ListProductScreen> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back,
                     size: 18,
                     color: Color(0xFFACACAC),
                   )),
               Text(
                 '${widget.argument?.label}',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                     color: Colors.black),
               ),
-              SizedBox(width: 40),
+              const SizedBox(width: 40),
             ],
           ),
-          SizedBox(height: 16.75),
+          const SizedBox(height: 16.75),
           Expanded(
             child: _loadingis
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(),
                   )
                 : _products.isEmpty
-                    ? Center(
+                    ? const Center(
                         child: Text("Không có sản phẩm nào!"),
                       )
                     : Column(
                         children: [
-                         GridView.builder(
-                           shrinkWrap: true,
+                          GridView.builder(
+                            shrinkWrap: true,
                             itemCount: _products.length,
                             controller: _scrollController,
                             physics: const NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 12.0, vertical: 12.0),
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 16.0,
                               mainAxisSpacing: 12.0,
@@ -150,13 +150,13 @@ class _ListProductScreenState extends State<ListProductScreen> {
                             ),
                             itemBuilder: (context, index) {
                               return CategoryItemProduct(
-                                itemWidth: _itemWidth,
+                                itemWidth: itemWidth,
                                 productModel: _products[index],
                               );
                             },
                           ),
                           _loading
-                              ? CircularProgressIndicator()
+                              ? const CircularProgressIndicator()
                               : const SizedBox(),
                         ],
                       ),

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-// Import for Android features.
+// ignore: depend_on_referenced_packages
 import 'package:webview_flutter_android/webview_flutter_android.dart';
-// Import for iOS features.
+// ignore: depend_on_referenced_packages
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import '../../themes/theme_text.dart';
@@ -19,10 +19,10 @@ class WebViewScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _WebviewScreenState createState() => _WebviewScreenState();
+  WebviewScreenState createState() => WebviewScreenState();
 }
 
-class _WebviewScreenState extends State<WebViewScreen> {
+class WebviewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     late final PlatformWebViewControllerCreationParams params;
@@ -80,7 +80,7 @@ Page resource error:
           );
         },
       )
-      ..loadRequest(Uri.parse('${widget.url}'));
+      ..loadRequest(Uri.parse(widget.url));
 
     // #docregion platform_features
     if (controller.platform is AndroidWebViewController) {
@@ -91,7 +91,7 @@ Page resource error:
     // #enddocregion platform_features
 
     return CustomScaffold(
-      backgroundColor: Color(0xFFF2F2F2),
+      backgroundColor: const Color(0xFFF2F2F2),
       body: Column(
         children: [
           // Expanded(
@@ -108,19 +108,19 @@ Page resource error:
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back,
                     size: 18,
                     color: Color(0xFFACACAC),
                   )),
-              Text(
+              const Text(
                 'Liên hệ',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: Colors.black),
               ),
-              SizedBox(width: 35),
+              const SizedBox(width: 35),
             ],
           ),
           Expanded(
@@ -128,17 +128,17 @@ Page resource error:
             child: Column(
               children: [
                 Image.asset(
-                  IconConst.Logo,
+                  IconConst.logoLogin,
                   width: 140,
                   height: 140,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Container(
                     width: 343,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(width: 1, color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(
+                      borderRadius: const BorderRadius.all(Radius.circular(
                         8,
                       )),
                     ),
@@ -147,18 +147,18 @@ Page resource error:
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Image.asset(
-                                IconConst.Location,
+                                IconConst.location,
                                 width: 24,
                                 height: 24,
                               ),
-                              SizedBox(width: 15),
+                              const SizedBox(width: 15),
                               RichText(
-                                  text: TextSpan(
+                                  text: const TextSpan(
                                       children: [
                                     TextSpan(
                                         text:
@@ -176,12 +176,12 @@ Page resource error:
                                           fontSize: 16)))
                             ],
                           ),
-                          SizedBox(height: 6),
+                          const SizedBox(height: 6),
                           Row(
                             children: [
-                              SizedBox(width: 39),
+                              const SizedBox(width: 39),
                               RichText(
-                                  text: TextSpan(
+                                  text: const TextSpan(
                                       text: 'Văn phòng HCM:',
                                       style: TextStyle(
                                           fontSize: 16,
@@ -198,17 +198,17 @@ Page resource error:
                                   ])),
                             ],
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     )),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Container(
                     width: 343,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(width: 1, color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(
+                      borderRadius: const BorderRadius.all(Radius.circular(
                         8,
                       )),
                     ),
@@ -217,18 +217,18 @@ Page resource error:
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Image.asset(
-                                IconConst.Hotline,
+                                IconConst.hotline,
                                 width: 24,
                                 height: 24,
                               ),
-                              SizedBox(width: 15),
+                              const SizedBox(width: 15),
                               RichText(
-                                  text: TextSpan(
+                                  text: const TextSpan(
                                       children: [
                                     TextSpan(
                                         text: '19008787',
@@ -245,9 +245,9 @@ Page resource error:
                                           fontSize: 16)))
                             ],
                           ),
-                          SizedBox(height: 6),
+                          const SizedBox(height: 6),
                           Row(
-                            children: [
+                            children: const [
                               SizedBox(width: 39),
                               Text(
                                 'VP HCM: 0987 655 755',
@@ -258,17 +258,17 @@ Page resource error:
                               )
                             ],
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     )),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Container(
                     width: 343,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(width: 1, color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(
+                      borderRadius: const BorderRadius.all(Radius.circular(
                         8,
                       )),
                     ),
@@ -277,18 +277,18 @@ Page resource error:
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Image.asset(
-                                IconConst.Mail,
+                                IconConst.mail,
                                 width: 24,
                                 height: 24,
                               ),
-                              SizedBox(width: 15),
+                              const SizedBox(width: 15),
                               RichText(
-                                  text: TextSpan(
+                                  text: const TextSpan(
                                 text: 'Email:',
                                 style: TextStyle(
                                     color: Colors.black,
@@ -306,17 +306,17 @@ Page resource error:
                               ))
                             ],
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     )),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Container(
                     width: 343,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(width: 1, color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(
+                      borderRadius: const BorderRadius.all(Radius.circular(
                         8,
                       )),
                     ),
@@ -325,18 +325,18 @@ Page resource error:
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 16),
-                          Text(
+                          const SizedBox(height: 16),
+                          const Text(
                             'Kết nối với Sinhair:',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                                 color: Colors.black),
                           ),
-                          _icon(() => {}, 'Gmail', IconConst.Gmail),
-                          _icon(() => {}, 'Facebook', IconConst.Facebook),
-                          _icon(() => {}, 'Zalo', IconConst.Zalo),
-                          SizedBox(height: 17),
+                          _icon(() => {}, 'Gmail', IconConst.gmail),
+                          _icon(() => {}, 'Facebook', IconConst.facebook),
+                          _icon(() => {}, 'Zalo', IconConst.zalo),
+                          const SizedBox(height: 17),
                         ],
                       ),
                     )),
@@ -363,7 +363,7 @@ Widget _icon(Function onTap, String text, String iconData) {
               height: 18,
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Text(
             text,
             style: AppTextTheme.normalBlack.copyWith(

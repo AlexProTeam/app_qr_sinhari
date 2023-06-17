@@ -25,19 +25,18 @@ class GridViewDisplayProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
-    final _itemHeight = _itemWidth + 50;
+    final itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
+    final itemHeight = itemWidth + 50;
     final numberRow = CommonUtil.countNumberRowOfGridview(products);
     final heightList =
-        (notExpand ? min(numberRow, 2) : numberRow) * (_itemHeight + 70);
+        (notExpand ? min(numberRow, 2) : numberRow) * (itemHeight + 70);
     return Column(
       children: [
         Row(
           children: [
             const SizedBox(width: 16),
-            Text(
-              label,
-              style: TextStyle(
+            Text(label,
+                style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
                     color: Color(0xFFEF4948))),
@@ -48,8 +47,8 @@ class GridViewDisplayProduct extends StatelessWidget {
                   onMore!();
                 }
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12),
                 child: Text(
                   'Xem thêm',
                   style: AppTextTheme.normalGrey,
@@ -59,15 +58,15 @@ class GridViewDisplayProduct extends StatelessWidget {
           ],
         ),
         // SizedBox(height: 10),
-        Container(
+        SizedBox(
           width: double.infinity,
           height: heightList,
           child: GridView.builder(
             itemCount:
                 notExpand ? min(products?.length ?? 0, 4) : products?.length,
             physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 16.0,
               mainAxisSpacing: 12.0,
@@ -76,7 +75,7 @@ class GridViewDisplayProduct extends StatelessWidget {
             itemBuilder: (context, index) {
               return Expanded(
                 child: CategoryDetailWidgetItemProduct(
-                  itemWidth: _itemWidth,
+                  itemWidth: itemWidth,
                   productModel: products?[index],
                 ),
               );

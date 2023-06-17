@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
@@ -25,7 +24,7 @@ import 'package:qrcode/feature/feature/personal/personal_screen.dart';
 import 'package:qrcode/feature/feature/personal/policy_screen.dart';
 import 'package:qrcode/feature/feature/profile/profile_screen.dart';
 import 'package:qrcode/feature/feature/scan/check_bill_screen.dart';
-import 'package:qrcode/feature/feature/scan_qr.dart';
+import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
@@ -80,21 +79,21 @@ class Routes {
   }
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    LOG.d('LOG ROUTE_NAVIGATOR: ${settings.name}');
+    lOG.d('LOG ROUTE_NAVIGATOR: ${settings.name}');
     switch (settings.name) {
-      case RouteName.GioiThieuScreen:
+      case RouteName.gioiThieuScreen:
         return SlideLeftRoute(
-          widget: GioiThieuScreen(),
+          widget: const GioiThieuScreen(),
         );
-      case RouteName.HuongDanScreen:
+      case RouteName.huongDanScreen:
         return SlideLeftRoute(
-          widget: HuongDanScreen(),
+          widget: const HuongDanScreen(),
         );
-      case RouteName.PolicyScreen:
+      case RouteName.policyScreen:
         return SlideLeftRoute(
-          widget: PolicyScreen(),
+          widget: const PolicyScreen(),
         );
-      case RouteName.MuaHangScrene:
+      case RouteName.muaHangScrene:
         return SlideLeftRoute(
           widget: DetailProductContact(
             argument: settings.arguments != null
@@ -102,7 +101,7 @@ class Routes {
                 : null,
           ),
         );
-      case RouteName.ActiveScrene:
+      case RouteName.activeScrene:
         return SlideLeftRoute(
           widget: DetailProductActive(
             argument: settings.arguments != null
@@ -110,54 +109,54 @@ class Routes {
                 : null,
           ),
         );
-      case RouteName.NotiScreen:
+      case RouteName.notiScreen:
         return SlideLeftRoute(
-          widget: NotiScreen(),
+          widget: const NotiScreen(),
         );
-      case RouteName.ContainerScreen:
+      case RouteName.containerScreen:
         return SlideLeftRoute(
-          widget: ScreenContainer(),
+          widget: const ScreenContainer(),
         );
-      case RouteName.WelcomeScreen:
+      case RouteName.welcomeScreen:
         return SlideLeftRoute(
-          widget: WelcomeScreen(),
+          widget: const WelcomeScreen(),
         );
-      case RouteName.VerifyOtpScreen:
+      case RouteName.verifyOtpScreen:
         return SlideLeftRoute(
           widget: VerifyOtpScreen(
             phone:
                 settings.arguments != null ? settings.arguments as String : '',
           ),
         );
-      case RouteName.HistoryScanScreen:
+      case RouteName.historyScanScreen:
         return SlideLeftRoute(
-          widget: HistoryScanScreen(),
+          widget: const HistoryScanScreen(),
         );
-      case RouteName.ScanQrScreen:
+      case RouteName.scanQrScreen:
         return SlideLeftRoute(
-          widget: ScanQrScreen(),
+          widget: const ScanQrScreen(),
         );
-      case RouteName.WebViewScreen:
+      case RouteName.webViewScreen:
         return SlideLeftRoute(
           widget: WebViewScreen(
             url: settings.arguments != null ? settings.arguments as String : '',
           ),
         );
-      case RouteName.WebViewDetailScreen:
+      case RouteName.webViewDetailScreen:
         return SlideLeftRoute(
           widget: WebViewDetailScreen(
             url: settings.arguments != null ? settings.arguments as String : '',
           ),
         );
-      case RouteName.ProfileScreen:
+      case RouteName.profileScreen:
         return SlideLeftRoute(
-          widget: ProfileScreen(),
+          widget: const ProfileScreen(),
         );
-      case RouteName.PersonalScreen:
+      case RouteName.personalScreen:
         return SlideLeftRoute(
-          widget: PersonalScreen(),
+          widget: const PersonalScreen(),
         );
-      case RouteName.DetailProductScreen:
+      case RouteName.detailProductScreen:
         return SlideLeftRoute(
           widget: DetailProductScreen(
             argument: settings.arguments != null
@@ -167,7 +166,7 @@ class Routes {
         );
 
       ///
-      case RouteName.DetailNewScreen:
+      case RouteName.detailNewScreen:
         return SlideLeftRoute(
           widget: DetailNewScreen(
             argument: settings.arguments != null
@@ -175,7 +174,7 @@ class Routes {
                 : null,
           ),
         );
-      case RouteName.ListProductScreen:
+      case RouteName.listProductScreen:
         return SlideLeftRoute(
           widget: ListProductScreen(
             argument: settings.arguments != null
@@ -183,27 +182,23 @@ class Routes {
                 : null,
           ),
         );
-      case RouteName.HomeScreen:
+      case RouteName.homeScreen:
         return SlideLeftRoute(
-          widget: HomeScreen(),
+          widget: const HomeScreen(),
         );
-      case RouteName.ChangePassScreen:
+      case RouteName.changePassScreen:
         return SlideLeftRoute(
-          widget: ChangePassScreen(),
+          widget: const ChangePassScreen(),
         );
-      case RouteName.RegisterScreen:
+      case RouteName.registerScreen:
         return SlideLeftRoute(
-          widget: RegisterScreen(),
+          widget: const RegisterScreen(),
         );
-      case RouteName.VerifyOtpScreen:
+      case RouteName.forgotPassScreen:
         return SlideLeftRoute(
-          widget: VerifyOtpScreen(phone: '',),
+          widget: const ForgotPassScreen(),
         );
-      case RouteName.ForgotPassScreen:
-        return SlideLeftRoute(
-          widget: ForgotPassScreen(),
-        );
-      case RouteName.LoginScreen:
+      case RouteName.loginScreen:
         return SlideLeftRoute(
           widget: LoginScreen(
             haveBack:
@@ -212,11 +207,11 @@ class Routes {
         );
       case RouteName.splashScreen:
         return SlideLeftRoute(
-          widget: SplashPage(),
+          widget: const SplashPage(),
         );
-      case RouteName.CheckBillScreen:
+      case RouteName.checkBillScreen:
         return SlideLeftRoute(
-          widget: CheckBillScreen(),
+          widget: const CheckBillScreen(),
         );
 
       default:

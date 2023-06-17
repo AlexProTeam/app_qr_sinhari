@@ -107,8 +107,11 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 class AnimatedLogo extends AnimatedWidget {
   static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
   static final _sizeTween = Tween<double>(begin: 0, end: 300);
-  AnimatedLogo({Key? key, required Animation<double> animation})
+
+  const AnimatedLogo({Key? key, required Animation<double> animation})
       : super(key: key, listenable: animation);
+
+  @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
     return Center(
@@ -124,16 +127,18 @@ class AnimatedLogo extends AnimatedWidget {
   }
 }
 
-// ignore: use_key_in_widget_constructors
 class SplashPage extends StatefulWidget {
+  const SplashPage({Key? key}) : super(key: key);
+
   @override
-  _LogoAppState createState() => _LogoAppState();
+  LogoAppState createState() => LogoAppState();
 }
 
-class _LogoAppState extends State<SplashPage>
+class LogoAppState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
+
   @override
   void initState() {
     super.initState();
@@ -153,21 +158,21 @@ class _LogoAppState extends State<SplashPage>
 
   void _initData() async {
     injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
-    String? _accessToken = injector<LocalApp>()
+    String? accessToken = injector<LocalApp>()
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
-    if (_accessToken?.isEmpty ?? true) {
-      await Future.delayed(Duration(seconds: 2));
+    if (accessToken?.isEmpty ?? true) {
+      await Future.delayed(const Duration(seconds: 2));
       // Routes.instance.navigateTo(RouteName.ContainerScreen);
-      Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
+      Routes.instance.navigateAndRemove(RouteName.welcomeScreen);
       return;
     }
     AppHeader appHeader = AppHeader();
-    appHeader.accessToken = _accessToken;
+    appHeader.accessToken = accessToken;
     injector<AppClient>().header = appHeader;
     final data = await injector<AppClient>().get('auth/showProfile');
     ProfileModel profileModel = ProfileModel.fromJson(data['data']);
     injector<AppCache>().profileModel = profileModel;
-    Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
+    Routes.instance.navigateAndRemove(RouteName.welcomeScreen);
   }
 
   @override
@@ -189,7 +194,7 @@ class _LogoAppState extends State<SplashPage>
                 style: AppTextTheme.medium20PxBlack.copyWith(fontSize: 18),
               ),
               const Spacer(),
-              Text(
+              const Text(
                 'Bản quyền thuộc sở hữu CÔNG TY TNHH SINHAIR Japan',
                 style: AppTextTheme.normalGrey,
                 textAlign: TextAlign.center,

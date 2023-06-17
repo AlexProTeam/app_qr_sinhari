@@ -1,51 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
-
 
 class MuaHangScrene extends StatefulWidget {
   // int productId;
   const MuaHangScrene({Key? key}) : super(key: key);
 
   @override
-  _MuaHangScreneState createState() => _MuaHangScreneState();
+  MuaHangScreneState createState() => MuaHangScreneState();
 }
 
-class _MuaHangScreneState extends State<MuaHangScrene> {
+class MuaHangScreneState extends State<MuaHangScrene> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
         title: 'Mua hàng',
         iconLeftTap: () {
-          Routes.instance.pop();
+          Navigator.pop(context);
         },
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            CustomTextField(
+            const CustomTextField(
               hintText: 'Họ tên',
             ),
             const SizedBox(height: 12),
-            CustomTextField(
+            const CustomTextField(
               hintText: 'Số điện thoại',
             ),
             const SizedBox(height: 12),
-            CustomTextField(
+            const CustomTextField(
               hintText: 'Địa chỉ',
             ),
             const SizedBox(height: 12),
-            CustomTextField(
+            const CustomTextField(
               hintText: 'Nội dung mua hàng',
             ),
             const SizedBox(height: 20),
             CustomButton(
               onTap: () async {
-                Routes.instance.pop();
+                Navigator.pop(context);
                 // try {
                 //   injector<LoadingBloc>().add(StartLoading());
                 //   await injector<AppClient>().post(

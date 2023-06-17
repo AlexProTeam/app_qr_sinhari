@@ -5,7 +5,6 @@ import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/injector_container.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
@@ -14,10 +13,10 @@ class PolicyScreen extends StatefulWidget {
   const PolicyScreen({Key? key}) : super(key: key);
 
   @override
-  _PolicyScreenState createState() => _PolicyScreenState();
+  PolicyScreenState createState() => PolicyScreenState();
 }
 
-class _PolicyScreenState extends State<PolicyScreen> {
+class PolicyScreenState extends State<PolicyScreen> {
   Map _data = {};
   bool isLoadding = false;
 
@@ -47,11 +46,11 @@ class _PolicyScreenState extends State<PolicyScreen> {
       customAppBar: CustomAppBar(
         title: 'Điều khoản sử dụng',
         iconLeftTap: () {
-          Routes.instance.pop();
+          Navigator.pop(context);
         },
       ),
       body: isLoadding
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
@@ -61,14 +60,14 @@ class _PolicyScreenState extends State<PolicyScreen> {
                   Stack(
                     children: [
                       Image.asset(
-                        IconConst.policy_background,
+                        IconConst.policyBackground,
                         width: double.infinity,
                         height: 120,
                         fit: BoxFit.cover,
                       ),
                       Positioned.fill(
                         child: Container(
-                          margin: EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                               border:
                                   Border.all(color: Colors.white, width: 2)),

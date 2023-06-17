@@ -14,7 +14,6 @@ import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/validate_utils.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/bottom_sheet_select_image.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
@@ -27,40 +26,41 @@ class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _adddressController = TextEditingController();
+class ProfileScreenState extends State<ProfileScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _adddressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   File? _image;
   bool isLoadding = false;
 
-  void _onDone() async {
-    CommonUtil.dismissKeyBoard(context);
-    if (!CommonUtil.validateAndSave(_formKey)) return;
-    try {
-      isLoadding = true;
-      await injector<AppClient>()
-          .post('auth/saveProfile?name=${_nameController.text}'
-              '&email=${_emailController.text}&phone=${_phoneController.text}&'
-              'address=${_adddressController.text}');
-      injector<SnackBarBloc>().add(ShowSnackbarEvent(
-          type: SnackBarType.success,
-          content: 'Cập nhật thông tin thành công!.'));
-      final data = await injector<AppClient>().get('auth/showProfile');
-      ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-      injector<AppCache>().profileModel = profileModel;
-      Routes.instance.pop();
-    } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      isLoadding = false;
-    }
-  }
+  ///todo: remove later
+  // void _onDone() async {
+  //   CommonUtil.dismissKeyBoard(context);
+  //   if (!CommonUtil.validateAndSave(_formKey)) return;
+  //   try {
+  //     isLoadding = true;
+  //     await injector<AppClient>()
+  //         .post('auth/saveProfile?name=${_nameController.text}'
+  //             '&email=${_emailController.text}&phone=${_phoneController.text}&'
+  //             'address=${_adddressController.text}');
+  //     injector<SnackBarBloc>().add(ShowSnackbarEvent(
+  //         type: SnackBarType.success,
+  //         content: 'Cập nhật thông tin thành công!.'));
+  //     final data = await injector<AppClient>().get('auth/showProfile');
+  //     ProfileModel profileModel = ProfileModel.fromJson(data['data']);
+  //     injector<AppCache>().profileModel = profileModel;
+  //     Routes.instance.pop();
+  //   } catch (e) {
+  //     CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+  //   } finally {
+  //     isLoadding = false;
+  //   }
+  // }
 
   void _onDoneNew() async {
     CommonUtil.dismissKeyBoard(context);
@@ -73,10 +73,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       var request = http.MultipartRequest('POST',
           Uri.parse('https://admin.sinhairvietnam.vn/api/auth/saveProfile'));
       request.fields.addAll({
-        'name': '${_nameController.text}',
-        'email': '${_emailController.text}',
-        'phone': '${_phoneController.text}',
-        'address': '${_adddressController.text}'
+        'name': _nameController.text,
+        'email': _emailController.text,
+        'phone': _phoneController.text,
+        'address': _adddressController.text
       });
       if (_image != null) {
         request.files.add(
@@ -92,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         final data = await injector<AppClient>().get('auth/showProfile');
         ProfileModel profileModel = ProfileModel.fromJson(data['data']);
         injector<AppCache>().profileModel = profileModel;
-        Routes.instance.pop();
+        Navigator.pop(context);
       }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
@@ -138,8 +138,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     _initData();
     super.initState();
-    print("--------------");
-    print("${injector<AppCache>().profileModel?.avatar}");
   }
 
   void _initData() {
@@ -161,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // ),
       resizeToAvoidBottomInset: false,
       body: isLoadding
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Column(
@@ -173,19 +171,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back,
                           size: 18,
                           color: Color(0xFFACACAC),
                         )),
-                    Text(
+                    const Text(
                       'Thông tin cá nhân',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                           color: Colors.black),
                     ),
-                    SizedBox(width: 40),
+                    const SizedBox(width: 40),
                   ],
                 ),
                 Expanded(
@@ -207,9 +205,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     height: 164,
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          width: 1, color: Color(0xFFD9D9D9)),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(
+                                          width: 1,
+                                          color: const Color(0xFFD9D9D9)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(
                                         12,
                                       )),
                                     ),
@@ -220,9 +219,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             decoration: BoxDecoration(
                                               border: Border.all(
                                                   width: 1,
-                                                  color: Color(0xFFD9D9D9)),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
+                                                  color:
+                                                      const Color(0xFFD9D9D9)),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(
                                                 12,
                                               )),
                                             ),
@@ -241,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 children: [
                                                   Center(
                                                     child: Image.asset(
-                                                      IconConst.Logo,
+                                                      IconConst.logoLogin,
                                                       width: 145,
                                                       height: 145,
                                                       fit: BoxFit.cover,
@@ -256,7 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           MainAxisAlignment.end,
                                                       children: [
                                                         Image.asset(
-                                                          IconConst.Camera,
+                                                          IconConst.camera,
                                                           width: 24,
                                                           height: 24,
                                                           fit: BoxFit.cover,

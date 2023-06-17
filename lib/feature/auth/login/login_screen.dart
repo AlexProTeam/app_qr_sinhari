@@ -1,7 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -22,31 +22,34 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key, this.haveBack}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _phoneController = TextEditingController();
+class LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void _onContinue() async {
+  void _onContinue() {
     if (!CommonUtil.validateAndSave(_formKey)) return;
+
     String text = _phoneController.text;
     String phoneNumber = text[0] != '0' ? '0$text' : text;
+
+    _performLogin(phoneNumber);
+  }
+
+  Future<void> _performLogin(String phoneNumber) async {
     try {
-      injector<LoadingBloc>().add(StartLoading());
       await injector<AppClient>().post('auth-with-otp?phone=$phoneNumber');
       await _addToken();
       Routes.instance
-          .navigateTo(RouteName.VerifyOtpScreen, arguments: phoneNumber);
+          .navigateTo(RouteName.verifyOtpScreen, arguments: phoneNumber);
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      injector<LoadingBloc>().add(FinishLoading());
     }
   }
 
-  Future _addToken() async {
+  Future<void> _addToken() async {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/add_device'));
     request.fields
@@ -55,9 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      final responseBody = await response.stream.bytesToString();
+      log('Token added successfully: $responseBody');
     } else {
-      print(response.reasonPhrase);
+      log('Failed to add token: ${response.reasonPhrase}',
+          error: response.reasonPhrase);
     }
   }
 
@@ -67,37 +72,27 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: AppColors.white,
       autoDismissKeyboard: true,
       resizeToAvoidBottomInset: false,
-      // customAppBar: CustomAppBar(
-      //   title: 'Đăng nhập',
-      //   iconLeftTap: () {
-      //     if (widget.haveBack == false) {
-      //       Routes.instance.navigateAndRemove(RouteName.splashScreen);
-      //     } else {
-      //       Routes.instance.pop();
-      //     }
-      //   },
-      // ),
       body: Column(
         children: [
           Row(
             children: [
               IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: 18,
-                    color: Color(0xFFACACAC),
-                  )),
-              SizedBox(width: 90),
-              Text(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back,
+                  size: 18,
+                  color: Color(0xFFACACAC),
+                ),
+              ),
+              const SizedBox(width: 90),
+              const Text(
                 'Đăng nhập',
                 style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black),
-              )
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
           Expanded(
@@ -114,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            IconConst.Logo,
+                            IconConst.logoLogin,
                             width: 232,
                             height: 232,
                           ),
@@ -137,44 +132,45 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       const SizedBox(height: 15),
-                      Center(
+                      const Center(
                         child: Text(
                           'Hoặc',
                           style: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 12,
-                              color: Colors.black),
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                      SizedBox(height: 11),
+                      const SizedBox(height: 11),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            IconConst.Gmail,
+                            IconConst.gmail,
                             width: 30,
                             height: 30,
                           ),
-                          SizedBox(width: 35),
+                          const SizedBox(width: 35),
                           Image.asset(
-                            IconConst.Facebook,
+                            IconConst.facebook,
                             width: 30,
                             height: 30,
                           ),
-                          SizedBox(width: 35),
+                          const SizedBox(width: 35),
                           Image.asset(
-                            IconConst.Zalo,
+                            IconConst.zalo,
                             width: 30,
                             height: 30,
                           ),
-                          SizedBox(width: 35),
+                          const SizedBox(width: 35),
                           Image.asset(
-                            IconConst.Apple,
+                            IconConst.apple,
                             width: 30,
                             height: 30,
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),

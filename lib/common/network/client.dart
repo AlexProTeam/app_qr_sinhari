@@ -29,7 +29,8 @@ class AppClient {
   Future<Map> get(String endPoint, {bool? checkRepeat}) async {
     if (checkRepeat == true) {
       DateTime now = DateTime.now();
-      if (now.difference(currentBackPressTime) > Duration(milliseconds: 200)) {
+      if (now.difference(currentBackPressTime) >
+          const Duration(milliseconds: 200)) {
         currentBackPressTime = now;
         return {};
       }
@@ -38,7 +39,7 @@ class AppClient {
     var url = Uri.parse('${Configurations.host}$endPoint');
     Response? response = await http
         .get(url, headers: header?.toJson() ?? {})
-        .timeout(Duration(seconds: Configurations.connectTimeout),
+        .timeout(const Duration(seconds: Configurations.connectTimeout),
             onTimeout: () {
       throw TimeOutException();
     });
@@ -46,8 +47,8 @@ class AppClient {
 
     String fullRequets = 'endPoint: ${Configurations.host}$endPoint\n'
         'Token: ${header?.accessToken}\n'
-        'Response: ${data}';
-    LOG.w('REQUEST_GET: $fullRequets');
+        'Response: $data';
+    lOG.w('REQUEST_GET: $fullRequets');
     return _handleData(data);
   }
 
@@ -65,7 +66,7 @@ class AppClient {
             body: body != null ? (encodeBody ? json.encode(body) : body) : null,
             headers: header?.toJson(contentType: contentType) ??
                 {'Content-Type': 'application/json'})
-        .timeout(Duration(seconds: Configurations.connectTimeout),
+        .timeout(const Duration(seconds: Configurations.connectTimeout),
             onTimeout: () {
       throw TimeOutException();
     });
@@ -76,7 +77,7 @@ class AppClient {
         'Token: ${header?.accessToken}\n'
         'body: $body\n'
         'Response: ${response.body}';
-    LOG.w('REQUEST_POST: $fullRequets');
+    lOG.w('REQUEST_POST: $fullRequets');
     if (!handleResponse) {
       return data;
     }

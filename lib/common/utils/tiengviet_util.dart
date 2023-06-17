@@ -1,5 +1,5 @@
 class TiengVietUtil {
-  static List<String> _vietNamese = [
+  static final List<String> _vietNamese = [
     'aàáạảãâầấậẩẫăằắặẳẵ',
     'eèéẹẻẽêềếệểễ',
     'oòóọỏõôồốộổỗơờớợởỡ',
@@ -14,7 +14,7 @@ class TiengVietUtil {
     text = text.toLowerCase();
     List<String> listInput = [];
     for (var i = 0; i < text.length; i++) {
-      listInput.add('${text[i]}');
+      listInput.add(text[i]);
     }
     listInput.remove('̀');
     listInput.remove('́');
@@ -22,7 +22,7 @@ class TiengVietUtil {
     for (var i = 0; i < listInput.length; i++) {
       for (int j = 0; j < _vietNamese.length; j++) {
         if (_vietNamese[j].contains(listInput[i])) {
-          listInput[i] = '${_vietNamese[j][0]}';
+          listInput[i] = _vietNamese[j][0];
           break;
         }
       }

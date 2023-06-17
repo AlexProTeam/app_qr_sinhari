@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
@@ -11,10 +10,10 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  RegisterScreenState createState() => RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -22,9 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomGestureDetector(
-            onTap: (){
-              Routes.instance.pop();
-            },
+            onTap: () => Navigator.pop(context),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Image.asset(
@@ -58,27 +55,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Email',
                 ),
                 const SizedBox(height: 12),
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Họ và tên',
                 ),
                 const SizedBox(height: 12),
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Địa chỉ',
                 ),
                 const SizedBox(height: 12),
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Địa chỉ',
                 ),
                 const SizedBox(height: 12),
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Mật khẩu',
                 ),
                 const SizedBox(height: 12),
-                CustomTextField(
+                const CustomTextField(
                   hintText: 'Nhập lại mật khẩu',
                 ),
                 const SizedBox(height: 20),

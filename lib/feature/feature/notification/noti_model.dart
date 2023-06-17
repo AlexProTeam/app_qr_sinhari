@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NotiModel {
   int? id;
@@ -18,15 +19,12 @@ class NotiModel {
     imageThumbs = json['image_thumbs'];
     createdAt = json['created_at'];
     if (createdAt?.isNotEmpty ?? false) {
-      DateFormat dateFormat = DateFormat('yyyy-MM-ddThh:mm:ss');
+      DateFormat dateFormat = DateFormat('yyyy-MM-ddTHH:mm:ss');
       DateTime dateTime = dateFormat.parse(createdAt!);
       DateTime date2 = DateTime.fromMillisecondsSinceEpoch(
           dateTime.millisecondsSinceEpoch + 3600000 * 7);
-      List<String> ngayThang =
-          date2.toString().substring(0, 10).split('-').toList();
-      String ngayThangText = ngayThang.reversed.join('/');
-      String gio = date2.toString().substring(11, 16);
-      createdAt = '$gio - $ngayThangText';
+
+      createdAt = timeago.format(date2, locale: 'en_short');
     }
   }
 }

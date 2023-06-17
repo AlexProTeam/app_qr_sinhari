@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
@@ -9,16 +8,15 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 import 'noti_model.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class NotiScreen extends StatefulWidget {
   const NotiScreen({Key? key}) : super(key: key);
 
   @override
-  _NotiScreenState createState() => _NotiScreenState();
+  NotiScreenState createState() => NotiScreenState();
 }
 
-class _NotiScreenState extends State<NotiScreen> {
+class NotiScreenState extends State<NotiScreen> {
   List<NotiModel> histories = [];
   bool isLoadding = false;
 
@@ -48,12 +46,9 @@ class _NotiScreenState extends State<NotiScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      // customAppBar: CustomAppBar(
-      //   title: 'Thông báo',
-      // ),
-      backgroundColor: Color(0xFFF2F2F2),
+      backgroundColor: const Color(0xFFF2F2F2),
       body: isLoadding
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Column(
@@ -64,13 +59,13 @@ class _NotiScreenState extends State<NotiScreen> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back,
                           size: 18,
                           color: Color(0xFFACACAC),
                         )),
-                    SizedBox(width: 90),
-                    Text(
+                    const SizedBox(width: 90),
+                    const Text(
                       'Thông báo',
                       style: TextStyle(
                           fontSize: 18,
@@ -79,10 +74,10 @@ class _NotiScreenState extends State<NotiScreen> {
                     )
                   ],
                 ),
-                SizedBox(height: 16.75),
+                const SizedBox(height: 16.75),
                 Expanded(
                   child: histories.isEmpty
-                      ? Center(
+                      ? const Center(
                           child: Text("Không có thông báo nào!"),
                         )
                       : ListView.builder(
@@ -99,8 +94,6 @@ class _NotiScreenState extends State<NotiScreen> {
   }
 
   Widget _item(NotiModel model) {
-    DateFormat dateFormat = DateFormat('yyyy-MM-ddThh:mm:ss');
-    DateTime dateTime = dateFormat.parse(model.createdAt!);
     return InkWell(
       onTap: () {
         // Routes.instance.navigateTo(RouteName.DetailProductScreen,
@@ -109,7 +102,7 @@ class _NotiScreenState extends State<NotiScreen> {
         //     ));
       },
       child: Container(
-        decoration: BoxDecoration(color: Color(0xFFF4F5FB)),
+        decoration: const BoxDecoration(color: Color(0xFFF4F5FB)),
         child: Column(
           children: [
             Padding(
@@ -127,11 +120,11 @@ class _NotiScreenState extends State<NotiScreen> {
                   const SizedBox(width: 12),
                   Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            model.title ?? '',
-                        style: TextStyle(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        model.title ?? '',
+                        style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             color: Colors.black),
@@ -149,19 +142,16 @@ class _NotiScreenState extends State<NotiScreen> {
                     ],
                   )),
                   Text(
-                    timeago.format(
-                      dateTime,
-                      ),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 10,
-                      color: Color(0xFFACACAC)
-                    ),
+                    model.createdAt ?? '',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 10,
+                        color: Color(0xFFACACAC)),
                   ),
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               color: Color(0xFFACACAC),
               height: 1,
             )

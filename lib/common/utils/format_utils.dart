@@ -1,5 +1,5 @@
-import 'package:qrcode/common/utils/common_util.dart';
 import 'package:intl/intl.dart';
+import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/log_util.dart';
 
 class FormatUtils {
@@ -41,8 +41,8 @@ class FormatUtils {
     }
     int hour = (seconds / 3600).round();
     int minute = ((seconds - hour * 3600) / 60).round();
-    String textHour = '${hour != 0 ? '${hour}giờ' : ''}';
-    String minuteText = '${minute != 0 ? '${minute}phút' : ''}';
+    String textHour = hour != 0 ? '${hour}giờ' : '';
+    String minuteText = minute != 0 ? '${minute}phút' : '';
     return '$textHour$minuteText';
   }
 
@@ -56,7 +56,7 @@ class FormatUtils {
       final output = NumberFormat.simpleCurrency(locale: 'vi').format(currency);
       return haveUnit ? output : output.trim().replaceAll('₫', '');
     } catch (e) {
-      LOG.e('Exception: formatCurrencyDoubleToString: ${e.toString()}');
+      lOG.e('Exception: formatCurrencyDoubleToString: ${e.toString()}');
       return '$currency';
     }
   }
@@ -135,6 +135,6 @@ class FormatUtils {
     } else {
       secondText = "$second";
     }
-    return minuteText + ":" + secondText;
+    return "$minuteText:$secondText";
   }
 }
