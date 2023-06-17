@@ -24,6 +24,7 @@ import 'package:qrcode/feature/feature/personal/huong_dan.dart';
 import 'package:qrcode/feature/feature/personal/personal_screen.dart';
 import 'package:qrcode/feature/feature/personal/policy_screen.dart';
 import 'package:qrcode/feature/feature/profile/profile_screen.dart';
+import 'package:qrcode/feature/feature/scan/check_bill_screen.dart';
 import 'package:qrcode/feature/feature/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
@@ -212,6 +213,10 @@ class Routes {
       case RouteName.splashScreen:
         return SlideLeftRoute(
           widget: SplashPage(),
+        );
+      case RouteName.CheckBillScreen:
+        return SlideLeftRoute(
+          widget: CheckBillScreen(),
         );
 
       default:

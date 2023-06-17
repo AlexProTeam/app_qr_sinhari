@@ -100,6 +100,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                     ),
                     _icon(
                       () {
+                        // Routes.instance.navigateTo(RouteName.CheckBillScreen);
                         Routes.instance.navigateTo(RouteName.HuongDanScreen);
                       },
                       'Chính sách bảo mật',
@@ -116,24 +117,38 @@ class _PersonalScreenState extends State<PersonalScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 31),
+            SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Kết nối với Sinhair:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                        color: Colors.black),
+              child: Container(
+                  width: 343,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(width: 1, color: Colors.white),
+                    borderRadius: BorderRadius.all(Radius.circular(
+                      8,
+                    )),
                   ),
-                  _icon(() => {}, 'Gmail', IconConst.Gmail),
-                  _icon(() => {}, 'Facebook', IconConst.Facebook),
-                  _icon(() => {}, 'Zalo', IconConst.Zalo)
-                ],
-              ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 16),
+                        Text(
+                          'Kết nối với Sinhair:',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: Colors.black),
+                        ),
+                        _icon(() => {}, 'Gmail', IconConst.Gmail),
+                        _icon(() => {}, 'Facebook', IconConst.Facebook),
+                        _icon(() => {}, 'Zalo', IconConst.Zalo),
+                        SizedBox(height: 17),
+                      ],
+                    ),
+                  )),
             ),
             const SizedBox(height: 20),
             Row(

@@ -68,68 +68,70 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
           _initData();
         }
       },
-      child: Scaffold(
-          // customAppBar: CustomAppBar(
-          //   title: 'Lịch sử quét',
-          //   haveIconLeft: false,
-          // ),
-          backgroundColor: Color(0xFFF2F2F2),
-          body: Column(
-            children: [
-              SizedBox(height: 39),
-              Center(
-                child: Text(
-                  'Lịch sử QR',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF000000)),
+      child: SafeArea(
+        child: Scaffold(
+            // customAppBar: CustomAppBar(
+            //   title: 'Lịch sử quét',
+            //   haveIconLeft: false,
+            // ),
+            backgroundColor: Color(0xFFF2F2F2),
+            body: Column(
+              children: [
+                SizedBox(height: 39),
+                Center(
+                  child: Text(
+                    'Lịch sử QR',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF000000)),
+                  ),
                 ),
-              ),
-              // isLoadding
-              //     ? Center(
-              //         child: CircularProgressIndicator(),
-              //       )
-              //     : histories.isEmpty
-              //         ? Padding(
-              //             padding: const EdgeInsets.symmetric(vertical: 320),
-              //             child: Text("Không có lịch sử nào!"),
-              //           )
-              //         :
-              // RefreshIndicator(
-              //   onRefresh: _onRefresh,
-              //   backgroundColor: Colors.white,
-              //   color: AppColors.primaryColor,
-              //   child:
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 16),
-                    Text(
-                      '10 sản phẩm',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.red),
-                    ),
-                    SizedBox(height: 16),
-                    ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (_, index) {
-                          return _item();
-                        },
-                        // itemCount: histories.length,
-                        itemCount: 5),
-                  ],
+                // isLoadding
+                //     ? Center(
+                //         child: CircularProgressIndicator(),
+                //       )
+                //     : histories.isEmpty
+                //         ? Padding(
+                //             padding: const EdgeInsets.symmetric(vertical: 320),
+                //             child: Text("Không có lịch sử nào!"),
+                //           )
+                //         :
+                // RefreshIndicator(
+                //   onRefresh: _onRefresh,
+                //   backgroundColor: Colors.white,
+                //   color: AppColors.primaryColor,
+                //   child:
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 16),
+                      Text(
+                        '10 sản phẩm',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.red),
+                      ),
+                      SizedBox(height: 16),
+                      ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (_, index) {
+                            return _item();
+                          },
+                          // itemCount: histories.length,
+                          itemCount: 5),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          )),
+              ],
+            )),
+      ),
     );
   }
 
