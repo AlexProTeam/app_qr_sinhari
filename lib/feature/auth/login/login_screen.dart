@@ -166,7 +166,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             IconConst.Zalo,
                             width: 30,
                             height: 30,
-                          )
+                          ),
+                          SizedBox(width: 35),
+                          Image.asset(
+                            IconConst.Apple,
+                            width: 30,
+                            height: 30,
+                          ),
                         ],
                       )
                     ],

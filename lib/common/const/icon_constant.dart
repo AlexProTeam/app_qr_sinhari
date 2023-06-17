@@ -39,6 +39,7 @@ class IconConst {
 
   //icon login page
   static const String Logo = '${_path}Logologin.png';
+  static const String Apple = '${_path}apple.png';
 
   //icon contact
   static const String Location = '${_path}location.png';
