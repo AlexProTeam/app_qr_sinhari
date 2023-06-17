@@ -37,7 +37,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void _initData() async {
     injector<LocalApp>().saveBool(KeySaveDataLocal.showWelcomeScreen, true);
     try {
-      injector<LoadingBloc>().add(StartLoading());
+      // injector<LoadingBloc>().add(StartLoading());
       final data = await injector<AppClient>()
           .post('get_image_introduction', handleResponse: false);
       data['banners'].forEach((e) {
@@ -48,7 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       CommonUtil.handleException(injector<SnackBarBloc>(), e,
           methodName: '_initData');
     } finally {
-      injector<LoadingBloc>().add(FinishLoading());
+      // injector<LoadingBloc>().add(FinishLoading());
     }
   }
 

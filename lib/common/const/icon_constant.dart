@@ -60,4 +60,9 @@ class IconConst {
   static const String ScanImage = '${_path}ScanImage.png';
   static const String ScanInvoice = '${_path}ScanInvoice.png';
   static const String ScanProduct = '${_path}ScanProduct.png';
+
+  //icon checkbill
+  static const String Car = '${_path}car.png';
+  static const String Ellipse = '${_path}Ellipse 69.png';
+  static const String LocationBill = '${_path}location_bill.png';
 }

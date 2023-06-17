@@ -24,4 +24,6 @@ class RouteName {
   static const String HistoryScanScreen = 'HistoryScanScreen';
   static const String WelcomeScreen = 'WelcomeScreen';
   static const String ContainerScreen = 'ContainerSCreen';
+  //
+  static const String CheckBillScreen = 'CheckBillScreen';
 }
