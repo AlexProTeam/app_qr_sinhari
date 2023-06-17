@@ -259,17 +259,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                           _newsModel.isEmpty
                               ? const SizedBox()
-                              : Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.3,
-                                  child: ListView.builder(
-                                    itemBuilder: (_, index) {
-                                      return _itemNews(_newsModel[index]);
-                                    },
-                                    itemCount: _newsModel.length,
-                                    scrollDirection: Axis.horizontal,
-                                  ),
+                              : Column(
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.3,
+                                      child: ListView.builder(
+                                        itemBuilder: (_, index) {
+                                          return _itemNews(_newsModel[index]);
+                                        },
+                                        itemCount: _newsModel.length,
+                                        scrollDirection: Axis.horizontal,
+                                      ),
+                                    ),
+                                    SizedBox(height: 50),
+                                  ],
                                 ),
                           const SizedBox(height: 20),
                         ],

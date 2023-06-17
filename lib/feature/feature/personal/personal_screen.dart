@@ -145,6 +145,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                         _icon(() => {}, 'Gmail', IconConst.Gmail),
                         _icon(() => {}, 'Facebook', IconConst.Facebook),
                         _icon(() => {}, 'Zalo', IconConst.Zalo),
+                        _icon(() => {}, 'Apple', IconConst.Apple),
                         SizedBox(height: 17),
                       ],
                     ),
