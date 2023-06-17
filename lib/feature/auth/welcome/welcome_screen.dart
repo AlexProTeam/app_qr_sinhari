@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/auth/welcome/welcome_3_point.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_model.dart';
+import 'package:qrcode/feature/auth/welcome/welcome_point_widget.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
-import 'package:qrcode/feature/widgets/custom_image_network.dart';
+
+import '../../../common/const/icon_constant.dart';
+import '../../widgets/custom_image_network.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -30,25 +29,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void initState() {
-    _initData();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _initData().then((value) => setState(() {})));
   }
 
-  void _initData() async {
-    injector<LocalApp>().saveBool(KeySaveDataLocal.showWelcomeScreen, true);
+  Future<void> _initData() async {
+    await injector<LocalApp>()
+        .saveBool(KeySaveDataLocal.showWelcomeScreen, true);
     try {
-      injector<LoadingBloc>().add(StartLoading());
       final data = await injector<AppClient>()
           .post('get_image_introduction', handleResponse: false);
-      data['banners'].forEach((e) {
-        _welcomeModel.add(WelcomeModel.fromJson(e));
-      });
-      setState(() {});
+      final banners = data['banners'] as List<dynamic>;
+      _welcomeModel = banners.map((e) => WelcomeModel.fromJson(e)).toList();
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e,
           methodName: '_initData');
-    } finally {
-      injector<LoadingBloc>().add(FinishLoading());
     }
   }
 
@@ -56,72 +52,72 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Column(
+      body: Stack(
         children: [
-         // const SizedBox(height: 50),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (int index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              children: _welcomeModel.isNotEmpty
-                  ? _welcomeModel.map((e) => _pageView(e)).toList()
-                  : [],
-            ),
+          PageView(
+            controller: _pageController,
+            onPageChanged: (int index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            children: _welcomeModel.map((e) => _buildPageView(e.Url)).toList(),
           ),
-          const SizedBox(height: 20),
           Container(
-            height: 120,
             width: double.infinity,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Welcome3Point(
+                PointWidget(
                   currentIndex: _currentIndex,
+                  dotSize: _welcomeModel.length,
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    CustomGestureDetector(
-                      onTap: () {
-                        Routes.instance.navigateTo(RouteName.ContainerScreen);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                const SizedBox(height: 65),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 22).copyWith(bottom: 45),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomGestureDetector(
+                        onTap: () => Routes.instance
+                            .navigateTo(RouteName.ContainerScreen),
                         child: Text(
-                          'Bỏ qua',
-                          style: AppTextTheme.mediumBlack.copyWith(
-                            color: AppColors.grey7,
+                          'Skip',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.white,
+                            decoration: TextDecoration.underline,
+                            height: 1.5,
                           ),
                         ),
                       ),
-                    ),
-                    const Spacer(),
-                    CustomGestureDetector(
-                      onTap: () {
-                        if (_currentIndex < 2) {
-                          setState(() {
-                            _currentIndex++;
-                          });
-                          _pageController.jumpToPage(_currentIndex);
-                          return;
-                        }
-                        Routes.instance.navigateTo(RouteName.ContainerScreen);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          'Tiếp theo',
-                          style: AppTextTheme.mediumBlack.copyWith(
-                            color: AppColors.primaryColor,
+                      CustomGestureDetector(
+                        onTap: () => _currentIndex == _welcomeModel.length - 1
+                            ? {
+                                setState(() => _currentIndex++),
+                                _pageController.jumpToPage(_currentIndex)
+                              }
+                            : Routes.instance
+                                .navigateTo(RouteName.ContainerScreen),
+                        child: Container(
+                          width: 45,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFEF4948),
+                          ),
+                          child: Icon(
+                            Icons.keyboard_arrow_right,
+                            size: 30,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    )
-                  ],
-                )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -130,30 +126,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
-  Widget _pageView(WelcomeModel welcomeModel) {
-    return SizedBox(
-      width: double.infinity,
-      child: Container(
-      //  padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            Expanded(
-              child: CustomImageNetwork(
-                url: welcomeModel.image,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text("Công ty TNHH Sinhair Japan", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 14
-            ),maxLines: 2,),
-            SizedBox(height: 10,),
-            Text(welcomeModel.title ?? '', style: TextStyle(
-              overflow: TextOverflow.ellipsis,
-            ),maxLines: 2,),
-          ],
-        ),
-      ),
-    );
+  Widget _buildPageView(String? url) {
+    return url != null
+        ? CustomImageNetwork(
+            url: url,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          )
+        : Image.asset(
+            IconConst.welcome,
+            width: double.maxFinite,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          );
   }
 }

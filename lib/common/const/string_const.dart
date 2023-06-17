@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class StringConst {
-  static const String _path = 'StringConst.';
   static const String someThingWentWrong = 'Lỗi không xác định';
   static const String copiedToClipboard = 'Đã copy vào bộ nhớ tạm';
   static const String connectError = 'Vui lòng kiểm tra internet của bạn';

@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+
 class NotiModel {
   int? id;
   String? title;
@@ -7,7 +8,6 @@ class NotiModel {
   String? image;
   String? imageThumbs;
   String? createdAt;
-
 
   NotiModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -22,12 +22,11 @@ class NotiModel {
       DateTime dateTime = dateFormat.parse(createdAt!);
       DateTime date2 = DateTime.fromMillisecondsSinceEpoch(
           dateTime.millisecondsSinceEpoch + 3600000 * 7);
-      // LOG.d('millisecondsSinceEpochNe: $date2');
-      List<String>  ngayThang = date2.toString().substring(0,10).split('-').toList();
+      List<String> ngayThang =
+          date2.toString().substring(0, 10).split('-').toList();
       String ngayThangText = ngayThang.reversed.join('/');
-      String gio = date2.toString().substring(11,16);
+      String gio = date2.toString().substring(11, 16);
       createdAt = '$gio - $ngayThangText';
     }
   }
-
 }

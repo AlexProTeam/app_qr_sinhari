@@ -33,7 +33,6 @@ class VerifyOtpScreen extends StatefulWidget {
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   TextEditingController _controller = TextEditingController();
   final _focusNode = FocusNode();
-  bool _enable = false;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -41,10 +40,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     _focusNode.requestFocus();
     _controller.addListener(() {
       if (_controller.text.length == 6) {
-        _enable = true;
-      } else {
-        _enable = false;
-      }
+      } else {}
       setState(() {});
     });
     super.initState();

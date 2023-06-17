@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 // Import for Android features.
 import 'package:webview_flutter_android/webview_flutter_android.dart';
-
 // Import for iOS features.
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
@@ -24,9 +20,6 @@ class WebViewScreen extends StatefulWidget {
 }
 
 class _WebviewScreenState extends State<WebViewScreen> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
-
   @override
   Widget build(BuildContext context) {
     late final PlatformWebViewControllerCreationParams params;

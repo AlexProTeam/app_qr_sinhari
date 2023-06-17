@@ -89,6 +89,7 @@
 //   }
 // }
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
@@ -106,7 +107,8 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 class AnimatedLogo extends AnimatedWidget {
   static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
   static final _sizeTween = Tween<double>(begin: 0, end: 300);
-  AnimatedLogo({Key? key, required Animation<double> animation}) : super(key: key, listenable: animation);
+  AnimatedLogo({Key? key, required Animation<double> animation})
+      : super(key: key, listenable: animation);
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
     return Center(
@@ -116,38 +118,39 @@ class AnimatedLogo extends AnimatedWidget {
             margin: const EdgeInsets.symmetric(vertical: 10),
             height: _sizeTween.evaluate(animation),
             width: _sizeTween.evaluate(animation),
-            child: Image.asset(IconConst.logo)
-        ),
+            child: Image.asset(IconConst.logo)),
       ),
     );
   }
 }
+
 // ignore: use_key_in_widget_constructors
 class SplashPage extends StatefulWidget {
   @override
   _LogoAppState createState() => _LogoAppState();
 }
-class _LogoAppState extends State<SplashPage> with SingleTickerProviderStateMixin {
+
+class _LogoAppState extends State<SplashPage>
+    with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
-  late Timer _timer;
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    controller =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();
         } else if (status == AnimationStatus.dismissed) {
           controller.forward();
-
         }
       });
     controller.forward();
     _initData();
-
   }
+
   void _initData() async {
     injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
     String? _accessToken = injector<LocalApp>()
@@ -166,8 +169,9 @@ class _LogoAppState extends State<SplashPage> with SingleTickerProviderStateMixi
     injector<AppCache>().profileModel = profileModel;
     Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
   }
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SizedBox(
@@ -193,11 +197,7 @@ class _LogoAppState extends State<SplashPage> with SingleTickerProviderStateMixi
               const SizedBox(height: 20),
             ],
           ),
-        )
-
-
-
-    );
+        ));
   }
 
   @override
