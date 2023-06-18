@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
-import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/common/utils/screen_utils.dart';
+import 'package:qrcode/feature/feature/home/widget/item_news.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
-import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/banner_slide_image.dart';
-import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/gridview_product.dart';
 
 enum IconHomeEnum {
@@ -175,8 +171,9 @@ class HomeScreenState extends State<HomeScreen> {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         BannerSlideImage(
                           height: MediaQuery.of(context).size.height * 0.22,
@@ -184,72 +181,74 @@ class HomeScreenState extends State<HomeScreen> {
                           images: _bannerModel.map((e) => e.url ?? '').toList(),
                         ),
                         const SizedBox(height: 22.5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: List.generate(
-                            IconHomeEnum.values.length,
-                            (index) => _buildFilterBarItem(index),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(
+                              IconHomeEnum.values.length,
+                              (index) => _buildFilterBarItem(index),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
-                        GridViewDisplayProduct(
-                          label: 'Sản phẩm nổi bật',
-                          products: _productFeatures,
-                          notExpand: true,
-                          onMore: () {
-                            Routes.instance
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: GridViewDisplayProduct(
+                            label: 'Sản phẩm nổi bật',
+                            products: _productFeatures,
+                            notExpand: true,
+                            onMore: () {
+                              Routes.instance
+                                  .navigateTo(RouteName.listProductScreen,
+                                      arguments: ArgumentListProductScreen(
+                                        url: 'product-feature',
+                                        label: 'Sản phẩm nổi bật',
+                                      ));
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 22),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: GridViewDisplayProduct(
+                            label: 'Sản phẩm bán chạy',
+                            products: _productSellers,
+                            notExpand: true,
+                            onMore: () => Routes.instance
                                 .navigateTo(RouteName.listProductScreen,
                                     arguments: ArgumentListProductScreen(
-                                      url: 'product-feature',
-                                      label: 'Sản phẩm nổi bật',
-                                    ));
-                          },
+                                      url: 'product-seller',
+                                      label: 'Sản phẩm bán chạy',
+                                    )),
+                          ),
                         ),
                         const SizedBox(height: 22),
-                        GridViewDisplayProduct(
-                          label: 'Sản phẩm bán chạy',
-                          products: _productSellers,
-                          notExpand: true,
-                          onMore: () => Routes.instance
-                              .navigateTo(RouteName.listProductScreen,
-                                  arguments: ArgumentListProductScreen(
-                                    url: 'product-seller',
-                                    label: 'Sản phẩm bán chạy',
-                                  )),
-                        ),
-                        const SizedBox(height: 22),
-                        _newsModel.isEmpty
-                            ? const SizedBox()
-                            : Row(
-                                children: const [
-                                  SizedBox(width: 16),
-                                  Text('Tin tức mới nhất',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700,
-                                          color: Color(0xFFEF4948))),
-                                ],
+                        if (_newsModel.isNotEmpty) ...[
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text('Tin tức mới nhất',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFFEF4948))),
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 220,
+                            child: ListView.builder(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              shrinkWrap: true,
+                              itemBuilder: (_, index) => ItemNews(
+                                model: _newsModel[index],
                               ),
-                        _newsModel.isEmpty
-                            ? const SizedBox()
-                            : Column(
-                                children: [
-                                  SizedBox(
-                                    width: double.infinity,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.3,
-                                    child: ListView.builder(
-                                      itemBuilder: (_, index) {
-                                        return _itemNews(_newsModel[index]);
-                                      },
-                                      itemCount: _newsModel.length,
-                                      scrollDirection: Axis.horizontal,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 50),
-                                ],
-                              ),
-                        const SizedBox(height: 20),
+                              itemCount: _newsModel.length,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: 80),
                       ],
                     ),
                   ),
@@ -280,52 +279,6 @@ class HomeScreenState extends State<HomeScreen> {
                 color: Color(0xFFACACAC)),
           )
         ],
-      ),
-    );
-  }
-
-  Widget _itemNews(NewsModel model) {
-    return InkWell(
-      onTap: () {
-        Routes.instance.navigateTo(RouteName.detailNewScreen,
-            arguments: ArgumentDetailNewScreen(
-                newsDetail: model.id, url: model.image));
-      },
-      child: Container(
-        width: GScreenUtil.screenWidthDp * 0.6,
-        margin: const EdgeInsets.symmetric(vertical: 12).copyWith(right: 16),
-        decoration: BoxDecoration(
-            boxShadow: StringConst.defaultShadow,
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.white),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomImageNetwork(
-              url: model.image,
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.15,
-              fit: BoxFit.cover,
-              border: 12,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model.title ?? '',
-                    style: AppTextTheme.normalRoboto,
-                  ),
-                  Text(
-                    model.createdAt ?? '',
-                    style: AppTextTheme.smallGrey,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
