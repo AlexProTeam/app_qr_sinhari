@@ -7,11 +7,12 @@ class LayoutContainWidgetKeepAlive extends StatefulWidget {
       : super(key: key);
 
   @override
-  _LayoutContainWidgetKeepAliveState createState() =>
-      _LayoutContainWidgetKeepAliveState();
+  LayoutContainWidgetKeepAliveState createState() =>
+      LayoutContainWidgetKeepAliveState();
 }
 
-class _LayoutContainWidgetKeepAliveState extends State<LayoutContainWidgetKeepAlive>
+class LayoutContainWidgetKeepAliveState
+    extends State<LayoutContainWidgetKeepAlive>
     with AutomaticKeepAliveClientMixin<LayoutContainWidgetKeepAlive> {
   @override
   Widget build(BuildContext context) {

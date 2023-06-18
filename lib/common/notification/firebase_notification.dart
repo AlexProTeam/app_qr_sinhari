@@ -40,7 +40,6 @@ class FirebaseNotification {
   void initFirebaseNotification() async {
     firebaseMessaging.getToken().then((value) {
       deviceToken = value;
-      print('deviceToken: $value');
     });
     if (Platform.isIOS) {
       FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
@@ -53,11 +52,11 @@ class FirebaseNotification {
       mapTypeMessageToNavigateTo(message?.data ?? {});
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
-      LOG.d('onMessageNe: ${event.data}');
+      lOG.d('onMessageNe: ${event.data}');
       handleOnMessage(event.data);
       RemoteNotification? notification = event.notification;
       String typeNoti = _getTypeNotification(event.data) ?? '';
-      LOG.d('typeNotiNe: $typeNoti');
+      lOG.d('typeNotiNe: $typeNoti');
       await LocalNotification.instance.showNotification(
         title: notification?.title,
         body: notification?.body,
@@ -79,7 +78,6 @@ class FirebaseNotification {
       });
     }
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print('onMessageOpenedApp roi ne');
       mapTypeMessageToNavigateTo(message.data);
     });
   }
@@ -103,7 +101,7 @@ class FirebaseNotification {
       var typeMessage = message['msgType'];
       return typeMessage;
     } catch (e) {
-      LOG.e('_getTypeNotification');
+      lOG.e('_getTypeNotification');
       return null;
     }
   }

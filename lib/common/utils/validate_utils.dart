@@ -1,4 +1,3 @@
-
 import 'package:qrcode/common/utils/format_utils.dart';
 
 class ValidateUtil {
@@ -97,7 +96,6 @@ class ValidateUtil {
   }
 
   static String? validPhone(String? phone, {bool aboutNumberPhoneTest = true}) {
-
     if ((phone?.isNotEmpty ?? false) && phone?[0] != '0') {
       phone = '0$phone';
     }
@@ -177,13 +175,13 @@ class ValidateUtil {
   }
 
   static String? validEmail(String? input) {
-    if(input?.isEmpty??true){
+    if (input?.isEmpty ?? true) {
       return 'Mục này không được bỏ trống';
     }
     String p =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
-    RegExp regExp = new RegExp(p);
+    RegExp regExp = RegExp(p);
     if (regExp.hasMatch(input!)) {
       return null;
     }

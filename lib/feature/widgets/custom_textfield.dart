@@ -31,7 +31,7 @@ class CustomTextField extends StatelessWidget {
       width: double.infinity,
       height: height ?? 40,
       decoration: BoxDecoration(
-        color: Color(0xFFFFFFFF),
+        color: const Color(0xFFFFFFFF),
         border: Border.all(color: AppColors.grey5, width: 1),
         borderRadius: BorderRadius.circular(border ?? 4),
       ),
@@ -41,7 +41,7 @@ class CustomTextField extends StatelessWidget {
           fontSize: fontsize ?? 14,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.normal,
-          color: AppColors.grey7,
+          color: AppColors.black,
         ),
         controller: controller,
         textInputAction: TextInputAction.done,
@@ -50,7 +50,8 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
-            contentPadding: EdgeInsets.symmetric(horizontal: 17, vertical: 11),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 17, vertical: 11),
             suffixIcon: icon != null
                 ? Icon(
                     icon,

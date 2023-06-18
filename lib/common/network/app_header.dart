@@ -5,13 +5,10 @@ class AppHeader {
 
   AppHeader({this.accessToken, this.lat, this.lng});
 
-  AppHeader.fromLatLng(double lat, double lng) {
-    this.lat = lat;
-    this.lng = lng;
-  }
+  AppHeader.fromLatLng(double this.lat, double this.lng);
 
   Map<String, String> toJson({String? contentType}) {
-    final Map<String, String> data = Map<String, String>();
+    final Map<String, String> data = <String, String>{};
     if (accessToken != null) {
       data['Authorization'] = 'Bearer $accessToken';
       if (contentType != null) {

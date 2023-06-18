@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
-  final Function onTap;
+  final Function() onTap;
   final double? width;
   final double? height;
 
@@ -18,13 +17,14 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomGestureDetector(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         width: width ?? 313,
         height: height ?? 50,
         decoration: BoxDecoration(
-            color: Color(0xFFEF4948), borderRadius: BorderRadius.circular(20)),
+            color: const Color(0xFFEF4948),
+            borderRadius: BorderRadius.circular(20)),
         child: Center(
           child: Text(
             text ?? '',

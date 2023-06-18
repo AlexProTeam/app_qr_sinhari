@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_state.dart';
@@ -37,10 +35,10 @@ class DetailProductScreen extends StatefulWidget {
   const DetailProductScreen({Key? key, this.argument}) : super(key: key);
 
   @override
-  _DetailProductScreenState createState() => _DetailProductScreenState();
+  DetailProductScreenState createState() => DetailProductScreenState();
 }
 
-class _DetailProductScreenState extends State<DetailProductScreen> {
+class DetailProductScreenState extends State<DetailProductScreen> {
   DetailProductModel? _detailProductModel;
   bool isLoadding = false;
 
@@ -64,7 +62,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e,
           methodName: 'getThemes CourseCubit');
-      Routes.instance.pop();
+      Navigator.pop(context);
     } finally {
       isLoadding = false;
     }
@@ -99,36 +97,35 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         content: 'URL không đúng định dạng',
         type: SnackBarType.warning,
       ));
-      Routes.instance.pop();
+      Navigator.pop(context);
     }
   }
 
-  void _onContact() async {
-    try {
-      injector<LoadingBloc>().add(StartLoading());
-      await injector<AppClient>()
-          .post('save-contact?product_id=${_detailProductModel?.id}');
-      injector<SnackBarBloc>().add(ShowSnackbarEvent(
-          type: SnackBarType.success, content: 'Lưu thông tin thành công'));
-    } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e,
-          methodName: 'getThemes CourseCubit');
-    } finally {
-      injector<LoadingBloc>().add(FinishLoading());
-    }
-  }
+  ///todo: remove later
+  // void _onContact() async {
+  //   try {
+  //     injector<LoadingBloc>().add(StartLoading());
+  //     await injector<AppClient>()
+  //         .post('save-contact?product_id=${_detailProductModel?.id}');
+  //     injector<SnackBarBloc>().add(ShowSnackbarEvent(
+  //         type: SnackBarType.success, content: 'Lưu thông tin thành công'));
+  //   } catch (e) {
+  //     CommonUtil.handleException(injector<SnackBarBloc>(), e,
+  //         methodName: 'getThemes CourseCubit');
+  //   } finally {
+  //     injector<LoadingBloc>().add(FinishLoading());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
         title: 'Chi tiết sản phẩm',
-        iconLeftTap: () {
-          Routes.instance.pop();
-        },
+        iconLeftTap: () => Navigator.pop(context),
       ),
       body: isLoadding
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Stack(
@@ -136,7 +133,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
               children: [
                 SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 60),
+                    padding: const EdgeInsets.only(bottom: 60),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -152,12 +149,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${_detailProductModel?.name ?? ''}',
+                                _detailProductModel?.name ?? '',
                                 style: AppTextTheme.normalBlack,
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                '${FormatUtils.formatCurrencyDoubleToString(_detailProductModel?.unitPrice)}',
+                                FormatUtils.formatCurrencyDoubleToString(
+                                    _detailProductModel?.unitPrice),
                                 style: AppTextTheme.mediumPrimary,
                               ),
                               Row(
@@ -295,31 +293,31 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                   ),
                 ),
                 Positioned(
+                  left: 12,
+                  right: 12,
+                  bottom: 16,
                   child: CustomButton(
                     onTap: () {
                       if (widget.argument?.url != null) {
                         injector<AppCache>().profileModel != null
-                            ? Routes.instance.navigateTo(RouteName.ActiveScrene,
+                            ? Routes.instance.navigateTo(RouteName.activeScrene,
                                 arguments: ArgumentActiveScreen(
                                     productId: _detailProductModel?.id))
-                            : Routes.instance.navigateTo(RouteName.LoginScreen,
+                            : Routes.instance.navigateTo(RouteName.loginScreen,
                                 arguments: true);
                       } else {
                         injector<AppCache>().profileModel != null
                             ? Routes.instance.navigateTo(
-                                RouteName.MuaHangScrene,
+                                RouteName.muaHangScrene,
                                 arguments: ArgumentContactScreen(
                                     productId: _detailProductModel?.id))
-                            : Routes.instance.navigateTo(RouteName.LoginScreen,
+                            : Routes.instance.navigateTo(RouteName.loginScreen,
                                 arguments: true);
                       }
                     },
                     text:
                         widget.argument?.url != null ? 'Kích hoạt' : 'Mua hàng',
                   ),
-                  left: 12,
-                  right: 12,
-                  bottom: 16,
                 ),
               ],
             ),
@@ -341,6 +339,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
             children: [
               Expanded(
                   child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     name,
@@ -352,12 +351,11 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     style: AppTextTheme.normalGrey,
                   )
                 ],
-                crossAxisAlignment: CrossAxisAlignment.start,
               )),
               Container(
                 decoration: BoxDecoration(color: Colors.blue.withOpacity(0.3)),
-                padding: EdgeInsets.all(10),
-                child: Icon(
+                padding: const EdgeInsets.all(10),
+                child: const Icon(
                   Icons.arrow_right,
                   color: Colors.blue,
                   size: 16,
@@ -366,7 +364,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
             ],
           ),
           const SizedBox(height: 12),
-          Divider(
+          const Divider(
             height: 1,
             color: AppColors.grey4,
           ),
@@ -378,7 +376,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.arrow_right,
                         color: Colors.blue,
                         size: 16,
@@ -399,7 +397,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
+              const Icon(
                 Icons.arrow_right,
                 color: Colors.blue,
                 size: 16,
@@ -419,7 +417,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
+              const Icon(
                 Icons.arrow_right,
                 color: Colors.blue,
                 size: 16,
@@ -453,7 +451,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '${number}',
+              '$number',
               style: AppTextTheme.mediumBlack.copyWith(
                 color: AppColors.blue,
               ),
@@ -471,7 +469,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   Widget _itemLimit(String dateTime, String notify) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       color: Colors.red,
       child: Center(
         child: Text(
@@ -485,9 +483,9 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   Widget _itemApccept() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       color: Colors.green,
-      child: Center(
+      child: const Center(
         child: Text(
           'Sản phẩm chính hãng của CÔNG TY TNHH SIN HAIR JAPAN',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

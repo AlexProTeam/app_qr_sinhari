@@ -118,7 +118,7 @@ class LocalNotification {
 
   Future<void> showNotification(
       {String? title, String? body, String? type}) async {
-    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    const androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your channel id',
       'your channel name',
       channelDescription: 'your channel description',
@@ -131,14 +131,14 @@ class LocalNotification {
       // sound: RawResourceAndroidNotificationSound('alarm'),
       styleInformation: BigTextStyleInformation(''),
     );
-    final iOSPlatformChannelSpecifics = DarwinNotificationDetails(
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
       // sound: 'alarm.wav',
       presentSound: true,
       presentAlert: true,
       presentBadge: true,
     );
 
-    final platformChannelSpecifics = NotificationDetails(
+    const platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics,
     );

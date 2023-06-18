@@ -46,13 +46,11 @@ class CommonUtil {
     return (data.length + 1) ~/ 2;
   }
 
-  static Future runUrl(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-      LOG.e('runUrlrunUrl: $url');
-    } else {
-      LOG.e('Exception: runUrl: $url');
-    }
+  static Future<void> runUrl(String url) async {
+    Uri dataUrl = Uri.parse(url);
+    await canLaunchUrl(dataUrl)
+        ? await launchUrl(dataUrl)
+        : lOG.e('Exception: runUrl: $url');
   }
 
   static void showCustomBottomSheet({
@@ -67,10 +65,10 @@ class CommonUtil {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext builder) {
-        double _maxHeight =
+        double maxHeight =
             GScreenUtil.screenHeightDp - 100 - GScreenUtil.statusBarHeight;
         return Container(
-          height: height != null ? min(height, _maxHeight) : _maxHeight,
+          height: height != null ? min(height, maxHeight) : maxHeight,
           margin: margin ?? const EdgeInsets.all(0),
           decoration: BoxDecoration(
             color: backgroundColor ?? Colors.white,
@@ -90,20 +88,20 @@ class CommonUtil {
   static void mapListenerSnackBarState(
       BuildContext context, SnackBarState state) {
     if (state is ShowSnackBarState) {
-      var icon;
-      var color;
-      var title;
+      Icon icon;
+      ui.Color color;
+      String title;
       switch (state.type) {
         case SnackBarType.success:
-          icon = Icon(
+          icon = const Icon(
             Icons.check_circle_outline,
             color: Colors.white,
           );
-          color = Color(0xff33B44A);
+          color = const Color(0xff33B44A);
           title = "Thành công";
           break;
         case SnackBarType.warning:
-          icon = Icon(
+          icon = const Icon(
             Icons.error_outline,
             color: Colors.white,
           );
@@ -111,15 +109,15 @@ class CommonUtil {
           title = "Cảnh báo";
           break;
         case SnackBarType.error:
-          icon = Icon(
+          icon = const Icon(
             Icons.error_outline,
             color: Colors.white,
           );
-          color = Color(0xffF63E43);
+          color = const Color(0xffF63E43);
           title = "Thất bại";
           break;
         default:
-          icon = Icon(
+          icon = const Icon(
             Icons.error_outline,
             color: Colors.white,
           );
@@ -130,7 +128,7 @@ class CommonUtil {
 
       showFlash(
         context: Routes.instance.navigatorKey.currentContext!,
-        duration: state.duration ?? Duration(milliseconds: 3000),
+        duration: state.duration ?? const Duration(milliseconds: 3000),
         builder: (context, controller) {
           return FlashBar(
             controller: controller,
@@ -148,7 +146,7 @@ class CommonUtil {
             ),
             content: Text(
               state.mess ?? '',
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
             icon: icon,
             shouldIconPulse: true,
@@ -306,7 +304,7 @@ class CommonUtil {
       bool showSnackbar = true,
       bool logBug = true,
       String? text}) async {
-    LOG.e('GstoreException: ${e.toString()} | $methodName | $exceptionName');
+    lOG.e('GstoreException: ${e.toString()} | $methodName | $exceptionName');
     if ((e is TimeOutException || e is ConnectException) &&
         snackBarBloc != null) {
       snackBarBloc.add(ShowSnackbarEvent(

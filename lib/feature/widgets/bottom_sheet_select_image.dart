@@ -14,10 +14,10 @@ class BottomSheetSelectImage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _BottomSheetSelectImageState createState() => _BottomSheetSelectImageState();
+  BottomSheetSelectImageState createState() => BottomSheetSelectImageState();
 }
 
-class _BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
+class BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
   void _requestPermission(context, bool camera) async {
     bool? checkPermissionCamera = injector<LocalApp>()
             .getBool(KeySaveDataLocal.havedAcceptPermissionCamera) ??
@@ -35,14 +35,13 @@ class _BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
       Navigator.pop(context);
       return;
     }
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     CommonUtil.showAlertDialog(
       context,
       showCancel: true,
-      title:
-      camera ?  'Camera' : 'Bộ sưu tập',
+      title: camera ? 'Camera' : 'Bộ sưu tập',
       message: StringConst.contentCamera,
-      textOk:StringConst.allow,
+      textOk: StringConst.allow,
       textCancel: StringConst.notAllow,
       onOk: () {
         if (camera) {
@@ -59,20 +58,20 @@ class _BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24.5),
+      margin: const EdgeInsets.symmetric(horizontal: 24.5),
       child: Column(
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             child: Column(
               children: <Widget>[
                 _itemButton(() {
                   _requestPermission(context, false);
                 }, 'Thư viện'),
-                Divider(height: 0.1, color: Colors.grey),
+                const Divider(height: 0.1, color: Colors.grey),
                 _itemButton(() {
                   _requestPermission(context, true);
                 }, 'Camera'),
@@ -84,9 +83,9 @@ class _BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
             child: Container(
               margin: const EdgeInsets.only(top: 10),
               height: 48,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               child: Center(
                 child: Text(
@@ -108,7 +107,7 @@ class _BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
         onTap: () async {
           onTap();
         },
-        child: Container(
+        child: SizedBox(
           height: 48,
           child: Center(
             child: Text(

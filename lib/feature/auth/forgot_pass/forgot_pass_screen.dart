@@ -9,25 +9,23 @@ class ForgotPassScreen extends StatefulWidget {
   const ForgotPassScreen({Key? key}) : super(key: key);
 
   @override
-  _ForgotPassScreenState createState() => _ForgotPassScreenState();
+  ForgotPassScreenState createState() => ForgotPassScreenState();
 }
 
-class _ForgotPassScreenState extends State<ForgotPassScreen> {
+class ForgotPassScreenState extends State<ForgotPassScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
         title: 'Quên mật khẩu',
-        iconLeftTap: (){
-          Routes.instance.pop();
-        },
+        iconLeftTap: () => Navigator.pop(context),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
             const SizedBox(height: 20),
-            CustomTextField(
+            const CustomTextField(
               hintText: 'Email',
             ),
             const SizedBox(height: 20),
@@ -36,7 +34,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
               children: [
                 CustomButton(
                   onTap: () {
-                    Routes.instance.navigateTo(RouteName.VerifyOtpScreen);
+                    Routes.instance.navigateTo(RouteName.verifyOtpScreen);
                   },
                   text: 'Gửi đi',
                 ),

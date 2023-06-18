@@ -3,7 +3,7 @@ import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_state.dart';
 
 class SnackBarBloc extends Bloc<SnackbarEvent, SnackBarState> {
-  final duration = Duration(seconds: 3);
+  final duration = const Duration(seconds: 3);
 
   SnackBarBloc() : super(InitialSnackbarState());
 

@@ -8,17 +8,16 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 class PersonalScreen extends StatefulWidget {
   const PersonalScreen({Key? key}) : super(key: key);
 
   @override
-  _PersonalScreenState createState() => _PersonalScreenState();
+  PersonalScreenState createState() => PersonalScreenState();
 }
 
-class _PersonalScreenState extends State<PersonalScreen> {
+class PersonalScreenState extends State<PersonalScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -26,12 +25,12 @@ class _PersonalScreenState extends State<PersonalScreen> {
       //   title: 'Tài khoản',
       //   haveIconLeft: false,
       // ),
-      backgroundColor: Color(0xFFF2F2F2),
+      backgroundColor: const Color(0xFFF2F2F2),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 30),
-            Text(
+            const SizedBox(height: 30),
+            const Text(
               'Tài khoản',
               style: TextStyle(
                   fontSize: 18,
@@ -47,8 +46,8 @@ class _PersonalScreenState extends State<PersonalScreen> {
                 injector<AppCache>().profileModel == null
                     ? CustomButton(
                         onTap: () {
-                          Routes.instance
-                              .navigateTo(RouteName.LoginScreen, arguments: true);
+                          Routes.instance.navigateTo(RouteName.loginScreen,
+                              arguments: true);
                         },
                         text: 'Đăng nhập',
                         width: 128,
@@ -57,7 +56,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                     : Container(),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 18,
             ),
             Container(
@@ -65,7 +64,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(width: 1, color: Colors.white),
-                borderRadius: BorderRadius.all(Radius.circular(
+                borderRadius: const BorderRadius.all(Radius.circular(
                   8,
                 )),
               ),
@@ -76,48 +75,49 @@ class _PersonalScreenState extends State<PersonalScreen> {
                     injector<AppCache>().profileModel != null
                         ? _icon(
                             () {
-                              Routes.instance.navigateTo(RouteName.ProfileScreen);
+                              Routes.instance
+                                  .navigateTo(RouteName.profileScreen);
                             },
                             'Thông tin cá nhân',
-                            IconConst.Info,
+                            IconConst.info,
                           )
                         : Container(),
                     _icon(
                       () {
-                        Routes.instance.navigateTo(RouteName.WebViewScreen,
+                        Routes.instance.navigateTo(RouteName.webViewScreen,
                             arguments: 'https://sinhairvietnam.vn/lien-he/');
                       },
                       'Liên hệ',
-                      IconConst.Contact,
+                      IconConst.contact,
                     ),
                     _icon(
                       () {
-                        Routes.instance.navigateTo(RouteName.ProfileScreen);
+                        Routes.instance.navigateTo(RouteName.profileScreen);
                         // Routes.instance.navigateTo(RouteName.GioiThieuScreen);
                       },
                       'Chính sách bán hàng',
-                      IconConst.ProvisionOrder,
+                      IconConst.provisionOrder,
                     ),
                     _icon(
                       () {
                         // Routes.instance.navigateTo(RouteName.CheckBillScreen);
-                        Routes.instance.navigateTo(RouteName.HuongDanScreen);
+                        Routes.instance.navigateTo(RouteName.huongDanScreen);
                       },
                       'Chính sách bảo mật',
-                      IconConst.ProvisionSecurity,
+                      IconConst.provisionSecurity,
                     ),
                     _icon(
                       () {
-                        Routes.instance.navigateTo(RouteName.VerifyOtpScreen);
+                        Routes.instance.navigateTo(RouteName.verifyOtpScreen);
                       },
                       'Điều khoản sử dụng',
-                      IconConst.Adjust,
+                      IconConst.adjust,
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
@@ -125,7 +125,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(width: 1, color: Colors.white),
-                    borderRadius: BorderRadius.all(Radius.circular(
+                    borderRadius: const BorderRadius.all(Radius.circular(
                       8,
                     )),
                   ),
@@ -134,19 +134,19 @@ class _PersonalScreenState extends State<PersonalScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 16),
-                        Text(
+                        const SizedBox(height: 16),
+                        const Text(
                           'Kết nối với Sinhair:',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                               color: Colors.black),
                         ),
-                        _icon(() => {}, 'Gmail', IconConst.Gmail),
-                        _icon(() => {}, 'Facebook', IconConst.Facebook),
-                        _icon(() => {}, 'Zalo', IconConst.Zalo),
-                        _icon(() => {}, 'Apple', IconConst.Apple),
-                        SizedBox(height: 17),
+                        _icon(() => {}, 'Gmail', IconConst.gmail),
+                        _icon(() => {}, 'Facebook', IconConst.facebook),
+                        _icon(() => {}, 'Zalo', IconConst.zalo),
+                        _icon(() => {}, 'Apple', IconConst.apple),
+                        const SizedBox(height: 17),
                       ],
                     ),
                   )),
@@ -162,7 +162,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                           injector<AppCache>().havedLogin = false;
                           await injector<LocalApp>().saveStringSharePreference(
                               KeySaveDataLocal.keySaveAccessToken, '');
-                          Routes.instance.navigateTo(RouteName.LoginScreen,
+                          Routes.instance.navigateTo(RouteName.loginScreen,
                               arguments: false);
                         },
                         text: 'Đăng xuất',
@@ -176,8 +176,8 @@ class _PersonalScreenState extends State<PersonalScreen> {
     );
   }
 
-  Widget _icon(Function onTap, String text, String iconData) {
-    return CustomGestureDetector(
+  Widget _icon(Function() onTap, String text, String iconData) {
+    return GestureDetector(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -190,7 +190,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                 height: 20,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
               text,
               style: AppTextTheme.normalBlack.copyWith(

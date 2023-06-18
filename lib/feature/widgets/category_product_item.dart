@@ -21,13 +21,12 @@ class CategoryItemProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _sizeImage = itemWidth + 10;
     return InkWell(
       onTap: () {
         if (injector<AppCache>().profileModel == null) {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
-        Routes.instance.navigateTo(RouteName.DetailProductScreen,
+        Routes.instance.navigateTo(RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
               productId: productModel?.id,
             ));
@@ -42,30 +41,30 @@ class CategoryItemProduct extends StatelessWidget {
             height: 164,
             border: 12,
           ),
-          SizedBox(height: 16.25),
+          const SizedBox(height: 16.25),
           SizedBox(
             height: 36,
             child: Text('${productModel?.name}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 textAlign: TextAlign.start,
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                     color: Colors.black)),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Image.asset(
-                IconConst.Star,
+                IconConst.star,
                 width: 13.5,
                 height: 13,
               ),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               RichText(
-                  text: TextSpan(
+                  text: const TextSpan(
                       text: '4.9 ',
                       style: TextStyle(
                           fontSize: 10,
@@ -82,7 +81,7 @@ class CategoryItemProduct extends StatelessWidget {
                   ]))
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2),
             child: Row(
@@ -90,8 +89,9 @@ class CategoryItemProduct extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
-                  style: TextStyle(
+                  FormatUtils.formatCurrencyDoubleToString(
+                      productModel?.purchasePrice ?? productModel?.unitPrice),
+                  style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFFFFC700)),
@@ -99,9 +99,9 @@ class CategoryItemProduct extends StatelessWidget {
                 // const Spacer(),
                 RichText(
                   text: TextSpan(
-                    text:
-                        '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
-                    style: TextStyle(
+                    text: FormatUtils.formatCurrencyDoubleToString(
+                        productModel?.purchasePrice ?? productModel?.unitPrice),
+                    style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFFACACAC),
@@ -111,9 +111,9 @@ class CategoryItemProduct extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Image.asset(
-                  IconConst.Heart,
+                  IconConst.heart,
                   width: 22,
                   height: 20,
                 )

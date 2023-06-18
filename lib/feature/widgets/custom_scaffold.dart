@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 
 const double defaultAppbar = 56.0;
 
@@ -40,7 +38,7 @@ class CustomScaffold extends StatelessWidget {
               (appbarWidget ?? SizedBox(height: GScreenUtil.statusBarHeight)),
           const Divider(height: 1, color: AppColors.grey5),
           Expanded(
-            child: CustomGestureDetector(
+            child: GestureDetector(
                 onTap: autoDismissKeyboard
                     ? () {
                         CommonUtil.dismissKeyBoard(context);
@@ -81,37 +79,21 @@ class CustomAppBar extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.only(top: (GScreenUtil.statusBarHeight)),
       height: defaultAppbar + (GScreenUtil.statusBarHeight),
-      decoration: BoxDecoration(
-          // boxShadow: hasShadow
-          //     ? const [
-          //         BoxShadow(
-          //             color: AppColors.grey3,
-          //             blurRadius: 0.5,
-          //             offset: Offset(0, 1),
-          //             spreadRadius: 0.5)
-          //       ]
-          //     : null,
-          // color: stylePrimary ? AppColors.primaryColor : AppColors.white,
-          ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           haveIconLeft
-              ? CustomGestureDetector(
-                  onTap: () {
-                    if (iconLeftTap != null) {
-                      iconLeftTap!();
-                    } else {
-                      Routes.instance.pop();
-                    }
-                  },
+              ? GestureDetector(
+                  onTap: () => iconLeftTap != null
+                      ? iconLeftTap!()
+                      : Navigator.pop(context),
                   child: Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 16, right: 20, top: 16, bottom: 16),
                     child: Center(child: Image.asset(IconConst.back)),
                   ),
                 )
-              : SizedBox(
+              : const SizedBox(
                   width: 60,
                 ),
           Expanded(
@@ -122,7 +104,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           widgetRight ??
-              SizedBox(
+              const SizedBox(
                 width: 60,
               )
         ],

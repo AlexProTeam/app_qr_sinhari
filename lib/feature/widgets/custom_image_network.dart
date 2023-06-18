@@ -51,8 +51,8 @@ class CustomImageNetwork extends StatelessWidget {
               return child ?? const SizedBox();
             }
             return Shimmer.fromColors(
-              baseColor: Color(0xFFE0E0E0),
-              highlightColor: Color(0xFFF5F5F5),
+              baseColor: const Color(0xFFE0E0E0),
+              highlightColor: const Color(0xFFF5F5F5),
               enabled: true,
               child: Container(
                 width: width,
@@ -69,10 +69,10 @@ class CustomImageNetwork extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
           border: Border.all(color: AppColors.grey4, width: 0.5),
         ),
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Container(
           width: 80,
           height: 80,

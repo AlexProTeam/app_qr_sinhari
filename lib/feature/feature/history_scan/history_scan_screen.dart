@@ -21,10 +21,10 @@ class HistoryScanScreen extends StatefulWidget {
   const HistoryScanScreen({Key? key}) : super(key: key);
 
   @override
-  _HistoryScanScreenState createState() => _HistoryScanScreenState();
+  HistoryScanScreenState createState() => HistoryScanScreenState();
 }
 
-class _HistoryScanScreenState extends State<HistoryScanScreen> {
+class HistoryScanScreenState extends State<HistoryScanScreen> {
   List<HistoryModel> histories = [];
   bool isLoadding = false;
   Completer<void> _refreshCompleter = Completer();
@@ -35,10 +35,11 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
     super.initState();
   }
 
-  Future _onRefresh() async {
-    _initData();
-    return _refreshCompleter.future;
-  }
+  ///todo: remove later
+  // Future _onRefresh() async {
+  //   _initData();
+  //   return _refreshCompleter.future;
+  // }
 
   void _initData() async {
     try {
@@ -74,11 +75,11 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
             //   title: 'Lịch sử quét',
             //   haveIconLeft: false,
             // ),
-            backgroundColor: Color(0xFFF2F2F2),
+            backgroundColor: const Color(0xFFF2F2F2),
             body: Column(
               children: [
-                SizedBox(height: 39),
-                Center(
+                const SizedBox(height: 39),
+                const Center(
                   child: Text(
                     'Lịch sử QR',
                     style: TextStyle(
@@ -108,17 +109,17 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(height: 16),
-                      Text(
+                      const SizedBox(height: 16),
+                      const Text(
                         '10 sản phẩm',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                             color: Colors.red),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
                           itemBuilder: (_, index) {
@@ -177,7 +178,7 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
   Widget _item() {
     return InkWell(
       onTap: () {
-        Routes.instance.navigateTo(RouteName.DetailProductScreen,
+        Routes.instance.navigateTo(RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
                 // productId: model.productId,
                 ));
@@ -187,7 +188,7 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
               child: Image.asset(
                 IconConst.logo,
                 width: 74,
@@ -195,8 +196,8 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
               )),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 12),
+            children: const [
+              SizedBox(height: 12),
               SizedBox(
                 width: 164,
                 child: Text(
@@ -218,12 +219,12 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
                 'Số Seri: L8O977V',
                 style: AppTextTheme.smallGrey,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
             ],
           ),
-          SizedBox(width: 20),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
+          const SizedBox(width: 20),
+          const Padding(
+            padding: EdgeInsets.all(12.0),
             child: Text(
               '5 lần',
               style: TextStyle(
@@ -237,23 +238,23 @@ class _HistoryScanScreenState extends State<HistoryScanScreen> {
     );
   }
 
-  void _onScan() async {
-    // final deviceId = await CommonUtil.getDeviceId();
-    // LOG.w('_onScan: $deviceId');
-    // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
-    // LOG.w('_onScan: $data');
-    // if (data != null) {
-    //   injector<AppClient>().get(
-    //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
-    //           '&city=ha noi&region=vn&url=$data');
-    //   injector<AppCache>().cacheDataProduct = data;
-    //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
-    //       arguments: ArgumentDetailProductScreen(
-    //         url: data,
-    //       ));
-    // }
-    Routes.instance.navigateTo(
-      RouteName.NotiScreen,
-    );
-  }
+  // void _onScan() async {
+  //   // final deviceId = await CommonUtil.getDeviceId();
+  //   // LOG.w('_onScan: $deviceId');
+  //   // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+  //   // LOG.w('_onScan: $data');
+  //   // if (data != null) {
+  //   //   injector<AppClient>().get(
+  //   //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
+  //   //           '&city=ha noi&region=vn&url=$data');
+  //   //   injector<AppCache>().cacheDataProduct = data;
+  //   //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
+  //   //       arguments: ArgumentDetailProductScreen(
+  //   //         url: data,
+  //   //       ));
+  //   // }
+  //   Routes.instance.navigateTo(
+  //     RouteName.NotiScreen,
+  //   );
+  // }
 }

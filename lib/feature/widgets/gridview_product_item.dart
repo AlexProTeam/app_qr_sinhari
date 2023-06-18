@@ -20,13 +20,12 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _sizeImage = itemWidth + 10;
     return InkWell(
       onTap: () {
         if (injector<AppCache>().profileModel == null) {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
-        Routes.instance.navigateTo(RouteName.DetailProductScreen,
+        Routes.instance.navigateTo(RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
               productId: productModel?.id,
             ));
@@ -41,36 +40,37 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
             height: 200,
             border: 12,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SizedBox(
             height: 36,
             child: Text('${productModel?.name}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 textAlign: TextAlign.start,
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                     color: Colors.black)),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
-                style: TextStyle(
+                FormatUtils.formatCurrencyDoubleToString(
+                    productModel?.purchasePrice ?? productModel?.unitPrice),
+                style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFFFFC700)),
               ),
               // const Spacer(),
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
               RichText(
                 text: TextSpan(
-                  text:
-                      '${FormatUtils.formatCurrencyDoubleToString(productModel?.purchasePrice ?? productModel?.unitPrice)}',
-                  style: TextStyle(
+                  text: FormatUtils.formatCurrencyDoubleToString(
+                      productModel?.purchasePrice ?? productModel?.unitPrice),
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFFACACAC),
@@ -83,7 +83,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
             ],
           ),
         ],
-        ),
+      ),
     );
   }
 }

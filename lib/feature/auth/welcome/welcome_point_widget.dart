@@ -16,7 +16,7 @@ class PointWidget extends StatelessWidget {
       );
 
   Widget _point(int index) => Container(
-        margin: index == 0 ? EdgeInsets.zero : EdgeInsets.only(left: 12),
+        margin: index == 0 ? EdgeInsets.zero : const EdgeInsets.only(left: 12),
         width: 8,
         height: 8,
         decoration: BoxDecoration(

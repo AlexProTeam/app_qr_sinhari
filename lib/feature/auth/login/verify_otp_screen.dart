@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
@@ -26,11 +24,11 @@ class VerifyOtpScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _VerifyOtpScreenState createState() => _VerifyOtpScreenState();
+  VerifyOtpScreenState createState() => VerifyOtpScreenState();
 }
 
-class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
-  TextEditingController _controller = TextEditingController();
+class VerifyOtpScreenState extends State<VerifyOtpScreen> {
+  final TextEditingController _controller = TextEditingController();
   final _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
@@ -48,7 +46,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   void _onContinue() async {
     if (!CommonUtil.validateAndSave(_formKey)) return;
     try {
-      injector<LoadingBloc>().add(StartLoading());
       final data = await injector<AppClient>()
           .post('confirm-otp?phone=${widget.phone}&otp=${_controller.text}');
       String? accessToken = data['data']['result']['accessToken'];
@@ -61,12 +58,10 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         final data = await injector<AppClient>().get('auth/showProfile');
         ProfileModel profileModel = ProfileModel.fromJson(data['data']);
         injector<AppCache>().profileModel = profileModel;
-        Routes.instance.navigateAndRemove(RouteName.ContainerScreen);
+        Routes.instance.navigateAndRemove(RouteName.containerScreen);
       }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      injector<LoadingBloc>().add(FinishLoading());
     }
   }
 
@@ -74,13 +69,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       autoDismissKeyboard: true,
-      backgroundColor: Color(0xFFF2F2F2),
-      // customAppBar: CustomAppBar(
-      //   title: 'Nhập mã OTP',
-      //   iconLeftTap: () {
-      //     Routes.instance.pop();
-      //   },
-      // ),
+      backgroundColor: const Color(0xFFF2F2F2),
       body: Form(
         key: _formKey,
         child: Column(
@@ -92,13 +81,13 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back,
                       size: 18,
                       color: Color(0xFFACACAC),
                     )),
-                SizedBox(width: 90),
-                Text(
+                const SizedBox(width: 90),
+                const Text(
                   'Nhập mã OTP',
                   style: TextStyle(
                       fontSize: 18,
@@ -108,7 +97,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               ],
             ),
             const SizedBox(height: 25),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(left: 20),
               child: Text(
                 "Mã OTP sẽ được gửi đến SĐT của bạn",
@@ -148,7 +137,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 },
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

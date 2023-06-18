@@ -19,7 +19,6 @@ import 'common/utils/screen_utils.dart';
 import 'feature/injector_container.dart';
 import 'feature/routes.dart';
 import 'feature/themes/theme_color.dart';
-import 'feature/widgets/loading_container.dart';
 
 dynamic decodeIsolate(String response) => jsonDecode(response);
 
@@ -38,15 +37,17 @@ Future main() async {
   await Firebase.initializeApp();
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
-  _AppState createState() => _AppState();
+  AppState createState() => AppState();
 }
 
-class _AppState extends State<App> {
+class AppState extends State<App> {
   List<BlocListener> _getBlocListener(context) => [
         BlocListener<SnackBarBloc, SnackBarState>(
             listener: _mapListenerSnackBarState),
@@ -60,20 +61,20 @@ class _AppState extends State<App> {
 
   void _mapListenerSnackBarState(BuildContext context, SnackBarState state) {
     if (state is ShowSnackBarState) {
-      var icon;
-      var color;
-      var title;
+      Icon icon;
+      Color color;
+      String title;
       switch (state.type) {
         case SnackBarType.success:
-          icon = Icon(
+          icon = const Icon(
             Icons.check_circle_outline,
             color: Colors.white,
           );
-          color = Color(0xff33B44A);
+          color = const Color(0xff33B44A);
           title = "Success";
           break;
         case SnackBarType.warning:
-          icon = Icon(
+          icon = const Icon(
             Icons.error_outline,
             color: Colors.white,
           );
@@ -81,18 +82,18 @@ class _AppState extends State<App> {
           title = "Warning";
           break;
         default:
-          icon = Icon(
+          icon = const Icon(
             Icons.error_outline,
             color: Colors.white,
           );
-          color = Color(0xffF63E43);
+          color = const Color(0xffF63E43);
           title = "Failed";
           break;
       }
 
       showFlash(
         context: Routes.instance.navigatorKey.currentContext!,
-        duration: state.duration ?? Duration(milliseconds: 3000),
+        duration: state.duration ?? const Duration(milliseconds: 3000),
         builder: (context, controller) {
           return FlashBar(
             controller: controller,
@@ -110,7 +111,7 @@ class _AppState extends State<App> {
             ),
             content: Text(
               state.mess!,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
             icon: icon,
             shouldIconPulse: true,
@@ -144,18 +145,13 @@ class _AppState extends State<App> {
           fontFamily: 'Montserrat',
           canvasColor: Colors.transparent,
           platform: TargetPlatform.iOS,
-          bottomAppBarTheme: BottomAppBarTheme(color: Color(0xff989898)),
+          bottomAppBarTheme: const BottomAppBarTheme(color: Color(0xff989898)),
         ),
         builder: (context, widget) {
           GScreenUtil.init(context);
-          return LoadingContainer(
-            child: MultiBlocListener(
-              listeners: _getBlocListener(context),
-              child: GestureDetector(
-                child: widget ?? SizedBox(),
-                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-              ),
-            ),
+          return MultiBlocListener(
+            listeners: _getBlocListener(context),
+            child: widget ?? const SizedBox(),
           );
         },
       ),

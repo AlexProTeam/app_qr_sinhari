@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_event.dart';
@@ -14,7 +13,6 @@ import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/validate_utils.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/bottom_sheet_select_image.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
@@ -27,110 +25,89 @@ class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _adddressController = TextEditingController();
+class ProfileScreenState extends State<ProfileScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   File? _image;
-  bool isLoadding = false;
+  bool isLoading = false;
 
   void _onDone() async {
     CommonUtil.dismissKeyBoard(context);
-    if (!CommonUtil.validateAndSave(_formKey)) return;
+    if (!_formKey.currentState!.validate()) return;
     try {
-      isLoadding = true;
-      await injector<AppClient>()
-          .post('auth/saveProfile?name=${_nameController.text}'
-              '&email=${_emailController.text}&phone=${_phoneController.text}&'
-              'address=${_adddressController.text}');
-      injector<SnackBarBloc>().add(ShowSnackbarEvent(
-          type: SnackBarType.success,
-          content: 'Cập nhật thông tin thành công!.'));
-      final data = await injector<AppClient>().get('auth/showProfile');
-      ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-      injector<AppCache>().profileModel = profileModel;
-      Routes.instance.pop();
-    } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      isLoadding = false;
-    }
-  }
-
-  void _onDoneNew() async {
-    CommonUtil.dismissKeyBoard(context);
-    if (!CommonUtil.validateAndSave(_formKey)) return;
-    try {
-      isLoadding = true;
-      var headers = {
-        'Authorization': 'Bearer ${injector<AppClient>().header?.accessToken}'
-      };
-      var request = http.MultipartRequest('POST',
-          Uri.parse('https://admin.sinhairvietnam.vn/api/auth/saveProfile'));
-      request.fields.addAll({
-        'name': '${_nameController.text}',
-        'email': '${_emailController.text}',
-        'phone': '${_phoneController.text}',
-        'address': '${_adddressController.text}'
+      setState(() {
+        isLoading = true;
       });
-      if (_image != null) {
-        request.files.add(
-            await http.MultipartFile.fromPath('avatar', '${_image?.path}'));
-      }
-      request.headers.addAll(headers);
-      http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
-        injector<SnackBarBloc>().add(ShowSnackbarEvent(
-            type: SnackBarType.success,
-            content: 'Cập nhật thông tin thành công!.'));
-        final data = await injector<AppClient>().get('auth/showProfile');
-        ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-        injector<AppCache>().profileModel = profileModel;
-        Routes.instance.pop();
+      final client = injector<AppClient>();
+      final name = _nameController.text;
+      final email = _emailController.text;
+      final phone = _phoneController.text;
+      final address = _addressController.text;
+
+      await client.post(
+          'auth/saveProfile?name=$name&email=$email&phone=$phone&address=$address');
+
+      injector<SnackBarBloc>().add(ShowSnackbarEvent(
+        type: SnackBarType.success,
+        content: 'Cập nhật thông tin thành công!',
+      ));
+
+      final data = await client.get('auth/showProfile');
+      final profileModel = ProfileModel.fromJson(data['data']);
+      injector<AppCache>().profileModel = profileModel;
+      if (mounted) {
+        Navigator.pop(context);
       }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      isLoadding = false;
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
   void _chooseTypeImage() {
     CommonUtil.showCustomBottomSheet(
-        context: context,
-        child: BottomSheetSelectImage(
-          onCameraTap: () {
-            _onSelectImage(true);
-          },
-          onPhotoTap: () {
-            _onSelectImage(false);
-          },
-        ),
-        height: 180,
-        onClosed: () {},
-        backgroundColor: Colors.transparent);
+      context: context,
+      child: BottomSheetSelectImage(
+        onCameraTap: () {
+          _onSelectImage(true);
+        },
+        onPhotoTap: () {
+          _onSelectImage(false);
+        },
+      ),
+      height: 180,
+      onClosed: () {},
+      backgroundColor: Colors.transparent,
+    );
   }
 
   void _onSelectImage(bool isCamera) async {
-    XFile? image = await ImagePicker().pickImage(
+    final imagePicker = ImagePicker();
+    final image = await imagePicker.pickImage(
       source: isCamera ? ImageSource.camera : ImageSource.gallery,
     );
+
     if (image != null) {
+      final localApp = injector<LocalApp>();
       if (isCamera) {
-        injector<LocalApp>()
-            .saveBool(KeySaveDataLocal.havedAcceptPermissionCamera, true);
+        localApp.saveBool(KeySaveDataLocal.havedAcceptPermissionCamera, true);
       } else {
-        injector<LocalApp>()
-            .saveBool(KeySaveDataLocal.havedAcceptPermissionPhoto, true);
+        localApp.saveBool(KeySaveDataLocal.havedAcceptPermissionPhoto, true);
       }
-      _image = File(image.path);
-      setState(() {});
+
+      setState(() {
+        _image = File(image.path);
+      });
     }
   }
 
@@ -138,30 +115,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     _initData();
     super.initState();
-    print("--------------");
-    print("${injector<AppCache>().profileModel?.avatar}");
   }
 
   void _initData() {
-    ProfileModel? profileModel = injector<AppCache>().profileModel;
+    final profileModel = injector<AppCache>().profileModel;
     _nameController.text = profileModel?.name ?? '';
     _emailController.text = profileModel?.email ?? '';
     _phoneController.text = profileModel?.phone ?? '';
-    _adddressController.text = profileModel?.address ?? '';
+    _addressController.text = profileModel?.address ?? '';
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      // customAppBar: CustomAppBar(
-      //   title: 'Thông tin cá nhân',
-      //   iconLeftTap: () {
-      //     Routes.instance.pop();
-      //   },
-      // ),
       resizeToAvoidBottomInset: false,
-      body: isLoadding
-          ? Center(
+      body: isLoading
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Column(
@@ -170,22 +148,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          size: 18,
-                          color: Color(0xFFACACAC),
-                        )),
-                    Text(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        size: 18,
+                        color: Color(0xFFACACAC),
+                      ),
+                    ),
+                    const Text(
                       'Thông tin cá nhân',
                       style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                      ),
                     ),
-                    SizedBox(width: 40),
+                    const SizedBox(width: 40),
                   ],
                 ),
                 Expanded(
@@ -195,86 +173,83 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Form(
                         key: _formKey,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const SizedBox(height: 12),
-                            InkWell(
+                            GestureDetector(
                               onTap: _chooseTypeImage,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 164,
-                                    height: 164,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1, color: Color(0xFFD9D9D9)),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(
-                                        12,
-                                      )),
-                                    ),
-                                    child: _image != null
-                                        ? Container(
-                                            width: 164,
-                                            height: 164,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 1,
-                                                  color: Color(0xFFD9D9D9)),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                12,
-                                              )),
-                                            ),
-                                            child: Image.file(
-                                              _image!,
-                                              width: 112,
-                                              height: 112,
-                                              fit: BoxFit.contain,
-                                            ))
-                                        : ((injector<AppCache>()
-                                                    .profileModel
-                                                    ?.avatar
-                                                    ?.isEmpty ??
-                                                true)
-                                            ? Stack(
-                                                children: [
-                                                  Center(
-                                                    child: Image.asset(
-                                                      IconConst.Logo,
-                                                      width: 145,
-                                                      height: 145,
+                              child: Container(
+                                width: 164,
+                                height: 164,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: const Color(0xFFD9D9D9),
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                                child: _image != null
+                                    ? Container(
+                                        width: 164,
+                                        height: 164,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            width: 1,
+                                            color: const Color(0xFFD9D9D9),
+                                          ),
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
+                                        ),
+                                        child: Image.file(
+                                          _image!,
+                                          width: 112,
+                                          height: 112,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )
+                                    : ((injector<AppCache>()
+                                                .profileModel
+                                                ?.avatar
+                                                ?.isEmpty ??
+                                            true)
+                                        ? Stack(
+                                            children: [
+                                              Center(
+                                                child: Image.asset(
+                                                  IconConst.logoLogin,
+                                                  width: 145,
+                                                  height: 145,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Image.asset(
+                                                      IconConst.camera,
+                                                      width: 24,
+                                                      height: 24,
                                                       fit: BoxFit.cover,
                                                     ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        Image.asset(
-                                                          IconConst.Camera,
-                                                          width: 24,
-                                                          height: 24,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            : CustomImageNetwork(
-                                                url:
-                                                    '${injector<AppCache>().profileModel?.avatar}',
-                                                width: 112,
-                                                height: 112,
-                                                fit: BoxFit.cover,
-                                              )),
-                                  )
-                                ],
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : CustomImageNetwork(
+                                            url:
+                                                '${injector<AppCache>().profileModel?.avatar}',
+                                            width: 112,
+                                            height: 112,
+                                            fit: BoxFit.cover,
+                                          )),
                               ),
                             ),
                             const SizedBox(height: 27),
@@ -294,29 +269,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             const SizedBox(height: 8),
                             CustomTextField(
-                                height: 45,
-                                hintText: 'Só điện thoại',
-                                validator: ValidateUtil.validPhone,
-                                controller: _phoneController,
-                                keyboardType: TextInputType.phone),
+                              height: 45,
+                              hintText: 'Số điện thoại',
+                              validator: ValidateUtil.validPhone,
+                              controller: _phoneController,
+                              keyboardType: TextInputType.phone,
+                            ),
                             const SizedBox(height: 8),
                             CustomTextField(
                               height: 45,
                               hintText: 'Địa chỉ',
-                              controller: _adddressController,
+                              controller: _addressController,
                               validator: ValidateUtil.validEmpty,
                             ),
                             const SizedBox(height: 16),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CustomButton(
-                                  width: 100.44,
-                                  height: 45,
-                                  onTap: _onDoneNew,
-                                  text: 'Lưu lại',
-                                ),
-                              ],
+                            CustomButton(
+                              width: 100.44,
+                              height: 45,
+                              onTap: _onDone,
+                              text: 'Lưu lại',
                             ),
                           ],
                         ),

@@ -90,7 +90,7 @@ class DateUtils {
     var beginningNextMonth = (month.month < 12)
         ? DateTime(month.year, month.month + 1, 1)
         : DateTime(month.year + 1, 1, 1);
-    return beginningNextMonth.subtract(Duration(days: 1));
+    return beginningNextMonth.subtract(const Duration(days: 1));
   }
 
   /// Returns a [DateTime] for each day the given range.
@@ -102,7 +102,7 @@ class DateUtils {
     var offset = start.timeZoneOffset;
     while (i.isBefore(end)) {
       yield i;
-      i = i.add(Duration(days: 1));
+      i = i.add(const Duration(days: 1));
       var timeZoneDiff = i.timeZoneOffset - offset;
       if (timeZoneDiff.inSeconds != 0) {
         offset = i.timeZoneOffset;
@@ -159,10 +159,10 @@ class DateUtils {
   }
 
   static DateTime previousWeek(DateTime w) {
-    return w.subtract(Duration(days: 7));
+    return w.subtract(const Duration(days: 7));
   }
 
   static DateTime nextWeek(DateTime w) {
-    return w.add(Duration(days: 7));
+    return w.add(const Duration(days: 7));
   }
 }

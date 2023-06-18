@@ -40,12 +40,12 @@ class HistoryModel {
       DateTime dateTime = dateFormat.parse(updatedAt!);
       DateTime date2 = DateTime.fromMillisecondsSinceEpoch(
           dateTime.millisecondsSinceEpoch + 3600000 * 7);
-      LOG.d('millisecondsSinceEpochNe: $date2');
-      List<String>  ngayThang = date2.toString().substring(0,10).split('-').toList();
+      lOG.d('millisecondsSinceEpochNe: $date2');
+      List<String> ngayThang =
+          date2.toString().substring(0, 10).split('-').toList();
       String ngayThangText = ngayThang.reversed.join('/');
-      String gio = date2.toString().substring(11,16);
+      String gio = date2.toString().substring(11, 16);
       updatedAt = '$gio - $ngayThangText';
     }
   }
-
 }

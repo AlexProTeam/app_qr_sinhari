@@ -2,18 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-
 import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
 
 class BarcodeScannerReturningImage extends StatefulWidget {
   const BarcodeScannerReturningImage({Key? key}) : super(key: key);
 
   @override
-  _BarcodeScannerReturningImageState createState() =>
-      _BarcodeScannerReturningImageState();
+  BarcodeScannerReturningImageState createState() =>
+      BarcodeScannerReturningImageState();
 }
 
-class _BarcodeScannerReturningImageState
+class BarcodeScannerReturningImageState
     extends State<BarcodeScannerReturningImage>
     with SingleTickerProviderStateMixin {
   BarcodeCapture? barcode;
@@ -59,18 +58,18 @@ class _BarcodeScannerReturningImageState
             Expanded(
               child: barcode?.image != null
                   ? Transform.rotate(
-                angle: 90 * pi / 180,
-                child: Image(
-                  gaplessPlayback: true,
-                  image: MemoryImage(barcode!.image!),
-                  fit: BoxFit.contain,
-                ),
-              )
+                      angle: 90 * pi / 180,
+                      child: Image(
+                        gaplessPlayback: true,
+                        image: MemoryImage(barcode!.image!),
+                        fit: BoxFit.contain,
+                      ),
+                    )
                   : const Center(
-                child: Text(
-                  'Your scanned barcode will appear here!',
-                ),
-              ),
+                      child: Text(
+                        'Your scanned barcode will appear here!',
+                      ),
+                    ),
             ),
             Expanded(
               flex: 2,

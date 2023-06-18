@@ -10,7 +10,6 @@ import 'package:qrcode/feature/auth/welcome/welcome_point_widget.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 
 import '../../../common/const/icon_constant.dart';
 import '../../widgets/custom_image_network.dart';
@@ -19,12 +18,12 @@ class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  WelcomeScreenState createState() => WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class WelcomeScreenState extends State<WelcomeScreen> {
   List<WelcomeModel> _welcomeModel = [];
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
 
   @override
@@ -61,9 +60,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 _currentIndex = index;
               });
             },
-            children: _welcomeModel.map((e) => _buildPageView(e.Url)).toList(),
+            children: _welcomeModel.map((e) => _buildPageView(e.url)).toList(),
           ),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -74,15 +73,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 const SizedBox(height: 65),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 22).copyWith(bottom: 45),
+                  padding: const EdgeInsets.symmetric(horizontal: 22)
+                      .copyWith(bottom: 45),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomGestureDetector(
+                      GestureDetector(
                         onTap: () => Routes.instance
-                            .navigateTo(RouteName.ContainerScreen),
-                        child: Text(
+                            .navigateTo(RouteName.containerScreen),
+                        child: const Text(
                           'Skip',
                           style: TextStyle(
                             fontSize: 14,
@@ -93,22 +92,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           ),
                         ),
                       ),
-                      CustomGestureDetector(
-                        onTap: () => _currentIndex == _welcomeModel.length - 1
+                      GestureDetector(
+                        onTap: () => _currentIndex != _welcomeModel.length - 1
                             ? {
                                 setState(() => _currentIndex++),
                                 _pageController.jumpToPage(_currentIndex)
                               }
                             : Routes.instance
-                                .navigateTo(RouteName.ContainerScreen),
+                                .navigateTo(RouteName.containerScreen),
                         child: Container(
                           width: 45,
                           height: 45,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Color(0xFFEF4948),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.keyboard_arrow_right,
                             size: 30,
                             color: Colors.white,

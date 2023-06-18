@@ -5,51 +5,14 @@ import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 
-enum BottomBarEnum {
-  home,
-  lich_su_quet,
-  scan,
-  tin_tuc,
-  ca_nhan,
-}
-
-extension BottomBarEx on BottomBarEnum {
-  String get getIcon {
-    switch (this) {
-      case BottomBarEnum.home:
-        return IconConst.home;
-      case BottomBarEnum.lich_su_quet:
-        return IconConst.lich_su_quet;
-      case BottomBarEnum.scan:
-        return IconConst.lich_su_quet;
-      case BottomBarEnum.tin_tuc:
-        return IconConst.tin_tuc;
-      case BottomBarEnum.ca_nhan:
-        return IconConst.ca_nhan;
-    }
-  }
-
-  String get getTitle {
-    switch (this) {
-      case BottomBarEnum.home:
-        return 'Lịch sử quét';
-      case BottomBarEnum.lich_su_quet:
-        return 'Tin tức';
-      case BottomBarEnum.tin_tuc:
-        return 'Tài khoản';
-      case BottomBarEnum.ca_nhan:
-        return 'Trang chủ';
-    }
-    return '';
-  }
-}
+import 'enum/bottom_bar_enum.dart';
 
 class BottomNavigation extends StatefulWidget {
   final List<Widget> tabViews;
   final Color? activeColor;
   final Color? inActiveColor;
 
-  BottomNavigation({
+  const BottomNavigation({
     Key? key,
     required this.tabViews,
     this.activeColor = AppColors.primaryColor,
@@ -63,7 +26,7 @@ class BottomNavigation extends StatefulWidget {
 class BottomNavigationState extends State<BottomNavigation> {
   final double _heightItem = 66.64;
   int _selectedIndex = 0;
-  final int _indexCenterIcon = 2;
+  final int _indexCenterIcon = BottomBarEnum.scan.index;
 
   @override
   void initState() {
@@ -78,65 +41,50 @@ class BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Expanded(
-            child: IndexedStack(
-              index: _selectedIndex,
-              children: widget.tabViews,
-            ),
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        IndexedStack(
+          index: _selectedIndex,
+          children: widget.tabViews,
+        ),
+        Image.asset(
+          IconConst.backGroupBottomBar,
+          width: double.infinity,
+          height: _heightItem,
+          fit: BoxFit.cover,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(
+            BottomBarEnum.values.length,
+            (index) => _buildBottomBarItem(index),
           ),
-          Image.asset(
-            IconConst.backGroupBottomBar,
-            width: double.infinity,
-            height: _heightItem,
-            fit: BoxFit.cover,
-          ),
-          Row(
-            children: List.generate(
-              BottomBarEnum.values.length,
-              (index) => _buildBottomBarItem(index),
-            ),
-          ),
-          _centerIconWidget
-        ],
-      ),
+        ),
+        _centerIconWidget
+      ],
     );
   }
 
   Widget _buildBottomBarItem(int index) {
     final isSelected = index == _selectedIndex;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => changeToTabIndex(index),
-        child: Container(
-          height: _heightItem,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
+    return GestureDetector(
+      onTap: () => changeToTabIndex(index),
+      child: SizedBox(
+        height: _heightItem,
+        child: index == _indexCenterIcon
+            ? const SizedBox.shrink()
+            : Image.asset(
                 BottomBarEnum.values[index].getIcon,
-                width: index == _indexCenterIcon ? 0 : 18,
-                height: index == _indexCenterIcon
-                    ? 0
-                    : 19 & index == 3
-                        ? 21
-                        : 18,
-                fit: BoxFit.cover,
+                width: 19,
                 color: isSelected ? AppColors.red2 : widget.inActiveColor,
               ),
-            ],
-          ),
-        ),
       ),
     );
   }
 
   Widget get _centerIconWidget => Container(
-        margin: EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 20),
         width: GScreenUtil.screenWidthDp / 5,
         height: _heightItem,
         child: InkWell(
@@ -151,7 +99,6 @@ class BottomNavigationState extends State<BottomNavigation> {
         ),
       );
 
-  void _scanQr() async {
-    await Routes.instance.navigateTo(RouteName.ScanQrScreen);
-  }
+  void _scanQr() async =>
+      await Routes.instance.navigateTo(RouteName.scanQrScreen);
 }

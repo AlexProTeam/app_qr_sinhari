@@ -35,10 +35,10 @@ class BannerSlideImage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _BannerSlideImageState createState() => _BannerSlideImageState();
+  BannerSlideImageState createState() => BannerSlideImageState();
 }
 
-class _BannerSlideImageState extends State<BannerSlideImage> {
+class BannerSlideImageState extends State<BannerSlideImage> {
   int _currentSlideIndex = 0;
 
   List<T> map<T>(List list, Function handler) {
@@ -54,7 +54,7 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        Container(
+        SizedBox(
           width: MediaQuery.of(context).size.width,
           height: widget.height ?? 248.0,
           child: CarouselSlider(
@@ -63,7 +63,7 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
               height: double.infinity,
               autoPlay: true,
               autoPlayAnimationDuration:
-                  widget.duration ?? Duration(seconds: 3),
+                  widget.duration ?? const Duration(seconds: 3),
               viewportFraction: 1.0,
               reverse: widget.revert,
               enableInfiniteScroll: true,
@@ -82,19 +82,19 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
                         if (e.urlLink != null &&
                             (e.urlLink?.contains('http') ?? false)) {
                           Routes.instance.navigateTo(
-                            RouteName.WebViewScreen,
+                            RouteName.webViewScreen,
                             arguments: e.urlLink,
                           );
                         }
                       },
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
                         color: Colors.transparent,
                         child: CustomImageNetwork(
                           url: e.url,
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           border: 12,
                         ),
                       ),
@@ -107,14 +107,14 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
           padding: const EdgeInsets.only(bottom: 11),
           child: Row(
             children: [
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: map<Widget>(widget.images ?? [], (index, obj) {
                   return Container(
                     width: 8.0,
                     height: 8.0,
-                    margin: EdgeInsets.symmetric(horizontal: 4),
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _currentSlideIndex == index
@@ -124,7 +124,7 @@ class _BannerSlideImageState extends State<BannerSlideImage> {
                   );
                 }),
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         )
