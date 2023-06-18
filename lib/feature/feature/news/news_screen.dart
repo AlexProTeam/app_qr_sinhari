@@ -54,7 +54,6 @@ class NewsScreenState extends State<NewsScreen> {
       //   title: 'Tin tức',
       //   haveIconLeft: false,
       // ),
-      backgroundColor: const Color(0xFFF2F2F2),
       body: Column(
         children: [
           const SizedBox(height: 20),

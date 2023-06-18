@@ -50,7 +50,6 @@ class WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: Stack(
         children: [
           PageView(

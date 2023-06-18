@@ -41,28 +41,30 @@ class BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        IndexedStack(
-          index: _selectedIndex,
-          children: widget.tabViews,
-        ),
-        Image.asset(
-          IconConst.backGroupBottomBar,
-          width: double.infinity,
-          height: _heightItem,
-          fit: BoxFit.cover,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: List.generate(
-            BottomBarEnum.values.length,
-            (index) => _buildBottomBarItem(index),
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          IndexedStack(
+            index: _selectedIndex,
+            children: widget.tabViews,
           ),
-        ),
-        _centerIconWidget
-      ],
+          Image.asset(
+            IconConst.backGroupBottomBar,
+            width: double.infinity,
+            height: _heightItem,
+            fit: BoxFit.cover,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(
+              BottomBarEnum.values.length,
+              (index) => _buildBottomBarItem(index),
+            ),
+          ),
+          _centerIconWidget
+        ],
+      ),
     );
   }
 

@@ -31,6 +31,7 @@ class GridViewDisplayProduct extends StatelessWidget {
     final heightList =
         (notExpand ? min(numberRow, 2) : numberRow) * (itemHeight + 70);
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,11 +65,9 @@ class GridViewDisplayProduct extends StatelessWidget {
               childAspectRatio: 164 / 269,
             ),
             itemBuilder: (context, index) {
-              return Expanded(
-                child: CategoryDetailWidgetItemProduct(
-                  itemWidth: itemWidth,
-                  productModel: products?[index],
-                ),
+              return CategoryDetailWidgetItemProduct(
+                itemWidth: itemWidth,
+                productModel: products?[index],
               );
             },
           ),
