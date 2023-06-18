@@ -41,7 +41,7 @@ class CustomTextField extends StatelessWidget {
           fontSize: fontsize ?? 14,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.normal,
-          color: AppColors.grey7,
+          color: AppColors.black,
         ),
         controller: controller,
         textInputAction: TextInputAction.done,

@@ -12,7 +12,7 @@ class GridViewDisplayProduct extends StatelessWidget {
   final String label;
   final List<ProductModel>? products;
   final bool notExpand;
-  final Function? onMore;
+  final Function()? onMore;
 
   const GridViewDisplayProduct({
     Key? key,
@@ -33,31 +33,22 @@ class GridViewDisplayProduct extends StatelessWidget {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(width: 16),
             Text(label,
                 style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
                     color: Color(0xFFEF4948))),
-            const Spacer(),
             InkWell(
-              onTap: () {
-                if (onMore != null) {
-                  onMore!();
-                }
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                child: Text(
-                  'Xem thêm',
-                  style: AppTextTheme.normalGrey,
-                ),
+              onTap: onMore,
+              child: const Text(
+                'Xem thêm',
+                style: AppTextTheme.normalGrey,
               ),
             )
           ],
         ),
-        // SizedBox(height: 10),
         SizedBox(
           width: double.infinity,
           height: heightList,
@@ -65,7 +56,7 @@ class GridViewDisplayProduct extends StatelessWidget {
             itemCount:
                 notExpand ? min(products?.length ?? 0, 4) : products?.length,
             physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            padding: const EdgeInsets.symmetric(vertical: 16),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 16.0,

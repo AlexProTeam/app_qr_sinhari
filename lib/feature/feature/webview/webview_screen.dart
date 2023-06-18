@@ -8,7 +8,6 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import '../../themes/theme_text.dart';
-import '../../widgets/custom_gesturedetactor.dart';
 
 class WebViewScreen extends StatefulWidget {
   final String url;
@@ -349,8 +348,8 @@ Page resource error:
   }
 }
 
-Widget _icon(Function onTap, String text, String iconData) {
-  return CustomGestureDetector(
+Widget _icon(Function() onTap, String text, String iconData) {
+  return GestureDetector(
     onTap: onTap,
     child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),

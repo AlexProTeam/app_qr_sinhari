@@ -12,7 +12,6 @@ import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
 import '../BottomBar/bottom_navigation.dart';
-import '../BottomBar/layout_keep_align.dart';
 import 'enum/bottom_bar_enum.dart';
 
 class ScreenContainer extends StatefulWidget {
@@ -65,11 +64,7 @@ class ScreenContainerState extends State<ScreenContainer> {
           width: double.infinity,
           height: double.infinity,
           child: BottomNavigation(
-            tabViews: BottomBarEnum.values
-                .map((e) => LayoutContainWidgetKeepAlive(
-                      child: e.getScreen,
-                    ))
-                .toList(),
+            tabViews: BottomBarEnum.values.map((e) => e.getScreen).toList(),
           ),
         ),
       );

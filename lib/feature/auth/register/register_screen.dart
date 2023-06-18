@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 
@@ -20,7 +19,7 @@ class RegisterScreenState extends State<RegisterScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomGestureDetector(
+          GestureDetector(
             onTap: () => Navigator.pop(context),
             child: Padding(
               padding: const EdgeInsets.all(16.0),

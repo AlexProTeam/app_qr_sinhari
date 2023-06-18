@@ -8,7 +8,6 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 class PersonalScreen extends StatefulWidget {
@@ -177,8 +176,8 @@ class PersonalScreenState extends State<PersonalScreen> {
     );
   }
 
-  Widget _icon(Function onTap, String text, String iconData) {
-    return CustomGestureDetector(
+  Widget _icon(Function() onTap, String text, String iconData) {
+    return GestureDetector(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),

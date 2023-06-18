@@ -4,7 +4,6 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 
 const double defaultAppbar = 56.0;
 
@@ -39,7 +38,7 @@ class CustomScaffold extends StatelessWidget {
               (appbarWidget ?? SizedBox(height: GScreenUtil.statusBarHeight)),
           const Divider(height: 1, color: AppColors.grey5),
           Expanded(
-            child: CustomGestureDetector(
+            child: GestureDetector(
                 onTap: autoDismissKeyboard
                     ? () {
                         CommonUtil.dismissKeyBoard(context);
@@ -84,7 +83,7 @@ class CustomAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           haveIconLeft
-              ? CustomGestureDetector(
+              ? GestureDetector(
                   onTap: () => iconLeftTap != null
                       ? iconLeftTap!()
                       : Navigator.pop(context),

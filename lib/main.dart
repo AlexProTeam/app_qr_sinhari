@@ -19,7 +19,6 @@ import 'common/utils/screen_utils.dart';
 import 'feature/injector_container.dart';
 import 'feature/routes.dart';
 import 'feature/themes/theme_color.dart';
-import 'feature/widgets/loading_container.dart';
 
 dynamic decodeIsolate(String response) => jsonDecode(response);
 
@@ -150,14 +149,9 @@ class AppState extends State<App> {
         ),
         builder: (context, widget) {
           GScreenUtil.init(context);
-          return LoadingContainer(
-            child: MultiBlocListener(
-              listeners: _getBlocListener(context),
-              child: GestureDetector(
-                child: widget ?? const SizedBox(),
-                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-              ),
-            ),
+          return MultiBlocListener(
+            listeners: _getBlocListener(context),
+            child: widget ?? const SizedBox(),
           );
         },
       ),

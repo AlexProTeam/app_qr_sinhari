@@ -11,7 +11,6 @@ import 'package:qrcode/common/utils/validate_utils.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 
@@ -126,7 +125,7 @@ class DetailProductActiveState extends State<DetailProductActive> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomGestureDetector(
+                        GestureDetector(
                           onTap: () {
                             _onDone();
                             _contentController.clear();

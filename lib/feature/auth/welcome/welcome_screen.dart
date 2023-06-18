@@ -10,7 +10,6 @@ import 'package:qrcode/feature/auth/welcome/welcome_point_widget.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 
 import '../../../common/const/icon_constant.dart';
 import '../../widgets/custom_image_network.dart';
@@ -79,7 +78,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomGestureDetector(
+                      GestureDetector(
                         onTap: () => Routes.instance
                             .navigateTo(RouteName.containerScreen),
                         child: const Text(
@@ -93,7 +92,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                           ),
                         ),
                       ),
-                      CustomGestureDetector(
+                      GestureDetector(
                         onTap: () => _currentIndex != _welcomeModel.length - 1
                             ? {
                                 setState(() => _currentIndex++),

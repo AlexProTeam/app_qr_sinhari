@@ -94,7 +94,7 @@ class BannerSlideImageState extends State<BannerSlideImage> {
                           url: e.url,
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           border: 12,
                         ),
                       ),

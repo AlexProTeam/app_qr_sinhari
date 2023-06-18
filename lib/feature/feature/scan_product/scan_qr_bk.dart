@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/routes.dart';
-import 'package:qrcode/feature/widgets/custom_gesturedetactor.dart';
 
 class ScanQrScreen extends StatefulWidget {
   const ScanQrScreen({Key? key}) : super(key: key);
@@ -42,7 +41,7 @@ class _QRViewExampleState extends State<ScanQrScreen> {
           Positioned(
               left: 0,
               top: GScreenUtil.statusBarHeight,
-              child: CustomGestureDetector(
+              child: GestureDetector(
                 onTap: () async {
                   // await controller?.pauseCamera();
                   // await controller?.stopCamera();

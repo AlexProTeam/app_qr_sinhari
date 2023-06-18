@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
@@ -48,7 +46,6 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
   void _onContinue() async {
     if (!CommonUtil.validateAndSave(_formKey)) return;
     try {
-      injector<LoadingBloc>().add(StartLoading());
       final data = await injector<AppClient>()
           .post('confirm-otp?phone=${widget.phone}&otp=${_controller.text}');
       String? accessToken = data['data']['result']['accessToken'];
@@ -65,8 +62,6 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
       }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      injector<LoadingBloc>().add(FinishLoading());
     }
   }
 
