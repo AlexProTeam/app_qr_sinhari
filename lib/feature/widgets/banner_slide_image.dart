@@ -88,7 +88,7 @@ class BannerSlideImageState extends State<BannerSlideImage> {
                         }
                       },
                       child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
                         color: Colors.transparent,
                         child: CustomImageNetwork(
                           url: e.url,
@@ -102,30 +102,23 @@ class BannerSlideImageState extends State<BannerSlideImage> {
                 .toList(),
           ),
         ),
-        // const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.only(bottom: 11),
           child: Row(
-            children: [
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: map<Widget>(widget.images ?? [], (index, obj) {
-                  return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentSlideIndex == index
-                          ? AppColors.white
-                          : AppColors.grey4,
-                    ),
-                  );
-                }),
-              ),
-              const Spacer(),
-            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: map<Widget>(widget.images ?? [], (index, obj) {
+              return Container(
+                width: 8.0,
+                height: 8.0,
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _currentSlideIndex == index
+                      ? AppColors.white
+                      : AppColors.grey4,
+                ),
+              );
+            }),
           ),
         )
       ],
