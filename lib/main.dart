@@ -31,11 +31,11 @@ dynamic endCodeJson(dynamic json) => compute(endCodeIsolate, json);
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-
   LocalNotification.instance.setUp();
   await Firebase.initializeApp();
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.black));
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const App());
 }
@@ -137,7 +137,7 @@ class AppState extends State<App> {
       child: MaterialApp(
         navigatorKey: Routes.instance.navigatorKey,
         debugShowCheckedModeBanner: false,
-        title: 'Sinhair',
+        title: 'SinHair',
         onGenerateRoute: Routes.generateRoute,
         initialRoute: RouteName.splashScreen,
         theme: ThemeData(
@@ -145,7 +145,10 @@ class AppState extends State<App> {
           fontFamily: 'Montserrat',
           canvasColor: Colors.transparent,
           platform: TargetPlatform.iOS,
-          bottomAppBarTheme: const BottomAppBarTheme(color: Color(0xff989898)),
+          scaffoldBackgroundColor: AppColors.white,
+          appBarTheme: const AppBarTheme(
+            systemOverlayStyle: SystemUiOverlayStyle.light,
+          ),
         ),
         builder: (context, widget) {
           GScreenUtil.init(context);

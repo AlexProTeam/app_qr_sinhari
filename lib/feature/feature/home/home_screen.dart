@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
-import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/feature/feature/home/widget/filter_item.dart';
 import 'package:qrcode/feature/feature/home/widget/item_news.dart';
-import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/injector_container.dart';
-import 'package:qrcode/feature/routes.dart';
-import 'package:qrcode/feature/widgets/banner_slide_image.dart';
-import 'package:qrcode/feature/widgets/gridview_product.dart';
+
+import '../../../common/navigation/route_names.dart';
+import '../../routes.dart';
+import '../../widgets/banner_slide_image.dart';
+import '../../widgets/gridview_product.dart';
+import '../list_product/list_product_screen.dart';
 
 enum IconHomeEnum {
   all,
@@ -187,7 +189,9 @@ class HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: List.generate(
                               IconHomeEnum.values.length,
-                              (index) => _buildFilterBarItem(index),
+                              (index) => FilterItemWidget(
+                                index: index,
+                              ),
                             ),
                           ),
                         ),
@@ -198,14 +202,10 @@ class HomeScreenState extends State<HomeScreen> {
                             label: 'Sản phẩm nổi bật',
                             products: _productFeatures,
                             notExpand: true,
-                            onMore: () {
-                              Routes.instance
-                                  .navigateTo(RouteName.listProductScreen,
-                                      arguments: ArgumentListProductScreen(
-                                        url: 'product-feature',
-                                        label: 'Sản phẩm nổi bật',
-                                      ));
-                            },
+                            onMore: () => getGoToScreen(
+                              url: 'product-feature',
+                              label: 'Sản phẩm nổi bật',
+                            ),
                           ),
                         ),
                         const SizedBox(height: 22),
@@ -215,12 +215,9 @@ class HomeScreenState extends State<HomeScreen> {
                             label: 'Sản phẩm bán chạy',
                             products: _productSellers,
                             notExpand: true,
-                            onMore: () => Routes.instance
-                                .navigateTo(RouteName.listProductScreen,
-                                    arguments: ArgumentListProductScreen(
-                                      url: 'product-seller',
-                                      label: 'Sản phẩm bán chạy',
-                                    )),
+                            onMore: () => getGoToScreen(
+                                url: 'product-seller',
+                                label: 'Sản phẩm bán chạy'),
                           ),
                         ),
                         const SizedBox(height: 22),
@@ -258,28 +255,10 @@ class HomeScreenState extends State<HomeScreen> {
           );
   }
 
-  Widget _buildFilterBarItem(int index) {
-    return SizedBox(
-      height: 60,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            IconHomeEnum.values[index].getIcon,
-            width: 45,
-            height: 45,
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(height: 2),
-          Text(
-            IconHomeEnum.values[index].getTitle,
-            style: const TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w400,
-                color: Color(0xFFACACAC)),
-          )
-        ],
-      ),
-    );
-  }
+  void getGoToScreen({required String url, required String label}) =>
+      Routes.instance.navigateTo(RouteName.listProductScreen,
+          arguments: ArgumentListProductScreen(
+            url: url,
+            label: label,
+          ));
 }

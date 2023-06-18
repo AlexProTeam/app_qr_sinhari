@@ -58,14 +58,10 @@ class ScreenContainerState extends State<ScreenContainer> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.white,
-        body: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: BottomNavigation(
-            tabViews: BottomBarEnum.values.map((e) => e.getScreen).toList(),
-          ),
+  Widget build(BuildContext context) => SafeArea(
+        bottom: false,
+        child: BottomNavigation(
+          tabViews: BottomBarEnum.values.map((e) => e.getScreen).toList(),
         ),
       );
 }
