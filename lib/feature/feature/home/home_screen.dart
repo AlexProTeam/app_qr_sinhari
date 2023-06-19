@@ -6,9 +6,10 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/home/widget/filter_item.dart';
-import 'package:qrcode/feature/feature/home/widget/item_news.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/injector_container.dart';
+import 'package:qrcode/feature/themes/theme_text.dart';
+import 'package:qrcode/feature/widgets/home_product_item.dart';
 
 import '../../../common/navigation/route_names.dart';
 import '../../routes.dart';
@@ -211,40 +212,95 @@ class HomeScreenState extends State<HomeScreen> {
                         const SizedBox(height: 22),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: GridViewDisplayProduct(
-                            label: 'Sản phẩm bán chạy',
-                            products: _productSellers,
-                            notExpand: true,
-                            onMore: () => getGoToScreen(
-                                url: 'product-seller',
-                                label: 'Sản phẩm bán chạy'),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('Sản phẩm bán chạy',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18,
+                                      color: Color(0xFFEF4948))),
+                              InkWell(
+                                onTap: () {},
+                                child: const Text(
+                                  'Xem thêm',
+                                  style: AppTextTheme.normalGrey,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: _productSellers.length,
+                            itemBuilder: (_, index) {
+                              return ProductItem(
+                                productModel: _productSellers[index],
+                              );
+                            },
                           ),
                         ),
                         const SizedBox(height: 22),
-                        if (_newsModel.isNotEmpty) ...[
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text('Tin tức mới nhất',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFFEF4948))),
+                        // if (_newsModel.isNotEmpty) ...[
+                        //   const Padding(
+                        //     padding: EdgeInsets.symmetric(horizontal: 16),
+                        //     child: Text('Tin tức mới nhất',
+                        //         style: TextStyle(
+                        //             fontSize: 18,
+                        //             fontWeight: FontWeight.w700,
+                        //             color: Color(0xFFEF4948))),
+                        //   ),
+                        //   SizedBox(
+                        //     width: double.infinity,
+                        //     height: 220,
+                        //     child: ListView.builder(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 16),
+                        //       shrinkWrap: true,
+                        //       itemBuilder: (_, index) => ItemNews(
+                        //         model: _newsModel[index],
+                        //       ),
+                        //       itemCount: _newsModel.length,
+                        //       scrollDirection: Axis.horizontal,
+                        //     ),
+                        //   ),
+                        // ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('Dầu gội phủ bạc',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18,
+                                      color: Color(0xFFEF4948))),
+                              InkWell(
+                                onTap: () {},
+                                child: const Text(
+                                  'Xem thêm',
+                                  style: AppTextTheme.normalGrey,
+                                ),
+                              )
+                            ],
                           ),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 220,
-                            child: ListView.builder(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              shrinkWrap: true,
-                              itemBuilder: (_, index) => ItemNews(
-                                model: _newsModel[index],
-                              ),
-                              itemCount: _newsModel.length,
-                              scrollDirection: Axis.horizontal,
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: _productSellers.length,
+                            itemBuilder: (_, index) {
+                              return ProductItem(
+                                productModel: _productSellers[index],
+                              );
+                            },
                           ),
-                        ],
+                        ),
                         const SizedBox(height: 80),
                       ],
                     ),
