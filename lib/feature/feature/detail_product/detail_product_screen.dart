@@ -51,7 +51,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
   void _initData() async {
     try {
       isLoadding = true;
-      if (widget.argument?.url != "") {
+      if ((widget.argument?.url ?? '').isNotEmpty) {
         await _getProductByUrl();
         return;
       }
@@ -72,7 +72,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
     try {
       final deviceId = injector<AppCache>().deviceId;
       final data = await injector<AppClient>().get(
-          'scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url}');
+          'scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url ?? ''}');
       _detailProductModel = DetailProductModel.fromJson(data['data']['data']);
       _detailProductModel?.serialCode = data['data']['code_active'];
       if (data['data']['tracking'] != null) {
