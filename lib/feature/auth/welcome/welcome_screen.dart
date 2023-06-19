@@ -79,7 +79,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                     children: [
                       GestureDetector(
                         onTap: () => Routes.instance
-                            .navigateTo(RouteName.containerScreen),
+                            .navigateTo(RouteName.bottomBarScreen),
                         child: const Text(
                           'Skip',
                           style: TextStyle(
@@ -98,7 +98,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                                 _pageController.jumpToPage(_currentIndex)
                               }
                             : Routes.instance
-                                .navigateTo(RouteName.containerScreen),
+                                .navigateTo(RouteName.bottomBarScreen),
                         child: Container(
                           width: 45,
                           height: 45,

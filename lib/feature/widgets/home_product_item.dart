@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
-import 'package:qrcode/feature/routes.dart';
 
 import '../../common/const/icon_constant.dart';
 import '../../common/model/product_model.dart';
@@ -17,7 +16,7 @@ class ProductItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: InkWell(
-        onTap: () => Routes.instance.navigateTo(RouteName.detailProductScreen,
+        onTap: () => Navigator.pushNamed(context, RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
               productId: productModel?.id,
             )),

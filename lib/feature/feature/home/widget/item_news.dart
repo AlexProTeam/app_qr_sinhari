@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../common/const/string_const.dart';
 import '../../../../common/navigation/route_names.dart';
 import '../../../../common/utils/screen_utils.dart';
-import '../../../routes.dart';
 import '../../../themes/theme_text.dart';
 import '../../../widgets/custom_image_network.dart';
 import '../../news/detail_new_screen.dart';
@@ -18,7 +17,7 @@ class ItemNews extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Routes.instance.navigateTo(RouteName.detailNewScreen,
+        Navigator.pushNamed(context, RouteName.detailNewScreen,
             arguments: ArgumentDetailNewScreen(
                 newsDetail: model.id, url: model.image));
       },

@@ -3,7 +3,6 @@ import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
 import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/navigation/slide_left_route.dart';
-import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/auth/change_pass/change_pass_screen.dart';
 import 'package:qrcode/feature/auth/forgot_pass/forgot_pass_screen.dart';
 import 'package:qrcode/feature/auth/login/login_screen.dart';
@@ -17,6 +16,7 @@ import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
+import 'package:qrcode/feature/feature/news/news_screen.dart';
 import 'package:qrcode/feature/feature/notification/notification_screen.dart';
 import 'package:qrcode/feature/feature/personal/gioi_thieu.dart';
 import 'package:qrcode/feature/feature/personal/huong_dan.dart';
@@ -29,11 +29,14 @@ import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
-import 'feature/BottomBar/screen_container.dart';
+import 'feature/bottom_bar_screen/bottom_bar_screen.dart';
 import 'feature/detail_product/detail_product_contact.dart';
 
 class Routes {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> bottomBarNavigatorKey =
+      GlobalKey<NavigatorState>();
 
   factory Routes() => _instance;
 
@@ -79,7 +82,25 @@ class Routes {
   }
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    lOG.d('LOG ROUTE_NAVIGATOR: ${settings.name}');
+    switch (settings.name) {
+      case RouteName.splashScreen:
+        return SlideLeftRoute(
+          widget: const SplashPage(),
+        );
+      case RouteName.welcomeScreen:
+        return SlideLeftRoute(
+          widget: const WelcomeScreen(),
+        );
+      case RouteName.bottomBarScreen:
+        return SlideLeftRoute(
+          widget: const BottomBarScreen(),
+        );
+      default:
+        return _emptyRoute(settings);
+    }
+  }
+
+  static Route<dynamic> generateBottomBarRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.gioiThieuScreen:
         return SlideLeftRoute(
@@ -113,14 +134,7 @@ class Routes {
         return SlideLeftRoute(
           widget: const NotiScreen(),
         );
-      case RouteName.containerScreen:
-        return SlideLeftRoute(
-          widget: const ScreenContainer(),
-        );
-      case RouteName.welcomeScreen:
-        return SlideLeftRoute(
-          widget: const WelcomeScreen(),
-        );
+
       case RouteName.verifyOtpScreen:
         return SlideLeftRoute(
           widget: VerifyOtpScreen(
@@ -130,6 +144,7 @@ class Routes {
         );
       case RouteName.historyScanScreen:
         return SlideLeftRoute(
+          duration: 0,
           widget: const HistoryScanScreen(),
         );
       case RouteName.scanQrScreen:
@@ -154,6 +169,7 @@ class Routes {
         );
       case RouteName.personalScreen:
         return SlideLeftRoute(
+          duration: 0,
           widget: const PersonalScreen(),
         );
       case RouteName.detailProductScreen:
@@ -168,6 +184,7 @@ class Routes {
       ///
       case RouteName.detailNewScreen:
         return SlideLeftRoute(
+          duration: 0,
           widget: DetailNewScreen(
             argument: settings.arguments != null
                 ? settings.arguments as ArgumentDetailNewScreen
@@ -184,6 +201,7 @@ class Routes {
         );
       case RouteName.homeScreen:
         return SlideLeftRoute(
+          duration: 0,
           widget: const HomeScreen(),
         );
       case RouteName.changePassScreen:
@@ -205,13 +223,14 @@ class Routes {
                 settings.arguments != null ? settings.arguments as bool : null,
           ),
         );
-      case RouteName.splashScreen:
-        return SlideLeftRoute(
-          widget: const SplashPage(),
-        );
       case RouteName.checkBillScreen:
         return SlideLeftRoute(
           widget: const CheckBillScreen(),
+        );
+      case RouteName.newsScreen:
+        return SlideLeftRoute(
+          duration: 0,
+          widget: const NewsScreen(),
         );
 
       default:

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../../common/const/icon_constant.dart';
+import '../../../../common/navigation/route_names.dart';
 import '../../history_scan/history_scan_screen.dart';
 import '../../home/home_screen.dart';
 import '../../news/news_screen.dart';
@@ -42,6 +43,23 @@ extension BottomBarEx on BottomBarEnum {
         return const PersonalScreen();
       default:
         return const SizedBox.shrink();
+    }
+  }
+
+  String get getRouteNames {
+    switch (this) {
+      case BottomBarEnum.home:
+        return RouteName.homeScreen;
+      case BottomBarEnum.lichSuQuet:
+        return RouteName.historyScanScreen;
+      case BottomBarEnum.scan:
+        return RouteName.scanQrScreen;
+      case BottomBarEnum.tinTuc:
+        return RouteName.newsScreen;
+      case BottomBarEnum.caNhan:
+        return RouteName.personalScreen;
+      default:
+        return RouteName.homeScreen;
     }
   }
 }

@@ -23,6 +23,7 @@ class RouteName {
   static const String webViewDetailScreen = 'WebViewDetailScreen';
   static const String historyScanScreen = 'HistoryScanScreen';
   static const String welcomeScreen = 'WelcomeScreen';
-  static const String containerScreen = 'ContainerScreen';
   static const String checkBillScreen = 'CheckBillScreen';
+  static const String bottomBarScreen = 'BottomBarScreen';
+  static const String newsScreen = 'NewsScreen';
 }

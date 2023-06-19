@@ -111,27 +111,8 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _initData();
-    // _checkAndNavigateToLastScreen();
     super.initState();
   }
-
-  ///todo: remove later
-  // void _checkAndNavigateToLastScreen() async {
-  //   await Future.delayed(Duration(seconds: 2));
-  //   if (injector<AppCache>().cacheDataProduct != null) {
-  //     Routes.instance.navigateTo(RouteName.DetailProductScreen,
-  //         arguments: ArgumentDetailProductScreen(
-  //           url: injector<AppCache>().cacheDataProduct,
-  //         ));
-  //     return;
-  //   }
-  //   if (injector<AppCache>().cacheProductId != null) {
-  //     Routes.instance.navigateTo(RouteName.DetailProductScreen,
-  //         arguments: ArgumentDetailProductScreen(
-  //           productId: injector<AppCache>().cacheProductId,
-  //         ));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -320,7 +301,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   void getGoToScreen({required String url, required String label}) =>
-      Routes.instance.navigateTo(RouteName.listProductScreen,
+      Navigator.pushNamed(context, RouteName.listProductScreen,
           arguments: ArgumentListProductScreen(
             url: url,
             label: label,

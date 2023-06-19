@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
@@ -81,7 +80,8 @@ class BannerSlideImageState extends State<BannerSlideImage> {
                       onTap: () {
                         if (e.urlLink != null &&
                             (e.urlLink?.contains('http') ?? false)) {
-                          Routes.instance.navigateTo(
+                          Navigator.pushNamed(
+                            context,
                             RouteName.webViewScreen,
                             arguments: e.urlLink,
                           );
