@@ -29,7 +29,7 @@ class DetailProductSlideState extends State<DetailProductSlide> {
       children: [
         SizedBox(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.5,
           child: CarouselSlider(
             options: CarouselOptions(
               initialPage: 0,
@@ -53,7 +53,7 @@ class DetailProductSlideState extends State<DetailProductSlide> {
                         child: CustomImageNetwork(
                           url: e,
                           width: double.infinity,
-                          height: double.infinity,
+                          height: 375,
                           fit: BoxFit.cover,
                         ),
                       ),

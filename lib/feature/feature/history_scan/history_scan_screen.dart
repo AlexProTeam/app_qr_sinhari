@@ -78,7 +78,7 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
             backgroundColor: const Color(0xFFF2F2F2),
             body: Column(
               children: [
-                const SizedBox(height: 39),
+                const SizedBox(height: 20),
                 const Center(
                   child: Text(
                     'Lịch sử QR',
