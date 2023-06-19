@@ -9,7 +9,6 @@ import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/empty_widget.dart';
 
 import '../../injector_container.dart';
@@ -49,7 +48,7 @@ class NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       // customAppBar: CustomAppBar(
       //   title: 'Tin tức',
       //   haveIconLeft: false,

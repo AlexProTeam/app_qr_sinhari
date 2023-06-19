@@ -7,7 +7,6 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/home/widget/filter_item.dart';
-import 'package:qrcode/feature/feature/home/widget/item_news.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
@@ -321,30 +320,30 @@ class HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                         ),
-                        if (_newsModel.isNotEmpty) ...[
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text('Tin tức mới nhất',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFFEF4948))),
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 220,
-                            child: ListView.builder(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              shrinkWrap: true,
-                              itemBuilder: (_, index) => ItemNews(
-                                model: _newsModel[index],
-                              ),
-                              itemCount: _newsModel.length,
-                              scrollDirection: Axis.horizontal,
-                            ),
-                          ),
-                        ],
+                        // if (_newsModel.isNotEmpty) ...[
+                        //   const Padding(
+                        //     padding: EdgeInsets.symmetric(horizontal: 16),
+                        //     child: Text('Tin tức mới nhất',
+                        //         style: TextStyle(
+                        //             fontSize: 18,
+                        //             fontWeight: FontWeight.w700,
+                        //             color: Color(0xFFEF4948))),
+                        //   ),
+                        //   SizedBox(
+                        //     width: double.infinity,
+                        //     height: 220,
+                        //     child: ListView.builder(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 16),
+                        //       shrinkWrap: true,
+                        //       itemBuilder: (_, index) => ItemNews(
+                        //         model: _newsModel[index],
+                        //       ),
+                        //       itemCount: _newsModel.length,
+                        //       scrollDirection: Axis.horizontal,
+                        //     ),
+                        //   ),
+                        // ],
                         const SizedBox(height: 80),
                       ],
                     ),

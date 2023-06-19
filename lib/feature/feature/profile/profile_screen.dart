@@ -16,7 +16,6 @@ import 'package:qrcode/common/utils/validate_utils.dart';
 import 'package:qrcode/feature/widgets/bottom_sheet_select_image.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 
 import '../../injector_container.dart';
@@ -136,7 +135,7 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       body: isLoading
           ? const Center(
@@ -144,6 +143,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             )
           : Column(
               children: [
+                SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -159,7 +159,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                       'Thông tin cá nhân',
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
                     ),
