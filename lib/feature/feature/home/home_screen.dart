@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
+import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -150,11 +151,46 @@ class HomeScreenState extends State<HomeScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Image.asset(
-                        IconConst.logo,
-                        width: 40,
-                        height: 40,
-                      ),
+                      child: injector<AppCache>().profileModel != null
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  IconConst.logo,
+                                  width: 40,
+                                  height: 40,
+                                ),
+                                const SizedBox(width: 12),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Xin chào,',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black),
+                                    ),
+                                    const SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      injector<AppCache>().profileModel?.name ??
+                                          "",
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )
+                          : Image.asset(
+                              IconConst.logo,
+                              width: 40,
+                              height: 40,
+                            ),
                     ),
                     GestureDetector(
                       onTap: () => Routes.instance.navigateTo(
