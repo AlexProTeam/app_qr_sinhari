@@ -8,7 +8,6 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 class PersonalScreen extends StatefulWidget {
   const PersonalScreen({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class PersonalScreen extends StatefulWidget {
 class PersonalScreenState extends State<PersonalScreen> {
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       // customAppBar: CustomAppBar(
       //   title: 'Tài khoản',
       //   haveIconLeft: false,
@@ -29,7 +28,7 @@ class PersonalScreenState extends State<PersonalScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             const Text(
               'Tài khoản',
               style: TextStyle(
@@ -92,8 +91,7 @@ class PersonalScreenState extends State<PersonalScreen> {
                     ),
                     _icon(
                       () {
-                        Routes.instance.navigateTo(RouteName.profileScreen);
-                        // Routes.instance.navigateTo(RouteName.GioiThieuScreen);
+                        Routes.instance.navigateTo(RouteName.gioiThieuScreen);
                       },
                       'Chính sách bán hàng',
                       IconConst.provisionOrder,
@@ -108,7 +106,7 @@ class PersonalScreenState extends State<PersonalScreen> {
                     ),
                     _icon(
                       () {
-                        Routes.instance.navigateTo(RouteName.verifyOtpScreen);
+                        Routes.instance.navigateTo(RouteName.policyScreen);
                       },
                       'Điều khoản sử dụng',
                       IconConst.adjust,

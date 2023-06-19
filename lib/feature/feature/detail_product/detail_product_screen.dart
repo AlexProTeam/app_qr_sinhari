@@ -120,176 +120,260 @@ class DetailProductScreenState extends State<DetailProductScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      customAppBar: CustomAppBar(
-        title: 'Chi tiết sản phẩm',
-        iconLeftTap: () => Navigator.pop(context),
-      ),
       body: isLoadding
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : Stack(
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.topCenter,
               children: [
                 SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 60),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _detailProductModel != null
-                            ? DetailProductSlide(
-                                images: _detailProductModel?.photos,
-                              )
-                            : const SizedBox(),
-                        const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _detailProductModel?.name ?? '',
-                                style: AppTextTheme.normalBlack,
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                FormatUtils.formatCurrencyDoubleToString(
-                                    _detailProductModel?.unitPrice),
-                                style: AppTextTheme.mediumPrimary,
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    IconConst.fakeStar,
-                                    width: 80,
-                                    height: 15,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Column(
-                          children: [
-                            widget.argument?.url != null
-                                ? Container(
-                                    child:
-                                        _detailProductModel?.limitScan == true
-                                            ? _itemLimit(
-                                                _detailProductModel
-                                                        ?.dateTimeScanLimit ??
-                                                    '',
-                                                _detailProductModel
-                                                        ?.exceedingScan ??
-                                                    '')
-                                            : _itemApccept(),
-                                  )
-                                : Container(),
-                            Container(
-                              height: 8,
-                              width: double.infinity,
-                              color: AppColors.grey4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              size: 18,
+                              color: Color(0xFFACACAC),
                             ),
-                            widget.argument?.url != null
-                                ? Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 12),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Serial: ${_detailProductModel?.serialCode ?? ''}',
-                                              style: AppTextTheme.normalBlue,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 8,
-                                        width: double.infinity,
-                                        color: AppColors.grey4,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 12),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                                child: _itemRow(
-                                              Icons.qr_code_scanner,
-                                              _detailProductModel?.countScan ??
-                                                  0,
-                                              'Số lần quét',
-                                            )),
-                                            Container(
-                                              width: 1,
-                                              height: 50,
-                                              color: AppColors.grey6,
-                                            ),
-                                            Expanded(
-                                                child: _itemRow(
-                                              Icons.person,
-                                              _detailProductModel
-                                                      ?.countPersonScan ??
-                                                  0,
-                                              'Số người quét',
-                                            )),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 8,
-                                        width: double.infinity,
-                                        color: AppColors.grey4,
-                                      ),
-                                      _itemCompany(
-                                        name: 'CÔNG TY TNHH SIN HAIR JAPAN',
-                                        label: 'Nhà phân phối',
-                                        phone: '0886986222',
-                                        address:
-                                            'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
-                                        mst: '0109429157',
-                                      ),
-                                      Container(
-                                        height: 8,
-                                        width: double.infinity,
-                                        color: AppColors.grey4,
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox(),
+                          ),
+                          const Text(
+                            'Chi tiết',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Image.asset(
+                              IconConst.heart,
+                              width: 22,
+                              height: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      _detailProductModel != null
+                          ? DetailProductSlide(
+                              images: _detailProductModel?.photos,
+                            )
+                          : const SizedBox(),
+                      const SizedBox(height: 18.5),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _detailProductModel?.name ?? '',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF000000)),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Image.asset(
+                                  IconConst.star,
+                                  width: 13.5,
+                                  height: 16,
+                                ),
+                                const SizedBox(width: 6),
+                                RichText(
+                                    text: const TextSpan(
+                                        text: '4.9 ',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black),
+                                        children: [
+                                      TextSpan(
+                                        text: '(122 sản phẩm)',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color: Color(0xFFACACAC)),
+                                      )
+                                    ]))
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  FormatUtils.formatCurrencyDoubleToString(
+                                      _detailProductModel?.unitPrice),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: Color(0xFFFFC700)),
+                                ),
+                                SizedBox(width: 15),
+                                RichText(
+                                  text: TextSpan(
+                                    text: FormatUtils
+                                        .formatCurrencyDoubleToString(
+                                            _detailProductModel?.unitPrice),
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFFACACAC),
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationColor: Color(
+                                          0xFFACACAC), // Màu của đường gạch ngang),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10)
                           ],
                         ),
-                        _detailProductModel != null
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 4),
-                                child: Html(
-                                  data: _detailProductModel?.description ?? "",
-                                  style: {
-                                    "html": Style(
-                                      backgroundColor: Colors.white,
-                                      color: AppColors.grey9,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: FontSize(14),
-                                      padding: HtmlPaddings.zero,
-                                      fontStyle: FontStyle.normal,
-                                      wordSpacing: 1.5,
+                      ),
+                      const SizedBox(height: 12),
+                      Column(
+                        children: [
+                          widget.argument?.url != null
+                              ? Container(
+                                  child: _detailProductModel?.limitScan == true
+                                      ? _itemLimit(
+                                          _detailProductModel
+                                                  ?.dateTimeScanLimit ??
+                                              '',
+                                          _detailProductModel?.exceedingScan ??
+                                              '')
+                                      : _itemApccept(),
+                                )
+                              : Container(),
+                          // Container(
+                          //   height: 8,
+                          //   width: double.infinity,
+                          //   color: AppColors.grey4,
+                          // ),
+                          widget.argument?.url != null
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Serial: ${_detailProductModel?.serialCode ?? ''}',
+                                            style: AppTextTheme.normalBlue,
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  },
+                                    Container(
+                                      height: 8,
+                                      width: double.infinity,
+                                      color: AppColors.grey4,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                              child: _itemRow(
+                                            Icons.qr_code_scanner,
+                                            _detailProductModel?.countScan ?? 0,
+                                            'Số lần quét',
+                                          )),
+                                          Container(
+                                            width: 1,
+                                            height: 50,
+                                            color: AppColors.grey6,
+                                          ),
+                                          Expanded(
+                                              child: _itemRow(
+                                            Icons.person,
+                                            _detailProductModel
+                                                    ?.countPersonScan ??
+                                                0,
+                                            'Số người quét',
+                                          )),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 8,
+                                      width: double.infinity,
+                                      color: AppColors.grey4,
+                                    ),
+                                    _itemCompany(
+                                      name: 'CÔNG TY TNHH SIN HAIR JAPAN',
+                                      label: 'Nhà phân phối',
+                                      phone: '0886986222',
+                                      address:
+                                          'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
+                                      mst: '0109429157',
+                                    ),
+                                    Container(
+                                      height: 8,
+                                      width: double.infinity,
+                                      color: AppColors.grey4,
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox(),
+                        ],
+                      ),
+                      _detailProductModel != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  child: Text(
+                                    'Mô tả sản phẩm:',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black),
+                                  ),
                                 ),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(height: 60),
-                      ],
-                    ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Html(
+                                    data:
+                                        _detailProductModel?.description ?? "",
+                                    style: {
+                                      "html": Style(
+                                        backgroundColor: Colors.white,
+                                        color: AppColors.grey9,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: FontSize(14),
+                                        padding: HtmlPaddings.zero,
+                                        fontStyle: FontStyle.normal,
+                                        wordSpacing: 1.5,
+                                      ),
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                      const SizedBox(height: 60),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -297,6 +381,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                   right: 12,
                   bottom: 16,
                   child: CustomButton(
+                    width: 343,
+                    height: 45,
+                    radius: 5,
                     onTap: () {
                       if (widget.argument?.url != null) {
                         injector<AppCache>().profileModel != null
@@ -316,7 +403,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                       }
                     },
                     text:
-                        widget.argument?.url != null ? 'Kích hoạt' : 'Mua hàng',
+                        widget.argument?.url != null ? 'Kích hoạt' : 'Mua ngay',
                   ),
                 ),
               ],
