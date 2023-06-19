@@ -38,7 +38,7 @@ class GridViewDisplayProduct extends StatelessWidget {
           children: [
             Text(label,
                 style: const TextStyle(
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     fontSize: 18,
                     color: Color(0xFFEF4948))),
             InkWell(
