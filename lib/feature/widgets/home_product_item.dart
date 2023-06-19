@@ -17,18 +17,16 @@ class ProductItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: InkWell(
-        onTap: () {
-          Routes.instance.navigateTo(RouteName.detailProductScreen,
-              arguments: ArgumentDetailProductScreen(
-                  // productId: model.productId,
-                  ));
-        },
+        onTap: () => Routes.instance.navigateTo(RouteName.detailProductScreen,
+            arguments: ArgumentDetailProductScreen(
+              productId: productModel?.id,
+            )),
         child: Container(
           width: 343,
           height: 132,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: Color(0xFFF2F2F2),
-              borderRadius: const BorderRadius.all(Radius.circular(
+              borderRadius: BorderRadius.all(Radius.circular(
                 8,
               ))),
           child: Row(
@@ -42,7 +40,7 @@ class ProductItem extends StatelessWidget {
                 height: 110,
                 border: 8,
               ),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +95,6 @@ class ProductItem extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             color: Color(0xFFFFC700)),
                       ),
-                      // const Spacer(),
                       const SizedBox(width: 15),
                       RichText(
                         text: TextSpan(
