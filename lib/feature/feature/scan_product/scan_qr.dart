@@ -7,7 +7,6 @@ import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
 import 'package:qrcode/feature/routes.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 
 import '../../widgets/qr_scanner_overlay.dart';
@@ -47,55 +46,54 @@ class QRViewExampleState extends State<ScanQrScreen>
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      body: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 18,
-                  color: Color(0xFFACACAC),
-                ),
-              ),
-              const Text(
-                'Quét mã QR',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(width: 40),
-            ],
-          ),
-          const SizedBox(height: 17),
-          _buildQrView(context),
-          const SizedBox(height: 20),
-          const Text(
-            'Kiểm tra sản phẩm chính hãng',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.red,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: List.generate(
-              ScanTypeEnum.values.length,
-              (index) => _buildBottomScanQrItem(
-                _currentIndex,
-                onTap: () => setState(() => _currentIndex = index),
-                enumData: ScanTypeEnum.values[index],
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 18,
+                color: Color(0xFFACACAC),
               ),
             ),
+            const Text(
+              'Quét mã QR',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(width: 40),
+          ],
+        ),
+        const SizedBox(height: 17),
+        _buildQrView(context),
+        const SizedBox(height: 20),
+        const Text(
+          'Kiểm tra sản phẩm chính hãng',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.red,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: List.generate(
+            ScanTypeEnum.values.length,
+            (index) => _buildBottomScanQrItem(
+              _currentIndex,
+              onTap: () => setState(() => _currentIndex = index),
+              enumData: ScanTypeEnum.values[index],
+            ),
+          ),
+        ),
+        const SizedBox(height: 50),
+      ],
     );
   }
 
