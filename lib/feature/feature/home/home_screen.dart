@@ -13,7 +13,6 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/home_product_item.dart';
 
 import '../../../common/navigation/route_names.dart';
-import '../../routes.dart';
 import '../../widgets/banner_slide_image.dart';
 import '../../widgets/gridview_product.dart';
 import '../list_product/list_product_screen.dart';
@@ -173,7 +172,8 @@ class HomeScreenState extends State<HomeScreen> {
                             ),
                     ),
                     GestureDetector(
-                      onTap: () => Routes.instance.navigateTo(
+                      onTap: () => Navigator.pushNamed(
+                        context,
                         RouteName.notiScreen,
                       ),
                       child: const Padding(

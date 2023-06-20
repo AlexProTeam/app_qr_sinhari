@@ -40,7 +40,7 @@
 //         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
 //     if (_accessToken?.isEmpty ?? true) {
 //       await Future.delayed(Duration(seconds: 1));
-//       // Routes.instance.navigateTo(RouteName.ContainerScreen);
+//       // Navigator.pushNamed(RouteName.ContainerScreen);
 //       Routes.instance.navigateAndRemove(RouteName.WelcomeScreen);
 //       return;
 //     }
@@ -162,7 +162,7 @@ class LogoAppState extends State<SplashPage>
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
     if (accessToken?.isEmpty ?? true) {
       await Future.delayed(const Duration(seconds: 2));
-      // Routes.instance.navigateTo(RouteName.ContainerScreen);
+      // Navigator.pushNamed(RouteName.ContainerScreen);
       Routes.instance.navigateAndRemove(RouteName.welcomeScreen);
       return;
     }

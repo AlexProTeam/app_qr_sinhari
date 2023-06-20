@@ -6,7 +6,6 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 class QrcodeScannerWithController extends StatefulWidget {
@@ -60,7 +59,7 @@ class QrcodeScannerWithControllerState
     if (url.contains('http://qcheck.vn/') || url.contains('http://qrco.de')) {
       CommonUtil.runUrl(url);
     } else {
-      Routes.instance.navigateTo(RouteName.detailProductScreen,
+      Navigator.pushNamed(context,RouteName.detailProductScreen,
           arguments: ArgumentDetailProductScreen(
             url: url,
           ));

@@ -5,7 +5,6 @@ import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/feature/injector_container.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 
@@ -45,7 +44,7 @@ class PersonalScreenState extends State<PersonalScreen> {
                 injector<AppCache>().profileModel == null
                     ? CustomButton(
                         onTap: () {
-                          Routes.instance.navigateTo(RouteName.loginScreen,
+                          Navigator.pushNamed(context, RouteName.loginScreen,
                               arguments: true);
                         },
                         text: 'Đăng nhập',
@@ -74,8 +73,8 @@ class PersonalScreenState extends State<PersonalScreen> {
                     injector<AppCache>().profileModel != null
                         ? _icon(
                             () {
-                              Routes.instance
-                                  .navigateTo(RouteName.profileScreen);
+                              Navigator.pushNamed(
+                                  context, RouteName.profileScreen);
                             },
                             'Thông tin cá nhân',
                             IconConst.info,
@@ -83,7 +82,7 @@ class PersonalScreenState extends State<PersonalScreen> {
                         : Container(),
                     _icon(
                       () {
-                        Routes.instance.navigateTo(RouteName.webViewScreen,
+                        Navigator.pushNamed(context, RouteName.webViewScreen,
                             arguments: 'https://sinhairvietnam.vn/lien-he/');
                       },
                       'Liên hệ',
@@ -91,22 +90,22 @@ class PersonalScreenState extends State<PersonalScreen> {
                     ),
                     _icon(
                       () {
-                        Routes.instance.navigateTo(RouteName.gioiThieuScreen);
+                        Navigator.pushNamed(context, RouteName.gioiThieuScreen);
                       },
                       'Chính sách bán hàng',
                       IconConst.provisionOrder,
                     ),
                     _icon(
                       () {
-                        // Routes.instance.navigateTo(RouteName.CheckBillScreen);
-                        Routes.instance.navigateTo(RouteName.huongDanScreen);
+                        // Navigator.pushNamed(RouteName.CheckBillScreen);
+                        Navigator.pushNamed(context, RouteName.huongDanScreen);
                       },
                       'Chính sách bảo mật',
                       IconConst.provisionSecurity,
                     ),
                     _icon(
                       () {
-                        Routes.instance.navigateTo(RouteName.policyScreen);
+                        Navigator.pushNamed(context, RouteName.policyScreen);
                       },
                       'Điều khoản sử dụng',
                       IconConst.adjust,
@@ -160,7 +159,7 @@ class PersonalScreenState extends State<PersonalScreen> {
                           injector<AppCache>().havedLogin = false;
                           await injector<LocalApp>().saveStringSharePreference(
                               KeySaveDataLocal.keySaveAccessToken, '');
-                          Routes.instance.navigateTo(RouteName.loginScreen,
+                          Navigator.pushNamed(context, RouteName.loginScreen,
                               arguments: false);
                         },
                         text: 'Đăng xuất',

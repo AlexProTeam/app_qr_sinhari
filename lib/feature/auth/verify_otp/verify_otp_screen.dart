@@ -76,7 +76,7 @@
 //               children: [
 //                 CustomButton(
 //                   onTap: () {
-//                     Routes.instance.navigateTo(RouteName.ChangePassScreen);
+//                     Navigator.pushNamed(RouteName.ChangePassScreen);
 //                   },
 //                   text: 'Xác nhận',
 //                 ),

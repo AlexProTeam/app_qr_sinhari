@@ -5,7 +5,6 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/widgets/category_product_item.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 
@@ -90,7 +89,7 @@ class ListProductScreenState extends State<ListProductScreen> {
   @override
   Widget build(BuildContext context) {
     final itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
-    return CustomScaffold(
+    return Scaffold(
       ///todo: remove later
       // customAppBar: CustomAppBar(
       //   title: '${widget.argument?.label}',

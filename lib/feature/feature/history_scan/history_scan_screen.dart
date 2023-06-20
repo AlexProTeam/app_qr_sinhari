@@ -12,7 +12,6 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
 import '../../injector_container.dart';
@@ -139,7 +138,7 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
   // Widget _item(HistoryModel model) {
   //   return InkWell(
   //     onTap: () {
-  //       Routes.instance.navigateTo(RouteName.DetailProductScreen,
+  //       Navigator.pushNamed(RouteName.DetailProductScreen,
   //           arguments: ArgumentDetailProductScreen(
   //             productId: model.productId,
   //           ));
@@ -178,7 +177,7 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
   Widget _item() {
     return InkWell(
       onTap: () {
-        Routes.instance.navigateTo(RouteName.detailProductScreen,
+        Navigator.pushNamed(context,RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
                 // productId: model.productId,
                 ));
@@ -241,19 +240,19 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
   // void _onScan() async {
   //   // final deviceId = await CommonUtil.getDeviceId();
   //   // LOG.w('_onScan: $deviceId');
-  //   // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+  //   // final data = await Navigator.pushNamed(RouteName.ScanQrScreen);
   //   // LOG.w('_onScan: $data');
   //   // if (data != null) {
   //   //   injector<AppClient>().get(
   //   //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
   //   //           '&city=ha noi&region=vn&url=$data');
   //   //   injector<AppCache>().cacheDataProduct = data;
-  //   //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
+  //   //   Navigator.pushNamed(RouteName.DetailProductScreen,
   //   //       arguments: ArgumentDetailProductScreen(
   //   //         url: data,
   //   //       ));
   //   // }
-  //   Routes.instance.navigateTo(
+  //   Navigator.pushNamed(
   //     RouteName.NotiScreen,
   //   );
   // }

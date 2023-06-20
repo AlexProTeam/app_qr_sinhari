@@ -9,10 +9,8 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/auth/login/widgets/input_phone_widget.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 
@@ -42,8 +40,8 @@ class LoginScreenState extends State<LoginScreen> {
     try {
       await injector<AppClient>().post('auth-with-otp?phone=$phoneNumber');
       await _addToken();
-      Routes.instance
-          .navigateTo(RouteName.verifyOtpScreen, arguments: phoneNumber);
+      Navigator.pushNamed(context, RouteName.verifyOtpScreen,
+          arguments: phoneNumber);
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     }
@@ -68,9 +66,8 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       backgroundColor: AppColors.white,
-      autoDismissKeyboard: true,
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
@@ -89,7 +86,7 @@ class LoginScreenState extends State<LoginScreen> {
                 'Đăng nhập',
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),
               ),

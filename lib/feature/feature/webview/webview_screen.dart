@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // ignore: depend_on_referenced_packages
 import 'package:webview_flutter_android/webview_flutter_android.dart';
@@ -89,7 +88,7 @@ Page resource error:
     }
     // #enddocregion platform_features
 
-    return CustomScaffold(
+    return Scaffold(
       backgroundColor: const Color(0xFFF2F2F2),
       body: Column(
         children: [
@@ -116,7 +115,7 @@ Page resource error:
                 'Liên hệ',
                 style: TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                     color: Colors.black),
               ),
               const SizedBox(width: 35),

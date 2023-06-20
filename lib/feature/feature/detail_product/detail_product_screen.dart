@@ -14,11 +14,9 @@ import 'package:qrcode/common/utils/format_utils.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_contact.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_slide.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 
@@ -119,7 +117,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       body: isLoadding
           ? const Center(
               child: CircularProgressIndicator(),
@@ -372,38 +370,44 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                               ],
                             )
                           : const SizedBox(),
-                      const SizedBox(height: 60),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: CustomButton(
+                          width: 343,
+                          height: 45,
+                          radius: 5,
+                          onTap: () {
+                            if (widget.argument?.url != null) {
+                              injector<AppCache>().profileModel != null
+                                  ? Navigator.pushNamed(
+                                context,
+                                      RouteName.activeScrene,
+                                      arguments: ArgumentActiveScreen(
+                                          productId: _detailProductModel?.id))
+                                  : Navigator.pushNamed(
+                                  context,
+                                      RouteName.loginScreen,
+                                      arguments: true);
+                            } else {
+                              injector<AppCache>().profileModel != null
+                                  ? Navigator.pushNamed(
+                                  context,
+                                      RouteName.muaHangScrene,
+                                      arguments: ArgumentContactScreen(
+                                          productId: _detailProductModel?.id))
+                                  : Navigator.pushNamed(
+                                  context,
+                                      RouteName.loginScreen,
+                                      arguments: true);
+                            }
+                          },
+                          text: widget.argument?.url != null
+                              ? 'Kích hoạt'
+                              : 'Mua ngay',
+                        ),
+                      ),
+                      const SizedBox(height: 80),
                     ],
-                  ),
-                ),
-                Positioned(
-                  left: 12,
-                  right: 12,
-                  bottom: 16,
-                  child: CustomButton(
-                    width: 343,
-                    height: 45,
-                    radius: 5,
-                    onTap: () {
-                      if (widget.argument?.url != null) {
-                        injector<AppCache>().profileModel != null
-                            ? Routes.instance.navigateTo(RouteName.activeScrene,
-                                arguments: ArgumentActiveScreen(
-                                    productId: _detailProductModel?.id))
-                            : Routes.instance.navigateTo(RouteName.loginScreen,
-                                arguments: true);
-                      } else {
-                        injector<AppCache>().profileModel != null
-                            ? Routes.instance.navigateTo(
-                                RouteName.muaHangScrene,
-                                arguments: ArgumentContactScreen(
-                                    productId: _detailProductModel?.id))
-                            : Routes.instance.navigateTo(RouteName.loginScreen,
-                                arguments: true);
-                      }
-                    },
-                    text:
-                        widget.argument?.url != null ? 'Kích hoạt' : 'Mua ngay',
                   ),
                 ),
               ],

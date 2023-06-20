@@ -6,7 +6,6 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 
 import '../../widgets/qr_scanner_overlay.dart';
@@ -31,7 +30,7 @@ class QRViewExampleState extends State<ScanQrScreen>
       if (url.contains('http://qcheck.vn/')) {
         CommonUtil.runUrl(url);
       } else {
-        await Routes.instance.navigateTo(RouteName.detailProductScreen,
+        await Navigator.pushNamed(context,RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(url: url));
       }
     }

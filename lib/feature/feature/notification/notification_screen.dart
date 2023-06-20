@@ -4,7 +4,6 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 import 'noti_model.dart';
@@ -45,7 +44,7 @@ class NotiScreenState extends State<NotiScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return Scaffold(
       backgroundColor: const Color(0xFFF2F2F2),
       body: isLoadding
           ? const Center(
@@ -96,7 +95,7 @@ class NotiScreenState extends State<NotiScreen> {
   Widget _item(NotiModel model) {
     return InkWell(
       onTap: () {
-        // Routes.instance.navigateTo(RouteName.DetailProductScreen,
+        // Navigator.pushNamed(RouteName.DetailProductScreen,
         //     arguments: ArgumentDetailProductScreen(
         //       productId: model.productId,
         //     ));

@@ -10,7 +10,6 @@ import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/injector_container.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
@@ -58,7 +57,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
         final data = await injector<AppClient>().get('auth/showProfile');
         ProfileModel profileModel = ProfileModel.fromJson(data['data']);
         injector<AppCache>().profileModel = profileModel;
-        Routes.instance.navigateAndRemove(RouteName.bottomBarScreen);
+        Navigator.popAndPushNamed(context, RouteName.bottomBarScreen);
       }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');

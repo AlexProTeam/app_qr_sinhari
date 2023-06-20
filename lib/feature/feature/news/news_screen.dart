@@ -6,7 +6,6 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/empty_widget.dart';
@@ -106,7 +105,7 @@ class NewsScreenState extends State<NewsScreen> {
   Widget _item(NewsModel model) {
     return InkWell(
       onTap: () {
-        Routes.instance.navigateTo(RouteName.detailNewScreen,
+        Navigator.pushNamed(context,RouteName.detailNewScreen,
             arguments: ArgumentDetailNewScreen(
                 newsDetail: model.id, url: model.image));
       },

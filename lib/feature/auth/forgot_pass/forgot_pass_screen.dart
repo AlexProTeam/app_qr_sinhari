@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
-import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
@@ -34,7 +33,7 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
               children: [
                 CustomButton(
                   onTap: () {
-                    Routes.instance.navigateTo(RouteName.verifyOtpScreen);
+                    Navigator.pushNamed(context, RouteName.verifyOtpScreen);
                   },
                   text: 'Gửi đi',
                 ),
