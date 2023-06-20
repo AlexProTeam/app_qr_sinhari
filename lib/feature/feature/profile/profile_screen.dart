@@ -143,7 +143,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             )
           : Column(
               children: [
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

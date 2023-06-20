@@ -15,7 +15,9 @@ import '../../../common/const/icon_constant.dart';
 import '../../widgets/custom_image_network.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  final List<WelcomeModel> welcomeModel;
+
+  const WelcomeScreen({Key? key, required this.welcomeModel}) : super(key: key);
 
   @override
   WelcomeScreenState createState() => WelcomeScreenState();
@@ -28,9 +30,13 @@ class WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void initState() {
+    _welcomeModel = widget.welcomeModel;
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _initData().then((value) => setState(() {})));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.welcomeModel.isNotEmpty) {
+        _initData().then((value) => setState(() {}));
+      }
+    });
   }
 
   Future<void> _initData() async {
@@ -104,7 +110,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                           height: 45,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xFFEF4948),
+                            color: AppColors.colorEF4948,
                           ),
                           child: const Icon(
                             Icons.keyboard_arrow_right,

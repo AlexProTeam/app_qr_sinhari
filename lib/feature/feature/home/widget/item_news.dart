@@ -39,13 +39,16 @@ class ItemNews extends StatelessWidget {
               border: 12,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     model.title ?? '',
                     style: AppTextTheme.normalRoboto,
+                  ),
+                  const SizedBox(
+                    height: 2,
                   ),
                   Text(
                     model.createdAt ?? '',
