@@ -9,6 +9,7 @@ import 'package:qrcode/feature/auth/login/login_screen.dart';
 import 'package:qrcode/feature/auth/login/verify_otp_screen.dart';
 import 'package:qrcode/feature/auth/register/register_screen.dart';
 import 'package:qrcode/feature/auth/splash/splash_screen.dart';
+import 'package:qrcode/feature/auth/welcome/welcome_model.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_screen.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
@@ -89,7 +90,11 @@ class Routes {
         );
       case RouteName.welcomeScreen:
         return SlideLeftRoute(
-          widget: const WelcomeScreen(),
+          widget: WelcomeScreen(
+            welcomeModel: settings.arguments != null
+                ? settings.arguments as List<WelcomeModel>
+                : [],
+          ),
         );
       case RouteName.bottomBarScreen:
         return SlideLeftRoute(

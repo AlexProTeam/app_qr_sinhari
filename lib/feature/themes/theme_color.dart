@@ -31,6 +31,7 @@ class AppColors {
   static const Color colorSun = Color(0xffFFD666);
   static const Color colorGoogle = Color(0xffdb3236);
   static const Color colorDivider = grey5;
+  static const Color colorEF4948 = Color(0xFFEF4948);
 
   // splash
   static const Color splashNotFocusDot = Color(0xffE8E8E8);

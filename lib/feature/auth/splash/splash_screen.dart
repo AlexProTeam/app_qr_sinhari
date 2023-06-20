@@ -104,6 +104,9 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
+import '../../widgets/toast_manager.dart';
+import '../welcome/welcome_model.dart';
+
 class AnimatedLogo extends AnimatedWidget {
   static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
   static final _sizeTween = Tween<double>(begin: 0, end: 300);
@@ -138,6 +141,7 @@ class LogoAppState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
+  List<WelcomeModel> _welcomeModel = [];
 
   @override
   void initState() {
@@ -160,19 +164,39 @@ class LogoAppState extends State<SplashPage>
     injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
     String? accessToken = injector<LocalApp>()
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
+    await _initDataWelComeScreen();
+
     if (accessToken?.isEmpty ?? true) {
-      await Future.delayed(const Duration(seconds: 2));
-      // Routes.instance.navigateTo(RouteName.ContainerScreen);
-      Routes.instance.navigateAndRemove(RouteName.welcomeScreen);
+      Future.delayed(const Duration(seconds: 3));
+      Routes.instance
+          .navigateAndRemove(RouteName.welcomeScreen, arguments: _welcomeModel);
       return;
     }
     AppHeader appHeader = AppHeader();
     appHeader.accessToken = accessToken;
     injector<AppClient>().header = appHeader;
+
+    ///todo: api get profile đang lỗi
     final data = await injector<AppClient>().get('auth/showProfile');
     ProfileModel profileModel = ProfileModel.fromJson(data['data']);
     injector<AppCache>().profileModel = profileModel;
-    Routes.instance.navigateAndRemove(RouteName.welcomeScreen);
+    Routes.instance
+        .navigateAndRemove(RouteName.welcomeScreen, arguments: _welcomeModel);
+  }
+
+  Future<void> _initDataWelComeScreen() async {
+    await injector<LocalApp>()
+        .saveBool(KeySaveDataLocal.showWelcomeScreen, false);
+    try {
+      final data = await injector<AppClient>()
+          .post('get_image_introduction', handleResponse: false);
+      final banners = data['banners'] as List<dynamic>;
+      _welcomeModel = banners.map((e) => WelcomeModel.fromJson(e)).toList();
+    } catch (e) {
+      if (mounted) {
+        ToastManager.showToast(context, text: e.toString());
+      }
+    }
   }
 
   @override

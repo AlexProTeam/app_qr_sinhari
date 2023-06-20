@@ -70,7 +70,7 @@ class BottomNavigationState extends State<BottomNavigation> {
             : Image.asset(
                 dataEnum.getIcon,
                 width: 19,
-                color: isSelected ? AppColors.red2 : AppColors.grey6,
+                color: isSelected ? AppColors.red2 : null,
               ),
       ),
     );
