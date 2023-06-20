@@ -3,18 +3,13 @@ import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 
-import 'enum/bottom_bar_enum.dart';
+import '../enum/bottom_bar_enum.dart';
 
 class BottomNavigation extends StatefulWidget {
-  ///todo: can remove later
-  // final List<Widget> tabViews;
   final Function(BottomBarEnum) onChange;
 
   const BottomNavigation({
     Key? key,
-
-    ///todo: can remove later
-    // required this.tabViews,
     required this.onChange,
   }) : super(key: key);
 
@@ -32,6 +27,9 @@ class BottomNavigationState extends State<BottomNavigation> {
   }
 
   void changeToTab(BottomBarEnum enumData) {
+    if (_selectedEnum == enumData) {
+      return;
+    }
     widget.onChange(enumData);
     setState(() {
       _selectedEnum = enumData;
@@ -83,8 +81,7 @@ class BottomNavigationState extends State<BottomNavigation> {
         width: GScreenUtil.screenWidthDp / 5,
         height: _heightItem,
         child: InkWell(
-          onTap: () => widget.onChange(BottomBarEnum
-              .scan), // Fix: Wrap the callback inside another function
+          onTap: () => changeToTab(BottomBarEnum.scan),
           child: Center(
             child: Image.asset(
               IconConst.iconScanHome,

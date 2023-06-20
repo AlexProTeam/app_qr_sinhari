@@ -21,8 +21,8 @@ class NewsScreen extends StatefulWidget {
 }
 
 class NewsScreenState extends State<NewsScreen> {
-  List<NewsModel> histories = [];
-  bool isLoadding = false;
+  final List<NewsModel> _histories = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -32,27 +32,23 @@ class NewsScreenState extends State<NewsScreen> {
 
   void _initData() async {
     try {
-      isLoadding = true;
+      _isLoading = true;
       final data =
           await injector<AppClient>().post('list_news', handleResponse: false);
       data['data'].forEach((e) {
-        histories.add(NewsModel.fromJson(e));
+        _histories.add(NewsModel.fromJson(e));
       });
-      setState(() {});
+      if (mounted) setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      isLoadding = false;
+      _isLoading = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // customAppBar: CustomAppBar(
-      //   title: 'Tin tức',
-      //   haveIconLeft: false,
-      // ),
       body: Column(
         children: [
           const SizedBox(height: 20),
@@ -62,20 +58,20 @@ class NewsScreenState extends State<NewsScreen> {
                 fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
           ),
           const SizedBox(height: 17),
-          isLoadding
+          _isLoading
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : histories.isEmpty
+              : _histories.isEmpty
                   ? const Center(
                       child: Text("Không có tin tức nào!"),
                     )
                   : Column(
                       children: [
-                        histories.isNotEmpty
+                        _histories.isNotEmpty
                             ? GridView.builder(
                                 shrinkWrap: true,
-                                itemCount: histories.length,
+                                itemCount: _histories.length,
                                 // controller: _scrollController,
                                 physics: const NeverScrollableScrollPhysics(),
                                 padding: const EdgeInsets.symmetric(
@@ -88,7 +84,7 @@ class NewsScreenState extends State<NewsScreen> {
                                   childAspectRatio: 300 / 410,
                                 ),
                                 itemBuilder: (context, index) {
-                                  return _item(histories[index]);
+                                  return _item(_histories[index]);
                                 },
                               )
                             : EmptyWidget(

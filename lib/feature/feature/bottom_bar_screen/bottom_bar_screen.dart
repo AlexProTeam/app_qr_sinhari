@@ -15,7 +15,7 @@ import 'package:qrcode/feature/injector_container.dart';
 import '../../../common/navigation/route_names.dart';
 import '../../routes.dart';
 import '../../widgets/nested_route_wrapper.dart';
-import 'bottom_navigation.dart';
+import 'widget/bottom_navigation.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({Key? key}) : super(key: key);

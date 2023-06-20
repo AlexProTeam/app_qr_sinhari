@@ -35,12 +35,6 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
     super.initState();
   }
 
-  ///todo: remove later
-  // Future _onRefresh() async {
-  //   _initData();
-  //   return _refreshCompleter.future;
-  // }
-
   void _initData() async {
     try {
       isLoadding = true;
@@ -52,7 +46,9 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       });
       _refreshCompleter.complete();
       _refreshCompleter = Completer();
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
@@ -71,10 +67,6 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-            // customAppBar: CustomAppBar(
-            //   title: 'Lịch sử quét',
-            //   haveIconLeft: false,
-            // ),
             backgroundColor: const Color(0xFFF2F2F2),
             body: Column(
               children: [
@@ -88,21 +80,6 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                         color: Color(0xFF000000)),
                   ),
                 ),
-                // isLoadding
-                //     ? Center(
-                //         child: CircularProgressIndicator(),
-                //       )
-                //     : histories.isEmpty
-                //         ? Padding(
-                //             padding: const EdgeInsets.symmetric(vertical: 320),
-                //             child: Text("Không có lịch sử nào!"),
-                //           )
-                //         :
-                // RefreshIndicator(
-                //   onRefresh: _onRefresh,
-                //   backgroundColor: Colors.white,
-                //   color: AppColors.primaryColor,
-                //   child:
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
@@ -238,23 +215,23 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
     );
   }
 
-  // void _onScan() async {
-  //   // final deviceId = await CommonUtil.getDeviceId();
-  //   // LOG.w('_onScan: $deviceId');
-  //   // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
-  //   // LOG.w('_onScan: $data');
-  //   // if (data != null) {
-  //   //   injector<AppClient>().get(
-  //   //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
-  //   //           '&city=ha noi&region=vn&url=$data');
-  //   //   injector<AppCache>().cacheDataProduct = data;
-  //   //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
-  //   //       arguments: ArgumentDetailProductScreen(
-  //   //         url: data,
-  //   //       ));
-  //   // }
-  //   Routes.instance.navigateTo(
-  //     RouteName.NotiScreen,
-  //   );
-  // }
+// void _onScan() async {
+//   // final deviceId = await CommonUtil.getDeviceId();
+//   // LOG.w('_onScan: $deviceId');
+//   // final data = await Routes.instance.navigateTo(RouteName.ScanQrScreen);
+//   // LOG.w('_onScan: $data');
+//   // if (data != null) {
+//   //   injector<AppClient>().get(
+//   //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
+//   //           '&city=ha noi&region=vn&url=$data');
+//   //   injector<AppCache>().cacheDataProduct = data;
+//   //   Routes.instance.navigateTo(RouteName.DetailProductScreen,
+//   //       arguments: ArgumentDetailProductScreen(
+//   //         url: data,
+//   //       ));
+//   // }
+//   Routes.instance.navigateTo(
+//     RouteName.NotiScreen,
+//   );
+// }
 }
