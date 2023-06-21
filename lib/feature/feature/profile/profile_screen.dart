@@ -85,7 +85,7 @@ class ProfileScreenState extends State<ProfileScreen> {
           _onSelectImage(false);
         },
       ),
-      height: 180,
+      height: 250,
       onClosed: () {},
       backgroundColor: Colors.transparent,
     );
