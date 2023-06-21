@@ -24,7 +24,7 @@ class NotiModel {
       DateTime date2 = DateTime.fromMillisecondsSinceEpoch(
           dateTime.millisecondsSinceEpoch + 3600000 * 7);
 
-      createdAt = timeago.format(date2, locale: 'en_short');
+      createdAt = timeago.format(date2);
     }
   }
 }

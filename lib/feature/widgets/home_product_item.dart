@@ -105,8 +105,7 @@ class ProductItem extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             color: Color(0xFFACACAC),
                             decoration: TextDecoration.lineThrough,
-                            decorationColor:
-                                Color(0xFFACACAC), // Màu của đường gạch ngang),
+                            decorationColor: Color(0xFFACACAC),
                           ),
                         ),
                       ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../common/const/string_const.dart';
 import '../../../../common/navigation/route_names.dart';
-import '../../../../common/utils/screen_utils.dart';
 import '../../../themes/theme_text.dart';
 import '../../../widgets/custom_image_network.dart';
 import '../../news/detail_new_screen.dart';
@@ -16,14 +15,13 @@ class ItemNews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, RouteName.detailNewScreen,
-            arguments: ArgumentDetailNewScreen(
-                newsDetail: model.id, url: model.image));
-      },
+      onTap: () => Navigator.pushNamed(context, RouteName.detailNewScreen,
+          arguments:
+              ArgumentDetailNewScreen(newsDetail: model.id, url: model.image)),
       child: Container(
-        width: GScreenUtil.screenWidthDp * 0.6,
-        margin: const EdgeInsets.symmetric(vertical: 12).copyWith(right: 16),
+        width: 250,
+        height: 250,
+        margin: const EdgeInsets.only(right: 16, bottom: 0),
         decoration: BoxDecoration(
             boxShadow: StringConst.defaultShadow,
             borderRadius: BorderRadius.circular(12),
@@ -34,7 +32,7 @@ class ItemNews extends StatelessWidget {
             CustomImageNetwork(
               url: model.image,
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.15,
+              height: 130,
               fit: BoxFit.cover,
               border: 12,
             ),
@@ -46,6 +44,8 @@ class ItemNews extends StatelessWidget {
                   Text(
                     model.title ?? '',
                     style: AppTextTheme.normalRoboto,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(
                     height: 2,

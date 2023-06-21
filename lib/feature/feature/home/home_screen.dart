@@ -312,9 +312,10 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         if (_newsModel.isNotEmpty) ...[
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text('Tin tức mới nhất',
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16)
+                                .copyWith(bottom: 12),
+                            child: const Text('Tin tức mới nhất',
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,

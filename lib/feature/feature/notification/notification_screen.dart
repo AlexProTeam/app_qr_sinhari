@@ -101,6 +101,7 @@ class NotiScreenState extends State<NotiScreen> {
         //     ));
       },
       child: Container(
+        ///todo: add color to const app
         decoration: const BoxDecoration(color: Color(0xFFF4F5FB)),
         child: Column(
           children: [
