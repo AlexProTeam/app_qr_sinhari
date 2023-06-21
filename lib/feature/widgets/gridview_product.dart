@@ -58,11 +58,14 @@ class GridViewDisplayProduct extends StatelessWidget {
                 notExpand ? min(products?.length ?? 0, 4) : products?.length,
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(vertical: 16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 16.0,
               mainAxisSpacing: 12.0,
-              childAspectRatio: 164 / 269,
+              childAspectRatio: MediaQuery.of(context)
+                  .size
+                  .width / 2 /
+                  (MediaQuery.of(context).size.height / 2.5),
             ),
             itemBuilder: (context, index) {
               return CategoryDetailWidgetItemProduct(

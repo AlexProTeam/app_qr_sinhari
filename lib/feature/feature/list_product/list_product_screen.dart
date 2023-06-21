@@ -122,43 +122,51 @@ class ListProductScreenState extends State<ListProductScreen> {
             ],
           ),
           const SizedBox(height: 16.75),
-          Expanded(
-            child: _loadingis
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : _products.isEmpty
-                    ? const Center(
-                        child: Text("Không có sản phẩm nào!"),
-                      )
-                    : Column(
-                        children: [
-                          GridView.builder(
-                            shrinkWrap: true,
-                            itemCount: _products.length,
-                            controller: _scrollController,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 12.0),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 16.0,
-                              mainAxisSpacing: 12.0,
-                              childAspectRatio: 164 / 269,
-                            ),
-                            itemBuilder: (context, index) {
-                              return CategoryItemProduct(
-                                itemWidth: itemWidth,
-                                productModel: _products[index],
-                              );
-                            },
+          Column(
+            children: [
+              _loadingis
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : _products.isEmpty
+                      ? const Center(
+                          child: Text("Không có sản phẩm nào!"),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              GridView.builder(
+                                shrinkWrap: true,
+                                itemCount: _products.length,
+                                controller: _scrollController,
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 12.0),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 16.0,
+                                  mainAxisSpacing: 12.0,
+                                  childAspectRatio: MediaQuery.of(context)
+                                          .size
+                                          .width /
+                                      2 /
+                                      (MediaQuery.of(context).size.height / 2.5),
+                                ),
+                                itemBuilder: (context, index) {
+                                  return CategoryItemProduct(
+                                    itemWidth: itemWidth,
+                                    productModel: _products[index],
+                                  );
+                                },
+                              ),
+                              _loading
+                                  ? const CircularProgressIndicator()
+                                  : const SizedBox(),
+                            ],
                           ),
-                          _loading
-                              ? const CircularProgressIndicator()
-                              : const SizedBox(),
-                        ],
-                      ),
+                        ),
+            ],
           ),
         ],
       ),

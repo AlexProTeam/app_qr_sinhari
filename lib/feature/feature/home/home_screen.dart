@@ -125,136 +125,181 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoadding
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : RefreshIndicator(
-            onRefresh: _onRefresh,
-            color: Colors.white,
-            backgroundColor: Colors.amber,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: injector<AppCache>().profileModel != null
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  IconConst.logo,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Xin chào,',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black),
-                                    ),
-                                    const SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(
-                                      injector<AppCache>().profileModel?.name ??
-                                          "",
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )
-                          : Image.asset(
-                              IconConst.logo,
-                              width: 40,
-                              height: 40,
-                            ),
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        RouteName.notiScreen,
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Center(
-                          child: Icon(
-                            Icons.notifications_outlined,
-                            size: 30,
-                            color: Color(0xFFCCD2E3),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BannerSlideImage(
-                          height: MediaQuery.of(context).size.height * 0.22,
-                          banners: _bannerModel.map((e) => e).toList(),
-                          images: _bannerModel.map((e) => e.url ?? '').toList(),
-                        ),
-                        const SizedBox(height: 22.5),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(
-                              IconHomeEnum.values.length,
-                              (index) => FilterItemWidget(
-                                index: index,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: isLoadding
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : RefreshIndicator(
+              onRefresh: _onRefresh,
+              color: Colors.white,
+              backgroundColor: Colors.amber,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: injector<AppCache>().profileModel != null
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    IconConst.logo,
+                                    width: 40,
+                                    height: 40,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Xin chào,',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                      ),
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      Text(
+                                        injector<AppCache>()
+                                                .profileModel
+                                                ?.name ??
+                                            "",
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
+                            : Image.asset(
+                                IconConst.logo,
+                                width: 40,
+                                height: 40,
                               ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          RouteName.notiScreen,
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: Icon(
+                              Icons.notifications_outlined,
+                              size: 30,
+                              color: Color(0xFFCCD2E3),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        if (_productFeatures.isNotEmpty) ...[
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BannerSlideImage(
+                            height: MediaQuery.of(context).size.height * 0.22,
+                            banners: _bannerModel.map((e) => e).toList(),
+                            images:
+                                _bannerModel.map((e) => e.url ?? '').toList(),
+                          ),
+                          const SizedBox(height: 22.5),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: GridViewDisplayProduct(
-                              label: 'Sản phẩm nổi bật',
-                              products: _productFeatures,
-                              notExpand: true,
-                              onMore: () => getGoToScreen(
-                                url: 'product-feature',
-                                label: 'Sản phẩm nổi bật',
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: List.generate(
+                                IconHomeEnum.values.length,
+                                (index) => FilterItemWidget(
+                                  index: index,
+                                ),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 22),
-                        ],
-                        if (_productSellers.isNotEmpty) ...[
+                          const SizedBox(height: 20),
+                          if (_productFeatures.isNotEmpty) ...[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: GridViewDisplayProduct(
+                                label: 'Sản phẩm nổi bật',
+                                products: _productFeatures,
+                                notExpand: true,
+                                onMore: () => getGoToScreen(
+                                  url: 'product-feature',
+                                  label: 'Sản phẩm nổi bật',
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 22),
+                          ],
+                          if (_productSellers.isNotEmpty) ...[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('Sản phẩm bán chạy',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18,
+                                          color: Color(0xFFEF4948))),
+                                  InkWell(
+                                    onTap: () => getGoToScreen(
+                                      url: 'product-seller',
+                                      label: 'Sản phẩm bán chạy',
+                                    ),
+                                    child: const Text(
+                                      'Xem thêm',
+                                      style: AppTextTheme.normalGrey,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: _productSellers.length,
+                                itemBuilder: (_, index) {
+                                  return ProductItem(
+                                    productModel: _productSellers[index],
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 22),
+                          ],
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Sản phẩm bán chạy',
+                                const Text('Dầu gội phủ bạc',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18,
                                         color: Color(0xFFEF4948))),
                                 InkWell(
-                                  onTap: () => getGoToScreen(
-                                    url: 'product-seller',
-                                    label: 'Sản phẩm bán chạy',
-                                  ),
+                                  onTap: () {},
                                   child: const Text(
                                     'Xem thêm',
                                     style: AppTextTheme.normalGrey,
@@ -276,74 +321,41 @@ class HomeScreenState extends State<HomeScreen> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 22),
-                        ],
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Dầu gội phủ bạc',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18,
-                                      color: Color(0xFFEF4948))),
-                              InkWell(
-                                onTap: () {},
-                                child: const Text(
-                                  'Xem thêm',
-                                  style: AppTextTheme.normalGrey,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _productSellers.length,
-                            itemBuilder: (_, index) {
-                              return ProductItem(
-                                productModel: _productSellers[index],
-                              );
-                            },
-                          ),
-                        ),
-                        if (_newsModel.isNotEmpty) ...[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16)
-                                .copyWith(bottom: 12),
-                            child: const Text('Tin tức mới nhất',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFFEF4948))),
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 220,
-                            child: ListView.builder(
+                          if (_newsModel.isNotEmpty) ...[
+                            Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              shrinkWrap: true,
-                              itemBuilder: (_, index) => ItemNews(
-                                model: _newsModel[index],
-                              ),
-                              itemCount: _newsModel.length,
-                              scrollDirection: Axis.horizontal,
+                                  const EdgeInsets.symmetric(horizontal: 16)
+                                      .copyWith(bottom: 12),
+                              child: const Text('Tin tức mới nhất',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFFEF4948))),
                             ),
-                          ),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 220,
+                              child: ListView.builder(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                shrinkWrap: true,
+                                itemBuilder: (_, index) => ItemNews(
+                                  model: _newsModel[index],
+                                ),
+                                itemCount: _newsModel.length,
+                                scrollDirection: Axis.horizontal,
+                              ),
+                            ),
+                          ],
+                          const SizedBox(height: 80),
                         ],
-                        const SizedBox(height: 80),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          );
+    );
   }
 
   void getGoToScreen({required String url, required String label}) =>

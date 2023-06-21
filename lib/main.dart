@@ -145,7 +145,7 @@ class AppState extends State<App> {
           fontFamily: 'Montserrat',
           canvasColor: Colors.transparent,
           platform: TargetPlatform.iOS,
-          scaffoldBackgroundColor: AppColors.white,
+          scaffoldBackgroundColor: const Color(0xFFF2F2F2),
           appBarTheme: const AppBarTheme(
             systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
