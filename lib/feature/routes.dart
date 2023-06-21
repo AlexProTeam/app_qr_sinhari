@@ -86,7 +86,7 @@ class Routes {
     switch (settings.name) {
       case RouteName.splashScreen:
         return SlideLeftRoute(
-          widget: const SplashPage(),
+          widget: const SplashScreen(),
         );
       case RouteName.welcomeScreen:
         return SlideLeftRoute(

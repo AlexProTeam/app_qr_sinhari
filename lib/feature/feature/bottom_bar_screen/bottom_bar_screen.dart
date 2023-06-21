@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
@@ -15,6 +16,7 @@ import 'package:qrcode/feature/injector_container.dart';
 import '../../../common/navigation/route_names.dart';
 import '../../routes.dart';
 import '../../widgets/nested_route_wrapper.dart';
+import 'bloc/bottom_bar_bloc.dart';
 import 'widget/bottom_navigation.dart';
 
 class BottomBarScreen extends StatefulWidget {
@@ -63,40 +65,53 @@ class BottomBarScreenState extends State<BottomBarScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Theme(
-        data: Theme.of(context).copyWith(
-          pageTransitionsTheme: const PageTransitionsTheme(
-            builders: {
-              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-            },
+  Widget build(BuildContext context) => BlocProvider(
+        create: (context) => BottomBarBloc(),
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              },
+            ),
           ),
-        ),
-        child: Scaffold(
-          body: SafeArea(
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                NestedRouteWrapper(
-                  onGenerateRoute: Routes.generateBottomBarRoute,
-                  navigationKey: Routes.bottomBarNavigatorKey,
-                  initialRoute: _routeName,
-                  onChangeScreen: (routeName) {
-                    _routeName = routeName;
-                  },
-                ),
-                BottomNavigation(onChange: (bottomBarEnum) {
-                  if (ModalRoute.of(
-                              Routes.bottomBarNavigatorKey.currentContext!)
-                          ?.settings
-                          .name !=
-                      bottomBarEnum.getRouteNames) {
-                    Navigator.pushReplacementNamed(
-                        Routes.bottomBarNavigatorKey.currentContext!,
-                        bottomBarEnum.getRouteNames);
-                  }
-                })
-              ],
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: SafeArea(
+              bottom: false,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  NestedRouteWrapper(
+                    onGenerateRoute: Routes.generateBottomBarRoute,
+                    navigationKey: Routes.bottomBarNavigatorKey,
+                    initialRoute: _routeName,
+                    onChangeScreen: (routeName) {
+                      _routeName = routeName;
+                    },
+                  ),
+                  BlocBuilder<BottomBarBloc, BottomBarState>(
+                    buildWhen: (previous, current) =>
+                        previous.bottomBarEnum != current.bottomBarEnum,
+                    builder: (context, state) {
+                      return BottomNavigation(
+                        onChange: (bottomBarEnum) {
+                          if (ModalRoute.of(Routes
+                                      .bottomBarNavigatorKey.currentContext!)
+                                  ?.settings
+                                  .name !=
+                              bottomBarEnum.getRouteNames) {
+                            Navigator.pushReplacementNamed(
+                                Routes.bottomBarNavigatorKey.currentContext!,
+                                bottomBarEnum.getRouteNames);
+                          }
+                        },
+                      );
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),

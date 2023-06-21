@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:http/http.dart' as http;
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
@@ -9,10 +10,11 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/auth/login/widgets/input_phone_widget.dart';
-import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
+import '../../widgets/follow_keyboard_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   final bool? haveBack;
@@ -40,8 +42,13 @@ class LoginScreenState extends State<LoginScreen> {
     try {
       await injector<AppClient>().post('auth-with-otp?phone=$phoneNumber');
       await _addToken();
-      Navigator.pushNamed(context, RouteName.verifyOtpScreen,
-          arguments: phoneNumber);
+      if (mounted) {
+        Navigator.pushNamed(
+          context,
+          RouteName.verifyOtpScreen,
+          arguments: phoneNumber,
+        );
+      }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     }
@@ -66,33 +73,11 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 18,
-                  color: Color(0xFFACACAC),
-                ),
-              ),
-              const SizedBox(width: 90),
-              const Text(
-                'Đăng nhập',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          Expanded(
+    return Column(
+      children: [
+        const CustomAppBar(title: 'Đăng nhập', haveIconLeft: true),
+        Expanded(
+          child: FollowKeyBoardWidget(
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
@@ -140,33 +125,26 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 11),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            IconConst.gmail,
-                            width: 30,
-                            height: 30,
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: List.generate(
+                            _conectWithWidget.length,
+                            (index) => Image.asset(
+                              _conectWithWidget[index],
+                              width: 30,
+                              height: 30,
+                            ),
                           ),
-                          const SizedBox(width: 35),
-                          Image.asset(
-                            IconConst.facebook,
-                            width: 30,
-                            height: 30,
-                          ),
-                          const SizedBox(width: 35),
-                          Image.asset(
-                            IconConst.zalo,
-                            width: 30,
-                            height: 30,
-                          ),
-                          const SizedBox(width: 35),
-                          Image.asset(
-                            IconConst.apple,
-                            width: 30,
-                            height: 30,
-                          ),
-                        ],
+                        ),
+                      ),
+                      KeyboardVisibilityBuilder(
+                        builder: (p0, isKeyboardVisible) => SizedBox(
+                          height: !isKeyboardVisible ? 100 : 0,
+                        ),
                       ),
                     ],
                   ),
@@ -174,8 +152,15 @@ class LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
+
+  final List<String> _conectWithWidget = [
+    IconConst.gmail,
+    IconConst.facebook,
+    IconConst.zalo,
+    IconConst.apple
+  ];
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
@@ -75,10 +74,9 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: EdgeInsets.only(top: (GScreenUtil.statusBarHeight)),
-      height: defaultAppbar + (GScreenUtil.statusBarHeight),
+      height: 56,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -87,10 +85,15 @@ class CustomAppBar extends StatelessWidget {
                   onTap: () => iconLeftTap != null
                       ? iconLeftTap!()
                       : Navigator.pop(context),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
+                  child: const Padding(
+                    padding: EdgeInsets.only(
                         left: 16, right: 20, top: 16, bottom: 16),
-                    child: Center(child: Image.asset(IconConst.back)),
+                    child: Center(
+                        child: Icon(
+                      Icons.arrow_back,
+                      size: 18,
+                      color: Color(0xFFACACAC),
+                    )),
                   ),
                 )
               : const SizedBox(

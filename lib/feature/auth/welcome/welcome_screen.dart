@@ -33,7 +33,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
     _welcomeModel = widget.welcomeModel;
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.welcomeModel.isNotEmpty) {
+      if (widget.welcomeModel.isEmpty) {
         _initData().then((value) => setState(() {}));
       }
     });
@@ -104,7 +104,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                                 _pageController.jumpToPage(_currentIndex)
                               }
                             : Routes.instance
-                                .navigateTo(RouteName.bottomBarScreen),
+                                .navigateAndRemove(RouteName.bottomBarScreen),
                         child: Container(
                           width: 45,
                           height: 45,

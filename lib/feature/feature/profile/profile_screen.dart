@@ -17,6 +17,7 @@ import 'package:qrcode/feature/widgets/bottom_sheet_select_image.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
+import 'package:qrcode/feature/widgets/follow_keyboard_widget.dart';
 
 import '../../injector_container.dart';
 
@@ -167,129 +168,132 @@ class ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 12),
-                            GestureDetector(
-                              onTap: _chooseTypeImage,
-                              child: Container(
-                                width: 164,
-                                height: 164,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: const Color(0xFFD9D9D9),
+                  child: FollowKeyBoardWidget(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 12),
+                              GestureDetector(
+                                onTap: _chooseTypeImage,
+                                child: Container(
+                                  width: 164,
+                                  height: 164,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      width: 1,
+                                      color: const Color(0xFFD9D9D9),
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(12),
+                                    ),
                                   ),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(12),
-                                  ),
-                                ),
-                                child: _image != null
-                                    ? Container(
-                                        width: 164,
-                                        height: 164,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            width: 1,
-                                            color: const Color(0xFFD9D9D9),
+                                  child: _image != null
+                                      ? Container(
+                                          width: 164,
+                                          height: 164,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 1,
+                                              color: const Color(0xFFD9D9D9),
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(12),
+                                            ),
                                           ),
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(12),
-                                          ),
-                                        ),
-                                        child: Image.file(
-                                          _image!,
-                                          width: 112,
-                                          height: 112,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      )
-                                    : ((injector<AppCache>()
-                                                .profileModel
-                                                ?.avatar
-                                                ?.isEmpty ??
-                                            true)
-                                        ? Stack(
-                                            children: [
-                                              Center(
-                                                child: Image.asset(
-                                                  IconConst.logoLogin,
-                                                  width: 145,
-                                                  height: 145,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    Image.asset(
-                                                      IconConst.camera,
-                                                      width: 24,
-                                                      height: 24,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : CustomImageNetwork(
-                                            url:
-                                                '${injector<AppCache>().profileModel?.avatar}',
+                                          child: Image.file(
+                                            _image!,
                                             width: 112,
                                             height: 112,
-                                            fit: BoxFit.cover,
-                                          )),
+                                            fit: BoxFit.contain,
+                                          ),
+                                        )
+                                      : ((injector<AppCache>()
+                                                  .profileModel
+                                                  ?.avatar
+                                                  ?.isEmpty ??
+                                              true)
+                                          ? Stack(
+                                              children: [
+                                                Center(
+                                                  child: Image.asset(
+                                                    IconConst.logoLogin,
+                                                    width: 145,
+                                                    height: 145,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Image.asset(
+                                                        IconConst.camera,
+                                                        width: 24,
+                                                        height: 24,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : CustomImageNetwork(
+                                              url:
+                                                  '${injector<AppCache>().profileModel?.avatar}',
+                                              width: 112,
+                                              height: 112,
+                                              fit: BoxFit.cover,
+                                            )),
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 27),
-                            CustomTextField(
-                              height: 45,
-                              hintText: 'Họ và tên',
-                              controller: _nameController,
-                              validator: ValidateUtil.validEmpty,
-                            ),
-                            const SizedBox(height: 8),
-                            CustomTextField(
-                              height: 45,
-                              hintText: 'Email',
-                              validator: ValidateUtil.validEmail,
-                              controller: _emailController,
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            const SizedBox(height: 8),
-                            CustomTextField(
-                              height: 45,
-                              hintText: 'Số điện thoại',
-                              validator: ValidateUtil.validPhone,
-                              controller: _phoneController,
-                              keyboardType: TextInputType.phone,
-                            ),
-                            const SizedBox(height: 8),
-                            CustomTextField(
-                              height: 45,
-                              hintText: 'Địa chỉ',
-                              controller: _addressController,
-                              validator: ValidateUtil.validEmpty,
-                            ),
-                            const SizedBox(height: 16),
-                            CustomButton(
-                              width: 100.44,
-                              height: 45,
-                              onTap: _onDone,
-                              text: 'Lưu lại',
-                            ),
-                          ],
+                              const SizedBox(height: 27),
+                              CustomTextField(
+                                height: 45,
+                                hintText: 'Họ và tên',
+                                controller: _nameController,
+                                validator: ValidateUtil.validEmpty,
+                              ),
+                              const SizedBox(height: 8),
+                              CustomTextField(
+                                height: 45,
+                                hintText: 'Email',
+                                validator: ValidateUtil.validEmail,
+                                controller: _emailController,
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                              const SizedBox(height: 8),
+                              CustomTextField(
+                                height: 45,
+                                hintText: 'Số điện thoại',
+                                validator: ValidateUtil.validPhone,
+                                controller: _phoneController,
+                                keyboardType: TextInputType.phone,
+                              ),
+                              const SizedBox(height: 8),
+                              CustomTextField(
+                                height: 45,
+                                hintText: 'Địa chỉ',
+                                controller: _addressController,
+                                validator: ValidateUtil.validEmpty,
+                              ),
+                              const SizedBox(height: 16),
+                              CustomButton(
+                                width: 100.44,
+                                height: 45,
+                                onTap: _onDone,
+                                text: 'Lưu lại',
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

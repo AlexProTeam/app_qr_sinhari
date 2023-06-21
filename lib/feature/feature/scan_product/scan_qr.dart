@@ -6,6 +6,7 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 
 import '../../widgets/qr_scanner_overlay.dart';
@@ -30,7 +31,7 @@ class QRViewExampleState extends State<ScanQrScreen>
       if (url.contains('http://qcheck.vn/')) {
         CommonUtil.runUrl(url);
       } else {
-        await Navigator.pushNamed(context,RouteName.detailProductScreen,
+        await Navigator.pushNamed(context, RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(url: url));
       }
     }
@@ -40,58 +41,46 @@ class QRViewExampleState extends State<ScanQrScreen>
     torchEnabled: false,
     formats: [BarcodeFormat.qrCode],
   );
-  final GlobalKey qrKeyView = GlobalKey(debugLabel: 'QR_view');
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back,
-                size: 18,
-                color: Color(0xFFACACAC),
-              ),
-            ),
-            const Text(
-              'Quét mã QR',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(width: 40),
-          ],
+      children: [
+        const CustomAppBar(
+          title: 'Quét mã QR',
+          haveIconLeft: false,
         ),
-        const SizedBox(height: 17),
-        _buildQrView(context),
-        const SizedBox(height: 20),
-        const Text(
-          'Kiểm tra sản phẩm chính hãng',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.red,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: List.generate(
-            ScanTypeEnum.values.length,
-            (index) => _buildBottomScanQrItem(
-              _currentIndex,
-              onTap: () => setState(() => _currentIndex = index),
-              enumData: ScanTypeEnum.values[index],
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 17),
+                _buildQrView(context),
+                const SizedBox(height: 20),
+                const Text(
+                  'Kiểm tra sản phẩm chính hãng',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.red,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: List.generate(
+                    ScanTypeEnum.values.length,
+                    (index) => _buildBottomScanQrItem(
+                      _currentIndex,
+                      onTap: () => setState(() => _currentIndex = index),
+                      enumData: ScanTypeEnum.values[index],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 100),
+              ],
             ),
           ),
-        ),
-        const SizedBox(height: 50),
+        )
       ],
     );
   }
@@ -113,7 +102,6 @@ class QRViewExampleState extends State<ScanQrScreen>
                 onDetect: (barcode) async {
                   setState(() => _barcode = barcode);
                   await _scanDetailQr(_barcode?.barcodes.first.rawValue ?? '');
-                  debugPrint('qrcode ${_barcode?.barcodes.first.rawValue}');
                 },
               ),
             ),

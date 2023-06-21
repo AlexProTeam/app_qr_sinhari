@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
@@ -13,6 +14,10 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
+
+import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
+import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
+import '../../routes.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   final String phone;
@@ -34,12 +39,14 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
   @override
   void initState() {
     _focusNode.requestFocus();
-    _controller.addListener(() {
-      if (_controller.text.length == 6) {
-      } else {}
-      setState(() {});
-    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
   }
 
   void _onContinue() async {
@@ -57,7 +64,13 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
         final data = await injector<AppClient>().get('auth/showProfile');
         ProfileModel profileModel = ProfileModel.fromJson(data['data']);
         injector<AppCache>().profileModel = profileModel;
-        Navigator.popAndPushNamed(context, RouteName.bottomBarScreen);
+        if (mounted) {
+          Navigator.pushReplacementNamed(
+              Routes.bottomBarNavigatorKey.currentContext!,
+              RouteName.homeScreen);
+          context.read<BottomBarBloc>().add(
+              const ChangeTabBottomBarEvent(bottomBarEnum: BottomBarEnum.home));
+        }
       }
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');

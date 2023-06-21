@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 
+import '../bloc/bottom_bar_bloc.dart';
 import '../enum/bottom_bar_enum.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -19,7 +21,6 @@ class BottomNavigation extends StatefulWidget {
 
 class BottomNavigationState extends State<BottomNavigation> {
   final double _heightItem = 66.64;
-  BottomBarEnum _selectedEnum = BottomBarEnum.home;
 
   @override
   void initState() {
@@ -27,13 +28,13 @@ class BottomNavigationState extends State<BottomNavigation> {
   }
 
   void changeToTab(BottomBarEnum enumData) {
-    if (_selectedEnum == enumData) {
+    if (context.read<BottomBarBloc>().state.bottomBarEnum == enumData) {
       return;
     }
     widget.onChange(enumData);
-    setState(() {
-      _selectedEnum = enumData;
-    });
+    context
+        .read<BottomBarBloc>()
+        .add(ChangeTabBottomBarEvent(bottomBarEnum: enumData));
   }
 
   @override
@@ -60,7 +61,8 @@ class BottomNavigationState extends State<BottomNavigation> {
   }
 
   Widget _buildBottomBarItem(BottomBarEnum dataEnum) {
-    final isSelected = dataEnum == _selectedEnum;
+    final isSelected =
+        dataEnum == context.read<BottomBarBloc>().state.bottomBarEnum;
     return GestureDetector(
       onTap: () => changeToTab(dataEnum),
       child: SizedBox(

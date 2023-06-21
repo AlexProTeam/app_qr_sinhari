@@ -74,7 +74,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   Future<void> _initData() async {
     try {
-      //  injector<LoadingBloc>().add(StartLoading());
       isLoadding = true;
       final data = await injector<AppClient>().get('banners');
       await injector<AppClient>().post('notifications',
@@ -105,9 +104,17 @@ class HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       CommonUtil.handleException(null, e, methodName: '');
     } finally {
-      // injector<LoadingBloc>().add(FinishLoading());
       isLoadding = false;
     }
+  }
+
+  Future<void> _onRefresh() async {
+    await _initData().then((value) => {
+          _bannerModel.clear(),
+          _productFeatures.clear(),
+          _productSellers.clear(),
+          _newsModel.clear(),
+        });
   }
 
   @override
@@ -123,7 +130,7 @@ class HomeScreenState extends State<HomeScreen> {
             child: CircularProgressIndicator(),
           )
         : RefreshIndicator(
-            onRefresh: _initData,
+            onRefresh: _onRefresh,
             color: Colors.white,
             backgroundColor: Colors.amber,
             child: Column(
