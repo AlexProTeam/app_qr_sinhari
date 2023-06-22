@@ -74,12 +74,14 @@ class SplashScreenState extends State<SplashScreen>
     injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
     String? accessToken = injector<LocalApp>()
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
+    await Future.delayed(const Duration(seconds: 3));
     if (accessToken?.isEmpty ?? true) {
-      Future.delayed(const Duration(seconds: 3));
       await _initDataWelcomeScreen();
 
-      Routes.instance
-          .navigateAndRemove(RouteName.welcomeScreen, arguments: _welcomeModel);
+      Navigator.pushReplacementNamed(
+          Routes.instance.navigatorKey.currentContext!, RouteName.welcomeScreen,
+          arguments: _welcomeModel);
+
       return;
     }
     AppHeader appHeader = AppHeader();
@@ -90,7 +92,10 @@ class SplashScreenState extends State<SplashScreen>
     final data = await injector<AppClient>().get('auth/showProfile');
     ProfileModel profileModel = ProfileModel.fromJson(data['data']);
     injector<AppCache>().profileModel = profileModel;
-    Routes.instance.navigateAndRemove(RouteName.bottomBarScreen);
+
+    Navigator.pushReplacementNamed(
+        Routes.instance.navigatorKey.currentContext!, RouteName.bottomBarScreen,
+        arguments: _welcomeModel);
   }
 
   Future<void> _initDataWelcomeScreen() async {
