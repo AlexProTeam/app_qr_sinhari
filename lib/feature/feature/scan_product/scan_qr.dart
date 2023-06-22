@@ -22,7 +22,7 @@ class ScanQrScreenState extends State<ScanQrScreen>
     with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
 
-  ///need to refactor thí logic
+  ///todo: need to refactor thí logic
   bool _canPushScreen = true;
 
   Future<void> _scanDetailQr(String url) async {
