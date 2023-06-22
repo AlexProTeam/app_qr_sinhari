@@ -85,7 +85,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                     children: [
                       GestureDetector(
                         onTap: () => Routes.instance
-                            .navigateTo(RouteName.bottomBarScreen),
+                            .navigateAndRemove(RouteName.bottomBarScreen),
                         child: const Text(
                           'Skip',
                           style: TextStyle(
