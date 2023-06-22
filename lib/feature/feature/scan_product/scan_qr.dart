@@ -3,7 +3,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
@@ -16,23 +15,27 @@ class ScanQrScreen extends StatefulWidget {
   const ScanQrScreen({Key? key}) : super(key: key);
 
   @override
-  QRViewExampleState createState() => QRViewExampleState();
+  ScanQrScreenState createState() => ScanQrScreenState();
 }
 
-class QRViewExampleState extends State<ScanQrScreen>
+class ScanQrScreenState extends State<ScanQrScreen>
     with SingleTickerProviderStateMixin {
-  BarcodeCapture? _barcode;
   int _currentIndex = 0;
 
+  ///need to refactor thí logic
+  bool _canPushScreen = true;
+
   Future<void> _scanDetailQr(String url) async {
-    lOG.w('_onScan: $url');
     if (url.isNotEmpty) {
-      lOG.w('_onScan: requestNe');
+      _canPushScreen = false;
       if (url.contains('http://qcheck.vn/')) {
         CommonUtil.runUrl(url);
       } else {
-        await Navigator.pushNamed(context, RouteName.detailProductScreen,
-            arguments: ArgumentDetailProductScreen(url: url));
+        await Navigator.pushReplacementNamed(
+          context,
+          RouteName.detailProductScreen,
+          arguments: ArgumentDetailProductScreen(url: url),
+        );
       }
     }
   }
@@ -55,7 +58,7 @@ class QRViewExampleState extends State<ScanQrScreen>
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 17),
-                _buildQrView(context),
+                _buildQrView(),
                 const SizedBox(height: 20),
                 const Text(
                   'Kiểm tra sản phẩm chính hãng',
@@ -70,7 +73,7 @@ class QRViewExampleState extends State<ScanQrScreen>
                   children: List.generate(
                     ScanTypeEnum.values.length,
                     (index) => _buildBottomScanQrItem(
-                      _currentIndex,
+                      index,
                       onTap: () => setState(() => _currentIndex = index),
                       enumData: ScanTypeEnum.values[index],
                     ),
@@ -80,12 +83,12 @@ class QRViewExampleState extends State<ScanQrScreen>
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }
 
-  Widget _buildQrView(BuildContext context) {
+  Widget _buildQrView() {
     return Stack(
       children: [
         Center(
@@ -100,8 +103,9 @@ class QRViewExampleState extends State<ScanQrScreen>
                     ScannerErrorWidget(error: error),
                 fit: BoxFit.cover,
                 onDetect: (barcode) async {
-                  setState(() => _barcode = barcode);
-                  await _scanDetailQr(_barcode?.barcodes.first.rawValue ?? '');
+                  if (_canPushScreen) {
+                    await _scanDetailQr(barcode.barcodes.first.rawValue ?? '');
+                  }
                 },
               ),
             ),
@@ -171,7 +175,7 @@ class QRViewExampleState extends State<ScanQrScreen>
                       fontSize: 12,
                       color: Colors.white,
                     ),
-                  )
+                  ),
                 ],
               );
             },
@@ -186,9 +190,12 @@ class QRViewExampleState extends State<ScanQrScreen>
     required ScanTypeEnum enumData,
     required Function() onTap,
   }) {
+    final isSelected = currentIndex == _currentIndex;
+    final color = isSelected ? Colors.black : const Color(0xFFACACAC);
+
     return Expanded(
       child: GestureDetector(
-        onTap: () => onTap(),
+        onTap: onTap,
         child: SizedBox(
           height: 66,
           child: Column(
@@ -198,7 +205,7 @@ class QRViewExampleState extends State<ScanQrScreen>
                 enumData.getIcon,
                 width: 50,
                 height: 50,
-                color: getColorSelected(enumData.index),
+                color: color,
               ),
               const SizedBox(height: 2),
               Text(
@@ -206,16 +213,13 @@ class QRViewExampleState extends State<ScanQrScreen>
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w400,
-                  color: getColorSelected(enumData.index),
+                  color: color,
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
-  Color getColorSelected(int index) =>
-      _currentIndex == index ? Colors.black : const Color(0xFFACACAC);
 }

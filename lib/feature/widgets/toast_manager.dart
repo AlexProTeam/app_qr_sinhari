@@ -14,7 +14,7 @@ class ToastManager {
       clipBehavior: Clip.antiAlias,
       alignment: Alignment.topCenter,
       shadowColor: Colors.transparent,
-      backgroundColor: AppColors.colorBorder,
+      backgroundColor: AppColors.primaryColor,
       content: Text(
         text,
         textAlign: TextAlign.center,
@@ -35,11 +35,10 @@ class ToastManager {
           Duration(seconds: delaySecond),
           () {
             if (context.mounted) {
-              afterShowToast?.call();
               Navigator.maybePop(context);
             }
           },
-        );
+        ).then((value) => afterShowToast?.call());
 
         return alert;
       },

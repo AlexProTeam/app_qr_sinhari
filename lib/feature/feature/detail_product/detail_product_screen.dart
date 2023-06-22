@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_event.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_state.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
@@ -17,6 +15,7 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_slide.dart'
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
+import 'package:qrcode/feature/widgets/toast_manager.dart';
 
 import '../../injector_container.dart';
 
@@ -91,11 +90,12 @@ class DetailProductScreenState extends State<DetailProductScreen> {
       }
       setState(() {});
     } catch (e) {
-      injector<SnackBarBloc>().add(ShowSnackbarEvent(
-        content: 'URL không đúng định dạng',
-        type: SnackBarType.warning,
-      ));
-      Navigator.pop(context);
+      ToastManager.showToast(context,
+          //todo: change to mes of api
+          text: 'URL không đúng định dạng',
+          delaySecond: 3,
+          afterShowToast: () =>
+              Navigator.pushReplacementNamed(context, RouteName.scanQrScreen));
     }
   }
 
