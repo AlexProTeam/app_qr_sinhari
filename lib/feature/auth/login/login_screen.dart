@@ -73,87 +73,90 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const CustomAppBar(title: 'Đăng nhập', haveIconLeft: true),
-        Expanded(
-          child: FollowKeyBoardWidget(
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 70),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            IconConst.logoLogin,
-                            width: 232,
-                            height: 232,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      TypePhoneNumber(
-                        height: 45,
-                        controller: _phoneController,
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomButton(
-                            width: 128,
-                            onTap: _onContinue,
-                            text: 'Đăng nhập',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 15),
-                      const Center(
-                        child: Text(
-                          'Hoặc',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        children: [
+          const CustomAppBar(title: 'Đăng nhập', haveIconLeft: true),
+          Expanded(
+            child: FollowKeyBoardWidget(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 70),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              IconConst.logoLogin,
+                              width: 232,
+                              height: 232,
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 11),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: List.generate(
-                            _conectWithWidget.length,
-                            (index) => Image.asset(
-                              _conectWithWidget[index],
-                              width: 30,
-                              height: 30,
+                        const SizedBox(height: 12),
+                        TypePhoneNumber(
+                          height: 45,
+                          controller: _phoneController,
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomButton(
+                              width: 128,
+                              onTap: _onContinue,
+                              text: 'Đăng nhập',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        const Center(
+                          child: Text(
+                            'Hoặc',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12,
+                              color: Colors.black,
                             ),
                           ),
                         ),
-                      ),
-                      KeyboardVisibilityBuilder(
-                        builder: (p0, isKeyboardVisible) => SizedBox(
-                          height: !isKeyboardVisible ? 100 : 0,
+                        const SizedBox(height: 11),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(
+                              _conectWithWidget.length,
+                              (index) => Image.asset(
+                                _conectWithWidget[index],
+                                width: 30,
+                                height: 30,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                        KeyboardVisibilityBuilder(
+                          builder: (p0, isKeyboardVisible) => SizedBox(
+                            height: !isKeyboardVisible ? 100 : 0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

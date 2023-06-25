@@ -9,6 +9,7 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 
+import '../../widgets/custom_scaffold.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 
@@ -23,45 +24,32 @@ class PersonalScreenState extends State<PersonalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // customAppBar: CustomAppBar(
-      //   title: 'Tài khoản',
-      //   haveIconLeft: false,
-      // ),
       backgroundColor: const Color(0xFFF2F2F2),
       body: Column(
         children: [
-          const SizedBox(height: 20),
-          const Text(
-            'Tài khoản',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF000000)),
+          const CustomAppBar(
+            title: 'Tài khoản',
+            haveIconLeft: false,
           ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      injector<AppCache>().profileModel == null
-                          ? CustomButton(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RouteName.loginScreen,
-                                    arguments: true);
-                              },
-                              text: 'Đăng nhập',
-                              width: 128,
-                              height: 45,
-                            )
-                          : Container(),
-                    ],
-                  ),
+                  injector<AppCache>().profileModel == null
+                      ? CustomButton(
+                          onTap: () {
+                            Navigator.pushNamed(context, RouteName.loginScreen,
+                                arguments: true);
+                          },
+                          text: 'Đăng nhập',
+                          width: 128,
+                          height: 45,
+                        )
+                      : Container(),
                   const SizedBox(
                     height: 18,
                   ),
@@ -193,7 +181,7 @@ class PersonalScreenState extends State<PersonalScreen> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

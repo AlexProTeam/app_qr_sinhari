@@ -74,7 +74,6 @@ class BottomBarScreenState extends State<BottomBarScreen> {
             ),
           ),
           child: Scaffold(
-            resizeToAvoidBottomInset: false,
             body: SafeArea(
               bottom: false,
               child: Stack(
@@ -82,8 +81,11 @@ class BottomBarScreenState extends State<BottomBarScreen> {
                 children: [
                   PageView(
                     controller: _controller,
-                    children:
-                        BottomBarEnum.values.map((e) => e.getScreen).toList(),
+                    children: BottomBarEnum.values
+                        .map((e) => LayoutContainWidgetKeepAlive(
+                              child: e.getScreen,
+                            ))
+                        .toList(),
                   ),
                   BlocBuilder<BottomBarBloc, BottomBarState>(
                     buildWhen: (previous, current) =>
@@ -102,4 +104,28 @@ class BottomBarScreenState extends State<BottomBarScreen> {
           ),
         ),
       );
+}
+
+class LayoutContainWidgetKeepAlive extends StatefulWidget {
+  final Widget child;
+
+  const LayoutContainWidgetKeepAlive({Key? key, required this.child})
+      : super(key: key);
+
+  @override
+  LayoutContainWidgetKeepAliveState createState() =>
+      LayoutContainWidgetKeepAliveState();
+}
+
+class LayoutContainWidgetKeepAliveState
+    extends State<LayoutContainWidgetKeepAlive>
+    with AutomaticKeepAliveClientMixin<LayoutContainWidgetKeepAlive> {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Container(child: widget.child);
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
