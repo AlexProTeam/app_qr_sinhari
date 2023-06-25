@@ -126,86 +126,81 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: isLoadding
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : RefreshIndicator(
-              onRefresh: _onRefresh,
-              color: Colors.white,
-              backgroundColor: Colors.amber,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: injector<AppCache>().profileModel != null
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    IconConst.logo,
-                                    width: 40,
-                                    height: 40,
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Xin chào,',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black),
-                                      ),
-                                      const SizedBox(
-                                        height: 3,
-                                      ),
-                                      Text(
-                                        injector<AppCache>()
-                                                .profileModel
-                                                ?.name ??
-                                            "",
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              )
-                            : Image.asset(
-                                IconConst.logo,
-                                width: 40,
-                                height: 40,
-                              ),
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          RouteName.notiScreen,
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Center(
-                            child: Icon(
-                              Icons.notifications_outlined,
-                              size: 30,
-                              color: Color(0xFFCCD2E3),
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        color: Colors.white,
+        backgroundColor: Colors.amber,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: injector<AppCache>().profileModel != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              IconConst.logo,
+                              width: 40,
+                              height: 40,
                             ),
-                          ),
+                            const SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Xin chào,',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
+                                ),
+                                const SizedBox(
+                                  height: 3,
+                                ),
+                                Text(
+                                  injector<AppCache>().profileModel?.name ?? "",
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+                      : Image.asset(
+                          IconConst.logo,
+                          width: 40,
+                          height: 40,
                         ),
-                      )
-                    ],
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    RouteName.notiScreen,
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Center(
+                      child: Icon(
+                        Icons.notifications_outlined,
+                        size: 30,
+                        color: Color(0xFFCCD2E3),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Expanded(
+              child: isLoadding
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,10 +346,10 @@ class HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                  ),
-                ],
-              ),
             ),
+          ],
+        ),
+      ),
     );
   }
 

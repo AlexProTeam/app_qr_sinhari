@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
 
 import '../../../../common/const/icon_constant.dart';
 import '../../../../common/navigation/route_names.dart';
@@ -37,12 +38,12 @@ extension BottomBarEx on BottomBarEnum {
         return const HomeScreen();
       case BottomBarEnum.lichSuQuet:
         return const HistoryScanScreen();
+      case BottomBarEnum.scan:
+        return const ScanQrScreen();
       case BottomBarEnum.tinTuc:
         return const NewsScreen();
       case BottomBarEnum.caNhan:
         return const PersonalScreen();
-      default:
-        return const SizedBox.shrink();
     }
   }
 

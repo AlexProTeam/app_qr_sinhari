@@ -35,10 +35,6 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
   }
 
   ///todo: remove later
-  // Future _onRefresh() async {
-  //   _initData();
-  //   return _refreshCompleter.future;
-  // }
 
   void _initData() async {
     try {
@@ -51,7 +47,6 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       });
       _refreshCompleter.complete();
       _refreshCompleter = Completer();
-      setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
@@ -177,7 +172,7 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
   Widget _item() {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context,RouteName.detailProductScreen,
+        Navigator.pushNamed(context, RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
                 // productId: model.productId,
                 ));
@@ -236,24 +231,4 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       ),
     );
   }
-
-  // void _onScan() async {
-  //   // final deviceId = await CommonUtil.getDeviceId();
-  //   // LOG.w('_onScan: $deviceId');
-  //   // final data = await Navigator.pushNamed(RouteName.ScanQrScreen);
-  //   // LOG.w('_onScan: $data');
-  //   // if (data != null) {
-  //   //   injector<AppClient>().get(
-  //   //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
-  //   //           '&city=ha noi&region=vn&url=$data');
-  //   //   injector<AppCache>().cacheDataProduct = data;
-  //   //   Navigator.pushNamed(RouteName.DetailProductScreen,
-  //   //       arguments: ArgumentDetailProductScreen(
-  //   //         url: data,
-  //   //       ));
-  //   // }
-  //   Navigator.pushNamed(
-  //     RouteName.NotiScreen,
-  //   );
-  // }
 }
