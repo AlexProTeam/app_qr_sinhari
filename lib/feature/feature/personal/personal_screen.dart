@@ -9,9 +9,26 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 
+import '../../routes.dart';
 import '../../widgets/custom_scaffold.dart';
+import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
+
+class PersonalNested extends StatelessWidget {
+  const PersonalNested({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return NestedRouteWrapper(
+      onGenerateRoute: Routes.generateBottomBarRoute,
+      navigationKey: Routes.personalKey,
+      initialRoute: BottomBarEnum.caNhan.getRouteNames,
+    );
+  }
+}
 
 class PersonalScreen extends StatefulWidget {
   const PersonalScreen({Key? key}) : super(key: key);
@@ -140,10 +157,10 @@ class PersonalScreenState extends State<PersonalScreen> {
                                     fontSize: 16,
                                     color: Colors.black),
                               ),
-                              _icon(() => {}, 'Gmail', IconConst.gmail),
-                              _icon(() => {}, 'Facebook', IconConst.facebook),
-                              _icon(() => {}, 'Zalo', IconConst.zalo),
-                              _icon(() => {}, 'Apple', IconConst.apple),
+                              _icon(() {}, 'Gmail', IconConst.gmail),
+                              _icon(() {}, 'Facebook', IconConst.facebook),
+                              _icon(() {}, 'Zalo', IconConst.zalo),
+                              _icon(() {}, 'Apple', IconConst.apple),
                               const SizedBox(height: 17),
                             ],
                           ),
@@ -162,11 +179,8 @@ class PersonalScreenState extends State<PersonalScreen> {
                                     .saveStringSharePreference(
                                         KeySaveDataLocal.keySaveAccessToken,
                                         '');
+                                setState(() {});
                                 if (mounted) {
-                                  Navigator.pushNamed(
-                                    context,
-                                    RouteName.homeScreen,
-                                  );
                                   context.read<BottomBarBloc>().add(
                                       const ChangeTabBottomBarEvent(
                                           bottomBarEnum: BottomBarEnum.home));
@@ -174,7 +188,7 @@ class PersonalScreenState extends State<PersonalScreen> {
                               },
                               text: 'Đăng xuất',
                             )
-                          : Container(),
+                          : const SizedBox.shrink(),
                     ],
                   ),
                   const SizedBox(height: 100),

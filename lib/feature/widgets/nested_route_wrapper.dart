@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
-
 class NestedRouteWrapper extends StatefulWidget {
   final RouteFactory onGenerateRoute;
   final GlobalKey<NavigatorState> navigationKey;
@@ -39,35 +37,32 @@ class _NestedRouteWrapperState extends State<NestedRouteWrapper> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: routeName,
-      // child: Navigator(
-      //   key: widget.navigationKey,
-      //   initialRoute: widget.initialRoute,
-      //   observers: [
-      //     _CustomNavigatorObserver(
-      //       onPop: (route) {
-      //         final popRouteName = route?.settings.name;
-      //         if (popRouteName != null) {
-      //           routeName.value = popRouteName;
-      //           if (widget.onChangeScreen != null) {
-      //             widget.onChangeScreen!(routeName.value);
-      //           }
-      //         }
-      //       },
-      //       onPush: (route) {
-      //         final pushRouteName = route.settings.name;
-      //         if (pushRouteName != null) {
-      //           routeName.value = pushRouteName;
-      //           if (widget.onChangeScreen != null) {
-      //             widget.onChangeScreen!(routeName.value);
-      //           }
-      //         }
-      //       },
-      //     ),
-      //   ],
-      //   onGenerateRoute: widget.onGenerateRoute,
-      // ),
-      child: PageView(
-        children: BottomBarEnum.values.map((e) => e.getScreen).toList(),
+      child: Navigator(
+        key: widget.navigationKey,
+        initialRoute: widget.initialRoute,
+        observers: [
+          _CustomNavigatorObserver(
+            onPop: (route) {
+              final popRouteName = route?.settings.name;
+              if (popRouteName != null) {
+                routeName.value = popRouteName;
+                if (widget.onChangeScreen != null) {
+                  widget.onChangeScreen!(routeName.value);
+                }
+              }
+            },
+            onPush: (route) {
+              final pushRouteName = route.settings.name;
+              if (pushRouteName != null) {
+                routeName.value = pushRouteName;
+                if (widget.onChangeScreen != null) {
+                  widget.onChangeScreen!(routeName.value);
+                }
+              }
+            },
+          ),
+        ],
+        onGenerateRoute: widget.onGenerateRoute,
       ),
       builder: (context, value, child) {
         return WillPopScope(

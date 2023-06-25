@@ -15,6 +15,24 @@ import 'package:qrcode/feature/feature/history_scan/history_model.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
 import '../../injector_container.dart';
+import '../../routes.dart';
+import '../../widgets/nested_route_wrapper.dart';
+import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
+
+class ScanHistoryNested extends StatelessWidget {
+  const ScanHistoryNested({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return NestedRouteWrapper(
+      onGenerateRoute: Routes.generateBottomBarRoute,
+      navigationKey: Routes.historyScanKey,
+      initialRoute: BottomBarEnum.lichSuQuet.getRouteNames,
+    );
+  }
+}
 
 class HistoryScanScreen extends StatefulWidget {
   const HistoryScanScreen({Key? key}) : super(key: key);
@@ -25,7 +43,7 @@ class HistoryScanScreen extends StatefulWidget {
 
 class HistoryScanScreenState extends State<HistoryScanScreen> {
   List<HistoryModel> histories = [];
-  bool isLoadding = false;
+  bool isLoading = false;
   Completer<void> _refreshCompleter = Completer();
 
   @override
@@ -34,11 +52,9 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
     super.initState();
   }
 
-  ///todo: remove later
-
   void _initData() async {
     try {
-      isLoadding = true;
+      isLoading = true;
       histories.clear();
       final data = await injector<AppClient>().get(
           'history-scan-qr-code?device_id=${injector<AppCache>().deviceId}');
@@ -50,7 +66,7 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     } finally {
-      isLoadding = false;
+      isLoading = false;
     }
   }
 

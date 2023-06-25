@@ -138,14 +138,14 @@ class AppState extends State<App> {
         navigatorKey: Routes.instance.navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'SinHair',
-        onGenerateRoute: Routes.generateRoute,
+        onGenerateRoute: Routes.generateDefaultRoute,
         initialRoute: RouteName.splashScreen,
         theme: ThemeData(
           primaryColor: AppColors.primaryColor,
           fontFamily: 'Montserrat',
           canvasColor: Colors.transparent,
           platform: TargetPlatform.iOS,
-          scaffoldBackgroundColor: const Color(0xFFF2F2F2),
+          scaffoldBackgroundColor: const Color(0xFFffffff),
           appBarTheme: const AppBarTheme(
             systemOverlayStyle: SystemUiOverlayStyle.light,
           ),

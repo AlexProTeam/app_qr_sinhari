@@ -10,6 +10,7 @@ import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
+import 'package:qrcode/feature/feature/bottom_bar_screen/widget/keep_alive_widget.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
 import 'bloc/bottom_bar_bloc.dart';
@@ -74,6 +75,7 @@ class BottomBarScreenState extends State<BottomBarScreen> {
             ),
           ),
           child: Scaffold(
+            resizeToAvoidBottomInset: false,
             body: SafeArea(
               bottom: false,
               child: Stack(
@@ -82,12 +84,18 @@ class BottomBarScreenState extends State<BottomBarScreen> {
                   PageView(
                     controller: _controller,
                     children: BottomBarEnum.values
-                        .map((e) => LayoutContainWidgetKeepAlive(
-                              child: e.getScreen,
-                            ))
+                        .map(
+                          (e) => LayoutContainWidgetKeepAlive(
+                            child: e.getScreen,
+                          ),
+                        )
                         .toList(),
                   ),
-                  BlocBuilder<BottomBarBloc, BottomBarState>(
+                  BlocConsumer<BottomBarBloc, BottomBarState>(
+                    listenWhen: (previous, current) =>
+                        previous.bottomBarEnum != current.bottomBarEnum,
+                    listener: (context, state) =>
+                        _controller.jumpToPage(state.bottomBarEnum.index),
                     buildWhen: (previous, current) =>
                         previous.bottomBarEnum != current.bottomBarEnum,
                     builder: (context, state) {
@@ -104,28 +112,4 @@ class BottomBarScreenState extends State<BottomBarScreen> {
           ),
         ),
       );
-}
-
-class LayoutContainWidgetKeepAlive extends StatefulWidget {
-  final Widget child;
-
-  const LayoutContainWidgetKeepAlive({Key? key, required this.child})
-      : super(key: key);
-
-  @override
-  LayoutContainWidgetKeepAliveState createState() =>
-      LayoutContainWidgetKeepAliveState();
-}
-
-class LayoutContainWidgetKeepAliveState
-    extends State<LayoutContainWidgetKeepAlive>
-    with AutomaticKeepAliveClientMixin<LayoutContainWidgetKeepAlive> {
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return Container(child: widget.child);
-  }
-
-  @override
-  bool get wantKeepAlive => true;
 }
