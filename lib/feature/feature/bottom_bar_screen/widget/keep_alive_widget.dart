@@ -17,7 +17,7 @@ class LayoutContainWidgetKeepAliveState
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Container(child: widget.child);
+    return Expanded(child: widget.child);
   }
 
   @override

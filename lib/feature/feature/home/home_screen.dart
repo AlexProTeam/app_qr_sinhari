@@ -348,4 +348,6 @@ class HomeScreenState extends State<HomeScreen> {
             url: url,
             label: label,
           ));
+
+  bool get wantKeepAlive => true;
 }

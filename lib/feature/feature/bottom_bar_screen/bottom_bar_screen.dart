@@ -74,14 +74,15 @@ class BottomBarScreenState extends State<BottomBarScreen> {
               },
             ),
           ),
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              bottom: false,
-              child: Stack(
+          child: SafeArea(
+            bottom: false,
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   PageView(
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: _controller,
                     children: BottomBarEnum.values
                         .map(

@@ -68,6 +68,9 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
     } finally {
       isLoading = false;
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -98,22 +101,16 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                         color: Color(0xFF000000)),
                   ),
                 ),
-                isLoadding
-                    ? Center(
+                isLoading
+                    ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : histories.isEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 320),
+                        ? const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 320),
                             child: Text("Không có lịch sử nào!"),
                           )
-                        :
-                        // RefreshIndicator(
-                        //   onRefresh: _onRefresh,
-                        //   backgroundColor: Colors.white,
-                        //   color: AppColors.primaryColor,
-                        //   child:
-                        Padding(
+                        : Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,8 +135,8 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                                   itemCount: histories.length,
                                 ),
                               ],
-                  ),
-                ),
+                            ),
+                          ),
               ],
             )),
       ),
