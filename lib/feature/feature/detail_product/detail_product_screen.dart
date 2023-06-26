@@ -356,7 +356,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                           "",
                                       style: {
                                         "html": Style(
-                                          backgroundColor: Colors.white,
+                                          backgroundColor: Colors.transparent,
                                           color: AppColors.grey9,
                                           fontWeight: FontWeight.w500,
                                           fontSize: FontSize(14),

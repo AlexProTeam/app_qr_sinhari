@@ -4,7 +4,7 @@ import 'package:qrcode/common/utils/log_util.dart';
 class HistoryModel {
   int? id;
   dynamic userId;
-  String? deviceId;
+  // String? deviceId;
   int? productId;
   String? urlScan;
   String? city;
@@ -15,11 +15,14 @@ class HistoryModel {
   String? productName;
   String? dateTime;
   String? image;
+  String? code;
+  String? numberSeri;
+  String? count;
 
   HistoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    deviceId = json['device_id'];
+    // deviceId = json['device_id'];
     productId = json['product_id'];
     urlScan = json['url_scan'];
     city = json['city'];
@@ -29,6 +32,9 @@ class HistoryModel {
     updatedAt = json['updated_at'];
     productName = json['product_name'];
     image = json['featured_img'];
+    code = json['code'];
+    numberSeri = json['numberSeri'];
+    count = json['count'];
     // DateFormat dateFormat = DateFormat('yyyy-MM-ddThh:mm:ss');
     // DateFormat dateFormat1 = DateFormat('hh:mm dd/MM/yyyy');
     // if(updatedAt!=null){
