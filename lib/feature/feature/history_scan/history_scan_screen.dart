@@ -65,8 +65,6 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       _refreshCompleter = Completer();
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      isLoading = false;
     }
     setState(() {
       isLoading = false;
