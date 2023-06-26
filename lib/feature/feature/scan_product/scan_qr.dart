@@ -8,8 +8,26 @@ import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 
+import '../../routes.dart';
+import '../../widgets/nested_route_wrapper.dart';
 import '../../widgets/qr_scanner_overlay.dart';
+import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 import 'enum/scan_enum.dart';
+
+class ScanQrNested extends StatelessWidget {
+  const ScanQrNested({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return NestedRouteWrapper(
+      onGenerateRoute: Routes.generateBottomBarRoute,
+      navigationKey: Routes.scanKey,
+      initialRoute: BottomBarEnum.scan.getRouteNames,
+    );
+  }
+}
 
 class ScanQrScreen extends StatefulWidget {
   const ScanQrScreen({Key? key}) : super(key: key);

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
 
 import '../../../../common/const/icon_constant.dart';
 import '../../../../common/navigation/route_names.dart';
@@ -34,15 +35,15 @@ extension BottomBarEx on BottomBarEnum {
   Widget get getScreen {
     switch (this) {
       case BottomBarEnum.home:
-        return const HomeScreen();
+        return const HomeNested();
       case BottomBarEnum.lichSuQuet:
-        return const HistoryScanScreen();
+        return const ScanHistoryNested();
+      case BottomBarEnum.scan:
+        return const ScanQrNested();
       case BottomBarEnum.tinTuc:
-        return const NewsScreen();
+        return const NewsNested();
       case BottomBarEnum.caNhan:
-        return const PersonalScreen();
-      default:
-        return const SizedBox.shrink();
+        return const PersonalNested();
     }
   }
 
@@ -58,8 +59,6 @@ extension BottomBarEx on BottomBarEnum {
         return RouteName.newsScreen;
       case BottomBarEnum.caNhan:
         return RouteName.personalScreen;
-      default:
-        return RouteName.homeScreen;
     }
   }
 }

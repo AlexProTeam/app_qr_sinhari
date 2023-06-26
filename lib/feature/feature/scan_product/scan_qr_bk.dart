@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
-import 'package:qrcode/feature/routes.dart';
 
 class ScanQrScreen extends StatefulWidget {
   const ScanQrScreen({Key? key}) : super(key: key);
@@ -87,7 +86,7 @@ class _QRViewExampleState extends State<ScanQrScreen> {
     controller.scannedDataStream.listen((scanData) {
       controller.pauseCamera();
       controller.stopCamera();
-      Routes.instance.pop(result: scanData.code ?? '');
+      // Routes.instance.pop(result: scanData.code ?? '');
     });
   }
 

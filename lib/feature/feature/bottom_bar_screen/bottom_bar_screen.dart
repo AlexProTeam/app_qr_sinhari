@@ -10,13 +10,11 @@ import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
-import 'package:qrcode/feature/feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
+import 'package:qrcode/feature/feature/bottom_bar_screen/widget/keep_alive_widget.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
-import '../../../common/navigation/route_names.dart';
-import '../../routes.dart';
-import '../../widgets/nested_route_wrapper.dart';
 import 'bloc/bottom_bar_bloc.dart';
+import 'enum/bottom_bar_enum.dart';
 import 'widget/bottom_navigation.dart';
 
 class BottomBarScreen extends StatefulWidget {
@@ -27,7 +25,7 @@ class BottomBarScreen extends StatefulWidget {
 }
 
 class BottomBarScreenState extends State<BottomBarScreen> {
-  String _routeName = RouteName.homeScreen;
+  final PageController _controller = PageController();
 
   @override
   void initState() {
@@ -76,36 +74,35 @@ class BottomBarScreenState extends State<BottomBarScreen> {
               },
             ),
           ),
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              bottom: false,
-              child: Stack(
+          child: SafeArea(
+            bottom: false,
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  NestedRouteWrapper(
-                    onGenerateRoute: Routes.generateBottomBarRoute,
-                    navigationKey: Routes.bottomBarNavigatorKey,
-                    initialRoute: _routeName,
-                    onChangeScreen: (routeName) {
-                      _routeName = routeName;
-                    },
+                  PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _controller,
+                    children: BottomBarEnum.values
+                        .map(
+                          (e) => LayoutContainWidgetKeepAlive(
+                            child: e.getScreen,
+                          ),
+                        )
+                        .toList(),
                   ),
-                  BlocBuilder<BottomBarBloc, BottomBarState>(
+                  BlocConsumer<BottomBarBloc, BottomBarState>(
+                    listenWhen: (previous, current) =>
+                        previous.bottomBarEnum != current.bottomBarEnum,
+                    listener: (context, state) =>
+                        _controller.jumpToPage(state.bottomBarEnum.index),
                     buildWhen: (previous, current) =>
                         previous.bottomBarEnum != current.bottomBarEnum,
                     builder: (context, state) {
                       return BottomNavigation(
                         onChange: (bottomBarEnum) {
-                          if (ModalRoute.of(Routes
-                                      .bottomBarNavigatorKey.currentContext!)
-                                  ?.settings
-                                  .name !=
-                              bottomBarEnum.getRouteNames) {
-                            Navigator.pushReplacementNamed(
-                                Routes.bottomBarNavigatorKey.currentContext!,
-                                bottomBarEnum.getRouteNames);
-                          }
+                          _controller.jumpToPage(bottomBarEnum.index);
                         },
                       );
                     },

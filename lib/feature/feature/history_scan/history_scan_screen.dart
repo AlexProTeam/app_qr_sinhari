@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/bloc/event_bus/event_bus_bloc.dart';
 import 'package:qrcode/common/bloc/event_bus/event_bus_state.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
-import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -13,8 +12,27 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
+import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
 import '../../injector_container.dart';
+import '../../routes.dart';
+import '../../widgets/nested_route_wrapper.dart';
+import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
+
+class ScanHistoryNested extends StatelessWidget {
+  const ScanHistoryNested({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return NestedRouteWrapper(
+      onGenerateRoute: Routes.generateBottomBarRoute,
+      navigationKey: Routes.historyScanKey,
+      initialRoute: BottomBarEnum.lichSuQuet.getRouteNames,
+    );
+  }
+}
 
 class HistoryScanScreen extends StatefulWidget {
   const HistoryScanScreen({Key? key}) : super(key: key);
@@ -25,7 +43,7 @@ class HistoryScanScreen extends StatefulWidget {
 
 class HistoryScanScreenState extends State<HistoryScanScreen> {
   List<HistoryModel> histories = [];
-  bool isLoadding = false;
+  bool isLoading = false;
   Completer<void> _refreshCompleter = Completer();
 
   @override
@@ -34,15 +52,9 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
     super.initState();
   }
 
-  ///todo: remove later
-  // Future _onRefresh() async {
-  //   _initData();
-  //   return _refreshCompleter.future;
-  // }
-
   void _initData() async {
     try {
-      isLoadding = true;
+      isLoading = true;
       histories.clear();
       final data = await injector<AppClient>().get(
           'history-scan-qr-code?device_id=${injector<AppCache>().deviceId}');
@@ -51,12 +63,12 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       });
       _refreshCompleter.complete();
       _refreshCompleter = Completer();
-      setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      isLoadding = false;
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -87,48 +99,42 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                         color: Color(0xFF000000)),
                   ),
                 ),
-                // isLoadding
-                //     ? Center(
-                //         child: CircularProgressIndicator(),
-                //       )
-                //     : histories.isEmpty
-                //         ? Padding(
-                //             padding: const EdgeInsets.symmetric(vertical: 320),
-                //             child: Text("Không có lịch sử nào!"),
-                //           )
-                //         :
-                // RefreshIndicator(
-                //   onRefresh: _onRefresh,
-                //   backgroundColor: Colors.white,
-                //   color: AppColors.primaryColor,
-                //   child:
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 16),
-                      const Text(
-                        '10 sản phẩm',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.red),
-                      ),
-                      const SizedBox(height: 16),
-                      ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (_, index) {
-                            return _item();
-                          },
-                          // itemCount: histories.length,
-                          itemCount: 5),
-                    ],
-                  ),
-                ),
+                isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : histories.isEmpty
+                        ? const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 320),
+                            child: Text("Không có lịch sử nào!"),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 16),
+                                Text(
+                                  '${histories.length} Sản phẩm',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.red),
+                                ),
+                                const SizedBox(height: 16),
+                                ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  itemBuilder: (_, index) {
+                                    return _item(histories[index]);
+                                  },
+                                  itemCount: histories.length,
+                                ),
+                              ],
+                            ),
+                          ),
               ],
             )),
       ),
@@ -174,10 +180,10 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
   //     ),
   //   );
   // }
-  Widget _item() {
+  Widget _item(HistoryModel model) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context,RouteName.detailProductScreen,
+        Navigator.pushNamed(context, RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
                 // productId: model.productId,
                 ));
@@ -187,21 +193,23 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
-              child: Image.asset(
-                IconConst.logo,
-                width: 74,
-                height: 74,
-              )),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
+            child: CustomImageNetwork(
+              url: model.image,
+              width: 74,
+              height: 74,
+              border: 5,
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SizedBox(height: 12),
+            children: [
+              const SizedBox(height: 12),
               SizedBox(
                 width: 164,
                 child: Text(
-                  'Dầu gội đầu nước hoa - Hương hoa sen',
-                  style: TextStyle(
+                  model.productName ?? '',
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
@@ -211,22 +219,22 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                 ),
               ),
               Text(
-                'Mã Code: SIN-1073250',
+                model.code ?? '',
                 style: AppTextTheme.smallGrey,
               ),
               Text(
-                'Số Seri: L8O977V',
+                model.numberSeri ?? '',
                 style: AppTextTheme.smallGrey,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
             ],
           ),
           const SizedBox(width: 20),
-          const Padding(
-            padding: EdgeInsets.all(12.0),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
             child: Text(
-              '5 lần',
-              style: TextStyle(
+              model.count ?? '',
+              style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF0085FF)),
@@ -236,24 +244,4 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       ),
     );
   }
-
-  // void _onScan() async {
-  //   // final deviceId = await CommonUtil.getDeviceId();
-  //   // LOG.w('_onScan: $deviceId');
-  //   // final data = await Navigator.pushNamed(RouteName.ScanQrScreen);
-  //   // LOG.w('_onScan: $data');
-  //   // if (data != null) {
-  //   //   injector<AppClient>().get(
-  //   //       'scan-qr-code?device_id=${injector<AppCache>().deviceId}'
-  //   //           '&city=ha noi&region=vn&url=$data');
-  //   //   injector<AppCache>().cacheDataProduct = data;
-  //   //   Navigator.pushNamed(RouteName.DetailProductScreen,
-  //   //       arguments: ArgumentDetailProductScreen(
-  //   //         url: data,
-  //   //       ));
-  //   // }
-  //   Navigator.pushNamed(
-  //     RouteName.NotiScreen,
-  //   );
-  // }
 }

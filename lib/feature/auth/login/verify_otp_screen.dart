@@ -6,18 +6,16 @@ import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/model/profile_model.dart';
-import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
-import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
+import '../../../common/navigation/route_names.dart';
 import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
-import '../../routes.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   final String phone;
@@ -49,38 +47,9 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
     super.dispose();
   }
 
-  void _onContinue() async {
-    if (!CommonUtil.validateAndSave(_formKey)) return;
-    try {
-      final data = await injector<AppClient>()
-          .post('confirm-otp?phone=${widget.phone}&otp=${_controller.text}');
-      String? accessToken = data['data']['result']['accessToken'];
-      if (accessToken != null) {
-        AppHeader appHeader = AppHeader();
-        appHeader.accessToken = accessToken;
-        injector<AppClient>().header = appHeader;
-        injector<LocalApp>().saveStringSharePreference(
-            KeySaveDataLocal.keySaveAccessToken, accessToken);
-        final data = await injector<AppClient>().get('auth/showProfile');
-        ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-        injector<AppCache>().profileModel = profileModel;
-        if (mounted) {
-          Navigator.pushReplacementNamed(
-              Routes.bottomBarNavigatorKey.currentContext!,
-              RouteName.homeScreen);
-          context.read<BottomBarBloc>().add(
-              const ChangeTabBottomBarEvent(bottomBarEnum: BottomBarEnum.home));
-        }
-      }
-    } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      autoDismissKeyboard: true,
+    return Scaffold(
       backgroundColor: const Color(0xFFF2F2F2),
       body: Form(
         key: _formKey,
@@ -165,5 +134,35 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
         ),
       ),
     );
+  }
+
+  void _onContinue() async {
+    if (!CommonUtil.validateAndSave(_formKey)) return;
+    try {
+      final data = await injector<AppClient>()
+          .post('confirm-otp?phone=${widget.phone}&otp=${_controller.text}');
+      String? accessToken = data['data']['result']['accessToken'];
+      if (accessToken != null) {
+        AppHeader appHeader = AppHeader();
+        appHeader.accessToken = accessToken;
+        injector<AppClient>().header = appHeader;
+        injector<LocalApp>().saveStringSharePreference(
+            KeySaveDataLocal.keySaveAccessToken, accessToken);
+        final data = await injector<AppClient>().get('auth/showProfile');
+        ProfileModel profileModel = ProfileModel.fromJson(data['data']);
+        injector<AppCache>().profileModel = profileModel;
+        if (mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RouteName.personalScreen,
+            (route) => false,
+          );
+          context.read<BottomBarBloc>().add(
+              const ChangeTabBottomBarEvent(bottomBarEnum: BottomBarEnum.home));
+        }
+      }
+    } catch (e) {
+      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+    }
   }
 }

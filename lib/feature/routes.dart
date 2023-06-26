@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_bloc.dart';
-import 'package:qrcode/common/bloc/loading_bloc/loading_event.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/navigation/slide_left_route.dart';
 import 'package:qrcode/feature/auth/change_pass/change_pass_screen.dart';
@@ -28,7 +26,6 @@ import 'package:qrcode/feature/feature/scan/check_bill_screen.dart';
 import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 import 'package:qrcode/feature/feature/webview/webview_screen.dart';
-import 'package:qrcode/feature/injector_container.dart';
 
 import 'feature/bottom_bar_screen/bottom_bar_screen.dart';
 import 'feature/detail_product/detail_product_contact.dart';
@@ -37,6 +34,18 @@ class Routes {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   static final GlobalKey<NavigatorState> bottomBarNavigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> homeKey = GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> historyScanKey =
+      GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> scanKey = GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> newsKey = GlobalKey<NavigatorState>();
+
+  static final GlobalKey<NavigatorState> personalKey =
       GlobalKey<NavigatorState>();
 
   factory Routes() => _instance;
@@ -77,12 +86,7 @@ class Routes {
         ?.pushReplacementNamed(routeName, arguments: arguments);
   }
 
-  dynamic pop({dynamic result}) {
-    injector<LoadingBloc>().add(FinishLoading());
-    return navigatorKey.currentState!.pop(result);
-  }
-
-  static Route<dynamic> generateRoute(RouteSettings settings) {
+  static Route<dynamic> generateDefaultRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splashScreen:
         return SlideLeftRoute(

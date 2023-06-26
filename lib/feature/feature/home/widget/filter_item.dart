@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../home_screen.dart';
+import '../bottom/home_enum.dart';
 
 class FilterItemWidget extends StatelessWidget {
   final int index;
