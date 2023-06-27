@@ -16,6 +16,7 @@ import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
 import '../../injector_container.dart';
 import '../../routes.dart';
+import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 
@@ -80,107 +81,59 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
           _initData();
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-            // customAppBar: CustomAppBar(
-            //   title: 'Lịch sử quét',
-            //   haveIconLeft: false,
-            // ),
-            backgroundColor: const Color(0xFFF2F2F2),
-            body: Column(
-              children: [
-                const SizedBox(height: 20),
-                const Center(
-                  child: Text(
-                    'Lịch sử QR',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF000000)),
-                  ),
-                ),
-                isLoading
+      child: Scaffold(
+          backgroundColor: const Color(0xFFF2F2F2),
+          body: Column(
+            children: [
+              const CustomAppBar(
+                title: 'Lịch sử quét',
+                haveIconLeft: false,
+              ),
+              Expanded(
+                child: isLoading
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : histories.isEmpty
                         ? const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 320),
+                            padding: EdgeInsets.only(top: 300),
                             child: Text("Không có lịch sử nào!"),
                           )
                         : Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 16),
-                                Text(
-                                  '${histories.length} Sản phẩm',
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.red),
-                                ),
-                                const SizedBox(height: 16),
-                                ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  padding: EdgeInsets.zero,
-                                  itemBuilder: (_, index) {
-                                    return _item(histories[index]);
-                                  },
-                                  itemCount: histories.length,
-                                ),
-                              ],
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    '${histories.length} Sản phẩm',
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.red),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    padding: const EdgeInsets.only(bottom: 300),
+                                    itemBuilder: (_, index) {
+                                      return _itemHistoryScan(histories[index]);
+                                    },
+                                    itemCount: histories.length,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-              ],
-            )),
-      ),
+              ),
+            ],
+          )),
     );
   }
 
-  // Widget _item(HistoryModel model) {
-  //   return InkWell(
-  //     onTap: () {
-  //       Navigator.pushNamed(RouteName.DetailProductScreen,
-  //           arguments: ArgumentDetailProductScreen(
-  //             productId: model.productId,
-  //           ));
-  //     },
-  //     child: Padding(
-  //       padding: const EdgeInsets.symmetric(horizontal: 16),
-  //       child: Row(
-  //         children: [
-  //           CustomImageNetwork(
-  //             url: model.image,
-  //             width: 74,
-  //             height: 74,
-  //             border: 5,
-  //           ),
-  //           const SizedBox(width: 12),
-  //           Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               const SizedBox(height: 12),
-  //               Text(
-  //                 model.productName ?? 'Dầu gội đầu nước hoa - Hương hoa sen',
-  //                 style: AppTextTheme.mediumBlack,
-  //               ),
-  //               Text(
-  //                 model.updatedAt ?? 'Mã Code: SIN-1073250',
-  //                 style: AppTextTheme.smallGrey,
-  //               ),
-  //                 const SizedBox(height: 12),
-  //               ],
-  //             ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-  Widget _item(HistoryModel model) {
+  Widget _itemHistoryScan(HistoryModel model) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, RouteName.detailProductScreen,

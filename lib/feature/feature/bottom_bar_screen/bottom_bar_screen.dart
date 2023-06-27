@@ -10,7 +10,6 @@ import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
-import 'package:qrcode/feature/feature/bottom_bar_screen/widget/keep_alive_widget.dart';
 import 'package:qrcode/feature/injector_container.dart';
 
 import 'bloc/bottom_bar_bloc.dart';
@@ -86,9 +85,7 @@ class BottomBarScreenState extends State<BottomBarScreen> {
                     controller: _controller,
                     children: BottomBarEnum.values
                         .map(
-                          (e) => LayoutContainWidgetKeepAlive(
-                            child: e.getScreen,
-                          ),
+                          (e) => e.getScreen,
                         )
                         .toList(),
                   ),
