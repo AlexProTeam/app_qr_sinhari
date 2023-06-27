@@ -8,7 +8,7 @@ import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
-import 'package:qrcode/feature/widgets/empty_widget.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 import '../../routes.dart';
@@ -69,52 +69,41 @@ class NewsScreenState extends State<NewsScreen> {
       backgroundColor: const Color(0xFFF2F2F2),
       body: Column(
         children: [
-          const SizedBox(height: 20),
-          const Text(
-            'Tin tức',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
+          const CustomAppBar(
+            title: 'Tin tức',
+            haveIconLeft: false,
           ),
           const SizedBox(height: 17),
           _isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
+              ? const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 )
               : _histories.isEmpty
-                  ? const Center(
-                      child: Text("Không có tin tức nào!"),
+                  ? const Expanded(
+                      child: Center(
+                        child: Text("Không có tin tức nào!"),
+                      ),
                     )
-                  : Column(
-                      children: [
-                        _histories.isNotEmpty
-                            ? GridView.builder(
-                                shrinkWrap: true,
-                                itemCount: _histories.length,
-                                // controller: _scrollController,
-                                physics: const NeverScrollableScrollPhysics(),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0, vertical: 12.0),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 8.0,
-                                  mainAxisSpacing: 8.0,
-                                  childAspectRatio:
-                                      MediaQuery.of(context).size.width /
-                                          2 /
-                                          (MediaQuery.of(context).size.height /
-                                              2.5),
-                                ),
-                                itemBuilder: (context, index) {
-                                  return _item(_histories[index]);
-                                },
-                              )
-                            : EmptyWidget(
-                                onReload: () {
-                                  _initData();
-                                },
-                              ),
-                      ],
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: _histories.length,
+                      // controller: _scrollController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 12.0),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
+                        childAspectRatio: MediaQuery.of(context).size.width /
+                            2 /
+                            (MediaQuery.of(context).size.height / 2.5),
+                      ),
+                      itemBuilder: (context, index) {
+                        return _item(_histories[index]);
+                      },
                     ),
         ],
       ),

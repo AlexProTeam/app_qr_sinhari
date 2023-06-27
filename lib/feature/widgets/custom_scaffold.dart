@@ -103,7 +103,10 @@ class CustomAppBar extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: AppTextTheme.mediumBlack,
+              style: AppTextTheme.mediumBlack.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           widgetRight ??
