@@ -54,7 +54,6 @@ dependencies:
   mobile_scanner: ^3.2.0
   timeago: ^3.0.2
   flutter_keyboard_visibility: ^5.4.1
-  flutter_facebook_auth: ^5.0.11
 dev_dependencies:
   flutter_lints: ^2.0.1
   flutter_test:
