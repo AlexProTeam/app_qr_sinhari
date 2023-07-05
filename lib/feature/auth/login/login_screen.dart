@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:http/http.dart' as http;
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
@@ -140,11 +139,6 @@ class LoginScreenState extends State<LoginScreen> {
                                   onTap: LoginEnum.values[index].getOnTap(),
                                   child: LoginEnum.values[index].getIcon()),
                             ),
-                          ),
-                        ),
-                        KeyboardVisibilityBuilder(
-                          builder: (p0, isKeyboardVisible) => SizedBox(
-                            height: !isKeyboardVisible ? 100 : 0,
                           ),
                         ),
                       ],
