@@ -1,4 +1,6 @@
+import 'package:code_scanner/code_scanner.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -38,7 +40,9 @@ class ScanQrScreen extends StatefulWidget {
 
 class ScanQrScreenState extends State<ScanQrScreen>
     with SingleTickerProviderStateMixin {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
+  final ImagePicker picker = ImagePicker();
+  CodeScannerController controllerGallery = CodeScannerController();
 
   ///todo: need to refactor thí logic
   bool _canPushScreen = true;
@@ -56,6 +60,15 @@ class ScanQrScreenState extends State<ScanQrScreen>
         );
       }
     }
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    CodeScanner(
+      controller: controllerGallery,
+    );
+    await controllerGallery.readDataFromGallery();
+    print("Dataaaa: $pickedFile");
   }
 
   final MobileScannerController controller = MobileScannerController(
@@ -90,9 +103,12 @@ class ScanQrScreenState extends State<ScanQrScreen>
                 Row(
                   children: List.generate(
                     ScanTypeEnum.values.length,
-                    (index) => _buildBottomScanQrItem(
+                        (index) => _buildBottomScanQrItem(
                       index,
-                      onTap: () => setState(() => _currentIndex = index),
+                      onTap: () => setState(() {
+                        _currentIndex = index;
+                        index == 0 ? _pickImage() : _currentIndex = index;
+                      }),
                       enumData: ScanTypeEnum.values[index],
                     ),
                   ),
