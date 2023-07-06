@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:http/http.dart' as http;
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
@@ -15,6 +14,7 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 import '../../widgets/follow_keyboard_widget.dart';
+import 'login_enum.dart';
 
 class LoginScreen extends StatefulWidget {
   final bool? haveBack;
@@ -134,18 +134,11 @@ class LoginScreenState extends State<LoginScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: List.generate(
-                              _conectWithWidget.length,
-                              (index) => Image.asset(
-                                _conectWithWidget[index],
-                                width: 30,
-                                height: 30,
-                              ),
+                              LoginEnum.values.length,
+                              (index) => InkWell(
+                                  onTap: LoginEnum.values[index].getOnTap(),
+                                  child: LoginEnum.values[index].getIcon()),
                             ),
-                          ),
-                        ),
-                        KeyboardVisibilityBuilder(
-                          builder: (p0, isKeyboardVisible) => SizedBox(
-                            height: !isKeyboardVisible ? 100 : 0,
                           ),
                         ),
                       ],
@@ -159,11 +152,4 @@ class LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  final List<String> _conectWithWidget = [
-    IconConst.gmail,
-    IconConst.facebook,
-    IconConst.zalo,
-    IconConst.apple
-  ];
 }

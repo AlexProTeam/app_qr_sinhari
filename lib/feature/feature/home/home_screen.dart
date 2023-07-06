@@ -107,6 +107,7 @@ class HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocListener<BottomBarBloc, BottomBarState>(
       listenWhen: (previous, current) =>
           previous.bottomBarEnum != current.bottomBarEnum &&
@@ -346,5 +347,6 @@ class HomeScreenState extends State<HomeScreen>
             label: label,
           ));
 
+  @override
   bool get wantKeepAlive => true;
 }

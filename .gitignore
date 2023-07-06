@@ -77,3 +77,6 @@ node_modules
 .fvm/flutter_sdk
 android/app/build
 .fvm/flutter_sdk
+.idea/libraries/Flutter_Plugins.xml
+pubspec.lock
+
