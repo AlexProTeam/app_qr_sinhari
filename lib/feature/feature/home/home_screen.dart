@@ -21,6 +21,7 @@ import '../../themes/theme_color.dart';
 import '../../widgets/banner_slide_image.dart';
 import '../../widgets/gridview_product.dart';
 import '../../widgets/nested_route_wrapper.dart';
+import '../../widgets/toast_manager.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 import '../list_product/list_product_screen.dart';
 import 'bottom/home_enum.dart';
@@ -210,6 +211,11 @@ class HomeScreenState extends State<HomeScreen>
                             IconHomeEnum.values.length,
                             (index) => FilterItemWidget(
                               index: index,
+                              onTap: () => ToastManager.showToast(
+                                context,
+                                delaySecond: 1,
+                                text: 'chức năng sẽ sớm ra mắt',
+                              ),
                             ),
                           ),
                         ),

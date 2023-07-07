@@ -1,4 +1,3 @@
-import 'package:code_scanner/code_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -9,6 +8,8 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
+import 'package:qrcode/feature/widgets/toast_manager.dart';
+import 'package:scan/scan.dart';
 
 import '../../routes.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -40,36 +41,8 @@ class ScanQrScreen extends StatefulWidget {
 
 class ScanQrScreenState extends State<ScanQrScreen>
     with SingleTickerProviderStateMixin {
-  int _currentIndex = 1;
-  final ImagePicker picker = ImagePicker();
-  CodeScannerController controllerGallery = CodeScannerController();
-
-  ///todo: need to refactor thí logic
-  bool _canPushScreen = true;
-
-  Future<void> _scanDetailQr(String url) async {
-    if (url.isNotEmpty) {
-      _canPushScreen = false;
-      if (url.contains('http://qcheck.vn/')) {
-        CommonUtil.runUrl(url);
-      } else {
-        await Navigator.pushReplacementNamed(
-          context,
-          RouteName.detailProductScreen,
-          arguments: ArgumentDetailProductScreen(url: url),
-        );
-      }
-    }
-  }
-
-  Future<void> _pickImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    CodeScanner(
-      controller: controllerGallery,
-    );
-    await controllerGallery.readDataFromGallery();
-    print("Dataaaa: $pickedFile");
-  }
+  int _currentIndex = ScanTypeEnum.product.index;
+  final ImagePicker _picker = ImagePicker();
 
   final MobileScannerController controller = MobileScannerController(
     torchEnabled: false,
@@ -103,12 +76,26 @@ class ScanQrScreenState extends State<ScanQrScreen>
                 Row(
                   children: List.generate(
                     ScanTypeEnum.values.length,
-                        (index) => _buildBottomScanQrItem(
-                      index,
-                      onTap: () => setState(() {
-                        _currentIndex = index;
-                        index == 0 ? _pickImage() : _currentIndex = index;
-                      }),
+                    (index) => _buildBottomScanQrItem(
+                      index == _currentIndex,
+                      onTap: () {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                        switch (ScanTypeEnum.values[index]) {
+                          case ScanTypeEnum.image:
+                            return _pickImage();
+                          case ScanTypeEnum.product:
+                            break;
+                          case ScanTypeEnum.invoice:
+                            return ToastManager.showToast(
+                              context,
+                              delaySecond: 1,
+                              text: 'chức năng sẽ sớm ra mắt',
+                              afterShowToast: () => _resetItemToScanCamera(),
+                            );
+                        }
+                      },
                       enumData: ScanTypeEnum.values[index],
                     ),
                   ),
@@ -137,9 +124,8 @@ class ScanQrScreenState extends State<ScanQrScreen>
                     ScannerErrorWidget(error: error),
                 fit: BoxFit.cover,
                 onDetect: (barcode) async {
-                  if (_canPushScreen) {
-                    await _scanDetailQr(barcode.barcodes.first.rawValue ?? '');
-                  }
+                  controller.stop();
+                  await _scanDetailQr(barcode.barcodes.first.rawValue ?? '');
                 },
               ),
             ),
@@ -220,12 +206,11 @@ class ScanQrScreenState extends State<ScanQrScreen>
   }
 
   Widget _buildBottomScanQrItem(
-    int currentIndex, {
+    bool isSelect, {
     required ScanTypeEnum enumData,
     required Function() onTap,
   }) {
-    final isSelected = currentIndex == _currentIndex;
-    final color = isSelected ? Colors.black : const Color(0xFFACACAC);
+    final color = isSelect ? Colors.black : const Color(0xFFACACAC);
 
     return Expanded(
       child: GestureDetector(
@@ -255,5 +240,39 @@ class ScanQrScreenState extends State<ScanQrScreen>
         ),
       ),
     );
+  }
+
+  Future<void> _scanDetailQr(String url) async {
+    if (url.contains('http://qcheck.vn/')) {
+      CommonUtil.runUrl(url);
+    } else {
+      await Navigator.pushNamed(
+        context,
+        RouteName.detailProductScreen,
+        arguments: ArgumentDetailProductScreen(url: url),
+      ).then((value) => _resetItemToScanCamera());
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final res = await _picker.pickImage(source: ImageSource.gallery);
+
+    String? str = await Scan.parse(res?.path ?? '');
+    if (str != null) {
+      return await _scanDetailQr(str);
+    }
+    if (mounted) {
+      return ToastManager.showToast(
+        context,
+        text: 'không nhận dạng được qr code',
+        afterShowToast: () => _resetItemToScanCamera(),
+      );
+    }
+  }
+
+  void _resetItemToScanCamera() {
+    setState(() {
+      _currentIndex = ScanTypeEnum.product.index;
+    });
   }
 }

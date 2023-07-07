@@ -116,8 +116,7 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                                   ),
                                   const SizedBox(height: 16),
                                   ListView.builder(
-                                    shrinkWrap: true,
-                                    padding: const EdgeInsets.only(bottom: 300),
+                                    padding: const EdgeInsets.only(bottom: 500),
                                     itemBuilder: (_, index) {
                                       return _itemHistoryScan(histories[index]);
                                     },
