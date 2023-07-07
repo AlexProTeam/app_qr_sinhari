@@ -64,49 +64,38 @@ class BottomBarScreenState extends State<BottomBarScreen> {
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (context) => BottomBarBloc(),
-        child: Theme(
-          data: Theme.of(context).copyWith(
-            pageTransitionsTheme: const PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-              },
-            ),
-          ),
-          child: SafeArea(
-            bottom: false,
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: _controller,
-                    children: BottomBarEnum.values
-                        .map(
-                          (e) => e.getScreen,
-                        )
-                        .toList(),
-                  ),
-                  BlocConsumer<BottomBarBloc, BottomBarState>(
-                    listenWhen: (previous, current) =>
-                        previous.bottomBarEnum != current.bottomBarEnum,
-                    listener: (context, state) =>
-                        _controller.jumpToPage(state.bottomBarEnum.index),
-                    buildWhen: (previous, current) =>
-                        previous.bottomBarEnum != current.bottomBarEnum,
-                    builder: (context, state) {
-                      return BottomNavigation(
-                        onChange: (bottomBarEnum) {
-                          _controller.jumpToPage(bottomBarEnum.index);
-                        },
-                      );
-                    },
-                  )
-                ],
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              SafeArea(
+                child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _controller,
+                  children: BottomBarEnum.values
+                      .map(
+                        (e) => e.getScreen,
+                      )
+                      .toList(),
+                ),
               ),
-            ),
+              BlocConsumer<BottomBarBloc, BottomBarState>(
+                listenWhen: (previous, current) =>
+                    previous.bottomBarEnum != current.bottomBarEnum,
+                listener: (context, state) =>
+                    _controller.jumpToPage(state.bottomBarEnum.index),
+                buildWhen: (previous, current) =>
+                    previous.bottomBarEnum != current.bottomBarEnum,
+                builder: (context, state) {
+                  return BottomNavigation(
+                    onChange: (bottomBarEnum) {
+                      _controller.jumpToPage(bottomBarEnum.index);
+                    },
+                  );
+                },
+              )
+            ],
           ),
         ),
       );

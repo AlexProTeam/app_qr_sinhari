@@ -146,9 +146,8 @@ class AppState extends State<App> {
           canvasColor: Colors.transparent,
           platform: TargetPlatform.iOS,
           scaffoldBackgroundColor: const Color(0xFFffffff),
-          appBarTheme: const AppBarTheme(
-            systemOverlayStyle: SystemUiOverlayStyle.light,
-          ),
+          appBarTheme:
+              const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
         ),
         builder: (context, widget) {
           GScreenUtil.init(context);
