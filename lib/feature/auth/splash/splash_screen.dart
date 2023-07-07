@@ -72,6 +72,7 @@ class SplashScreenState extends State<SplashScreen>
 
   void _initData() async {
     injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
+
     String? accessToken = injector<LocalApp>()
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
     await Future.delayed(const Duration(seconds: 3));
