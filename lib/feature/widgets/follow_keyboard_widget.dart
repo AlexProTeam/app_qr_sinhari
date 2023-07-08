@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class FollowKeyBoardWidget extends StatefulWidget {
   final Widget child;
   final Widget? bottomWidget;
+  final double scaleTo;
 
   const FollowKeyBoardWidget({
     required this.child,
     Key? key,
     this.bottomWidget,
+    this.scaleTo = 30.0,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,8 @@ class FollowKeyBoardWidgetState extends State<FollowKeyBoardWidget> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: MouseRegion(
         onHover: (data) {
-          mouseRegion = mediaQuery.size.height - data.position.dy + 30;
+          mouseRegion =
+              mediaQuery.size.height - data.position.dy + widget.scaleTo;
         },
         child: Column(
           mainAxisSize: MainAxisSize.min,

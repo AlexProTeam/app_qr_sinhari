@@ -34,8 +34,9 @@ Future main() async {
   LocalNotification.instance.setUp();
   await Firebase.initializeApp();
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.black));
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.white, statusBarBrightness: Brightness.light));
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const App());
 }
@@ -143,17 +144,15 @@ class AppState extends State<App> {
         theme: ThemeData(
           primaryColor: AppColors.primaryColor,
           fontFamily: 'Montserrat',
-          canvasColor: Colors.transparent,
-          platform: TargetPlatform.iOS,
-          scaffoldBackgroundColor: const Color(0xFFffffff),
-          appBarTheme:
-              const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
+          scaffoldBackgroundColor: AppColors.white,
         ),
         builder: (context, widget) {
           GScreenUtil.init(context);
           return MultiBlocListener(
             listeners: _getBlocListener(context),
-            child: widget ?? const SizedBox(),
+            child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: widget ?? const SizedBox()),
           );
         },
       ),

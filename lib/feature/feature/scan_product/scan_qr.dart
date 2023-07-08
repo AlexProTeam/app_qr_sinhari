@@ -47,65 +47,61 @@ class ScanQrScreenState extends State<ScanQrScreen>
   final MobileScannerController controller = MobileScannerController(
     torchEnabled: false,
     formats: [BarcodeFormat.qrCode],
+    autoStart: true,
   );
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const CustomAppBar(
-          title: 'Quét mã QR',
-          haveIconLeft: false,
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 17),
-                _buildQrView(),
-                const SizedBox(height: 20),
-                const Text(
-                  'Kiểm tra sản phẩm chính hãng',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.red,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: List.generate(
-                    ScanTypeEnum.values.length,
-                    (index) => _buildBottomScanQrItem(
-                      index == _currentIndex,
-                      onTap: () {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                        switch (ScanTypeEnum.values[index]) {
-                          case ScanTypeEnum.image:
-                            return _pickImage();
-                          case ScanTypeEnum.product:
-                            break;
-                          case ScanTypeEnum.invoice:
-                            return ToastManager.showToast(
-                              context,
-                              delaySecond: 1,
-                              text: 'chức năng sẽ sớm ra mắt',
-                              afterShowToast: () => _resetItemToScanCamera(),
-                            );
-                        }
-                      },
-                      enumData: ScanTypeEnum.values[index],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 100),
-              ],
+    return Scaffold(
+      appBar: BaseAppBar(
+        title: 'Quét mã QR',
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 17),
+            _buildQrView(),
+            const SizedBox(height: 20),
+            const Text(
+              'Kiểm tra sản phẩm chính hãng',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.red,
+              ),
             ),
-          ),
+            const SizedBox(height: 10),
+            Row(
+              children: List.generate(
+                ScanTypeEnum.values.length,
+                (index) => _buildBottomScanQrItem(
+                  index == _currentIndex,
+                  onTap: () {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                    switch (ScanTypeEnum.values[index]) {
+                      case ScanTypeEnum.image:
+                        return _pickImage();
+                      case ScanTypeEnum.product:
+                        break;
+                      case ScanTypeEnum.invoice:
+                        return ToastManager.showToast(
+                          context,
+                          delaySecond: 1,
+                          text: 'chức năng sẽ sớm ra mắt',
+                          afterShowToast: () => _resetItemToScanCamera(),
+                        );
+                    }
+                  },
+                  enumData: ScanTypeEnum.values[index],
+                ),
+              ),
+            ),
+            const SizedBox(height: 100),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -246,7 +242,7 @@ class ScanQrScreenState extends State<ScanQrScreen>
     if (url.contains('http://qcheck.vn/')) {
       CommonUtil.runUrl(url);
     } else {
-      await Navigator.pushNamed(
+      Navigator.pushNamed(
         context,
         RouteName.detailProductScreen,
         arguments: ArgumentDetailProductScreen(url: url),
@@ -274,5 +270,6 @@ class ScanQrScreenState extends State<ScanQrScreen>
     setState(() {
       _currentIndex = ScanTypeEnum.product.index;
     });
+    controller.start();
   }
 }

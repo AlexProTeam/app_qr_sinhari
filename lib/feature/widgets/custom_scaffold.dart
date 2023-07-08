@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
@@ -116,5 +117,76 @@ class CustomAppBar extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
+  final bool isShowBack;
+  @override
+  final Size preferredSize;
+  final Widget? leadingIcon;
+  final String? title;
+  final Color? backGroundColor;
+  final List<Widget>? actions;
+  final PreferredSizeWidget? tabbar;
+  final bool? refreshData;
+  final Widget? widgetTitle;
+
+  BaseAppBar({
+    Key? key,
+    this.title,
+    this.leadingIcon,
+    this.actions,
+    this.tabbar,
+    this.backGroundColor,
+    this.isShowBack = false,
+    this.refreshData,
+    this.widgetTitle,
+    this.preferredSize = const Size.fromHeight(kToolbarHeight),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      bottomOpacity: 0.0,
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      bottom: tabbar,
+      automaticallyImplyLeading: false,
+      title: widgetTitle ??
+          Text(
+            title ?? '',
+            textAlign: TextAlign.center,
+            style: AppTextTheme.mediumBlack.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+      centerTitle: true,
+      leading: leadingWidget(context),
+      actions: actions,
+    );
+  }
+
+  Widget leadingWidget(BuildContext context) {
+    if (leadingIcon != null) {
+      return leadingIcon ?? const SizedBox();
+    }
+    if (isShowBack) {
+      return GestureDetector(
+        onTap: () {
+          Navigator.pop(context, refreshData);
+        },
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.grey,
+          size: 24,
+        ),
+      );
+    }
+
+    return const SizedBox.shrink();
   }
 }

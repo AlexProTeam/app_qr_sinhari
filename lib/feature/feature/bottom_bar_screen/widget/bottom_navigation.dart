@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
-import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 
+import '../../../../common/utils/screen_utils.dart';
 import '../bloc/bottom_bar_bloc.dart';
 import '../enum/bottom_bar_enum.dart';
 
@@ -49,7 +49,7 @@ class BottomNavigationState extends State<BottomNavigation> {
           fit: BoxFit.cover,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
             BottomBarEnum.values.length,
             (index) => _buildBottomBarItem(BottomBarEnum.values[index]),
@@ -63,16 +63,19 @@ class BottomNavigationState extends State<BottomNavigation> {
   Widget _buildBottomBarItem(BottomBarEnum dataEnum) {
     final isSelected =
         dataEnum == context.read<BottomBarBloc>().state.bottomBarEnum;
-    return GestureDetector(
+    return InkWell(
       onTap: () => changeToTab(dataEnum),
       child: SizedBox(
+        width: MediaQuery.of(context).size.width / 5.3,
         height: _heightItem,
         child: dataEnum == BottomBarEnum.scan
             ? const SizedBox.shrink()
-            : Image.asset(
-                dataEnum.getIcon,
-                width: 19,
-                color: isSelected ? AppColors.red2 : null,
+            : Center(
+                child: Image.asset(
+                  dataEnum.getIcon,
+                  width: 19,
+                  color: isSelected ? AppColors.red2 : null,
+                ),
               ),
       ),
     );
