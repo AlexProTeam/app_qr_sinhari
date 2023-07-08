@@ -64,39 +64,37 @@ class BottomBarScreenState extends State<BottomBarScreen> {
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (context) => BottomBarBloc(),
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              SafeArea(
-                child: PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _controller,
-                  children: BottomBarEnum.values
-                      .map(
-                        (e) => e.getScreen,
-                      )
-                      .toList(),
-                ),
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            SafeArea(
+              bottom: false,
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _controller,
+                children: BottomBarEnum.values
+                    .map(
+                      (e) => e.getScreen,
+                    )
+                    .toList(),
               ),
-              BlocConsumer<BottomBarBloc, BottomBarState>(
-                listenWhen: (previous, current) =>
-                    previous.bottomBarEnum != current.bottomBarEnum,
-                listener: (context, state) =>
-                    _controller.jumpToPage(state.bottomBarEnum.index),
-                buildWhen: (previous, current) =>
-                    previous.bottomBarEnum != current.bottomBarEnum,
-                builder: (context, state) {
-                  return BottomNavigation(
-                    onChange: (bottomBarEnum) {
-                      _controller.jumpToPage(bottomBarEnum.index);
-                    },
-                  );
-                },
-              )
-            ],
-          ),
+            ),
+            BlocConsumer<BottomBarBloc, BottomBarState>(
+              listenWhen: (previous, current) =>
+                  previous.bottomBarEnum != current.bottomBarEnum,
+              listener: (context, state) =>
+                  _controller.jumpToPage(state.bottomBarEnum.index),
+              buildWhen: (previous, current) =>
+                  previous.bottomBarEnum != current.bottomBarEnum,
+              builder: (context, state) {
+                return BottomNavigation(
+                  onChange: (bottomBarEnum) {
+                    _controller.jumpToPage(bottomBarEnum.index);
+                  },
+                );
+              },
+            )
+          ],
         ),
       );
 }

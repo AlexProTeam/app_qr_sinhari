@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/bloc/event_bus/event_bus_bloc.dart';
-import 'package:qrcode/common/bloc/event_bus/event_bus_state.dart';
 import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -45,7 +42,6 @@ class HistoryScanScreen extends StatefulWidget {
 class HistoryScanScreenState extends State<HistoryScanScreen> {
   List<HistoryModel> histories = [];
   bool isLoading = false;
-  Completer<void> _refreshCompleter = Completer();
 
   @override
   void initState() {
@@ -53,83 +49,66 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
     super.initState();
   }
 
-  void _initData() async {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: BaseAppBar(title: 'Lịch sử QR'),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await _initData();
+        },
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : histories.isEmpty
+                ? const Center(child: Text("Không có lịch sử nào!"))
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 16),
+                        Text(
+                          '${histories.length} Sản phẩm',
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.red),
+                        ),
+                        const SizedBox(height: 16),
+                        Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(bottom: 100),
+                            itemBuilder: (_, index) {
+                              return _itemHistoryScan(histories[index]);
+                            },
+                            itemCount: histories.length,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+      ),
+    );
+  }
+
+  Future<void> _initData() async {
     try {
-      isLoading = true;
+      setState(() {
+        isLoading = true;
+      });
       histories.clear();
       final data = await injector<AppClient>().get(
           'history-scan-qr-code?device_id=${injector<AppCache>().deviceId}');
       data['data'][0].forEach((e) {
         histories.add(HistoryModel.fromJson(e));
       });
-      _refreshCompleter.complete();
-      _refreshCompleter = Completer();
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     }
     setState(() {
       isLoading = false;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<EventBusBloc, EventBusState>(
-      bloc: injector<EventBusBloc>(),
-      listener: (_, state) {
-        if (state is EventBusReloadHistoryState) {
-          _initData();
-        }
-      },
-      child: Scaffold(
-          backgroundColor: const Color(0xFFF2F2F2),
-          body: Column(
-            children: [
-              const CustomAppBar(
-                title: 'Lịch sử quét',
-                haveIconLeft: false,
-              ),
-              Expanded(
-                child: isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : histories.isEmpty
-                        ? const Padding(
-                            padding: EdgeInsets.only(top: 300),
-                            child: Text("Không có lịch sử nào!"),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    '${histories.length} Sản phẩm',
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.red),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  ListView.builder(
-                                    padding: const EdgeInsets.only(bottom: 500),
-                                    itemBuilder: (_, index) {
-                                      return _itemHistoryScan(histories[index]);
-                                    },
-                                    itemCount: histories.length,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-              ),
-            ],
-          )),
-    );
   }
 
   Widget _itemHistoryScan(HistoryModel model) {
@@ -140,59 +119,59 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                 // productId: model.productId,
                 ));
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: CustomImageNetwork(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomImageNetwork(
               url: model.image,
               width: 74,
               height: 74,
               border: 5,
+              fit: BoxFit.cover,
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 12),
-              SizedBox(
-                width: 164,
-                child: Text(
-                  model.productName ?? '',
-                  style: const TextStyle(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 164,
+                  child: Text(
+                    model.productName ?? '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Text(
+                  model.code ?? '',
+                  style: AppTextTheme.smallGrey,
+                ),
+                Text(
+                  model.numberSeri ?? '',
+                  style: AppTextTheme.smallGrey,
+                ),
+                const SizedBox(height: 12),
+              ],
+            ),
+            const SizedBox(width: 20),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                model.count ?? '',
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                    color: Color(0xFF0085FF)),
               ),
-              Text(
-                model.code ?? '',
-                style: AppTextTheme.smallGrey,
-              ),
-              Text(
-                model.numberSeri ?? '',
-                style: AppTextTheme.smallGrey,
-              ),
-              const SizedBox(height: 12),
-            ],
-          ),
-          const SizedBox(width: 20),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              model.count ?? '',
-              style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF0085FF)),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

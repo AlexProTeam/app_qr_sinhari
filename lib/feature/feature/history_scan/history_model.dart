@@ -35,12 +35,6 @@ class HistoryModel {
     code = json['code'];
     numberSeri = json['numberSeri'];
     count = json['count'];
-    // DateFormat dateFormat = DateFormat('yyyy-MM-ddThh:mm:ss');
-    // DateFormat dateFormat1 = DateFormat('hh:mm dd/MM/yyyy');
-    // if(updatedAt!=null){
-    //  var dateTimeData = dateFormat.parse(updatedAt!);
-    //  dateTime = dateFormat1.format(dateTimeData);
-    // }
     if (updatedAt?.isNotEmpty ?? false) {
       DateFormat dateFormat = DateFormat('yyyy-MM-ddThh:mm:ss');
       DateTime dateTime = dateFormat.parse(updatedAt!);

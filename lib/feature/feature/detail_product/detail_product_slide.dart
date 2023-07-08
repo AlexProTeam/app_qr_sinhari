@@ -29,7 +29,7 @@ class DetailProductSlideState extends State<DetailProductSlide> {
       children: [
         SizedBox(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: 375,
           child: CarouselSlider(
             options: CarouselOptions(
               initialPage: 0,
@@ -54,7 +54,7 @@ class DetailProductSlideState extends State<DetailProductSlide> {
                           url: e,
                           width: double.infinity,
                           height: 375,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ))

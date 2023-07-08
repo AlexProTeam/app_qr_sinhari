@@ -17,29 +17,6 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 import '../../widgets/toast_manager.dart';
 import '../welcome/welcome_model.dart';
 
-class AnimatedLogo extends AnimatedWidget {
-  static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
-  static final _sizeTween = Tween<double>(begin: 0, end: 300);
-
-  const AnimatedLogo({Key? key, required Animation<double> animation})
-      : super(key: key, listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final animation = listenable as Animation<double>;
-    return Center(
-      child: Opacity(
-        opacity: _opacityTween.evaluate(animation),
-        child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            height: _sizeTween.evaluate(animation),
-            width: _sizeTween.evaluate(animation),
-            child: Image.asset(IconConst.logo)),
-      ),
-    );
-  }
-}
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -58,7 +35,7 @@ class SplashScreenState extends State<SplashScreen>
     super.initState();
     controller =
         AnimationController(duration: const Duration(seconds: 2), vsync: this);
-    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    animation = CurvedAnimation(parent: controller, curve: Curves.linear)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();
@@ -126,7 +103,7 @@ class SplashScreenState extends State<SplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(),
-              AnimatedLogo(animation: animation),
+              _AnimatedLogo(animation: animation),
               const SizedBox(height: 12),
               Text(
                 'Công ty TNHH Sinhair Japan',
@@ -148,5 +125,28 @@ class SplashScreenState extends State<SplashScreen>
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+}
+
+class _AnimatedLogo extends AnimatedWidget {
+  static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
+  static final _sizeTween = Tween<double>(begin: 0, end: 300);
+
+  const _AnimatedLogo({Key? key, required Animation<double> animation})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = listenable as Animation<double>;
+    return Center(
+      child: Opacity(
+        opacity: _opacityTween.evaluate(animation),
+        child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            height: _sizeTween.evaluate(animation),
+            width: _sizeTween.evaluate(animation),
+            child: Image.asset(IconConst.logo)),
+      ),
+    );
   }
 }

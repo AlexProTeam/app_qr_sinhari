@@ -6,6 +6,7 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
 import '../../injector_container.dart';
+import '../../themes/theme_color.dart';
 import 'noti_model.dart';
 
 class NotiScreen extends StatefulWidget {
@@ -95,67 +96,74 @@ class NotiScreenState extends State<NotiScreen> {
   Widget _item(NotiModel model) {
     return InkWell(
       onTap: () {
-        // Navigator.pushNamed(RouteName.DetailProductScreen,
+        // Navigator.pushNamed(context, RouteName.detailProductScreen,
         //     arguments: ArgumentDetailProductScreen(
-        //       productId: model.productId,
+        //       productId: model.id,
         //     ));
       },
       child: Container(
         ///todo: add color to const app
-        decoration: const BoxDecoration(color: Color(0xFFF4F5FB)),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-              child: Row(
+        decoration: const BoxDecoration(
+          color: AppColors.colorF4F5FB,
+          border: Border(
+            bottom: BorderSide(color: AppColors.grey4),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomImageNetwork(
+                url: model.image,
+                width: 16,
+                height: 16,
+                fit: BoxFit.cover,
+                border: 4,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                  child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomImageNetwork(
-                    url: model.image,
-                    width: 16,
-                    height: 16,
-                    fit: BoxFit.cover,
-                    // border: 25,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                      child: Column(
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        model.title ?? '',
-                        style: const TextStyle(
+                      Expanded(
+                        child: Text(
+                          model.title ?? '',
+                          style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                            height: 1.2,
+                          ),
+                        ),
                       ),
-                      const SizedBox(
-                        height: 2,
-                      ),
+                      const SizedBox(width: 5),
                       Text(
-                        model.des ?? '',
-                        style: AppTextTheme.normalBlack,
-                      ),
-                      const SizedBox(
-                        height: 2,
+                        model.createdAt ?? '',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 10,
+                            color: Color(0xFFACACAC)),
                       ),
                     ],
-                  )),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Text(
-                    model.createdAt ?? '',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 10,
-                        color: Color(0xFFACACAC)),
+                    model.des ?? '',
+                    style: AppTextTheme.normalBlack,
+                  ),
+                  const SizedBox(
+                    height: 2,
                   ),
                 ],
-              ),
-            ),
-            const Divider(
-              color: Color(0xFFACACAC),
-              height: 1,
-            )
-          ],
+              )),
+            ],
+          ),
         ),
       ),
     );

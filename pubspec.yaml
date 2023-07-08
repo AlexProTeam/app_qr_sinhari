@@ -37,10 +37,10 @@ dependencies:
   cached_network_image: ^3.2.0
 #  keyboard_dismisser: ^3.0.0
   equatable: ^2.0.3
-  url_launcher: ^6.0.17
+  url_launcher: ^6.0.1
   dio: ^5.1.1
 #  retrofit: ^4.0.1
-  mobile_scanner: ^3.2.0
+  mobile_scanner: ^3.3.0
   timeago: ^3.0.2
 #  code_scanner: ^1.0.0
   uuid: ^3.0.7
