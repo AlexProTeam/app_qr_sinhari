@@ -36,7 +36,9 @@ Future main() async {
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: Colors.white, statusBarBrightness: Brightness.light));
+    statusBarColor: Colors.transparent,
+    statusBarBrightness: Brightness.light,
+  ));
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const App());
 }
