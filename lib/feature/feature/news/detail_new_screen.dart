@@ -171,9 +171,6 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                             'img': Style(
                               width: Width(
                                   MediaQuery.of(context).size.width * 0.9),
-                              // height: Height(100),
-
-                              alignment: Alignment.center,
                             )
                           },
                         )
