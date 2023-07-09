@@ -67,17 +67,14 @@ class BottomBarScreenState extends State<BottomBarScreen> {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            SafeArea(
-              bottom: false,
-              child: PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _controller,
-                children: BottomBarEnum.values
-                    .map(
-                      (e) => e.getScreen,
-                    )
-                    .toList(),
-              ),
+            PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _controller,
+              children: BottomBarEnum.values
+                  .map(
+                    (e) => e.getScreen,
+                  )
+                  .toList(),
             ),
             BlocConsumer<BottomBarBloc, BottomBarState>(
               listenWhen: (previous, current) =>

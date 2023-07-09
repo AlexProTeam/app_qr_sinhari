@@ -107,7 +107,6 @@ class PersonalScreenState extends State<PersonalScreen> {
                     ),
                     _icon(
                       () {
-                        // Navigator.pushNamed(RouteName.CheckBillScreen);
                         Navigator.pushNamed(context, RouteName.huongDanScreen);
                       },
                       'Chính sách bảo mật',

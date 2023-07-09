@@ -42,12 +42,10 @@ class PolicyScreenState extends State<PolicyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      customAppBar: CustomAppBar(
+    return Scaffold(
+      appBar: BaseAppBar(
         title: 'Điều khoản sử dụng',
-        iconLeftTap: () {
-          Navigator.pop(context);
-        },
+        isShowBack: true,
       ),
       body: isLoadding
           ? const Center(

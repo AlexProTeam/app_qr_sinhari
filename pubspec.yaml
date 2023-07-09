@@ -28,7 +28,7 @@ dependencies:
   flutter_html: ^3.0.0-alpha.6 #display context as html
   qr_code_scanner: ^1.0.1 # scan image qr
   webview_flutter: ^4.2.0 # load url in app
-  flutter_launcher_icons: ^0.13.1
+#  flutter_launcher_icons: ^0.13.1
 #  device_info_plus: ^8.2.2
   firebase_messaging: ^14.5.0
   flutter_local_notifications: ^14.0.0+1
@@ -54,7 +54,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/logo.png"
+  image_path: "assets/icons/app_icon.png"
 
 flutter:
   uses-material-design: true

@@ -4,6 +4,7 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 import '../../themes/theme_color.dart';
@@ -46,63 +47,28 @@ class NotiScreenState extends State<NotiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: BaseAppBar(
+        title: 'Thông báo',
+        isShowBack: true,
+      ),
       backgroundColor: const Color(0xFFF2F2F2),
       body: isLoadding
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          size: 18,
-                          color: Color(0xFFACACAC),
-                        )),
-                    const SizedBox(width: 90),
-                    const Text(
-                      'Thông báo',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
-                    )
-                  ],
+          : histories.isEmpty
+              ? const Center(
+                  child: Text("Không có thông báo nào!"),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 100),
+                  itemBuilder: (_, index) => _item(histories[index]),
+                  itemCount: histories.length,
                 ),
-                const SizedBox(height: 16.75),
-                Expanded(
-                  child: histories.isEmpty
-                      ? const Center(
-                          child: Text("Không có thông báo nào!"),
-                        )
-                      : ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (_, index) {
-                            return _item(histories[index]);
-                          },
-                          itemCount: histories.length,
-                        ),
-                ),
-              ],
-            ),
     );
   }
 
-  Widget _item(NotiModel model) {
-    return InkWell(
-      onTap: () {
-        // Navigator.pushNamed(context, RouteName.detailProductScreen,
-        //     arguments: ArgumentDetailProductScreen(
-        //       productId: model.id,
-        //     ));
-      },
-      child: Container(
-        ///todo: add color to const app
+  Widget _item(NotiModel model) => Container(
         decoration: const BoxDecoration(
           color: AppColors.colorF4F5FB,
           border: Border(
@@ -165,7 +131,5 @@ class NotiScreenState extends State<NotiScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
 }

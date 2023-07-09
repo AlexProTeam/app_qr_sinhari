@@ -64,6 +64,7 @@ class AppColors {
   static const Color grocery = Color(0xff212121);
   static const Color house = Color(0xffD500F9);
   static const Color other = Color(0xff01579B);
+  static const Color colorACACAC = Color(0xffACACAC);
 
   // color logo
   static const Color logoPink = Color(0xffe94776);

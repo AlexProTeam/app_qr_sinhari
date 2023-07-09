@@ -25,7 +25,7 @@ class CategoryItemProduct extends StatelessWidget {
         if (injector<AppCache>().profileModel == null) {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
-        Navigator.pushNamed(context,RouteName.detailProductScreen,
+        Navigator.pushNamed(context, RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
               productId: productModel?.id,
             ));

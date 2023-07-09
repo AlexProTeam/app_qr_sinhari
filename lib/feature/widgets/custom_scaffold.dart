@@ -36,7 +36,6 @@ class CustomScaffold extends StatelessWidget {
         children: [
           customAppBar ??
               (appbarWidget ?? SizedBox(height: GScreenUtil.statusBarHeight)),
-          const Divider(height: 1, color: AppColors.grey5),
           Expanded(
             child: GestureDetector(
                 onTap: autoDismissKeyboard
@@ -46,7 +45,6 @@ class CustomScaffold extends StatelessWidget {
                     : () {},
                 child: body ?? const SizedBox()),
           ),
-          SizedBox(height: paddingBottom ? GScreenUtil.bottomBarHeight : 0),
         ],
       ),
     );

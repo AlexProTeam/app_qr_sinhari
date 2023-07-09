@@ -44,12 +44,10 @@ class HuongDanScreenState extends State<HuongDanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      customAppBar: CustomAppBar(
+    return Scaffold(
+      appBar: BaseAppBar(
         title: 'Chính sách bảo mật',
-        iconLeftTap: () {
-          Navigator.pop(context);
-        },
+        isShowBack: true,
       ),
       body: isLoadding
           ? const Center(
@@ -75,7 +73,7 @@ class HuongDanScreenState extends State<HuongDanScreen> {
                                   Border.all(color: Colors.white, width: 2)),
                           child: Center(
                             child: Text(
-                              'Chính sách bán hàng',
+                              'Chính sách bảo mật',
                               style: AppTextTheme.mediumBlack
                                   .copyWith(color: Colors.white),
                             ),

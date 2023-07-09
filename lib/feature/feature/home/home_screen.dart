@@ -13,11 +13,11 @@ import 'package:qrcode/feature/feature/home/widget/item_news.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/home_product_item.dart';
 
 import '../../../common/navigation/route_names.dart';
 import '../../routes.dart';
-import '../../themes/theme_color.dart';
 import '../../widgets/banner_slide_image.dart';
 import '../../widgets/gridview_product.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -115,8 +115,7 @@ class HomeScreenState extends State<HomeScreen>
           current.bottomBarEnum == BottomBarEnum.home,
       listener: (context, state) =>
           state.bottomBarEnum == BottomBarEnum.home ? _onRefresh() : null,
-      child: Scaffold(
-        backgroundColor: AppColors.white,
+      child: CustomScaffold(
         body: RefreshIndicator(
           onRefresh: _onRefresh,
           color: Colors.white,

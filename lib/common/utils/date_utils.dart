@@ -1,11 +1,13 @@
 import 'package:intl/intl.dart';
 
-class DateUtils {
+class DateUtilsApp {
   static final DateFormat _monthFormat = DateFormat('MMMM yyyy');
   static final DateFormat _dayFormat = DateFormat('dd');
   static final DateFormat _firstDayFormat = DateFormat('MMM dd');
   static final DateFormat _fullDayFormat = DateFormat('EEE MMM dd, yyyy');
   static final DateFormat _apiDayFormat = DateFormat('yyyy-MM-dd');
+  static final DateFormat _formatterAppDetail =
+      DateFormat('HH:mm - dd/MM/yyyy');
 
   static String formatMonth(DateTime d) => _monthFormat.format(d);
 
@@ -16,6 +18,8 @@ class DateUtils {
   static String fullDayFormat(DateTime d) => _fullDayFormat.format(d);
 
   static String apiDayFormat(DateTime d) => _apiDayFormat.format(d);
+
+  static String formatterDetail(DateTime d) => _formatterAppDetail.format(d);
 
   static const List<String> weekdays = [
     'Sun',
@@ -38,7 +42,7 @@ class DateUtils {
     var first = firstDayOfMonth(month);
     var daysBefore = first.weekday;
     var firstToDisplay = first.subtract(Duration(days: daysBefore));
-    var last = DateUtils.lastDayOfMonth(month);
+    var last = DateUtilsApp.lastDayOfMonth(month);
 
     var daysAfter = 7 - last.weekday;
 

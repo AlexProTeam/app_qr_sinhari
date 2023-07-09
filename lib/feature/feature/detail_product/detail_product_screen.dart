@@ -126,11 +126,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _detailProductModel != null
-                      ? DetailProductSlide(
-                          images: _detailProductModel?.photos,
-                        )
-                      : const SizedBox(),
+                  if (_detailProductModel != null)
+                    DetailProductSlide(
+                      images: _detailProductModel?.photos,
+                    ),
                   const SizedBox(height: 18.5),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -194,8 +193,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xFFACACAC),
                                   decoration: TextDecoration.lineThrough,
-                                  decorationColor: Color(
-                                      0xFFACACAC), // Màu của đường gạch ngang),
+                                  decorationColor: Color(0xFFACACAC),
                                 ),
                               ),
                             ),
@@ -206,124 +204,113 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Column(
-                    children: [
-                      widget.argument?.url != null
-                          ? Container(
-                              child: _detailProductModel?.limitScan == true
-                                  ? _itemLimit(
-                                      _detailProductModel?.dateTimeScanLimit ??
-                                          '',
-                                      _detailProductModel?.exceedingScan ?? '')
-                                  : _itemApccept(),
-                            )
-                          : Container(),
-                      widget.argument?.url != null
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Serial: ${_detailProductModel?.serialCode ?? ''}',
-                                        style: AppTextTheme.normalBlue,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 8,
-                                  width: double.infinity,
-                                  color: AppColors.grey4,
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                          child: _itemRow(
-                                        Icons.qr_code_scanner,
-                                        _detailProductModel?.countScan ?? 0,
-                                        'Số lần quét',
-                                      )),
-                                      Container(
-                                        width: 1,
-                                        height: 50,
-                                        color: AppColors.grey6,
-                                      ),
-                                      Expanded(
-                                          child: _itemRow(
-                                        Icons.person,
-                                        _detailProductModel?.countPersonScan ??
-                                            0,
-                                        'Số người quét',
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 8,
-                                  width: double.infinity,
-                                  color: AppColors.grey4,
-                                ),
-                                _itemCompany(
-                                  name: 'CÔNG TY TNHH SIN HAIR JAPAN',
-                                  label: 'Nhà phân phối',
-                                  phone: '0886986222',
-                                  address:
-                                      'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
-                                  mst: '0109429157',
-                                ),
-                                Container(
-                                  height: 8,
-                                  width: double.infinity,
-                                  color: AppColors.grey4,
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
-                  _detailProductModel != null
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                'Mô tả sản phẩm:',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black),
+                  if (widget.argument?.url != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: _detailProductModel?.limitScan == true
+                              ? _itemLimit(
+                                  _detailProductModel?.dateTimeScanLimit ?? '',
+                                  _detailProductModel?.exceedingScan ?? '')
+                              : _itemApccept(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Serial: ${_detailProductModel?.serialCode ?? ''}',
+                                style: AppTextTheme.normalBlue,
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 8,
+                          width: double.infinity,
+                          color: AppColors.grey4,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: _itemRow(
+                                Icons.qr_code_scanner,
+                                _detailProductModel?.countScan ?? 0,
+                                'Số lần quét',
+                              )),
+                              Container(
+                                width: 1,
+                                height: 50,
+                                color: AppColors.grey6,
                               ),
+                              Expanded(
+                                  child: _itemRow(
+                                Icons.person,
+                                _detailProductModel?.countPersonScan ?? 0,
+                                'Số người quét',
+                              )),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 8,
+                          width: double.infinity,
+                          color: AppColors.grey4,
+                        ),
+                        _itemCompany(
+                          name: 'CÔNG TY TNHH SIN HAIR JAPAN',
+                          label: 'Nhà phân phối',
+                          phone: '0886986222',
+                          address:
+                              'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
+                          mst: '0109429157',
+                        ),
+                        Container(
+                          height: 8,
+                          width: double.infinity,
+                          color: AppColors.grey4,
+                        ),
+                      ],
+                    ),
+                  if (_detailProductModel != null) ...[
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'Mô tả sản phẩm:',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Html(
+                        data: _detailProductModel?.description ?? "",
+                        style: {
+                          "html": Style(
+                            backgroundColor: Colors.transparent,
+                            color: AppColors.grey9,
+                            fontWeight: FontWeight.w500,
+                            fontSize: FontSize(14),
+                            padding: HtmlPaddings.zero,
+                            fontStyle: FontStyle.normal,
+                            wordSpacing: 1.5,
+                          ),
+                          'img': Style(
+                            width: Width(MediaQuery.of(context).size.width),
+                            height: Height(
+                              MediaQuery.of(context).size.width * 1.5,
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: Html(
-                                data: _detailProductModel?.description ?? "",
-                                style: {
-                                  "html": Style(
-                                    backgroundColor: Colors.transparent,
-                                    color: AppColors.grey9,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: FontSize(14),
-                                    padding: HtmlPaddings.zero,
-                                    fontStyle: FontStyle.normal,
-                                    wordSpacing: 1.5,
-                                  ),
-                                },
-                              ),
-                            ),
-                          ],
-                        )
-                      : const SizedBox(),
+                          )
+                        },
+                      ),
+                    ),
+                  ],
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -365,12 +352,13 @@ class DetailProductScreenState extends State<DetailProductScreen> {
     );
   }
 
-  Widget _itemCompany(
-      {required String name,
-      required String label,
-      required String address,
-      String? phone,
-      required String mst}) {
+  Widget _itemCompany({
+    required String name,
+    required String label,
+    required String address,
+    String? phone,
+    required String mst,
+  }) {
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(

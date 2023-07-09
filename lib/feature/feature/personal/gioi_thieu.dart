@@ -44,12 +44,10 @@ class HuongDanScreenState extends State<GioiThieuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      customAppBar: CustomAppBar(
+    return Scaffold(
+      appBar: BaseAppBar(
         title: 'Chính sách bán hàng',
-        iconLeftTap: () {
-          Navigator.pop(context);
-        },
+        isShowBack: true,
       ),
       body: isLoadding
           ? const Center(
