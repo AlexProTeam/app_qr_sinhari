@@ -66,7 +66,7 @@ class SplashScreenState extends State<SplashScreen>
     appHeader.accessToken = accessToken;
     injector<AppClient>().header = appHeader;
 
-    ///todo: api get profile đang lỗi
+    ///todo: api get profile err
     final data = await injector<AppClient>().get('auth/showProfile');
     ProfileModel profileModel = ProfileModel.fromJson(data['data']);
     injector<AppCache>().profileModel = profileModel;
@@ -115,7 +115,7 @@ class SplashScreenState extends State<SplashScreen>
                 style: AppTextTheme.normalGrey,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
             ],
           ),
         ));

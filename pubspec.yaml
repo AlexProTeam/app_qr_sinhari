@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.2.6+3
+version: 1.2.6+6
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -29,7 +29,7 @@ dependencies:
   qr_code_scanner: ^1.0.1 # scan image qr
   webview_flutter: ^4.2.0 # load url in app
 #  flutter_launcher_icons: ^0.13.1
-#  device_info_plus: ^8.2.2
+  device_info_plus: ^8.2.2
   firebase_messaging: ^14.5.0
   flutter_local_notifications: ^14.0.0+1
   firebase_core: ^2.11.0
@@ -38,7 +38,7 @@ dependencies:
 #  keyboard_dismisser: ^3.0.0
   equatable: ^2.0.3
   url_launcher: ^6.0.1
-  dio: ^5.1.1
+  dio: ^5.0.0
 #  retrofit: ^4.0.1
   mobile_scanner: ^3.3.0
   timeago: ^3.0.2

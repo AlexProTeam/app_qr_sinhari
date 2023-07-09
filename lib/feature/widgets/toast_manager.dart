@@ -14,7 +14,7 @@ class ToastManager {
       clipBehavior: Clip.antiAlias,
       alignment: Alignment.topCenter,
       shadowColor: Colors.transparent,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.colorEF4948,
       content: Text(
         text,
         textAlign: TextAlign.center,

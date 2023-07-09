@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../themes/theme_color.dart';
 import '../bottom/home_enum.dart';
 
 class FilterItemWidget extends StatelessWidget {
@@ -30,7 +31,7 @@ class FilterItemWidget extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w400,
-                  color: Color(0xFFACACAC)),
+                  color: AppColors.colorACACAC),
             )
           ],
         ),

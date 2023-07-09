@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 
+import '../../themes/theme_color.dart';
 import '../../themes/theme_text.dart';
 import '../../widgets/custom_scaffold.dart';
 
@@ -24,7 +25,7 @@ class WebviewScreenState extends State<WebViewScreen> {
         title: 'Liên hệ',
         isShowBack: true,
       ),
-      backgroundColor: const Color(0xFFF2F2F2),
+      backgroundColor: AppColors.bgrScafold,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),

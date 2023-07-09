@@ -12,7 +12,10 @@ class BottomBarBloc extends Bloc<BottomBarEvent, BottomBarState> {
     on<BottomBarEvent>((event, emit) {});
 
     on<ChangeTabBottomBarEvent>((event, emit) {
-      emit(BottomBarState(bottomBarEnum: event.bottomBarEnum));
+      emit(BottomBarState(
+        bottomBarEnum: event.bottomBarEnum,
+        isRefresh: event.isRefresh,
+      ));
     });
   }
 }

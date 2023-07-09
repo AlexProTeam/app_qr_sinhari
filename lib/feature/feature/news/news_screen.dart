@@ -12,6 +12,7 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 import '../../routes.dart';
+import '../../themes/theme_color.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 
@@ -66,7 +67,7 @@ class NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F2),
+      backgroundColor: AppColors.bgrScafold,
       body: Column(
         children: [
           const CustomAppBar(

@@ -1,4 +1,4 @@
-class ProductModel {
+class ProductResponse {
   int? id;
   dynamic productIdVtap;
   String? name;
@@ -56,7 +56,7 @@ class ProductModel {
   int? isSale;
   int? isNew;
 
-  ProductModel.fromJson(Map<String?, dynamic> json) {
+  ProductResponse.fromJson(Map<String?, dynamic> json) {
     id = json['id'];
     productIdVtap = json['product_id_vtap'];
     name = json['name'];
@@ -116,5 +116,18 @@ class ProductModel {
     productBuyWith = json['product_buy_with'];
     isSale = json['is_sale'];
     isNew = json['is_new'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['rating'] = rating;
+    data['category_id'] = categoryId;
+    data['subcategory_id'] = subcategoryId;
+    data['subsubcategory_id'] = subsubcategoryId;
+    data['thumbnail_img'] = thumbnailImg;
+    data['unit_price'] = unitPrice;
+    return data;
   }
 }

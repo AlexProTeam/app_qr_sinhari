@@ -91,7 +91,7 @@ class CustomAppBar extends StatelessWidget {
                         child: Icon(
                       Icons.arrow_back,
                       size: 18,
-                      color: Color(0xFFACACAC),
+                      color: AppColors.colorACACAC,
                     )),
                   ),
                 )
@@ -129,6 +129,7 @@ class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
   final PreferredSizeWidget? tabbar;
   final bool? refreshData;
   final Widget? widgetTitle;
+  final double? leadingWidth;
 
   BaseAppBar({
     Key? key,
@@ -141,11 +142,13 @@ class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
     this.refreshData,
     this.widgetTitle,
     this.preferredSize = const Size.fromHeight(kToolbarHeight),
+    this.leadingWidth,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leadingWidth: leadingWidth,
       backgroundColor: Colors.transparent,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       bottomOpacity: 0.0,
@@ -173,7 +176,7 @@ class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
       return leadingIcon ?? const SizedBox();
     }
     if (isShowBack) {
-      return GestureDetector(
+      return InkWell(
         onTap: () {
           Navigator.pop(context, refreshData);
         },

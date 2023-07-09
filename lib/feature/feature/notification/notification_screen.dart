@@ -36,12 +36,12 @@ class NotiScreenState extends State<NotiScreen> {
       data['notifications'].forEach((e) {
         histories.add(NotiModel.fromJson(e));
       });
-      setState(() {});
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      isLoadding = false;
     }
+    setState(() {
+      isLoadding = true;
+    });
   }
 
   @override
@@ -51,7 +51,7 @@ class NotiScreenState extends State<NotiScreen> {
         title: 'Thông báo',
         isShowBack: true,
       ),
-      backgroundColor: const Color(0xFFF2F2F2),
+      backgroundColor: AppColors.bgrScafold,
       body: isLoadding
           ? const Center(
               child: CircularProgressIndicator(),
@@ -112,7 +112,7 @@ class NotiScreenState extends State<NotiScreen> {
                         style: const TextStyle(
                             fontWeight: FontWeight.w300,
                             fontSize: 10,
-                            color: Color(0xFFACACAC)),
+                            color: AppColors.colorACACAC),
                       ),
                     ],
                   ),

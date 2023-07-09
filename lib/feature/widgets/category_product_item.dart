@@ -8,9 +8,11 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
+import '../themes/theme_color.dart';
+
 class CategoryItemProduct extends StatelessWidget {
   final double itemWidth;
-  final ProductModel? productModel;
+  final ProductResponse? productModel;
 
   const CategoryItemProduct({
     Key? key,
@@ -75,7 +77,7 @@ class CategoryItemProduct extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w300,
-                          color: Color(0xFFACACAC)),
+                          color: AppColors.colorACACAC),
                     )
                   ]))
             ],
@@ -103,10 +105,9 @@ class CategoryItemProduct extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFFACACAC),
+                      color: AppColors.colorACACAC,
                       decoration: TextDecoration.lineThrough,
-                      decorationColor:
-                          Color(0xFFACACAC), // Màu của đường gạch ngang),
+                      decorationColor: AppColors.colorACACAC,
                     ),
                   ),
                 ),

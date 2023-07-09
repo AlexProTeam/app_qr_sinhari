@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,12 +17,24 @@ import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/alert_dialog_container.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:uuid/uuid.dart';
 
 class CommonUtil {
   static Future<String> getDeviceId() async {
-    var uuid = const Uuid();
-    return uuid.v1();
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    try {
+      if (Platform.isAndroid) {
+        var build = await deviceInfoPlugin.androidInfo;
+        return build.id;
+      }
+      if (Platform.isIOS) {
+        var data = await deviceInfoPlugin.iosInfo;
+        return data.identifierForVendor ?? '';
+      }
+    } catch (e) {
+      return '';
+    }
+
+    return '';
   }
 
   static int countNumberRowOfGridview(List? data) {
@@ -292,7 +305,7 @@ class CommonUtil {
       bool showSnackbar = true,
       bool logBug = true,
       String? text}) async {
-    lOG.e('GstoreException: ${e.toString()} | $methodName | $exceptionName');
+    lOG.e('GstoreException: ${e.toString()} \n$methodName \n $exceptionName');
     if ((e is TimeOutException || e is ConnectException) &&
         snackBarBloc != null) {
       snackBarBloc.add(ShowSnackbarEvent(

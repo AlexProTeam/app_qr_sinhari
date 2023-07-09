@@ -95,8 +95,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           //todo: change to mes of api
           text: 'URL không đúng định dạng',
           delaySecond: 3,
-          afterShowToast: () =>
-              Navigator.pushReplacementNamed(context, RouteName.scanQrScreen));
+          afterShowToast: () => Navigator.pop(context));
     }
   }
 
@@ -107,12 +106,16 @@ class DetailProductScreenState extends State<DetailProductScreen> {
         title: 'Chi tiết',
         isShowBack: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Image.asset(
-              IconConst.heart,
-              width: 22,
-              height: 20,
+          InkWell(
+            onTap: () => ToastManager.showToast(context,
+                text: 'Chức năng sẽ sớm ra mắt,'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Image.asset(
+                IconConst.heart,
+                width: 22,
+                height: 20,
+              ),
             ),
           ),
         ],
@@ -166,7 +169,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w300,
-                                        color: Color(0xFFACACAC)),
+                                        color: AppColors.colorACACAC),
                                   )
                                 ]))
                           ],
@@ -191,9 +194,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                 style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xFFACACAC),
+                                  color: AppColors.colorACACAC,
                                   decoration: TextDecoration.lineThrough,
-                                  decorationColor: Color(0xFFACACAC),
+                                  decorationColor: AppColors.colorACACAC,
                                 ),
                               ),
                             ),

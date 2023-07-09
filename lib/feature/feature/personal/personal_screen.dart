@@ -11,6 +11,7 @@ import 'package:qrcode/feature/widgets/custom_button.dart';
 
 import '../../auth/login/login_enum.dart';
 import '../../routes.dart';
+import '../../themes/theme_color.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';
@@ -45,7 +46,7 @@ class PersonalScreenState extends State<PersonalScreen> {
       appBar: BaseAppBar(
         title: 'Tài khoản',
       ),
-      backgroundColor: const Color(0xFFF2F2F2),
+      backgroundColor: AppColors.bgrScafold,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,17 +54,19 @@ class PersonalScreenState extends State<PersonalScreen> {
             const SizedBox(
               height: 20,
             ),
-            injector<AppCache>().profileModel == null
-                ? CustomButton(
-                    onTap: () {
-                      Navigator.pushNamed(context, RouteName.loginScreen,
-                          arguments: true);
-                    },
-                    text: 'Đăng nhập',
-                    width: 128,
-                    height: 45,
-                  )
-                : Container(),
+            if (!_isProfileModelNotBull)
+              CustomButton(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    RouteName.loginScreen,
+                    arguments: true,
+                  );
+                },
+                text: 'Đăng nhập',
+                width: 128,
+                height: 45,
+              ),
             const SizedBox(
               height: 18,
             ),
@@ -80,16 +83,14 @@ class PersonalScreenState extends State<PersonalScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
-                    injector<AppCache>().profileModel != null
-                        ? _icon(
-                            () {
-                              Navigator.pushNamed(
-                                  context, RouteName.profileScreen);
-                            },
-                            'Thông tin cá nhân',
-                            IconConst.info,
-                          )
-                        : Container(),
+                    if (_isProfileModelNotBull)
+                      _icon(
+                        () {
+                          Navigator.pushNamed(context, RouteName.profileScreen);
+                        },
+                        'Thông tin cá nhân',
+                        IconConst.info,
+                      ),
                     _icon(
                       () {
                         Navigator.pushNamed(context, RouteName.webViewScreen,
@@ -156,34 +157,33 @@ class PersonalScreenState extends State<PersonalScreen> {
                   )),
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                injector<AppCache>().profileModel != null
-                    ? CustomButton(
-                        onTap: () async {
-                          injector<AppCache>().profileModel = null;
-                          injector<AppCache>().havedLogin = false;
-                          await injector<LocalApp>().saveStringSharePreference(
-                              KeySaveDataLocal.keySaveAccessToken, '');
-                          setState(() {});
-                          if (mounted) {
-                            context.read<BottomBarBloc>().add(
-                                const ChangeTabBottomBarEvent(
-                                    bottomBarEnum: BottomBarEnum.home));
-                          }
-                        },
-                        text: 'Đăng xuất',
-                      )
-                    : const SizedBox.shrink(),
-              ],
-            ),
+            if (_isProfileModelNotBull)
+              CustomButton(
+                onTap: () async {
+                  injector<AppCache>().profileModel = null;
+                  injector<AppCache>().havedLogin = false;
+                  await injector<LocalApp>().saveStringSharePreference(
+                      KeySaveDataLocal.keySaveAccessToken, '');
+                  setState(() {});
+                  if (mounted) {
+                    context.read<BottomBarBloc>().add(
+                          const ChangeTabBottomBarEvent(
+                            bottomBarEnum: BottomBarEnum.home,
+                            isRefresh: true,
+                          ),
+                        );
+                  }
+                },
+                text: 'Đăng xuất',
+              ),
             const SizedBox(height: 100),
           ],
         ),
       ),
     );
   }
+
+  bool get _isProfileModelNotBull => injector<AppCache>().profileModel != null;
 
   Widget _icon(Function() onTap, String text, String iconData,
       {Widget? iconWidget}) {

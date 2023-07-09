@@ -34,7 +34,6 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(title: 'Đăng nhập', isShowBack: true),
-      resizeToAvoidBottomInset: false,
       body: FollowKeyBoardWidget(
         child: SingleChildScrollView(
           child: Form(
@@ -103,17 +102,18 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _onLogin() {
+  Future<void> _onLogin() async {
     if (!CommonUtil.validateAndSave(_formKey)) return;
+    await DialogManager.showLoadingDialog(context);
 
     String text = _phoneController.text;
     String phoneNumber = text[0] != '0' ? '0$text' : text;
 
-    _performLogin(phoneNumber);
+    await _performLogin(phoneNumber);
+    DialogManager.hideLoadingDialog;
   }
 
   Future<void> _performLogin(String phoneNumber) async {
-    await DialogManager.showLoadingDialog(context);
     try {
       await injector<AppClient>().post('auth-with-otp?phone=$phoneNumber');
       await _addToken();
@@ -127,7 +127,6 @@ class LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
     }
-    DialogManager.hideLoadingDialog;
   }
 
   Future<void> _addToken() async {

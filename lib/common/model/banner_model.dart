@@ -1,10 +1,10 @@
-class BannerModel {
+class BannerResponse {
   String? url;
   int? id;
   String? title;
   String? urlLink;
 
-  BannerModel.fromJson(Map<String, dynamic> data) {
+  BannerResponse.fromJson(Map<String, dynamic> data) {
     url = data['photo_1'];
     id = data['id'];
     title = data['title_1'];

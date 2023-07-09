@@ -16,7 +16,7 @@ class BannerSlideImage extends StatefulWidget {
   final Function(int index)? onchangePage;
   final BoxFit? fit;
   final List<String>? images;
-  final List<BannerModel>? banners;
+  final List<BannerResponse>? banners;
 
   const BannerSlideImage(
       {Key? key,

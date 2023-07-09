@@ -6,6 +6,7 @@ import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/scan/scanner_error_widget.dart';
+import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
@@ -51,8 +52,21 @@ class ScanQrScreenState extends State<ScanQrScreen>
   );
 
   @override
+  void initState() {
+    controller.stop();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bgrScafold,
       appBar: BaseAppBar(
         title: 'Quét mã QR',
       ),
@@ -206,7 +220,7 @@ class ScanQrScreenState extends State<ScanQrScreen>
     required ScanTypeEnum enumData,
     required Function() onTap,
   }) {
-    final color = isSelect ? Colors.black : const Color(0xFFACACAC);
+    final color = isSelect ? Colors.black : AppColors.colorACACAC;
 
     return Expanded(
       child: GestureDetector(

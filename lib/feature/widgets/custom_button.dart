@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
+import '../themes/theme_color.dart';
+
 class CustomButton extends StatelessWidget {
   final String? text;
   final Function() onTap;
@@ -25,7 +27,7 @@ class CustomButton extends StatelessWidget {
         width: width ?? 313,
         height: height ?? 50,
         decoration: BoxDecoration(
-            color: const Color(0xFFEF4948),
+            color: AppColors.colorEF4948,
             borderRadius: BorderRadius.circular(radius ?? 20)),
         child: Center(
           child: Text(

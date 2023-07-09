@@ -86,14 +86,22 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                       GestureDetector(
                         onTap: () => Routes.instance
                             .navigateAndRemove(RouteName.bottomBarScreen),
-                        child: const Text(
-                          'Skip',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.white,
-                            decoration: TextDecoration.underline,
-                            height: 1.5,
+                        child: Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black.withOpacity(0.06)),
+                          child: const Center(
+                            child: Text(
+                              'Skip',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.white,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
                           ),
                         ),
                       ),

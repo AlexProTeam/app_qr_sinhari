@@ -31,7 +31,7 @@ class ListProductScreen extends StatefulWidget {
 }
 
 class ListProductScreenState extends State<ListProductScreen> {
-  final List<ProductModel> _products = [];
+  final List<ProductResponse> _products = [];
   int _page = 1;
   final ScrollController _scrollController = ScrollController();
   bool _enableContinueLoadMore = true;
@@ -51,7 +51,7 @@ class ListProductScreenState extends State<ListProductScreen> {
           : null;
       dataSeller['data'][key ?? 'productFeatures']['data'].forEach((e) {
         i++;
-        _products.add(ProductModel.fromJson(e));
+        _products.add(ProductResponse.fromJson(e));
       });
       if (i == 10) {
         _enableContinueLoadMore = true;
