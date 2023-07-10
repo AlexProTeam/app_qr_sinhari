@@ -11,9 +11,9 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/auth/login/widgets/input_phone_widget.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
-import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 
 import '../../injector_container.dart';
+import '../../widgets/dialog_manager_custom.dart';
 import '../../widgets/follow_keyboard_widget.dart';
 import 'login_enum.dart';
 

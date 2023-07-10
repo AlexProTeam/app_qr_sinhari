@@ -15,7 +15,6 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
-import '../../../common/navigation/route_names.dart';
 import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
 
@@ -160,11 +159,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 bottomBarEnum: BottomBarEnum.home,
                 isRefresh: true,
               ));
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RouteName.personalScreen,
-            (route) => false,
-          );
+          Navigator.popUntil(context, (route) => route.isFirst);
         }
       }
     } catch (e) {
