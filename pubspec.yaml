@@ -38,12 +38,12 @@ dependencies:
 #  keyboard_dismisser: ^3.0.0
   equatable: ^2.0.3
   url_launcher: ^6.0.1
-  dio: ^5.0.0
+  dio: ^5.1.1
 #  retrofit: ^4.0.1
   mobile_scanner: ^3.3.0
   timeago: ^3.0.2
 #  code_scanner: ^1.0.0
-  uuid: ^3.0.7
+#  uuid: ^3.0.7
   scan: ^1.6.0
 
 dev_dependencies:

@@ -49,11 +49,13 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
                 maxLines: 2,
                 textAlign: TextAlign.start,
                 style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Colors.black)),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: Colors.black,
+                  height: 1.3,
+                )),
           ),
-          const SizedBox(height: 10),
+          const Spacer(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -61,22 +63,22 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
                 FormatUtils.formatCurrencyDoubleToString(
                     productModel?.purchasePrice ?? productModel?.unitPrice),
                 style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFFFFC700)),
               ),
-              // const Spacer(),
               const SizedBox(width: 5),
               RichText(
                 text: TextSpan(
                   text: FormatUtils.formatCurrencyDoubleToString(
                       productModel?.purchasePrice ?? productModel?.unitPrice),
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.w500,
                     color: AppColors.colorACACAC,
                     decoration: TextDecoration.lineThrough,
                     decorationColor: AppColors.colorACACAC,
+                    height: 1.3,
                   ),
                 ),
               )

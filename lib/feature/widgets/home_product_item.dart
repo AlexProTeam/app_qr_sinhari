@@ -21,8 +21,9 @@ class ProductItem extends StatelessWidget {
             productId: productModel?.id,
           )),
       child: Container(
+        height: 134,
         margin: const EdgeInsets.only(top: 12),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         decoration: const BoxDecoration(
           color: AppColors.bgrScafold,
           borderRadius: BorderRadius.all(
@@ -32,8 +33,7 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomImageNetwork(
               url: '${productModel?.thumbnailImg}',
@@ -42,22 +42,25 @@ class ProductItem extends StatelessWidget {
               height: 110,
               border: 8,
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const SizedBox(height: 10),
                 SizedBox(
-                    width: 164,
-                    child: Text(productModel?.name ?? '',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        textAlign: TextAlign.start,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: Colors.black))),
+                  width: 164,
+                  child: Text(
+                    productModel?.name ?? '',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.black,
+                        height: 1.3),
+                  ),
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -96,7 +99,7 @@ class ProductItem extends StatelessWidget {
                               productModel?.unitPrice),
                       style: const TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w500,
                           color: Color(0xFFFFC700)),
                     ),
                     const SizedBox(width: 15),

@@ -67,47 +67,34 @@ class NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bgrScafold,
-      body: Column(
-        children: [
-          const CustomAppBar(
-            title: 'Tin tức',
-            haveIconLeft: false,
-          ),
-          const SizedBox(height: 17),
-          _isLoading
-              ? const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : _histories.isEmpty
-                  ? const Expanded(
-                      child: Center(
-                        child: Text("Không có tin tức nào!"),
-                      ),
-                    )
-                  : GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: _histories.length,
-                      // controller: _scrollController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 12.0),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 8.0,
-                        mainAxisSpacing: 8.0,
-                        childAspectRatio: MediaQuery.of(context).size.width /
-                            2 /
-                            (MediaQuery.of(context).size.height / 2.5),
-                      ),
-                      itemBuilder: (context, index) {
-                        return _item(_histories[index]);
-                      },
-                    ),
-        ],
+      appBar: BaseAppBar(
+        title: 'Tin tức',
       ),
+      backgroundColor: AppColors.bgrScafold,
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : _histories.isEmpty
+              ? const Center(
+                  child: Text("Không có tin tức nào!"),
+                )
+              : GridView.builder(
+                  itemCount: _histories.length,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 12.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                    childAspectRatio: MediaQuery.of(context).size.width /
+                        2 /
+                        (MediaQuery.of(context).size.height / 2.5),
+                  ),
+                  itemBuilder: (context, index) {
+                    return _item(_histories[index]);
+                  },
+                ),
     );
   }
 
