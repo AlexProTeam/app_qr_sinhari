@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
@@ -232,7 +231,7 @@ class ProfileScreenState extends State<ProfileScreen> {
       }
       return;
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
 
     DialogManager.hideLoadingDialog;

@@ -5,6 +5,7 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
 import '../../common/const/icon_constant.dart';
+import '../../common/const/string_const.dart';
 import '../../common/model/product_model.dart';
 import '../themes/theme_color.dart';
 import 'custom_image_network.dart';
@@ -24,9 +25,10 @@ class ProductItem extends StatelessWidget {
         height: 134,
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
+          boxShadow: StringConst.defaultShadow,
           color: AppColors.bgrScafold,
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(
               8,
             ),
@@ -77,11 +79,10 @@ class ProductItem extends StatelessWidget {
                             fontSize: 12,
                             fontWeight: FontWeight.w300,
                             color: Colors.black),
-                        children: const [
+                        children: [
                           TextSpan(
-                            ///todo: hard code
-                            text: ' (122 sản phẩm)',
-                            style: TextStyle(
+                            text: ' ${productModel?.quantity}',
+                            style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w300,
                                 color: AppColors.colorACACAC),
@@ -95,8 +96,7 @@ class ProductItem extends StatelessWidget {
                   children: [
                     Text(
                       FormatUtils.formatCurrencyDoubleToString(
-                          productModel?.purchasePrice ??
-                              productModel?.unitPrice),
+                          productModel?.unitPrice),
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -106,8 +106,9 @@ class ProductItem extends StatelessWidget {
                     RichText(
                       text: TextSpan(
                         text: FormatUtils.formatCurrencyDoubleToString(
-                            productModel?.purchasePrice ??
-                                productModel?.unitPrice),
+                          productModel?.purchasePrice ??
+                              ((productModel?.unitPrice ?? 0) * 1.3).toInt(),
+                        ),
                         style: const TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,

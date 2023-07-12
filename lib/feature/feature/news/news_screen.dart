@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -48,22 +47,6 @@ class NewsScreenState extends State<NewsScreen> {
     super.initState();
   }
 
-  void _initData() async {
-    try {
-      _isLoading = true;
-      final data =
-          await injector<AppClient>().post('list_news', handleResponse: false);
-      data['data'].forEach((e) {
-        _histories.add(NewsModel.fromJson(e));
-      });
-      if (mounted) setState(() {});
-    } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      _isLoading = false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,26 +58,32 @@ class NewsScreenState extends State<NewsScreen> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : _histories.isEmpty
-              ? const Center(
-                  child: Text("Không có tin tức nào!"),
-                )
-              : GridView.builder(
-                  itemCount: _histories.length,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 12.0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                        2 /
-                        (MediaQuery.of(context).size.height / 2.5),
-                  ),
-                  itemBuilder: (context, index) {
-                    return _item(_histories[index]);
-                  },
-                ),
+          : RefreshIndicator(
+              onRefresh: () async {
+                _histories.clear();
+                _initData();
+              },
+              child: _histories.isEmpty
+                  ? const Center(
+                      child: Text("Không có tin tức nào!"),
+                    )
+                  : GridView.builder(
+                      itemCount: _histories.length,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 12.0),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
+                        childAspectRatio: MediaQuery.of(context).size.width /
+                            2 /
+                            (MediaQuery.of(context).size.height / 2.5),
+                      ),
+                      itemBuilder: (context, index) {
+                        return _item(_histories[index]);
+                      },
+                    ),
+            ),
     );
   }
 
@@ -154,5 +143,24 @@ class NewsScreenState extends State<NewsScreen> {
         ],
       ),
     );
+  }
+
+  void _initData() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      final data =
+          await injector<AppClient>().post('list_news', handleResponse: false);
+      data['data'].forEach((e) {
+        _histories.add(NewsModel.fromJson(e));
+      });
+      if (mounted) setState(() {});
+    } catch (e) {
+      CommonUtil.handleException(e, methodName: '');
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

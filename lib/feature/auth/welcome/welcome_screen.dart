@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -48,8 +47,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
       final banners = data['banners'] as List<dynamic>;
       _welcomeModel = banners.map((e) => WelcomeModel.fromJson(e)).toList();
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e,
-          methodName: '_initData');
+      CommonUtil.handleException(e, methodName: '_initData');
     }
   }
 

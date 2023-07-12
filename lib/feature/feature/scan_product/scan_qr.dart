@@ -121,6 +121,7 @@ class ScanQrScreenState extends State<ScanQrScreen>
 
   Widget _buildQrView() {
     return Stack(
+      alignment: Alignment.topCenter,
       children: [
         Center(
           child: ClipRRect(
@@ -156,24 +157,22 @@ class ScanQrScreenState extends State<ScanQrScreen>
         ),
         Positioned(
           top: 420,
-          left: 110,
-          child: ValueListenableBuilder(
-            valueListenable: controller.hasTorchState,
-            builder: (context, state, child) {
-              if (state != true) {
-                return const SizedBox.shrink();
-              }
-              return Row(
-                children: [
-                  IconButton(
-                    color: Colors.white,
-                    icon: ValueListenableBuilder(
+          child: InkWell(
+            onTap: () => controller.toggleTorch(),
+            child: ValueListenableBuilder(
+              valueListenable: controller.hasTorchState,
+              builder: (context, state, child) {
+                if (state != true) {
+                  return const SizedBox.shrink();
+                }
+                return Row(
+                  children: [
+                    ValueListenableBuilder(
                       valueListenable: controller.torchState,
                       builder: (context, state, child) {
                         if (state == null) {
                           return Image.asset(
                             IconConst.flash,
-                            color: Colors.white,
                             width: 24,
                             height: 24,
                           );
@@ -182,33 +181,30 @@ class ScanQrScreenState extends State<ScanQrScreen>
                           case TorchState.off:
                             return const Icon(
                               Icons.flash_off_rounded,
-                              color: Colors.white,
                               size: 24,
+                              color: Colors.white,
                             );
                           case TorchState.on:
                             return Image.asset(
                               IconConst.flash,
-                              color: Colors.white,
                               width: 24,
                               height: 24,
                             );
                         }
                       },
                     ),
-                    iconSize: 32.0,
-                    onPressed: () => controller.toggleTorch(),
-                  ),
-                  const Text(
-                    'Bật đèn Flash',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
-                      color: Colors.white,
+                    const Text(
+                      'Bật đèn Flash',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
-              );
-            },
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ],
@@ -231,10 +227,9 @@ class ScanQrScreenState extends State<ScanQrScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                enumData.getIcon,
+                isSelect ? enumData.getIconSelect : enumData.getIconUnSelect,
                 width: 50,
                 height: 50,
-                color: color,
               ),
               const SizedBox(height: 2),
               Text(

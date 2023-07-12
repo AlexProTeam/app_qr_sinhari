@@ -71,6 +71,9 @@ class HomeScreenState extends State<HomeScreen>
                 color: Colors.white,
                 backgroundColor: Colors.amber,
                 child: SingleChildScrollView(
+                  padding: const EdgeInsets.only(
+                    bottom: 120,
+                  ),
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -93,7 +96,6 @@ class HomeScreenState extends State<HomeScreen>
 
                       ///tin mới nhất
                       const NewsHomeWidget(),
-                      const SizedBox(height: 100),
                     ],
                   ),
                 ),

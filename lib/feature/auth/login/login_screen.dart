@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -125,7 +124,7 @@ class LoginScreenState extends State<LoginScreen> {
         );
       }
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
   }
 

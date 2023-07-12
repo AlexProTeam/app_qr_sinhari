@@ -41,7 +41,7 @@ class _BannerHomeWidgetState extends State<BannerHomeWidget> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 22, top: 10),
       child: BannerSlideImage(
-        height: MediaQuery.of(context).size.height * 0.22,
+        height: MediaQuery.of(context).size.height * 0.2,
         banners: _bannerModel.map((e) => e).toList(),
         images: _bannerModel.map((e) => e.url ?? '').toList(),
       ),
@@ -60,7 +60,7 @@ class _BannerHomeWidgetState extends State<BannerHomeWidget> {
         _bannerModel.add(BannerResponse.fromJson(e));
       });
     } catch (e) {
-      CommonUtil.handleException(null, e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
     setState(() {
       _isBannerLoading = false;

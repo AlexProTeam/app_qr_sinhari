@@ -90,7 +90,7 @@ class _ProductFeaturesWidgetState extends State<ProductFeaturesWidget> {
         _productFeatures.add(ProductResponse.fromJson(e));
       });
     } catch (e) {
-      CommonUtil.handleException(null, e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
     setState(() {
       _isLoading = false;

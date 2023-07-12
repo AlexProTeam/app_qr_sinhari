@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -71,9 +70,10 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                         Text(
                           '${histories.length} Sản phẩm',
                           style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.red),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.red,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         Expanded(
@@ -104,7 +104,7 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
         histories.add(HistoryModel.fromJson(e));
       });
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
     setState(() {
       isLoading = false;
@@ -116,8 +116,8 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       onTap: () {
         Navigator.pushNamed(context, RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
-                // productId: model.productId,
-                ));
+              productId: model.productId,
+            ));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 12),

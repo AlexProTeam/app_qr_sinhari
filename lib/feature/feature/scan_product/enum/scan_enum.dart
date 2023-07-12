@@ -7,14 +7,25 @@ enum ScanTypeEnum {
 }
 
 extension IconHomeEx on ScanTypeEnum {
-  String get getIcon {
+  String get getIconSelect {
     switch (this) {
       case ScanTypeEnum.image:
-        return IconConst.scanImage;
+        return IconConst.scanImageSelect;
       case ScanTypeEnum.product:
-        return IconConst.scanProduct;
+        return IconConst.scanProductSelect;
       case ScanTypeEnum.invoice:
-        return IconConst.scanInvoice;
+        return IconConst.scanInvoiceSelect;
+    }
+  }
+
+  String get getIconUnSelect {
+    switch (this) {
+      case ScanTypeEnum.image:
+        return IconConst.scanUnImage;
+      case ScanTypeEnum.product:
+        return IconConst.scanProductUnSelect;
+      case ScanTypeEnum.invoice:
+        return IconConst.scanInvoiceUnSelect;
     }
   }
 

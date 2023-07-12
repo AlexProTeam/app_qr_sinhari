@@ -58,6 +58,7 @@ class _NewsHomeWidgetState extends State<NewsHomeWidget> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 22, top: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding:
@@ -70,8 +71,7 @@ class _NewsHomeWidgetState extends State<NewsHomeWidget> {
                 )),
           ),
           SizedBox(
-            width: double.infinity,
-            height: 220,
+            height: 200,
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               shrinkWrap: true,
@@ -99,7 +99,7 @@ class _NewsHomeWidgetState extends State<NewsHomeWidget> {
         _newsModel.add(NewsModel.fromJson(e));
       });
     } catch (e) {
-      CommonUtil.handleException(null, e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
     setState(() {
       _isLoading = false;

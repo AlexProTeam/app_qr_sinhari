@@ -126,7 +126,7 @@ class _SilverCoatedShampooWidgetState extends State<SilverCoatedShampooWidget> {
         _homeCategory.add(HomeCategoryResponse.fromJson(e));
       });
     } catch (e) {
-      CommonUtil.handleException(null, e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
     setState(() {
       _isLoading = false;

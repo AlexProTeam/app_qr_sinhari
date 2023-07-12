@@ -20,23 +20,6 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class BottomNavigationState extends State<BottomNavigation> {
-  final double _heightItem = 66.64;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void changeToTab(BottomBarEnum enumData) {
-    if (context.read<BottomBarBloc>().state.bottomBarEnum == enumData) {
-      return;
-    }
-    widget.onChange(enumData);
-    context
-        .read<BottomBarBloc>()
-        .add(ChangeTabBottomBarEvent(bottomBarEnum: enumData));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -55,9 +38,21 @@ class BottomNavigationState extends State<BottomNavigation> {
             (index) => _buildBottomBarItem(BottomBarEnum.values[index]),
           ),
         ),
-        _centerIconWidget,
+        _centerIconWidget(),
       ],
     );
+  }
+
+  final double _heightItem = 66.64;
+
+  void changeToTab(BottomBarEnum enumData) {
+    if (context.read<BottomBarBloc>().state.bottomBarEnum == enumData) {
+      return;
+    }
+    widget.onChange(enumData);
+    context
+        .read<BottomBarBloc>()
+        .add(ChangeTabBottomBarEvent(bottomBarEnum: enumData));
   }
 
   Widget _buildBottomBarItem(BottomBarEnum dataEnum) {
@@ -81,7 +76,7 @@ class BottomNavigationState extends State<BottomNavigation> {
     );
   }
 
-  Widget get _centerIconWidget => Container(
+  Widget _centerIconWidget() => Container(
         margin: const EdgeInsets.only(bottom: 20),
         width: GScreenUtil.screenWidthDp / 5,
         height: _heightItem,

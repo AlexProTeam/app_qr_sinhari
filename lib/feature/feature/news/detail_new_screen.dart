@@ -3,14 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
 import '../../../common/const/icon_constant.dart';
 import '../../../common/utils/date_utils.dart';
-import '../../injector_container.dart';
 
 class ArgumentDetailNewScreen {
   final int? newsDetail;
@@ -54,7 +52,7 @@ class DetailNewScreenState extends State<DetailNewScreen> {
       }
       setState(() {});
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     } finally {
       isLoadding = false;
     }

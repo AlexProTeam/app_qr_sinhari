@@ -25,10 +25,10 @@ import 'package:qrcode/feature/feature/profile/profile_screen.dart';
 import 'package:qrcode/feature/feature/scan/check_bill_screen.dart';
 import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
-import 'package:qrcode/feature/feature/webview/webview_screen.dart';
 
 import 'feature/bottom_bar_screen/bottom_bar_screen.dart';
 import 'feature/detail_product/detail_product_contact.dart';
+import 'feature/personal/contact_screen.dart';
 
 class Routes {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -162,9 +162,7 @@ class Routes {
         );
       case RouteName.webViewScreen:
         return SlideLeftRoute(
-          widget: WebViewScreen(
-            url: settings.arguments != null ? settings.arguments as String : '',
-          ),
+          widget: const WebViewScreen(),
         );
       case RouteName.webViewDetailScreen:
         return SlideLeftRoute(

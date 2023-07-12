@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
+import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 
 import '../../injector_container.dart';
 import '../../themes/theme_color.dart';
@@ -19,7 +19,6 @@ class NotiScreen extends StatefulWidget {
 
 class NotiScreenState extends State<NotiScreen> {
   List<NotiModel> histories = [];
-  bool isLoadding = false;
 
   @override
   void initState() {
@@ -27,9 +26,12 @@ class NotiScreenState extends State<NotiScreen> {
     super.initState();
   }
 
-  void _initData() async {
+  Future<void> _initData() async {
     try {
-      isLoadding = true;
+      await Future.delayed(const Duration(milliseconds: 100));
+      if (mounted) {
+        await DialogManager.showLoadingDialog(context);
+      }
 
       final data = await injector<AppClient>()
           .post('notifications', handleResponse: false);
@@ -37,11 +39,10 @@ class NotiScreenState extends State<NotiScreen> {
         histories.add(NotiModel.fromJson(e));
       });
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
-    setState(() {
-      isLoadding = true;
-    });
+    setState(() {});
+    DialogManager.hideLoadingDialog;
   }
 
   @override
@@ -52,19 +53,15 @@ class NotiScreenState extends State<NotiScreen> {
         isShowBack: true,
       ),
       backgroundColor: AppColors.bgrScafold,
-      body: isLoadding
+      body: histories.isEmpty
           ? const Center(
-              child: CircularProgressIndicator(),
+              child: Text("Không có thông báo nào!"),
             )
-          : histories.isEmpty
-              ? const Center(
-                  child: Text("Không có thông báo nào!"),
-                )
-              : ListView.builder(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  itemBuilder: (_, index) => _item(histories[index]),
-                  itemCount: histories.length,
-                ),
+          : ListView.builder(
+              padding: const EdgeInsets.only(bottom: 100),
+              itemBuilder: (_, index) => _item(histories[index]),
+              itemCount: histories.length,
+            ),
     );
   }
 

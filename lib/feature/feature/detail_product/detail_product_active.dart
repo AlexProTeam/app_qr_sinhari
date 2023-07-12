@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_event.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_state.dart';
 import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/profile_model.dart';
@@ -13,6 +10,7 @@ import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
+import 'package:qrcode/feature/widgets/toast_manager.dart';
 
 class ArgumentActiveScreen {
   final int? productId;
@@ -43,14 +41,14 @@ class DetailProductActiveState extends State<DetailProductActive> {
       isLoadding = true;
       await injector<AppClient>().post(
           'save-contact?product_id=${widget.argument?.productId}&content=${_contentController.text}&type=1');
-      injector<SnackBarBloc>().add(ShowSnackbarEvent(
-          type: SnackBarType.success, content: 'Kích hoạt thành công'));
+      if (mounted) {
+        await ToastManager.showToast(context, text: 'Kích hoạt thành công');
+      }
 
       if (!mounted) return;
       Navigator.pop(context);
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e,
-          methodName: 'getThemes CourseCubit');
+      CommonUtil.handleException(e, methodName: 'getThemes CourseCubit');
     } finally {
       isLoadding = false;
     }

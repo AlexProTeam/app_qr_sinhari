@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
@@ -60,7 +59,7 @@ class ListProductScreenState extends State<ListProductScreen> {
         _loading = false;
       });
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     } finally {
       _loading = false;
     }

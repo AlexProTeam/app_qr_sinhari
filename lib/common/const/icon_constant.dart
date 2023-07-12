@@ -1,6 +1,5 @@
 class IconConst {
-  static const String _path = 'assets/icons/';
-  static const String back = '${_path}back.png';
+  static const String back = '${_pathIcons}back.png';
   static const String _pathIcons = 'assets/icons/';
   static const String _pathImg = 'assets/images/';
 
@@ -17,6 +16,7 @@ class IconConst {
   static const String iconScanHome = '${_pathIcons}icon_scan_home.png';
   static const String backGroupBottomBar =
       '${_pathIcons}backGroupBottomBar.png';
+  static const String iconTictok = '${_pathIcons}icon_tictok.png';
 
   ///new
   static const String home = '${_pathImg}Home.png';
@@ -25,6 +25,7 @@ class IconConst {
   static const String caNhan = '${_pathImg}User.png';
   static const String logo = '${_pathImg}Logo.png';
   static const String notification = '${_pathImg}Notification.png';
+  static const String logoMain = '${_pathImg}logo_main.png';
 
   ///icon home page
   static const String icon1 = '${_pathImg}Icon1.png';
@@ -45,7 +46,7 @@ class IconConst {
 
   ///icon login page
   static const String logoLogin = '${_pathIcons}Logologin.png';
-  static const String apple = '${_path}apple.png';
+  static const String apple = '${_pathIcons}apple.png';
 
   ///icon contact
   static const String location = '${_pathIcons}location.png';
@@ -64,12 +65,19 @@ class IconConst {
 
   ///icon scanQR
   static const String flash = '${_pathIcons}Flash.png';
-  static const String scanImage = '${_pathIcons}ScanImage.png';
-  static const String scanInvoice = '${_pathIcons}ScanInvoice.png';
-  static const String scanProduct = '${_pathIcons}ScanProduct.png';
+
+  static const String scanImageSelect = '${_pathIcons}scan_img_select.png';
+  static const String scanUnImage = '${_pathIcons}ScanImage.png';
+
+  static const String scanProductSelect = '${_pathIcons}ScanProduct.png';
+  static const String scanProductUnSelect =
+      '${_pathIcons}scan_product_unselect.png';
+
+  static const String scanInvoiceSelect = '${_pathIcons}scan_bill_select.png';
+  static const String scanInvoiceUnSelect = '${_pathIcons}ScanInvoice.png';
 
   ///icon checkbill
-  static const String car = '${_path}car.png';
-  static const String ellipse = '${_path}ellipse_69.png';
-  static const String locationBill = '${_path}location_bill.png';
+  static const String car = '${_pathIcons}car.png';
+  static const String ellipse = '${_pathIcons}ellipse_69.png';
+  static const String locationBill = '${_pathIcons}location_bill.png';
 }

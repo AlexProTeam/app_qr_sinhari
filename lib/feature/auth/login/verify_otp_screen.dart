@@ -42,13 +42,6 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
@@ -62,11 +55,11 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 25),
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
               child: Text(
-                "Mã OTP sẽ được gửi đến SĐT của bạn",
-                style: TextStyle(
+                "Mã OTP sẽ được gửi đến SĐT ${widget.phone} của bạn",
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
                     color: Colors.black),

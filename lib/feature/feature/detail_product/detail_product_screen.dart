@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
@@ -38,7 +37,7 @@ class DetailProductScreen extends StatefulWidget {
 
 class DetailProductScreenState extends State<DetailProductScreen> {
   DetailProductModel? _detailProductModel;
-  bool isLoadding = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -48,7 +47,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
 
   void _initData() async {
     try {
-      isLoadding = true;
+      setState(() {
+        _isLoading = true;
+      });
       if ((widget.argument?.url ?? '').isNotEmpty) {
         await _getProductByUrl();
         return;
@@ -58,16 +59,19 @@ class DetailProductScreenState extends State<DetailProductScreen> {
       _detailProductModel = DetailProductModel.fromJson(data['data']);
       setState(() {});
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e,
-          methodName: 'getThemes CourseCubit');
+      CommonUtil.handleException(e, methodName: 'getThemes CourseCubit');
       Navigator.pop(context);
-    } finally {
-      isLoadding = false;
     }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   Future _getProductByUrl() async {
     try {
+      setState(() {
+        _isLoading = true;
+      });
       final deviceId = injector<AppCache>().deviceId;
       final data = await injector<AppClient>().get(
           'scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url ?? ''}');
@@ -89,7 +93,6 @@ class DetailProductScreenState extends State<DetailProductScreen> {
               dateFormatLast.format(datetime);
         }
       }
-      setState(() {});
     } catch (e) {
       ToastManager.showToast(context,
           //todo: change to mes of api
@@ -97,6 +100,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           delaySecond: 3,
           afterShowToast: () => Navigator.pop(context));
     }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -120,7 +127,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           ),
         ],
       ),
-      body: isLoadding
+      body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(),
             )

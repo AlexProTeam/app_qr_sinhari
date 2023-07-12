@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/feature/injector_container.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 
-import '../../auth/login/login_enum.dart';
+import '../../../common/utils/common_util.dart';
 import '../../routes.dart';
 import '../../themes/theme_color.dart';
+import '../../widgets/box_border_widget.dart';
 import '../../widgets/custom_scaffold.dart';
+import '../../widgets/icon_text_widget.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
+import 'enum/personal_contact_enum.dart';
+import 'enum/personal_menu_enum.dart';
 
 class PersonalNested extends StatelessWidget {
   const PersonalNested({
@@ -48,13 +50,11 @@ class PersonalScreenState extends State<PersonalScreen> {
       ),
       backgroundColor: AppColors.bgrScafold,
       body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 100),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 20,
-            ),
-            if (!_isProfileModelNotBull)
+            if (!_isProfileModelNotBull) ...[
               CustomButton(
                 onTap: () {
                   Navigator.pushNamed(
@@ -67,116 +67,57 @@ class PersonalScreenState extends State<PersonalScreen> {
                 width: 128,
                 height: 45,
               ),
-            const SizedBox(
-              height: 18,
-            ),
-            Container(
-              width: 343,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(width: 1, color: Colors.white),
-                borderRadius: const BorderRadius.all(Radius.circular(
-                  8,
-                )),
+              const SizedBox(
+                height: 18,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    if (_isProfileModelNotBull)
-                      _icon(
-                        () {
-                          Navigator.pushNamed(context, RouteName.profileScreen);
-                        },
-                        'Thông tin cá nhân',
-                        IconConst.info,
-                      ),
-                    _icon(
-                      () {
-                        Navigator.pushNamed(context, RouteName.webViewScreen,
-                            arguments: 'https://sinhairvietnam.vn/lien-he/');
-                      },
-                      'Liên hệ',
-                      IconConst.contact,
-                    ),
-                    _icon(
-                      () {
-                        Navigator.pushNamed(context, RouteName.gioiThieuScreen);
-                      },
-                      'Chính sách bán hàng',
-                      IconConst.provisionOrder,
-                    ),
-                    _icon(
-                      () {
-                        Navigator.pushNamed(context, RouteName.huongDanScreen);
-                      },
-                      'Chính sách bảo mật',
-                      IconConst.provisionSecurity,
-                    ),
-                    _icon(
-                      () {
-                        Navigator.pushNamed(context, RouteName.policyScreen);
-                      },
-                      'Điều khoản sử dụng',
-                      IconConst.adjust,
-                    ),
-                  ],
-                ),
+            ],
+            boxBorderApp(
+              child: Column(
+                children: PersonalContactEnum.values
+                    .map(
+                      (e) => !_isProfileModelNotBull &&
+                              e == PersonalContactEnum.account
+                          ? const SizedBox.shrink()
+                          : iconTextWidget(
+                              onTap: () => e.getOnTap(context),
+                              text: e.getDisplayValue,
+                              iconWidget: e.getIcon(),
+                            ),
+                    )
+                    .toList(),
               ),
             ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                  width: 343,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(width: 1, color: Colors.white),
-                    borderRadius: const BorderRadius.all(Radius.circular(
-                      8,
-                    )),
+            const SizedBox(height: 16),
+            boxBorderApp(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Kết nối với Sinhair:',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.black),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Kết nối với Sinhair:',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: Colors.black),
-                        ),
-                        ...LoginEnum.values.map((e) =>
-                            _icon(() {}, e.name, '', iconWidget: e.getIcon())),
-                        const SizedBox(height: 17),
-                      ],
+                  const SizedBox(height: 11),
+                  ...AppContact.values.map(
+                    (e) => iconTextWidget(
+                      onTap: () => CommonUtil.runUrl(e.getLongContact),
+                      text: e.getShortContact,
+                      iconWidget: e.getIcon(),
+                      iconData: '',
                     ),
-                  )),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            if (_isProfileModelNotBull)
+            if (_isProfileModelNotBull) ...[
+              const SizedBox(height: 50),
               CustomButton(
-                onTap: () async {
-                  injector<AppCache>().profileModel = null;
-                  injector<AppCache>().havedLogin = false;
-                  await injector<LocalApp>().saveStringSharePreference(
-                      KeySaveDataLocal.keySaveAccessToken, '');
-                  setState(() {});
-                  if (mounted) {
-                    context.read<BottomBarBloc>().add(
-                          const ChangeTabBottomBarEvent(
-                            bottomBarEnum: BottomBarEnum.home,
-                            isRefresh: true,
-                          ),
-                        );
-                  }
-                },
+                onTap: _onTapLogout,
                 text: 'Đăng xuất',
               ),
-            const SizedBox(height: 100),
+            ],
           ],
         ),
       ),
@@ -185,36 +126,19 @@ class PersonalScreenState extends State<PersonalScreen> {
 
   bool get _isProfileModelNotBull => injector<AppCache>().profileModel != null;
 
-  Widget _icon(Function() onTap, String text, String iconData,
-      {Widget? iconWidget}) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Row(
-          children: [
-            Center(
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: iconWidget ??
-                    Image.asset(
-                      iconData,
-                      width: 20,
-                      height: 20,
-                    ),
-              ),
+  void _onTapLogout() async {
+    injector<AppCache>().profileModel = null;
+    injector<AppCache>().havedLogin = false;
+    await injector<LocalApp>()
+        .saveStringSharePreference(KeySaveDataLocal.keySaveAccessToken, '');
+    setState(() {});
+    if (mounted) {
+      context.read<BottomBarBloc>().add(
+            const ChangeTabBottomBarEvent(
+              bottomBarEnum: BottomBarEnum.home,
+              isRefresh: true,
             ),
-            const SizedBox(width: 10),
-            Text(
-              text,
-              style: AppTextTheme.normalBlack.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+          );
+    }
   }
 }

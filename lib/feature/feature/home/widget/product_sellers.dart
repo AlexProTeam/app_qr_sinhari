@@ -109,7 +109,7 @@ class _ProductSellersWidgetState extends State<ProductSellersWidget> {
         _productSellers.add(ProductResponse.fromJson(e));
       });
     } catch (e) {
-      CommonUtil.handleException(null, e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     }
     setState(() {
       _isLoading = false;

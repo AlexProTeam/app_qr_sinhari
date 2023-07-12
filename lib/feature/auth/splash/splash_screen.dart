@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
-import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -14,7 +11,7 @@ import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
-import '../../widgets/toast_manager.dart';
+import '../../../common/model/profile_model.dart';
 import '../welcome/welcome_model.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -52,43 +49,34 @@ class SplashScreenState extends State<SplashScreen>
 
     String? accessToken = injector<LocalApp>()
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
-    await Future.delayed(const Duration(seconds: 3));
-    if (accessToken?.isEmpty ?? true) {
-      await _initDataWelcomeScreen();
 
+    try {
+      AppHeader appHeader = AppHeader();
+      appHeader.accessToken = accessToken;
+      injector<AppClient>().header = appHeader;
+
+      final data = await injector<AppClient>().get('auth/showProfile');
+      ProfileModel profileModel = ProfileModel.fromJson(data['data']);
+      injector<AppCache>().profileModel = profileModel;
+    } catch (e) {
+      CommonUtil.handleException(e, methodName: '');
+    }
+
+    if (accessToken?.isEmpty == true) {
       Navigator.pushReplacementNamed(
-          Routes.instance.navigatorKey.currentContext!, RouteName.welcomeScreen,
-          arguments: _welcomeModel);
+        Routes.instance.navigatorKey.currentContext!,
+        RouteName.welcomeScreen,
+        arguments: _welcomeModel,
+      );
 
       return;
     }
-    AppHeader appHeader = AppHeader();
-    appHeader.accessToken = accessToken;
-    injector<AppClient>().header = appHeader;
-
-    ///todo: api get profile err
-    final data = await injector<AppClient>().get('auth/showProfile');
-    ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-    injector<AppCache>().profileModel = profileModel;
 
     Navigator.pushReplacementNamed(
-        Routes.instance.navigatorKey.currentContext!, RouteName.bottomBarScreen,
-        arguments: _welcomeModel);
-  }
-
-  Future<void> _initDataWelcomeScreen() async {
-    await injector<LocalApp>()
-        .saveBool(KeySaveDataLocal.showWelcomeScreen, false);
-    try {
-      final data = await injector<AppClient>()
-          .post('get_image_introduction', handleResponse: false);
-      final banners = data['banners'] as List<dynamic>;
-      _welcomeModel = banners.map((e) => WelcomeModel.fromJson(e)).toList();
-    } catch (e) {
-      if (mounted) {
-        ToastManager.showToast(context, text: e.toString());
-      }
-    }
+      Routes.instance.navigatorKey.currentContext!,
+      RouteName.bottomBarScreen,
+      arguments: _welcomeModel,
+    );
   }
 
   @override
@@ -102,20 +90,12 @@ class SplashScreenState extends State<SplashScreen>
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(),
               _AnimatedLogo(animation: animation),
               const SizedBox(height: 12),
               Text(
                 'Công ty TNHH Sinhair Japan',
                 style: AppTextTheme.medium20PxBlack.copyWith(fontSize: 18),
               ),
-              const Spacer(),
-              const Text(
-                'Bản quyền thuộc sở hữu CÔNG TY TNHH SINHAIR Japan',
-                style: AppTextTheme.normalGrey,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 30),
             ],
           ),
         ));
@@ -129,8 +109,8 @@ class SplashScreenState extends State<SplashScreen>
 }
 
 class _AnimatedLogo extends AnimatedWidget {
-  static final _opacityTween = Tween<double>(begin: 0.1, end: 1);
-  static final _sizeTween = Tween<double>(begin: 0, end: 300);
+  static final _opacityTween = Tween<double>(begin: 1, end: 1);
+  static final _sizeTween = Tween<double>(begin: 150, end: 200);
 
   const _AnimatedLogo({Key? key, required Animation<double> animation})
       : super(key: key, listenable: animation);
@@ -141,11 +121,10 @@ class _AnimatedLogo extends AnimatedWidget {
     return Center(
       child: Opacity(
         opacity: _opacityTween.evaluate(animation),
-        child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
+        child: SizedBox(
             height: _sizeTween.evaluate(animation),
             width: _sizeTween.evaluate(animation),
-            child: Image.asset(IconConst.logo)),
+            child: Image.asset(IconConst.logoMain)),
       ),
     );
   }
