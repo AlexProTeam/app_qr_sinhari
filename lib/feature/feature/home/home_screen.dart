@@ -15,7 +15,6 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import '../../../common/navigation/route_names.dart';
 import '../../routes.dart';
 import '../../widgets/nested_route_wrapper.dart';
-import '../../widgets/toast_manager.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 import 'bottom/home_enum.dart';
 
@@ -43,7 +42,15 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin<HomeScreen> {
+  late BottomBarBloc _bottomBarBloc;
+
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    _bottomBarBloc = context.read<BottomBarBloc>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,11 +183,30 @@ class HomeScreenState extends State<HomeScreen>
             IconHomeEnum.values.length,
             (index) => FilterItemWidget(
               index: index,
-              onTap: () => ToastManager.showToast(
-                context,
-                delaySecond: 1,
-                text: 'chức năng sẽ sớm ra mắt',
-              ),
+              onTap: () {
+                switch (IconHomeEnum.values[index]) {
+                  case IconHomeEnum.all:
+
+                    ///todo: update later
+                    break;
+                  case IconHomeEnum.shampoo:
+
+                    ///todo: update later
+                    break;
+                  case IconHomeEnum.news:
+                    _bottomBarBloc.add(const ChangeTabBottomBarEvent(
+                        bottomBarEnum: BottomBarEnum.tinTuc));
+                    break;
+                  case IconHomeEnum.favourite:
+
+                    ///todo: update later
+                    break;
+                  case IconHomeEnum.tool:
+
+                    ///todo: update later
+                    break;
+                }
+              },
             ),
           ),
         ),
