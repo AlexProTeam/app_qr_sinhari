@@ -94,11 +94,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
         }
       }
     } catch (e) {
-      ToastManager.showToast(context,
-          //todo: change to mes of api
-          text: 'URL không đúng định dạng',
-          delaySecond: 3,
-          afterShowToast: () => Navigator.pop(context));
+      CommonUtil.handleException(e, methodName: '');
     }
 
     setState(() {
@@ -164,16 +160,18 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                             ),
                             const SizedBox(width: 6),
                             RichText(
-                                text: const TextSpan(
-                                    text: '4.9 ',
-                                    style: TextStyle(
+                                text: TextSpan(
+                                    text: (_detailProductModel?.rating ?? 0)
+                                        .toString(),
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w300,
                                         color: Colors.black),
                                     children: [
                                   TextSpan(
-                                    text: '(122 sản phẩm)',
-                                    style: TextStyle(
+                                    text:
+                                        ' (${(_detailProductModel?.quantity ?? 0).toString()} sản phẩm)',
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w300,
                                         color: AppColors.colorACACAC),
@@ -191,13 +189,13 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                               style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
-                                  color: Color(0xFFFFC700)),
+                                  color: AppColors.colorFFC700),
                             ),
                             const SizedBox(width: 15),
                             RichText(
                               text: TextSpan(
                                 text: FormatUtils.formatCurrencyDoubleToString(
-                                    _detailProductModel?.unitPrice),
+                                    _detailProductModel?.purchasePrice),
                                 style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,

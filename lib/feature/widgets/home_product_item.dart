@@ -100,7 +100,7 @@ class ProductItem extends StatelessWidget {
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFFFFC700)),
+                            color: AppColors.colorFFC700),
                       ),
                       const SizedBox(width: 15),
                       RichText(

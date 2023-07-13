@@ -2,19 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/local/app_cache.dart';
-import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
-import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
 import '../../injector_container.dart';
 import '../../routes.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
+import 'item_history_scan_widget.dart';
 
 class ScanHistoryNested extends StatelessWidget {
   const ScanHistoryNested({
@@ -77,10 +74,14 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
                         ),
                         const SizedBox(height: 16),
                         Expanded(
-                          child: ListView.builder(
+                          child: ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 12,
+                            ),
                             padding: const EdgeInsets.only(bottom: 100),
                             itemBuilder: (_, index) {
-                              return _itemHistoryScan(histories[index]);
+                              return itemHistoryScan(context, histories[index]);
                             },
                             itemCount: histories.length,
                           ),
@@ -109,70 +110,5 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
     setState(() {
       isLoading = false;
     });
-  }
-
-  Widget _itemHistoryScan(HistoryModel model) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, RouteName.detailProductScreen,
-            arguments: ArgumentDetailProductScreen(
-              productId: model.productId,
-            ));
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomImageNetwork(
-              url: model.image,
-              width: 74,
-              height: 74,
-              border: 5,
-              fit: BoxFit.cover,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 164,
-                  child: Text(
-                    model.productName ?? '',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Text(
-                  model.code ?? '',
-                  style: AppTextTheme.smallGrey,
-                ),
-                Text(
-                  model.numberSeri ?? '',
-                  style: AppTextTheme.smallGrey,
-                ),
-                const SizedBox(height: 12),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                model.count ?? '',
-                style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF0085FF)),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }
