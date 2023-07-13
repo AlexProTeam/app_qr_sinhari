@@ -142,7 +142,7 @@ class HomeScreenState extends State<HomeScreen>
       : Padding(
           padding: const EdgeInsets.only(left: 16),
           child: Image.asset(
-            IconConst.logo,
+            IconConst.logoMain,
             width: 40,
             height: 40,
           ),

@@ -16,25 +16,26 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.pushNamed(context, RouteName.detailProductScreen,
-          arguments: ArgumentDetailProductScreen(
-            productId: productModel?.id,
-          )),
-      child: Container(
-        height: 134,
-        margin: const EdgeInsets.only(top: 12),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-        decoration: BoxDecoration(
-          boxShadow: StringConst.defaultShadow,
-          color: AppColors.bgrScafold,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(
-              8,
-            ),
+    return Container(
+      height: 134,
+      margin: const EdgeInsets.only(top: 12),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      decoration: BoxDecoration(
+        boxShadow: StringConst.defaultShadow,
+        color: AppColors.bgrScafold,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(
+            8,
           ),
         ),
+      ),
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, RouteName.detailProductScreen,
+            arguments: ArgumentDetailProductScreen(
+              productId: productModel?.id,
+            )),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomImageNetwork(
@@ -44,94 +45,97 @@ class ProductItem extends StatelessWidget {
               height: 110,
               border: 8,
             ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 164,
-                  child: Text(
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
                     productModel?.name ?? '',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     textAlign: TextAlign.start,
                     style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: Colors.black,
-                        height: 1.3),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: Colors.black,
+                      height: 1.3,
+                    ),
                   ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Image.asset(
-                      IconConst.star,
-                      width: 16,
-                      height: 16,
-                    ),
-                    const SizedBox(width: 6),
-                    RichText(
-                      text: TextSpan(
-                        text: productModel?.rating.toString(),
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text: ' ${productModel?.quantity}',
-                            style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300,
-                                color: AppColors.colorACACAC),
-                          )
-                        ],
+                  Row(
+                    children: [
+                      Image.asset(
+                        IconConst.star,
+                        width: 16,
+                        height: 16,
                       ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      FormatUtils.formatCurrencyDoubleToString(
-                          productModel?.unitPrice),
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFFFFC700)),
-                    ),
-                    const SizedBox(width: 15),
-                    RichText(
-                      text: TextSpan(
-                        text: FormatUtils.formatCurrencyDoubleToString(
-                          productModel?.purchasePrice ??
-                              ((productModel?.unitPrice ?? 0) * 1.3).toInt(),
+                      const SizedBox(width: 6),
+                      RichText(
+                        text: TextSpan(
+                          text: (productModel?.rating ?? 0).toString(),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.black),
+                          children: [
+                            TextSpan(
+                              text:
+                                  ' (${(productModel?.quantity ?? 0).toString()} Sản phẩm)',
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w300,
+                                  color: AppColors.colorACACAC),
+                            )
+                          ],
                         ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        FormatUtils.formatCurrencyDoubleToString(
+                            productModel?.unitPrice),
                         style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.colorACACAC,
-                          decoration: TextDecoration.lineThrough,
-                          decorationColor: AppColors.colorACACAC,
-                          height: 2,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFFFFC700)),
+                      ),
+                      const SizedBox(width: 15),
+                      RichText(
+                        text: TextSpan(
+                          text: FormatUtils.formatCurrencyDoubleToString(
+                            productModel?.purchasePrice,
+                          ),
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.colorACACAC,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor: AppColors.colorACACAC,
+                            height: 2,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 25),
-                    InkWell(
-                      onTap: () => ToastManager.showToast(context,
-                          text: 'Chức năng này sẽ sớm ra mắt'),
-                      child: Image.asset(
-                        IconConst.heart,
-                        width: 22,
-                        height: 20,
-                      ),
-                    )
-                  ],
-                ),
-              ],
+                      InkWell(
+                        onTap: () => ToastManager.showToast(
+                          context,
+                          text: 'Chức năng này sẽ sớm ra mắt',
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Image.asset(
+                            IconConst.heart,
+                            width: 22,
+                            height: 20,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

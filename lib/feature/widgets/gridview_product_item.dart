@@ -76,8 +76,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
               RichText(
                 text: TextSpan(
                   text: FormatUtils.formatCurrencyDoubleToString(
-                    productModel?.purchasePrice ??
-                        ((productModel?.unitPrice ?? 0) * 1.3).toInt(),
+                    productModel?.purchasePrice,
                   ),
                   style: const TextStyle(
                     fontSize: 10,

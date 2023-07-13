@@ -164,7 +164,8 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                               fontStyle: FontStyle.normal,
                               wordSpacing: 1.5,
                               alignment: Alignment.center,
-                              padding: HtmlPaddings.symmetric(horizontal: 9),
+                              padding: HtmlPaddings.symmetric(horizontal: 9)
+                                  .copyWith(bottom: HtmlPadding(100)),
                             ),
                             'img': Style(
                               width: Width(

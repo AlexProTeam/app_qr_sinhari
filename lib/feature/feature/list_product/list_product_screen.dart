@@ -86,6 +86,13 @@ class ListProductScreenState extends State<ListProductScreen> {
   }
 
   @override
+  void dispose() {
+    _scrollController.removeListener(() => _scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
