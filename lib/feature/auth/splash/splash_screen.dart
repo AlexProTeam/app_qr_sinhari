@@ -25,7 +25,7 @@ class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
-  List<WelcomeModel> _welcomeModel = [];
+  final List<WelcomeModel> _welcomeModel = [];
 
   @override
   void initState() {
