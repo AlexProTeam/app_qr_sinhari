@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
-import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
-import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
@@ -15,6 +13,7 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
+import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
 
@@ -143,10 +142,10 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
         injector<AppClient>().header = appHeader;
         injector<LocalApp>().saveStringSharePreference(
             KeySaveDataLocal.keySaveAccessToken, accessToken);
-        final data = await injector<AppClient>().get('auth/showProfile');
-        ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-        injector<AppCache>().profileModel = profileModel;
+
         if (mounted) {
+          context.read<ProfileBloc>().add(const InitProfileEvent());
+
           _focusNode.unfocus();
           context.read<BottomBarBloc>().add(const ChangeTabBottomBarEvent(
                 bottomBarEnum: BottomBarEnum.home,

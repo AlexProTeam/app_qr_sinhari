@@ -7,6 +7,7 @@ import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 
+import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../../common/utils/common_util.dart';
 import '../../routes.dart';
 import '../../themes/theme_color.dart';
@@ -124,10 +125,11 @@ class PersonalScreenState extends State<PersonalScreen> {
     );
   }
 
-  bool get _isProfileModelNotBull => injector<AppCache>().profileModel != null;
+  bool get _isProfileModelNotBull =>
+      context.read<ProfileBloc>().state.profileModel != null;
 
   void _onTapLogout() async {
-    injector<AppCache>().profileModel = null;
+    context.read<ProfileBloc>().add(const ClearProfileEvent());
     injector<AppCache>().havedLogin = false;
     await injector<LocalApp>()
         .saveStringSharePreference(KeySaveDataLocal.keySaveAccessToken, '');

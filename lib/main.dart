@@ -6,9 +6,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/notification/local_notification.dart';
 import 'package:qrcode/feature/injector_container.dart' as di;
 
+import 'common/bloc/profile_bloc/profile_bloc.dart';
 import 'common/navigation/route_names.dart';
 import 'common/notification/firebase_notification.dart';
 import 'common/utils/screen_utils.dart';
@@ -56,22 +58,37 @@ class AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Routes.instance.navigatorKey,
-      debugShowCheckedModeBanner: false,
-      title: 'SinHair',
-      onGenerateRoute: Routes.generateDefaultRoute,
-      initialRoute: RouteName.splashScreen,
-      theme: ThemeData(
-        primaryColor: AppColors.primaryColor,
-        fontFamily: 'Montserrat',
-        scaffoldBackgroundColor: AppColors.white,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ProfileBloc(),
+        )
+      ],
+      child: MaterialApp(
+        navigatorKey: Routes.instance.navigatorKey,
+        debugShowCheckedModeBanner: false,
+        title: 'SinHair',
+        onGenerateRoute: Routes.generateDefaultRoute,
+        initialRoute: RouteName.splashScreen,
+        theme: ThemeData(
+          primaryColor: AppColors.primaryColor,
+          fontFamily: 'Montserrat',
+          scaffoldBackgroundColor: AppColors.white,
+        ),
+        builder: (context, widget) {
+          GScreenUtil.init(context);
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => ProfileBloc(),
+              )
+            ],
+            child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: widget ?? const SizedBox()),
+          );
+        },
       ),
-      builder: (context, widget) {
-        GScreenUtil.init(context);
-        return Scaffold(
-            resizeToAvoidBottomInset: false, body: widget ?? const SizedBox());
-      },
     );
   }
 }

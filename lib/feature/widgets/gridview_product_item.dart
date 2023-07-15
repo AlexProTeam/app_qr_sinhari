@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -7,6 +8,7 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
+import '../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../common/const/string_const.dart';
 import '../themes/theme_color.dart';
 
@@ -24,7 +26,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (injector<AppCache>().profileModel == null) {
+        if (context.read<ProfileBloc>().state.profileModel == null) {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
         Navigator.pushNamed(context, RouteName.detailProductScreen,

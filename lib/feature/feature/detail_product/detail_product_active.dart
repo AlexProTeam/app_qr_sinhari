@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/const/string_const.dart';
-import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
@@ -61,7 +62,7 @@ class DetailProductActiveState extends State<DetailProductActive> {
   }
 
   void _initData() async {
-    ProfileModel? profileModel = injector<AppCache>().profileModel;
+    ProfileModel? profileModel = context.read<ProfileBloc>().state.profileModel;
     _nameController.text = profileModel?.name ?? '';
     _phoneController.text = profileModel?.phone ?? '';
     _adddressController.text = profileModel?.address ?? '';

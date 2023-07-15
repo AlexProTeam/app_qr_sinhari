@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
-import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/feature/feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import 'package:qrcode/feature/feature/home/widget/banner_home.dart';
 import 'package:qrcode/feature/feature/home/widget/filter_item.dart';
@@ -9,9 +8,9 @@ import 'package:qrcode/feature/feature/home/widget/news_home_widget.dart';
 import 'package:qrcode/feature/feature/home/widget/product_features.dart';
 import 'package:qrcode/feature/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/feature/feature/home/widget/silver_coated_shampoo_widget.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
+import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../../common/navigation/route_names.dart';
 import '../../routes.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -136,7 +135,7 @@ class HomeScreenState extends State<HomeScreen>
                   height: 3,
                 ),
                 Text(
-                  injector<AppCache>().profileModel?.name ?? "",
+                  context.read<ProfileBloc>().state.profileModel?.name ?? "",
                   style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -155,7 +154,8 @@ class HomeScreenState extends State<HomeScreen>
           ),
         );
 
-  bool get _isHasProfileData => injector<AppCache>().profileModel != null;
+  bool get _isHasProfileData =>
+      context.read<ProfileBloc>().state.profileModel?.phone != null;
 
   Widget _notiIcon() => GestureDetector(
         onTap: () => Navigator.pushNamed(

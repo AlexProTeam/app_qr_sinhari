@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/product_model.dart';
@@ -24,7 +26,7 @@ class CategoryItemProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (injector<AppCache>().profileModel == null) {
+        if (context.read<ProfileBloc>().state.profileModel == null) {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
         Navigator.pushNamed(context, RouteName.detailProductScreen,

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
-import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -19,6 +19,7 @@ import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 import 'package:qrcode/feature/widgets/follow_keyboard_widget.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
+import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../injector_container.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -36,6 +37,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   File? _image;
   bool isLoading = false;
+  ProfileModel _profileModel = ProfileModel();
 
   @override
   void initState() {
@@ -44,11 +46,12 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _initData() {
-    final profileModel = injector<AppCache>().profileModel;
-    _nameController.text = profileModel?.name ?? '';
-    _emailController.text = profileModel?.email ?? '';
-    _phoneController.text = profileModel?.phone ?? '';
-    _addressController.text = profileModel?.address ?? '';
+    _profileModel =
+        context.read<ProfileBloc>().state.profileModel ?? ProfileModel();
+    _nameController.text = _profileModel.name ?? '';
+    _emailController.text = _profileModel.email ?? '';
+    _phoneController.text = _profileModel.phone ?? '';
+    _addressController.text = _profileModel.address ?? '';
   }
 
   @override
@@ -116,11 +119,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                       fit: BoxFit.contain,
                                     ),
                                   )
-                                : ((injector<AppCache>()
-                                            .profileModel
-                                            ?.avatar
-                                            ?.isEmpty ??
-                                        true)
+                                : ((_profileModel.avatar?.isEmpty ?? true)
                                     ? Stack(
                                         children: [
                                           Center(
@@ -149,8 +148,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                         ],
                                       )
                                     : CustomImageNetwork(
-                                        url:
-                                            '${injector<AppCache>().profileModel?.avatar}',
+                                        url: '${_profileModel.avatar}',
                                         width: 112,
                                         height: 112,
                                         fit: BoxFit.cover,
@@ -218,10 +216,8 @@ class ProfileScreenState extends State<ProfileScreen> {
       await client.post(
           'auth/saveProfile?name=$name&email=$email&phone=$phone&address=$address');
 
-      final data = await client.get('auth/showProfile');
-      final profileModel = ProfileModel.fromJson(data['data']);
-      injector<AppCache>().profileModel = profileModel;
       if (mounted) {
+        context.read<ProfileBloc>().add(const InitProfileEvent());
         DialogManager.hideLoadingDialog;
         await ToastManager.showToast(
           context,

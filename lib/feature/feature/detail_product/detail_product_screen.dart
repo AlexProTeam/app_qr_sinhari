@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
@@ -17,6 +18,7 @@ import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
+import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../injector_container.dart';
 
 class ArgumentDetailProductScreen {
@@ -328,7 +330,8 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                         radius: 5,
                         onTap: () {
                           if (widget.argument?.url != null) {
-                            injector<AppCache>().profileModel != null
+                            context.read<ProfileBloc>().state.profileModel !=
+                                    null
                                 ? Navigator.pushNamed(
                                     context, RouteName.activeScrene,
                                     arguments: ArgumentActiveScreen(
@@ -337,7 +340,8 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                     context, RouteName.loginScreen,
                                     arguments: true);
                           } else {
-                            injector<AppCache>().profileModel != null
+                            context.read<ProfileBloc>().state.profileModel !=
+                                    null
                                 ? Navigator.pushNamed(
                                     context, RouteName.muaHangScrene,
                                     arguments: ArgumentContactScreen(

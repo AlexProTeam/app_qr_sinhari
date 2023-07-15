@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
-import 'package:qrcode/common/network/app_header.dart';
-import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
-import '../../../common/model/profile_model.dart';
-import '../welcome/welcome_model.dart';
+import '../../../common/const/status_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -25,10 +24,16 @@ class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
-  final List<WelcomeModel> _welcomeModel = [];
+  late ProfileBloc _profileBloc;
+
+  String? accessToken = injector<LocalApp>()
+      .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
 
   @override
   void initState() {
+    _profileBloc = context.read<ProfileBloc>();
+
+    _initData();
     super.initState();
     controller =
         AnimationController(duration: const Duration(seconds: 2), vsync: this);
@@ -41,64 +46,57 @@ class SplashScreenState extends State<SplashScreen>
         }
       });
     controller.forward();
-    _initData();
   }
 
-  void _initData() async {
+  Future<void> _initData() async {
     injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
+    await Future.delayed(const Duration(seconds: 3));
 
-    String? accessToken = injector<LocalApp>()
-        .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
-
-    try {
-      AppHeader appHeader = AppHeader();
-      appHeader.accessToken = accessToken;
-      injector<AppClient>().header = appHeader;
-
-      final data = await injector<AppClient>().get('auth/showProfile');
-      ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-      injector<AppCache>().profileModel = profileModel;
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: '');
-    }
-
-    if (accessToken?.isEmpty == true) {
+    if ((accessToken ?? '').isEmpty) {
       Navigator.pushReplacementNamed(
         Routes.instance.navigatorKey.currentContext!,
         RouteName.welcomeScreen,
-        arguments: _welcomeModel,
       );
 
       return;
     }
 
-    Navigator.pushReplacementNamed(
-      Routes.instance.navigatorKey.currentContext!,
-      RouteName.bottomBarScreen,
-      arguments: _welcomeModel,
-    );
+    _profileBloc.add(const InitProfileEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _AnimatedLogo(animation: animation),
-              const SizedBox(height: 12),
-              Text(
-                'Công ty TNHH Sinhair Japan',
-                style: AppTextTheme.medium20PxBlack.copyWith(fontSize: 18),
-              ),
-            ],
-          ),
-        ));
+    return BlocListener<ProfileBloc, ProfileState>(
+      listener: (context, state) async {
+        switch (state.status) {
+          case StatusBloc.success:
+            Navigator.pushReplacementNamed(
+              Routes.instance.navigatorKey.currentContext!,
+              RouteName.bottomBarScreen,
+            );
+            break;
+          default:
+        }
+      },
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _AnimatedLogo(animation: animation),
+                const SizedBox(height: 12),
+                Text(
+                  'Công ty TNHH Sinhair Japan',
+                  style: AppTextTheme.medium20PxBlack.copyWith(fontSize: 18),
+                ),
+              ],
+            ),
+          )),
+    );
   }
 
   @override

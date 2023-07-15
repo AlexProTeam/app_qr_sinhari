@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:qrcode/common/const/key_save_data_local.dart';
-import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
-import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
@@ -39,9 +37,6 @@ class BottomBarScreenState extends State<BottomBarScreen> {
     appHeader.accessToken = accessToken;
     injector<AppClient>().header = appHeader;
     await _addToken();
-    final data = await injector<AppClient>().get('auth/showProfile');
-    ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-    injector<AppCache>().profileModel = profileModel;
   }
 
   Future<void> _addToken() async {

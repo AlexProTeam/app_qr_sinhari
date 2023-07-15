@@ -30,12 +30,11 @@ class WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     _welcomeModel = widget.welcomeModel;
+    if (_welcomeModel.isEmpty) {
+      _initData().then((value) => setState(() {}));
+    }
+
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.welcomeModel.isEmpty) {
-        _initData().then((value) => setState(() {}));
-      }
-    });
   }
 
   Future<void> _initData() async {
@@ -49,6 +48,13 @@ class WelcomeScreenState extends State<WelcomeScreen> {
     } catch (e) {
       CommonUtil.handleException(e, methodName: '_initData');
     }
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
