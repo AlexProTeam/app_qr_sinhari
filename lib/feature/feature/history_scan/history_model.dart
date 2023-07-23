@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:qrcode/common/utils/log_util.dart';
 
 class HistoryModel {
   int? id;
@@ -32,21 +31,14 @@ class HistoryModel {
     updatedAt = json['updated_at'];
     productName = json['product_name'];
     image = json['featured_img'];
-    code = json['code'];
-    numberSeri = json['numberSeri'];
+    code = json['serial_code'];
+    numberSeri = json['serial_id'];
     count = json['count'];
-    // DateFormat dateFormat = DateFormat('yyyy-MM-ddThh:mm:ss');
-    // DateFormat dateFormat1 = DateFormat('hh:mm dd/MM/yyyy');
-    // if(updatedAt!=null){
-    //  var dateTimeData = dateFormat.parse(updatedAt!);
-    //  dateTime = dateFormat1.format(dateTimeData);
-    // }
     if (updatedAt?.isNotEmpty ?? false) {
       DateFormat dateFormat = DateFormat('yyyy-MM-ddThh:mm:ss');
       DateTime dateTime = dateFormat.parse(updatedAt!);
       DateTime date2 = DateTime.fromMillisecondsSinceEpoch(
           dateTime.millisecondsSinceEpoch + 3600000 * 7);
-      lOG.d('millisecondsSinceEpochNe: $date2');
       List<String> ngayThang =
           date2.toString().substring(0, 10).split('-').toList();
       String ngayThangText = ngayThang.reversed.join('/');

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/product_model.dart';
@@ -8,9 +10,11 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
+import '../themes/theme_color.dart';
+
 class CategoryItemProduct extends StatelessWidget {
   final double itemWidth;
-  final ProductModel? productModel;
+  final ProductResponse? productModel;
 
   const CategoryItemProduct({
     Key? key,
@@ -22,10 +26,10 @@ class CategoryItemProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (injector<AppCache>().profileModel == null) {
+        if (context.read<ProfileBloc>().state.profileModel == null) {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
-        Navigator.pushNamed(context,RouteName.detailProductScreen,
+        Navigator.pushNamed(context, RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(
               productId: productModel?.id,
             ));
@@ -75,7 +79,7 @@ class CategoryItemProduct extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w300,
-                          color: Color(0xFFACACAC)),
+                          color: AppColors.colorACACAC),
                     )
                   ]))
             ],
@@ -93,7 +97,7 @@ class CategoryItemProduct extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFFFFC700)),
+                      color: AppColors.colorFFC700),
                 ),
                 // const Spacer(),
                 RichText(
@@ -103,10 +107,9 @@ class CategoryItemProduct extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFFACACAC),
+                      color: AppColors.colorACACAC,
                       decoration: TextDecoration.lineThrough,
-                      decorationColor:
-                          Color(0xFFACACAC), // Màu của đường gạch ngang),
+                      decorationColor: AppColors.colorACACAC,
                     ),
                   ),
                 ),

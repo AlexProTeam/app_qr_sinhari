@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -7,9 +8,13 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
+import '../../common/bloc/profile_bloc/profile_bloc.dart';
+import '../../common/const/string_const.dart';
+import '../themes/theme_color.dart';
+
 class CategoryDetailWidgetItemProduct extends StatelessWidget {
   final double itemWidth;
-  final ProductModel? productModel;
+  final ProductResponse? productModel;
 
   const CategoryDetailWidgetItemProduct({
     Key? key,
@@ -21,7 +26,7 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (injector<AppCache>().profileModel == null) {
+        if (context.read<ProfileBloc>().state.profileModel == null) {
           injector<AppCache>().cacheProductId = productModel?.id;
         }
         Navigator.pushNamed(context, RouteName.detailProductScreen,
@@ -32,50 +37,56 @@ class CategoryDetailWidgetItemProduct extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomImageNetwork(
-            url: '${productModel?.thumbnailImg}',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: 200,
-            border: 12,
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: StringConst.defaultShadow,
+            ),
+            child: CustomImageNetwork(
+              url: '${productModel?.thumbnailImg}',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 200,
+              border: 12,
+            ),
           ),
           const SizedBox(height: 10),
-          SizedBox(
-            height: 36,
-            child: Text('${productModel?.name}',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                textAlign: TextAlign.start,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Colors.black)),
+          Text(
+            '${productModel?.name}',
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            textAlign: TextAlign.start,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Colors.black,
+              height: 1.3,
+            ),
           ),
-          const SizedBox(height: 10),
+          const Spacer(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 FormatUtils.formatCurrencyDoubleToString(
-                    productModel?.purchasePrice ?? productModel?.unitPrice),
+                    productModel?.unitPrice),
                 style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFFFFC700)),
+                    color: AppColors.colorFFC700),
               ),
-              // const Spacer(),
               const SizedBox(width: 5),
               RichText(
                 text: TextSpan(
                   text: FormatUtils.formatCurrencyDoubleToString(
-                      productModel?.purchasePrice ?? productModel?.unitPrice),
+                    productModel?.purchasePrice,
+                  ),
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFFACACAC),
+                    color: AppColors.colorACACAC,
                     decoration: TextDecoration.lineThrough,
-                    decorationColor:
-                        Color(0xFFACACAC), // Màu của đường gạch ngang),
+                    decorationColor: AppColors.colorACACAC,
+                    height: 1.3,
                   ),
                 ),
               )

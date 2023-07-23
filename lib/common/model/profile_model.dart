@@ -18,7 +18,31 @@ class ProfileModel {
   int? isAgency;
   int? nextQrSerialNo;
   int? isNotification;
-String? avatar;
+  String? avatar;
+
+  ProfileModel({
+    this.id,
+    this.userType,
+    this.name,
+    this.email,
+    this.address,
+    this.country,
+    this.city,
+    this.districtCode,
+    this.wardCode,
+    this.phone,
+    this.balance,
+    this.createdAt,
+    this.updatedAt,
+    this.turnEarn,
+    this.isApproval,
+    this.isSpecial,
+    this.isAgency,
+    this.nextQrSerialNo,
+    this.isNotification,
+    this.avatar,
+  });
+
   ProfileModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userType = json['user_type'];
@@ -26,7 +50,7 @@ String? avatar;
     email = json['email'];
     address = json['address'];
     country = json['country'];
-    if(json['avatar']!=null){
+    if (json['avatar'] != null) {
       avatar = 'https://admin.sinhairvietnam.vn/${json['avatar']}';
     }
 

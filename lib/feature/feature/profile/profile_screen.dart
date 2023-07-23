@@ -1,13 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_event.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_state.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
-import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -16,9 +13,13 @@ import 'package:qrcode/common/utils/validate_utils.dart';
 import 'package:qrcode/feature/widgets/bottom_sheet_select_image.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
+import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 import 'package:qrcode/feature/widgets/follow_keyboard_widget.dart';
+import 'package:qrcode/feature/widgets/toast_manager.dart';
 
+import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../injector_container.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -36,14 +37,175 @@ class ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   File? _image;
   bool isLoading = false;
+  ProfileModel _profileModel = ProfileModel();
+
+  @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
+  void _initData() {
+    _profileModel =
+        context.read<ProfileBloc>().state.profileModel ?? ProfileModel();
+    _nameController.text = _profileModel.name ?? '';
+    _emailController.text = _profileModel.email ?? '';
+    _phoneController.text = _profileModel.phone ?? '';
+    _addressController.text = _profileModel.address ?? '';
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: BaseAppBar(
+        title: 'Thông tin cá nhân',
+        isShowBack: true,
+      ),
+      resizeToAvoidBottomInset: false,
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : FollowKeyBoardWidget(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 12),
+                        GestureDetector(
+                          onTap: _chooseTypeImage,
+                          child: Container(
+                            width: 164,
+                            height: 164,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 1,
+                                color: const Color(0xFFD9D9D9),
+                              ),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                            child: _image != null
+                                ? Container(
+                                    width: 164,
+                                    height: 164,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xFFD9D9D9),
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(12),
+                                      ),
+                                    ),
+                                    child: Image.file(
+                                      _image!,
+                                      width: 112,
+                                      height: 112,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  )
+                                : ((_profileModel.avatar?.isEmpty ?? true)
+                                    ? Stack(
+                                        children: [
+                                          Center(
+                                            child: Image.asset(
+                                              IconConst.logoLogin,
+                                              width: 145,
+                                              height: 145,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Image.asset(
+                                                  IconConst.camera,
+                                                  width: 24,
+                                                  height: 24,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : CustomImageNetwork(
+                                        url: '${_profileModel.avatar}',
+                                        width: 112,
+                                        height: 112,
+                                        fit: BoxFit.cover,
+                                      )),
+                          ),
+                        ),
+                        const SizedBox(height: 27),
+                        CustomTextField(
+                          height: 45,
+                          hintText: 'Họ và tên',
+                          controller: _nameController,
+                          validator: ValidateUtil.validEmpty,
+                        ),
+                        const SizedBox(height: 8),
+                        CustomTextField(
+                          height: 45,
+                          hintText: 'Email',
+                          validator: ValidateUtil.validEmail,
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        const SizedBox(height: 8),
+                        CustomTextField(
+                          height: 45,
+                          hintText: 'Số điện thoại',
+                          validator: ValidateUtil.validPhone,
+                          controller: _phoneController,
+                          keyboardType: TextInputType.phone,
+                        ),
+                        const SizedBox(height: 8),
+                        CustomTextField(
+                          height: 45,
+                          hintText: 'Địa chỉ',
+                          controller: _addressController,
+                          validator: ValidateUtil.validEmpty,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomButton(
+                          width: 100.44,
+                          height: 45,
+                          onTap: _onDone,
+                          text: 'Lưu lại',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+    );
+  }
 
   void _onDone() async {
     CommonUtil.dismissKeyBoard(context);
     if (!_formKey.currentState!.validate()) return;
     try {
-      setState(() {
-        isLoading = true;
-      });
+      await DialogManager.showLoadingDialog(context);
 
       final client = injector<AppClient>();
       final name = _nameController.text;
@@ -54,24 +216,22 @@ class ProfileScreenState extends State<ProfileScreen> {
       await client.post(
           'auth/saveProfile?name=$name&email=$email&phone=$phone&address=$address');
 
-      injector<SnackBarBloc>().add(ShowSnackbarEvent(
-        type: SnackBarType.success,
-        content: 'Cập nhật thông tin thành công!',
-      ));
-
-      final data = await client.get('auth/showProfile');
-      final profileModel = ProfileModel.fromJson(data['data']);
-      injector<AppCache>().profileModel = profileModel;
       if (mounted) {
-        Navigator.pop(context);
+        context.read<ProfileBloc>().add(const InitProfileEvent());
+        DialogManager.hideLoadingDialog;
+        await ToastManager.showToast(
+          context,
+          text: 'Cập nhật thông tin thành công!',
+          afterShowToast: () => Navigator.pop(context),
+        );
       }
+      return;
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
+      CommonUtil.handleException(e, methodName: '');
     }
+
+    DialogManager.hideLoadingDialog;
+    setState(() {});
   }
 
   void _chooseTypeImage() {
@@ -91,6 +251,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  ///todo: err up img
   void _onSelectImage(bool isCamera) async {
     final imagePicker = ImagePicker();
     final image = await imagePicker.pickImage(
@@ -109,198 +270,5 @@ class ProfileScreenState extends State<ProfileScreen> {
         _image = File(image.path);
       });
     }
-  }
-
-  @override
-  void initState() {
-    _initData();
-    super.initState();
-  }
-
-  void _initData() {
-    final profileModel = injector<AppCache>().profileModel;
-    _nameController.text = profileModel?.name ?? '';
-    _emailController.text = profileModel?.email ?? '';
-    _phoneController.text = profileModel?.phone ?? '';
-    _addressController.text = profileModel?.address ?? '';
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _addressController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Column(
-              children: [
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        size: 18,
-                        color: Color(0xFFACACAC),
-                      ),
-                    ),
-                    const Text(
-                      'Thông tin cá nhân',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(width: 40),
-                  ],
-                ),
-                Expanded(
-                  child: FollowKeyBoardWidget(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 12),
-                              GestureDetector(
-                                onTap: _chooseTypeImage,
-                                child: Container(
-                                  width: 164,
-                                  height: 164,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 1,
-                                      color: const Color(0xFFD9D9D9),
-                                    ),
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(12),
-                                    ),
-                                  ),
-                                  child: _image != null
-                                      ? Container(
-                                          width: 164,
-                                          height: 164,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              width: 1,
-                                              color: const Color(0xFFD9D9D9),
-                                            ),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(12),
-                                            ),
-                                          ),
-                                          child: Image.file(
-                                            _image!,
-                                            width: 112,
-                                            height: 112,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        )
-                                      : ((injector<AppCache>()
-                                                  .profileModel
-                                                  ?.avatar
-                                                  ?.isEmpty ??
-                                              true)
-                                          ? Stack(
-                                              children: [
-                                                Center(
-                                                  child: Image.asset(
-                                                    IconConst.logoLogin,
-                                                    width: 145,
-                                                    height: 145,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      Image.asset(
-                                                        IconConst.camera,
-                                                        width: 24,
-                                                        height: 24,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : CustomImageNetwork(
-                                              url:
-                                                  '${injector<AppCache>().profileModel?.avatar}',
-                                              width: 112,
-                                              height: 112,
-                                              fit: BoxFit.cover,
-                                            )),
-                                ),
-                              ),
-                              const SizedBox(height: 27),
-                              CustomTextField(
-                                height: 45,
-                                hintText: 'Họ và tên',
-                                controller: _nameController,
-                                validator: ValidateUtil.validEmpty,
-                              ),
-                              const SizedBox(height: 8),
-                              CustomTextField(
-                                height: 45,
-                                hintText: 'Email',
-                                validator: ValidateUtil.validEmail,
-                                controller: _emailController,
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                              const SizedBox(height: 8),
-                              CustomTextField(
-                                height: 45,
-                                hintText: 'Số điện thoại',
-                                validator: ValidateUtil.validPhone,
-                                controller: _phoneController,
-                                keyboardType: TextInputType.phone,
-                              ),
-                              const SizedBox(height: 8),
-                              CustomTextField(
-                                height: 45,
-                                hintText: 'Địa chỉ',
-                                controller: _addressController,
-                                validator: ValidateUtil.validEmpty,
-                              ),
-                              const SizedBox(height: 16),
-                              CustomButton(
-                                width: 100.44,
-                                height: 45,
-                                onTap: _onDone,
-                                text: 'Lưu lại',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-    );
   }
 }

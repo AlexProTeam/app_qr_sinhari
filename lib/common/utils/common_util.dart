@@ -3,12 +3,8 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_event.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_state.dart';
 import 'package:qrcode/common/exceptions/app_exception.dart';
 import 'package:qrcode/common/exceptions/connect_exception.dart';
 import 'package:qrcode/common/exceptions/timeout_exception.dart';
@@ -16,24 +12,26 @@ import 'package:qrcode/common/utils/log_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/widgets/alert_dialog_container.dart';
+import 'package:qrcode/feature/widgets/toast_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CommonUtil {
   static Future<String> getDeviceId() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-    String identifier = '';
     try {
       if (Platform.isAndroid) {
         var build = await deviceInfoPlugin.androidInfo;
-        identifier = build.id; //UUID for Android
-      } else if (Platform.isIOS) {
+        return build.id;
+      }
+      if (Platform.isIOS) {
         var data = await deviceInfoPlugin.iosInfo;
-        identifier = data.isPhysicalDevice as String; //UUID for iOS
+        return data.identifierForVendor ?? '';
       }
     } catch (e) {
       return '';
     }
-    return identifier;
+
+    return '';
   }
 
   static int countNumberRowOfGridview(List? data) {
@@ -83,78 +81,6 @@ class CommonUtil {
         onClosed();
       }
     });
-  }
-
-  static void mapListenerSnackBarState(
-      BuildContext context, SnackBarState state) {
-    if (state is ShowSnackBarState) {
-      Icon icon;
-      ui.Color color;
-      String title;
-      switch (state.type) {
-        case SnackBarType.success:
-          icon = const Icon(
-            Icons.check_circle_outline,
-            color: Colors.white,
-          );
-          color = const Color(0xff33B44A);
-          title = "Thành công";
-          break;
-        case SnackBarType.warning:
-          icon = const Icon(
-            Icons.error_outline,
-            color: Colors.white,
-          );
-          color = Colors.orange;
-          title = "Cảnh báo";
-          break;
-        case SnackBarType.error:
-          icon = const Icon(
-            Icons.error_outline,
-            color: Colors.white,
-          );
-          color = const Color(0xffF63E43);
-          title = "Thất bại";
-          break;
-        default:
-          icon = const Icon(
-            Icons.error_outline,
-            color: Colors.white,
-          );
-          color = Colors.grey;
-          title = "Thông báo";
-          break;
-      }
-
-      showFlash(
-        context: Routes.instance.navigatorKey.currentContext!,
-        duration: state.duration ?? const Duration(milliseconds: 3000),
-        builder: (context, controller) {
-          return FlashBar(
-            controller: controller,
-            backgroundColor: color,
-            position: FlashPosition.top,
-            margin: const EdgeInsets.all(8),
-            forwardAnimationCurve: Curves.easeOutBack,
-            reverseAnimationCurve: Curves.easeInCubic,
-            title: Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Colors.white),
-            ),
-            content: Text(
-              state.mess ?? '',
-              style: const TextStyle(color: Colors.white),
-            ),
-            icon: icon,
-            shouldIconPulse: true,
-            showProgressIndicator: false,
-          );
-        },
-      );
-    }
   }
 
   static dynamic getObjectInList(List<dynamic>? list, int index) {
@@ -298,27 +224,27 @@ class CommonUtil {
     return 12742 * asin(sqrt(a));
   }
 
-  static void handleException(SnackBarBloc? snackBarBloc, e,
-      {required String methodName,
-      String? exceptionName,
-      bool showSnackbar = true,
-      bool logBug = true,
-      String? text}) async {
-    lOG.e('GstoreException: ${e.toString()} | $methodName | $exceptionName');
-    if ((e is TimeOutException || e is ConnectException) &&
-        snackBarBloc != null) {
-      snackBarBloc.add(ShowSnackbarEvent(
-        content: 'Đường truyền của bạn không ổn định, vui lòng thử lại',
-        type: SnackBarType.warning,
-      ));
+  static void handleException(
+    e, {
+    required String methodName,
+    String? exceptionName,
+    bool showSnackbar = true,
+    bool logBug = true,
+    String? text,
+  }) async {
+    lOG.e('GstoreException: ${e.toString()} \n$methodName \n $exceptionName');
+    if ((e is TimeOutException || e is ConnectException)) {
+      await ToastManager.showToast(Routes.instance.navigatorKey.currentContext!,
+          text: 'Đường truyền của bạn không ổn định, vui lòng thử lại');
       return;
     }
 
     final message = (e is AppException) ? e.message : 'Lỗi không xác định';
 
-    if (showSnackbar && snackBarBloc != null) {
-      snackBarBloc.add(ShowSnackbarEvent(content: exceptionName ?? message));
-    }
+    await ToastManager.showToast(
+      Routes.instance.navigatorKey.currentContext!,
+      text: message,
+    );
   }
 
   static String getTwoCharOfName(String? name) {

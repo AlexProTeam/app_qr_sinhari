@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
-import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
-import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
+import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
+import 'package:qrcode/feature/widgets/toast_manager.dart';
 
-import '../../../common/navigation/route_names.dart';
+import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
 
@@ -41,48 +41,24 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F2),
+      appBar: BaseAppBar(
+        title: 'Nhập mã OTP',
+        isShowBack: true,
+      ),
+      backgroundColor: AppColors.bgrScafold,
       body: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      size: 18,
-                      color: Color(0xFFACACAC),
-                    )),
-                const SizedBox(width: 90),
-                const Text(
-                  'Nhập mã OTP',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
-                )
-              ],
-            ),
             const SizedBox(height: 25),
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
               child: Text(
-                "Mã OTP sẽ được gửi đến SĐT của bạn",
-                style: TextStyle(
+                "Mã OTP sẽ được gửi đến SĐT ${widget.phone} của bạn",
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
                     color: Colors.black),
@@ -113,9 +89,11 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 keyboardType: TextInputType.number,
                 enableActiveFill: true,
                 onCompleted: (v) {},
-                onChanged: (value) {
-                  setState(() {});
+                validator: (value) {
+                  if ((value ?? '').isEmpty) return;
+                  return null;
                 },
+                onChanged: (value) {},
               ),
             ),
             const SizedBox(height: 15),
@@ -136,9 +114,25 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
     );
   }
 
-  void _onContinue() async {
+  Future<void> _onContinue() async {
     if (!CommonUtil.validateAndSave(_formKey)) return;
+    if (_controller.text.isEmpty) {
+      return await ToastManager.showToast(
+        context,
+        text: 'bạn chưa nhập mã',
+        delaySecond: 1,
+      );
+    }
+    if (_controller.text.length < 6) {
+      return await ToastManager.showToast(
+        context,
+        text: 'Chưa nhập đủ mã',
+        delaySecond: 1,
+      );
+    }
+
     try {
+      await DialogManager.showLoadingDialog(context);
       final data = await injector<AppClient>()
           .post('confirm-otp?phone=${widget.phone}&otp=${_controller.text}');
       String? accessToken = data['data']['result']['accessToken'];
@@ -148,21 +142,27 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
         injector<AppClient>().header = appHeader;
         injector<LocalApp>().saveStringSharePreference(
             KeySaveDataLocal.keySaveAccessToken, accessToken);
-        final data = await injector<AppClient>().get('auth/showProfile');
-        ProfileModel profileModel = ProfileModel.fromJson(data['data']);
-        injector<AppCache>().profileModel = profileModel;
+
         if (mounted) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RouteName.personalScreen,
-            (route) => false,
-          );
-          context.read<BottomBarBloc>().add(
-              const ChangeTabBottomBarEvent(bottomBarEnum: BottomBarEnum.home));
+          context.read<ProfileBloc>().add(const InitProfileEvent());
+
+          _focusNode.unfocus();
+          context.read<BottomBarBloc>().add(const ChangeTabBottomBarEvent(
+                bottomBarEnum: BottomBarEnum.home,
+                isRefresh: true,
+              ));
+          Navigator.popUntil(context, (route) => route.isFirst);
         }
       }
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      if (mounted) {
+        await ToastManager.showToast(
+          context,
+          text: 'Mã không đúng',
+        );
+      }
+      _controller.clear();
     }
+    DialogManager.hideLoadingDialog;
   }
 }

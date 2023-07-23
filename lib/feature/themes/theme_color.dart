@@ -32,7 +32,8 @@ class AppColors {
   static const Color colorGoogle = Color(0xffdb3236);
   static const Color colorDivider = grey5;
   static const Color colorEF4948 = Color(0xFFEF4948);
-
+  static const Color colorF4F5FB = Color(0xFFF4F5FB);
+  static const Color bgrScafold = Color(0xFFF2F2F2);
   // splash
   static const Color splashNotFocusDot = Color(0xffE8E8E8);
 
@@ -63,6 +64,8 @@ class AppColors {
   static const Color grocery = Color(0xff212121);
   static const Color house = Color(0xffD500F9);
   static const Color other = Color(0xff01579B);
+  static const Color colorACACAC = Color(0xffACACAC);
+  static const Color colorFFC700 = Color(0xFFFFC700);
 
   // color logo
   static const Color logoPink = Color(0xffe94776);

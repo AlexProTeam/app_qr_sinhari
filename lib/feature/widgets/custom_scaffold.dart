@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
@@ -35,7 +36,6 @@ class CustomScaffold extends StatelessWidget {
         children: [
           customAppBar ??
               (appbarWidget ?? SizedBox(height: GScreenUtil.statusBarHeight)),
-          const Divider(height: 1, color: AppColors.grey5),
           Expanded(
             child: GestureDetector(
                 onTap: autoDismissKeyboard
@@ -45,7 +45,6 @@ class CustomScaffold extends StatelessWidget {
                     : () {},
                 child: body ?? const SizedBox()),
           ),
-          SizedBox(height: paddingBottom ? GScreenUtil.bottomBarHeight : 0),
         ],
       ),
     );
@@ -92,7 +91,7 @@ class CustomAppBar extends StatelessWidget {
                         child: Icon(
                       Icons.arrow_back,
                       size: 18,
-                      color: Color(0xFFACACAC),
+                      color: AppColors.colorACACAC,
                     )),
                   ),
                 )
@@ -116,5 +115,79 @@ class CustomAppBar extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
+  final bool isShowBack;
+  @override
+  final Size preferredSize;
+  final Widget? leadingIcon;
+  final String? title;
+  final Color? backGroundColor;
+  final List<Widget>? actions;
+  final PreferredSizeWidget? tabbar;
+  final bool? refreshData;
+  final Widget? widgetTitle;
+  final double? leadingWidth;
+
+  BaseAppBar({
+    Key? key,
+    this.title,
+    this.leadingIcon,
+    this.actions,
+    this.tabbar,
+    this.backGroundColor,
+    this.isShowBack = false,
+    this.refreshData,
+    this.widgetTitle,
+    this.preferredSize = const Size.fromHeight(kToolbarHeight),
+    this.leadingWidth,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leadingWidth: leadingWidth,
+      backgroundColor: Colors.transparent,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+      bottomOpacity: 0.0,
+      elevation: 0,
+      shadowColor: Colors.transparent,
+      bottom: tabbar,
+      automaticallyImplyLeading: false,
+      title: widgetTitle ??
+          Text(
+            title ?? '',
+            textAlign: TextAlign.center,
+            style: AppTextTheme.mediumBlack.copyWith(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+      centerTitle: true,
+      leading: leadingWidget(context),
+      actions: actions,
+    );
+  }
+
+  Widget leadingWidget(BuildContext context) {
+    if (leadingIcon != null) {
+      return leadingIcon ?? const SizedBox();
+    }
+    if (isShowBack) {
+      return InkWell(
+        onTap: () {
+          Navigator.pop(context, refreshData);
+        },
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.grey,
+          size: 24,
+        ),
+      );
+    }
+
+    return const SizedBox.shrink();
   }
 }

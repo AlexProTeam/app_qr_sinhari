@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 
+import '../../themes/theme_color.dart';
+
 class CheckBillScreen extends StatefulWidget {
   const CheckBillScreen({Key? key}) : super(key: key);
 
@@ -14,7 +16,7 @@ class _CheckBillScreenState extends State<CheckBillScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F2),
+      backgroundColor: AppColors.bgrScafold,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [Center(child: _itemBill())],

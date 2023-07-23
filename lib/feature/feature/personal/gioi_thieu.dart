@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
@@ -36,7 +35,7 @@ class HuongDanScreenState extends State<GioiThieuScreen> {
       _data = data['policy'];
       setState(() {});
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     } finally {
       isLoadding = false;
     }
@@ -44,12 +43,10 @@ class HuongDanScreenState extends State<GioiThieuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      customAppBar: CustomAppBar(
+    return Scaffold(
+      appBar: BaseAppBar(
         title: 'Chính sách bán hàng',
-        iconLeftTap: () {
-          Navigator.pop(context);
-        },
+        isShowBack: true,
       ),
       body: isLoadding
           ? const Center(

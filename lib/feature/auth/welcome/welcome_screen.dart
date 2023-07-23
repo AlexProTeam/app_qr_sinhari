@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -31,12 +30,11 @@ class WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     _welcomeModel = widget.welcomeModel;
+    if (_welcomeModel.isEmpty) {
+      _initData().then((value) => setState(() {}));
+    }
+
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.welcomeModel.isEmpty) {
-        _initData().then((value) => setState(() {}));
-      }
-    });
   }
 
   Future<void> _initData() async {
@@ -48,9 +46,15 @@ class WelcomeScreenState extends State<WelcomeScreen> {
       final banners = data['banners'] as List<dynamic>;
       _welcomeModel = banners.map((e) => WelcomeModel.fromJson(e)).toList();
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e,
-          methodName: '_initData');
+      CommonUtil.handleException(e, methodName: '_initData');
     }
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,14 +90,22 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                       GestureDetector(
                         onTap: () => Routes.instance
                             .navigateAndRemove(RouteName.bottomBarScreen),
-                        child: const Text(
-                          'Skip',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.white,
-                            decoration: TextDecoration.underline,
-                            height: 1.5,
+                        child: Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black.withOpacity(0.06)),
+                          child: const Center(
+                            child: Text(
+                              'Skip',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.white,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
                           ),
                         ),
                       ),

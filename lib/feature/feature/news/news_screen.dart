@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
@@ -12,6 +11,7 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 import '../../routes.dart';
+import '../../themes/theme_color.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 
@@ -47,50 +47,28 @@ class NewsScreenState extends State<NewsScreen> {
     super.initState();
   }
 
-  void _initData() async {
-    try {
-      _isLoading = true;
-      final data =
-          await injector<AppClient>().post('list_news', handleResponse: false);
-      data['data'].forEach((e) {
-        _histories.add(NewsModel.fromJson(e));
-      });
-      if (mounted) setState(() {});
-    } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
-    } finally {
-      _isLoading = false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F2F2),
-      body: Column(
-        children: [
-          const CustomAppBar(
-            title: 'Tin tức',
-            haveIconLeft: false,
-          ),
-          const SizedBox(height: 17),
-          _isLoading
-              ? const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : _histories.isEmpty
-                  ? const Expanded(
-                      child: Center(
-                        child: Text("Không có tin tức nào!"),
-                      ),
+      appBar: BaseAppBar(
+        title: 'Tin tức',
+      ),
+      backgroundColor: AppColors.bgrScafold,
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : RefreshIndicator(
+              onRefresh: () async {
+                _histories.clear();
+                _initData();
+              },
+              child: _histories.isEmpty
+                  ? const Center(
+                      child: Text("Không có tin tức nào!"),
                     )
                   : GridView.builder(
-                      shrinkWrap: true,
                       itemCount: _histories.length,
-                      // controller: _scrollController,
-                      physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 12.0),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -105,8 +83,7 @@ class NewsScreenState extends State<NewsScreen> {
                         return _item(_histories[index]);
                       },
                     ),
-        ],
-      ),
+            ),
     );
   }
 
@@ -166,5 +143,24 @@ class NewsScreenState extends State<NewsScreen> {
         ],
       ),
     );
+  }
+
+  void _initData() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      final data =
+          await injector<AppClient>().post('list_news', handleResponse: false);
+      data['data'].forEach((e) {
+        _histories.add(NewsModel.fromJson(e));
+      });
+      if (mounted) setState(() {});
+    } catch (e) {
+      CommonUtil.handleException(e, methodName: '');
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

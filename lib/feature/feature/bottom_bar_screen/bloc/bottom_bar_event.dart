@@ -6,9 +6,13 @@ abstract class BottomBarEvent extends Equatable {
 
 class ChangeTabBottomBarEvent extends BottomBarEvent {
   final BottomBarEnum bottomBarEnum;
+  final bool isRefresh;
 
-  const ChangeTabBottomBarEvent({required this.bottomBarEnum});
+  const ChangeTabBottomBarEvent({
+    required this.bottomBarEnum,
+    this.isRefresh = false,
+  });
 
   @override
-  List<Object?> get props => [bottomBarEnum];
+  List<Object?> get props => [bottomBarEnum, isRefresh];
 }

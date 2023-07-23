@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/bloc/snackbar_bloc/snackbar_bloc.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/widgets/category_product_item.dart';
+import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../injector_container.dart';
 
@@ -30,18 +30,17 @@ class ListProductScreen extends StatefulWidget {
 }
 
 class ListProductScreenState extends State<ListProductScreen> {
-  final List<ProductModel> _products = [];
+  final List<ProductResponse> _products = [];
   int _page = 1;
   final ScrollController _scrollController = ScrollController();
   bool _enableContinueLoadMore = true;
   bool _loading = false;
-  bool _loadingis = false;
+  final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
 
   void _initData({bool showLoading = true}) async {
     try {
       if (showLoading) {
-        // injector<LoadingBloc>().add(StartLoading());
-        _loadingis = true;
+        _loading = true;
       }
       final dataSeller = await injector<AppClient>()
           .get('${widget.argument?.url}?page=$_page');
@@ -51,7 +50,7 @@ class ListProductScreenState extends State<ListProductScreen> {
           : null;
       dataSeller['data'][key ?? 'productFeatures']['data'].forEach((e) {
         i++;
-        _products.add(ProductModel.fromJson(e));
+        _products.add(ProductResponse.fromJson(e));
       });
       if (i == 10) {
         _enableContinueLoadMore = true;
@@ -60,9 +59,9 @@ class ListProductScreenState extends State<ListProductScreen> {
         _loading = false;
       });
     } catch (e) {
-      CommonUtil.handleException(injector<SnackBarBloc>(), e, methodName: '');
+      CommonUtil.handleException(e, methodName: '');
     } finally {
-      _loadingis = false;
+      _loading = false;
     }
   }
 
@@ -87,87 +86,52 @@ class ListProductScreenState extends State<ListProductScreen> {
   }
 
   @override
+  void dispose() {
+    _scrollController.removeListener(() => _scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
     return Scaffold(
-      ///todo: remove later
-      // customAppBar: CustomAppBar(
-      //   title: '${widget.argument?.label}',
-      //   iconLeftTap: () {
-      //     Routes.instance.pop();
-      //   },
-      // ),
+      appBar: BaseAppBar(
+        title: '${widget.argument?.label}',
+        isShowBack: true,
+      ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    size: 18,
-                    color: Color(0xFFACACAC),
-                  )),
-              Text(
-                '${widget.argument?.label}',
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
-              ),
-              const SizedBox(width: 40),
-            ],
-          ),
-          const SizedBox(height: 16.75),
-          Column(
-            children: [
-              _loadingis
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : _products.isEmpty
-                      ? const Center(
-                          child: Text("Không có sản phẩm nào!"),
-                        )
-                      : SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              GridView.builder(
-                                shrinkWrap: true,
-                                itemCount: _products.length,
-                                controller: _scrollController,
-                                physics: const NeverScrollableScrollPhysics(),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0, vertical: 12.0),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 16.0,
-                                  mainAxisSpacing: 12.0,
-                                  childAspectRatio: MediaQuery.of(context)
-                                          .size
-                                          .width /
-                                      2 /
-                                      (MediaQuery.of(context).size.height / 2.5),
-                                ),
-                                itemBuilder: (context, index) {
-                                  return CategoryItemProduct(
-                                    itemWidth: itemWidth,
-                                    productModel: _products[index],
-                                  );
-                                },
-                              ),
-                              _loading
-                                  ? const CircularProgressIndicator()
-                                  : const SizedBox(),
-                            ],
-                          ),
-                        ),
-            ],
-          ),
+          _loading
+              ? const Expanded(
+                  child: Center(
+                  child: CircularProgressIndicator(),
+                ))
+              : _products.isEmpty
+                  ? const Expanded(
+                      child: Center(
+                      child: Text("Không có sản phẩm nào!"),
+                    ))
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: _products.length,
+                      controller: _scrollController,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 12.0),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16.0,
+                        mainAxisSpacing: 12.0,
+                        childAspectRatio: MediaQuery.of(context).size.width /
+                            2 /
+                            (MediaQuery.of(context).size.height / 2.5),
+                      ),
+                      itemBuilder: (context, index) {
+                        return CategoryItemProduct(
+                          itemWidth: _itemWidth,
+                          productModel: _products[index],
+                        );
+                      },
+                    ),
         ],
       ),
     );

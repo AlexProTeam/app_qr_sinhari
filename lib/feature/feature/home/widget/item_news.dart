@@ -20,8 +20,7 @@ class ItemNews extends StatelessWidget {
               ArgumentDetailNewScreen(newsDetail: model.id, url: model.image)),
       child: Container(
         width: 250,
-        height: 250,
-        margin: const EdgeInsets.only(right: 16, bottom: 0),
+        margin: const EdgeInsets.only(right: 16),
         decoration: BoxDecoration(
             boxShadow: StringConst.defaultShadow,
             borderRadius: BorderRadius.circular(12),
@@ -36,27 +35,25 @@ class ItemNews extends StatelessWidget {
               fit: BoxFit.cover,
               border: 12,
             ),
+            const Spacer(),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model.title ?? '',
-                    style: AppTextTheme.normalRoboto,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    model.createdAt ?? '',
-                    style: AppTextTheme.smallGrey,
-                  ),
-                ],
+              padding: const EdgeInsets.only(left: 16),
+              child: Text(
+                model.title ?? '',
+                style: AppTextTheme.normalRoboto,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Text(
+                model.createdAt ?? '',
+                style: AppTextTheme.smallGrey,
+              ),
+            ),
+            const Spacer(),
           ],
         ),
       ),
