@@ -1,0 +1,96 @@
+name: qrcode
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.2.6+6
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  permission_handler: ^10.2.0 # permission
+  image_picker: ^0.8.7+4 # image picker
+  logger: ^1.1.0  # logger
+  flutter_bloc: ^8.1.2 # state management
+  flutter_svg: ^2.0.5  #render image SVG
+  carousel_slider: ^4.0.0 # image slider
+  shimmer: ^2.0.0  # shimmer when wait loading data
+  http: ^0.13.3
+  intl: ^0.18.1
+  flash: ^3.0.3+5 # snackbar
+  get_it: ^7.2.0 # manager instance
+  shared_preferences: ^2.0.7
+  pin_code_fields: ^7.3.0
+  flutter_html: ^3.0.0-alpha.6 #display context as html
+  qr_code_scanner: ^1.0.1 # scan image qr
+  webview_flutter: ^4.2.0 # load url in app
+#  flutter_launcher_icons: ^0.13.1
+  device_info_plus: ^8.2.2
+  firebase_messaging: ^14.5.0
+  flutter_local_notifications: ^14.0.0+1
+  firebase_core: ^2.11.0
+  rxdart: ^0.27.3
+  cached_network_image: ^3.2.0
+#  keyboard_dismisser: ^3.0.0
+  equatable: ^2.0.3
+  url_launcher: ^6.0.1
+  dio: ^5.1.1
+#  retrofit: ^4.0.1
+  mobile_scanner: ^3.3.0
+  timeago: ^3.0.2
+#  code_scanner: ^1.0.0
+#  uuid: ^3.0.7
+  scan: ^1.6.0
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+  flutter_test:
+    sdk: flutter
+  lint: ^2.0.1
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/
+    - assets/fonts/
+    - assets/images/
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-ExtraBold.ttf
+          weight: 700
+        - asset: assets/fonts/Montserrat-ExtraBoldItalic.ttf
+          weight: 700
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/Montserrat-BoldItalic.ttf
+          weight: 600
+        - asset: assets/fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Montserrat-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Montserrat-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Montserrat-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Montserrat-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Montserrat-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Montserrat-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Montserrat-ThinItalic.ttf
+          weight: 100
+          style: italic
