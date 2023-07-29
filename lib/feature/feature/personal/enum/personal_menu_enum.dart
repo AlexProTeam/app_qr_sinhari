@@ -12,7 +12,7 @@ extension LoginEx on AppContact {
       case AppContact.tictok:
         return _icon(IconConst.iconTictok);
       case AppContact.website:
-        return _icon(IconConst.logo);
+        return _icon(IconConst.logoMain);
     }
   }
 

@@ -115,7 +115,7 @@ class HomeScreenState extends State<HomeScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              IconConst.logo,
+              IconConst.logoMain,
               width: 40,
               height: 40,
             ),

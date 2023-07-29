@@ -30,7 +30,7 @@ class WidgetLoading extends StatelessWidget {
           height: size,
           child: CircularProgressIndicator(
             strokeWidth: strokeWidth,
-            color: AppColors.primaryColor,
+            color: AppColors.colorEF4948,
           ),
         ),
       ),
