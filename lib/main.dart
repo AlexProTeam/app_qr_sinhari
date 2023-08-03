@@ -40,6 +40,7 @@ Future main() async {
       version: "v12.0",
     );
   }
+  //test
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
