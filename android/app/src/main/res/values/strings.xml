@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="default_notification_channel_id">my_channel_01</string>
-
+    <string name="facebook_app_id">2444192092457900</string>
+    <string name="facebook_client_token">c6469aae5442fb3a1ddc0797b5cb14bc</string>
 </resources>
 

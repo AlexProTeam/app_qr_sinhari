@@ -63,7 +63,7 @@ android {
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-//        multiDexEnabled true
+        multiDexEnabled true
     }
     signingConfigs {
         release {

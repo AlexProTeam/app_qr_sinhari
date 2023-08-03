@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:qrcode/common/notification/local_notification.dart';
 import 'package:qrcode/feature/injector_container.dart' as di;
 
@@ -16,6 +17,7 @@ import 'common/notification/firebase_notification.dart';
 import 'common/utils/screen_utils.dart';
 import 'feature/routes.dart';
 import 'feature/themes/theme_color.dart';
+import 'firebase_options.dart';
 
 dynamic decodeIsolate(String response) => jsonDecode(response);
 
@@ -29,7 +31,15 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   LocalNotification.instance.setUp();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,name: 'DEV');
+  if (kIsWeb) {
+    FacebookAuth.i.webInitialize(
+      appId: "2444192092457900", // Replace with your app id
+      cookie: true,
+      xfbml: true,
+      version: "v12.0",
+    );
+  }
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(

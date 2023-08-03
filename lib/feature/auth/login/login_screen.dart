@@ -14,6 +14,7 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import '../../injector_container.dart';
 import '../../widgets/dialog_manager_custom.dart';
 import '../../widgets/follow_keyboard_widget.dart';
+import 'login_enum.dart';
 
 class LoginScreen extends StatefulWidget {
   final bool? haveBack;
@@ -70,29 +71,29 @@ class LoginScreenState extends State<LoginScreen> {
 
                   ///todo: update login in next version
                   const SizedBox(height: 15),
-                  // const Center(
-                  //   child: Text(
-                  //     'Hoặc',
-                  //     style: TextStyle(
-                  //       fontWeight: FontWeight.w300,
-                  //       fontSize: 12,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 11),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: List.generate(
-                  //     LoginEnum.values.length,
-                  //     (index) => Padding(
-                  //       padding: EdgeInsets.only(
-                  //           right:
-                  //               index != LoginEnum.values.length - 1 ? 35 : 0),
-                  //       child: LoginEnum.values[index].getIcon(),
-                  //     ),
-                  //   ),
-                  // ),
+                  const Center(
+                    child: Text(
+                      'Hoặc',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 11),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      LoginEnum.values.length,
+                      (index) => Padding(
+                        padding: EdgeInsets.only(
+                            right:
+                                index != LoginEnum.values.length - 1 ? 35 : 0),
+                        child: LoginEnum.values[index].getIcon(),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

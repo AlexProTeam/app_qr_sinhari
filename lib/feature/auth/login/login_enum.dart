@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:qrcode/feature/auth/helper/facebook_manager.dart';
 
 import '../../../common/const/icon_constant.dart';
 
@@ -12,7 +13,10 @@ extension LoginEx on LoginEnum {
       case LoginEnum.gmail:
         return () {};
       case LoginEnum.facebook:
-        return () {};
+        return () async {
+          //login
+          await FacebookManager.instance.onLogin();
+        };
       case LoginEnum.zalo:
         return () {};
       case LoginEnum.apple:
