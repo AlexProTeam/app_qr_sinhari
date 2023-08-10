@@ -45,7 +45,7 @@ class IconConst {
   static const String zalo = '${_pathIcons}Zalo.png';
 
   ///icon login page
-  static const String logoLogin = '${_pathIcons}Logologin.png';
+  static const String logoLogin = '${_pathIcons}logo_login.png';
   static const String apple = '${_pathIcons}apple.png';
 
   ///icon contact

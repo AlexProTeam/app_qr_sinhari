@@ -52,74 +52,79 @@ class PersonalScreenState extends State<PersonalScreen> {
       backgroundColor: AppColors.bgrScafold,
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (!_isProfileModelNotBull) ...[
-              CustomButton(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    RouteName.loginScreen,
-                    arguments: true,
-                  );
-                },
-                text: 'Đăng nhập',
-                width: 128,
-                height: 45,
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-            ],
-            boxBorderApp(
-              child: Column(
-                children: PersonalContactEnum.values
-                    .map(
-                      (e) => !_isProfileModelNotBull &&
-                              e == PersonalContactEnum.account
-                          ? const SizedBox.shrink()
-                          : iconTextWidget(
-                              onTap: () => e.getOnTap(context),
-                              text: e.getDisplayValue,
-                              iconWidget: e.getIcon(),
-                            ),
-                    )
-                    .toList(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            boxBorderApp(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Kết nối với Sinhair:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: Colors.black),
+        child: BlocBuilder<ProfileBloc, ProfileState>(
+          buildWhen: (previous, current) => previous != current,
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (!_isProfileModelNotBull) ...[
+                  CustomButton(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        RouteName.loginScreen,
+                        arguments: true,
+                      );
+                    },
+                    text: 'Đăng nhập',
+                    width: 128,
+                    height: 45,
                   ),
-                  const SizedBox(height: 11),
-                  ...AppContact.values.map(
-                    (e) => iconTextWidget(
-                      onTap: () => CommonUtil.runUrl(e.getLongContact),
-                      text: e.getShortContact,
-                      iconWidget: e.getIcon(),
-                      iconData: '',
-                    ),
+                  const SizedBox(
+                    height: 18,
                   ),
                 ],
-              ),
-            ),
-            if (_isProfileModelNotBull) ...[
-              const SizedBox(height: 50),
-              CustomButton(
-                onTap: _onTapLogout,
-                text: 'Đăng xuất',
-              ),
-            ],
-          ],
+                boxBorderApp(
+                  child: Column(
+                    children: PersonalContactEnum.values
+                        .map(
+                          (e) => !_isProfileModelNotBull &&
+                                  e == PersonalContactEnum.account
+                              ? const SizedBox.shrink()
+                              : iconTextWidget(
+                                  onTap: () => e.getOnTap(context),
+                                  text: e.getDisplayValue,
+                                  iconWidget: e.getIcon(),
+                                ),
+                        )
+                        .toList(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                boxBorderApp(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Kết nối với Sinhair:',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Colors.black),
+                      ),
+                      const SizedBox(height: 11),
+                      ...AppContact.values.map(
+                        (e) => iconTextWidget(
+                          onTap: () => CommonUtil.runUrl(e.getLongContact),
+                          text: e.getShortContact,
+                          iconWidget: e.getIcon(),
+                          iconData: '',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (_isProfileModelNotBull) ...[
+                  const SizedBox(height: 50),
+                  CustomButton(
+                    onTap: _onTapLogout,
+                    text: 'Đăng xuất',
+                  ),
+                ],
+              ],
+            );
+          },
         ),
       ),
     );
@@ -133,7 +138,6 @@ class PersonalScreenState extends State<PersonalScreen> {
     injector<AppCache>().havedLogin = false;
     await injector<LocalApp>()
         .saveStringSharePreference(KeySaveDataLocal.keySaveAccessToken, '');
-    setState(() {});
     if (mounted) {
       context.read<BottomBarBloc>().add(
             const ChangeTabBottomBarEvent(

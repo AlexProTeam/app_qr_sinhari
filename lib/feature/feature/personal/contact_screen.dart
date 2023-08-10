@@ -6,6 +6,7 @@ import '../../themes/theme_color.dart';
 import '../../widgets/box_border_widget.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/icon_text_widget.dart';
+import '../../widgets/icon_tiltile_value_widget.dart';
 import 'enum/personal_menu_enum.dart';
 
 class WebViewScreen extends StatefulWidget {
@@ -40,135 +41,29 @@ class WebviewScreenState extends State<WebViewScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Image.asset(
-                        IconConst.location,
-                        width: 24,
-                        height: 24,
-                      ),
-                      const SizedBox(width: 15),
-                      RichText(
-                          text: const TextSpan(
-                              children: [
-                            TextSpan(
-                              text: ' 192 Mai Anh Tuấn, Quận\n Ba Đình, Hà Nội',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                              ),
-                            )
-                          ],
-                              text: 'Trụ sở:',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16)))
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      const SizedBox(width: 39),
-                      RichText(
-                          text: const TextSpan(
-                              text: 'Văn phòng HCM:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black),
-                              children: [
-                            TextSpan(
-                                text:
-                                    ' Số nhà 76 Lê\n Lai, Quận 1, Tp Hồ Chí Minh',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16,
-                                    color: Colors.black))
-                          ])),
-                    ],
+                  titleValueWidget(
+                    icon: IconConst.location,
+                    title: 'Trụ sở: ',
+                    value:
+                        'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên,Thành phố Hà Nội, Việt Nam',
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 12),
             boxBorderApp(
-                child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      IconConst.hotline,
-                      width: 24,
-                      height: 24,
-                    ),
-                    const SizedBox(width: 15),
-                    RichText(
-                        text: const TextSpan(
-                            children: [
-                          TextSpan(
-                              text: '19008787',
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                              ))
-                        ],
-                            text: 'Hotline: ',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16)))
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  children: const [
-                    SizedBox(width: 39),
-                    Text(
-                      'VP HCM: 0987 655 755',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
-                    )
-                  ],
-                ),
-              ],
-            )),
+              child: titleValueWidget(
+                icon: IconConst.hotline,
+                title: 'Hotline: ',
+                value: '19003065',
+              ),
+            ),
             const SizedBox(height: 12),
             boxBorderApp(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    IconConst.mail,
-                    width: 24,
-                    height: 24,
-                  ),
-                  const SizedBox(width: 15),
-                  RichText(
-                      text: const TextSpan(
-                    text: 'Email:',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        height: 1.35),
-                    children: [
-                      TextSpan(
-                          text: ' sunhair.cskh@gmail.com',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                          ))
-                    ],
-                  ))
-                ],
+              child: titleValueWidget(
+                icon: IconConst.mail,
+                title: 'Email: ',
+                value: 'info@sinhairvietnam.vn',
               ),
             ),
             const SizedBox(height: 12),
