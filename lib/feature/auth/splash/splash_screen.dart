@@ -68,6 +68,7 @@ class SplashScreenState extends State<SplashScreen>
     return BlocListener<ProfileBloc, ProfileState>(
       listener: (context, state) async {
         switch (state.status) {
+          case StatusBloc.failed:
           case StatusBloc.success:
             Navigator.pushReplacementNamed(
               Routes.instance.navigatorKey.currentContext!,
