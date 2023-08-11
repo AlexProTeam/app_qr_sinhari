@@ -43,7 +43,7 @@ class BottomBarScreenState extends State<BottomBarScreen> {
     /// todo: change to base later.
 
     var request = http.MultipartRequest(
-        'POST', Uri.parse('admin.sinhairvietnam.vn/api/add_device'));
+        'POST', Uri.parse('https://beta.sinhairvietnam.vn/api/add_device'));
     request.fields
         .addAll({'device_id': '${FirebaseNotification.instance.deviceToken}'});
 

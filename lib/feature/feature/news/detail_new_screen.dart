@@ -44,7 +44,7 @@ class DetailNewScreenState extends State<DetailNewScreen> {
       ///todo: change to base later
 
       var request = http.MultipartRequest(
-          'POST', Uri.parse('admin.sinhairvietnam.vn/api/news_detail'));
+          'POST', Uri.parse('https://beta.sinhairvietnam.vnapi/news_detail'));
       request.fields.addAll({'news_id': '${widget.argument?.newsDetail}'});
 
       http.StreamedResponse response = await request.send();
