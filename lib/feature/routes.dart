@@ -195,7 +195,7 @@ class Routes {
           widget: DetailNewScreen(
             argument: settings.arguments != null
                 ? settings.arguments as ArgumentDetailNewScreen
-                : null,
+                : ArgumentDetailNewScreen(),
           ),
         );
       case RouteName.listProductScreen:
@@ -203,7 +203,7 @@ class Routes {
           widget: ListProductScreen(
             argument: settings.arguments != null
                 ? settings.arguments as ArgumentListProductScreen
-                : null,
+                : ArgumentListProductScreen(),
           ),
         );
       case RouteName.homeScreen:
@@ -227,7 +227,7 @@ class Routes {
         return SlideLeftRoute(
           widget: LoginScreen(
             haveBack:
-                settings.arguments != null ? settings.arguments as bool : null,
+                settings.arguments != null ? settings.arguments as bool : false,
           ),
         );
       case RouteName.checkBillScreen:
