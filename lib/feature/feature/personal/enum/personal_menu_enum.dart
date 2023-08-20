@@ -54,5 +54,5 @@ extension LoginEx on AppContact {
         height: 30,
       );
 
-  String get _getUrl => '${Configurations.host}?social_type=$name';
+  String get _getUrl => '${Configurations.host}go_social?social_type=$name';
 }
