@@ -173,7 +173,11 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                             'img': Style(
                               width: Width(
                                   MediaQuery.of(context).size.width * 0.9),
-                            )
+                            ),
+                            'h1': _getWidthTitleHTML,
+                            'h2': _getWidthTitleHTML,
+                            'h3': _getWidthTitleHTML,
+                            'h4': _getWidthTitleHTML,
                           },
                         )
                     ],
@@ -183,4 +187,11 @@ class DetailNewScreenState extends State<DetailNewScreen> {
             ),
     );
   }
+
+  Style get _getWidthTitleHTML => Style(
+        width: Width(MediaQuery.of(context).size.width * 0.9),
+        fontSize: FontSize(
+          20,
+        ),
+      );
 }
