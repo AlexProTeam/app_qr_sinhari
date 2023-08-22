@@ -62,7 +62,7 @@ class HomeScreenState extends State<HomeScreen>
       },
       child: Scaffold(
         appBar: BaseAppBar(
-          leadingWidth: _isHasProfileData ? 138 : null,
+          leadingWidth: _isHasProfileData ? 153 : null,
           leadingIcon: _headerWidget(),
           actions: [
             _notiIcon(),

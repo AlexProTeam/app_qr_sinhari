@@ -31,6 +31,7 @@ class SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     _profileBloc = context.read<ProfileBloc>();
+    _profileBloc.add(const InitProfileEvent());
 
     _initData();
     super.initState();
@@ -59,8 +60,6 @@ class SplashScreenState extends State<SplashScreen>
 
       return;
     }
-
-    _profileBloc.add(const InitProfileEvent());
   }
 
   @override
@@ -69,6 +68,9 @@ class SplashScreenState extends State<SplashScreen>
       listener: (context, state) async {
         switch (state.status) {
           case StatusBloc.failed:
+            injector<LocalApp>().saveStringSharePreference(
+                KeySaveDataLocal.keySaveAccessToken, '');
+            break;
           case StatusBloc.success:
             Navigator.pushReplacementNamed(
               Routes.instance.navigatorKey.currentContext!,
