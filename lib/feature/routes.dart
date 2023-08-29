@@ -11,7 +11,7 @@ import 'package:qrcode/feature/auth/welcome/welcome_model.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_screen.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
-import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
+import 'package:qrcode/feature/feature/history_scan/ui/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/feature/news/details_news/ui/detail_new_screen.dart';

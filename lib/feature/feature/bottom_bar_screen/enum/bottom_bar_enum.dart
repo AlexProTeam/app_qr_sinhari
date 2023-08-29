@@ -3,7 +3,7 @@ import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
 
 import '../../../../common/const/icon_constant.dart';
 import '../../../../common/navigation/route_names.dart';
-import '../../history_scan/history_scan_screen.dart';
+import '../../history_scan/ui/history_scan_screen.dart';
 import '../../home/home_screen.dart';
 import '../../news/news_screen/ui/news_screen.dart';
 import '../../personal/personal_screen.dart';
