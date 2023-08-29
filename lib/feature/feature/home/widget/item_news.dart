@@ -4,7 +4,7 @@ import '../../../../common/const/string_const.dart';
 import '../../../../common/navigation/route_names.dart';
 import '../../../themes/theme_text.dart';
 import '../../../widgets/custom_image_network.dart';
-import '../../news/detail_new_screen.dart';
+import '../../news/details_news/ui/detail_new_screen.dart';
 import '../../news/history_model.dart';
 
 class ItemNews extends StatelessWidget {
