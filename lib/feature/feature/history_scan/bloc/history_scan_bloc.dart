@@ -9,7 +9,6 @@ import '../../../../common/utils/common_util.dart';
 import '../../../injector_container.dart';
 
 part 'history_scan_event.dart';
-
 part 'history_scan_state.dart';
 
 class HistoryScanBloc extends Bloc<HistoryScanEvent, HistoryScanState> {
@@ -24,9 +23,9 @@ class HistoryScanBloc extends Bloc<HistoryScanEvent, HistoryScanState> {
             'history-scan-qr-code?device_id=${injector<AppCache>().deviceId}');
         data['data'][0].forEach((e) {
           histories.add(HistoryModel.fromJson(e));
-          emit(state.copyWith(
-              status: ScreenStatus.success, histories: histories));
         });
+        emit(
+            state.copyWith(status: ScreenStatus.success, histories: histories));
       } catch (e) {
         emit(state.copyWith(status: ScreenStatus.failed));
         CommonUtil.handleException(e, methodName: '');

@@ -48,14 +48,14 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
           builder: (BuildContext context, state) {
             if (state.status == ScreenStatus.loading) {
               return const Center(child: CircularProgressIndicator());
+            } else if (state.histories.isEmpty && state.status != ScreenStatus.loading) {
+              return const Center(child: Text("Không có lịch sử nào!"));
             } else {
               return RefreshIndicator(
                 onRefresh: () async {
                   context.read<HistoryScanBloc>().add(InitDataHistoryEvent());
                 },
-                child: (state.histories.isEmpty)
-                    ? const Center(child: Text("Không có lịch sử nào!"))
-                    : Padding(
+                child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
