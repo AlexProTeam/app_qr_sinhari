@@ -9,7 +9,6 @@ import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
-import 'package:qrcode/feature/themes/theme_text.dart';
 
 import '../../../common/const/status_bloc.dart';
 
@@ -32,6 +31,7 @@ class SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     _profileBloc = context.read<ProfileBloc>();
+    _profileBloc.add(const InitProfileEvent());
 
     _initData();
     super.initState();
@@ -60,8 +60,6 @@ class SplashScreenState extends State<SplashScreen>
 
       return;
     }
-
-    _profileBloc.add(const InitProfileEvent());
   }
 
   @override
@@ -69,6 +67,10 @@ class SplashScreenState extends State<SplashScreen>
     return BlocListener<ProfileBloc, ProfileState>(
       listener: (context, state) async {
         switch (state.status) {
+          case StatusBloc.failed:
+            injector<LocalApp>().saveStringSharePreference(
+                KeySaveDataLocal.keySaveAccessToken, '');
+            break;
           case StatusBloc.success:
             Navigator.pushReplacementNamed(
               Routes.instance.navigatorKey.currentContext!,
@@ -83,18 +85,7 @@ class SplashScreenState extends State<SplashScreen>
           body: SizedBox(
             width: double.infinity,
             height: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _AnimatedLogo(animation: animation),
-                const SizedBox(height: 12),
-                Text(
-                  'Công ty TNHH Sinhair Japan',
-                  style: AppTextTheme.medium20PxBlack.copyWith(fontSize: 18),
-                ),
-              ],
-            ),
+            child: _AnimatedLogo(animation: animation),
           )),
     );
   }
@@ -108,7 +99,7 @@ class SplashScreenState extends State<SplashScreen>
 
 class _AnimatedLogo extends AnimatedWidget {
   static final _opacityTween = Tween<double>(begin: 1, end: 1);
-  static final _sizeTween = Tween<double>(begin: 150, end: 200);
+  static final _sizeTween = Tween<double>(begin: 150, end: 300);
 
   const _AnimatedLogo({Key? key, required Animation<double> animation})
       : super(key: key, listenable: animation);
@@ -122,7 +113,7 @@ class _AnimatedLogo extends AnimatedWidget {
         child: SizedBox(
             height: _sizeTween.evaluate(animation),
             width: _sizeTween.evaluate(animation),
-            child: Image.asset(IconConst.logoMain)),
+            child: Image.asset(IconConst.logoLogin)),
       ),
     );
   }

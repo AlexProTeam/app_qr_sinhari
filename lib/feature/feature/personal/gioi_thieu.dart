@@ -90,7 +90,8 @@ class HuongDanScreenState extends State<GioiThieuScreen> {
                         _data['content'] != null
                             ? Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 4),
+                                    const EdgeInsets.symmetric(horizontal: 4)
+                                        .copyWith(bottom: 120),
                                 child: Html(
                                   data: _data['content'],
                                   style: {
@@ -107,10 +108,6 @@ class HuongDanScreenState extends State<GioiThieuScreen> {
                                 ),
                               )
                             : const SizedBox()
-                        // Text(
-                        //   '${_data['content'] ?? ''}',
-                        //   style: AppTextTheme.normalBlack,
-                        // ),
                       ],
                     ),
                   ),

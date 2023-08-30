@@ -12,14 +12,17 @@ import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
 import '../themes/theme_color.dart';
 
+///todo: use same a base item with home screen
 class CategoryItemProduct extends StatelessWidget {
   final double itemWidth;
   final ProductResponse? productModel;
+  final bool isShowLike;
 
   const CategoryItemProduct({
     Key? key,
     required this.itemWidth,
     this.productModel,
+    this.isShowLike = true,
   }) : super(key: key);
 
   @override
@@ -93,32 +96,35 @@ class CategoryItemProduct extends StatelessWidget {
               children: [
                 Text(
                   FormatUtils.formatCurrencyDoubleToString(
-                      productModel?.purchasePrice ?? productModel?.unitPrice),
+                      productModel?.unitPrice),
                   style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: AppColors.colorFFC700),
                 ),
-                // const Spacer(),
+                const SizedBox(width: 5),
                 RichText(
                   text: TextSpan(
                     text: FormatUtils.formatCurrencyDoubleToString(
-                        productModel?.purchasePrice ?? productModel?.unitPrice),
+                      productModel?.purchasePrice,
+                    ),
                     style: const TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w500,
                       color: AppColors.colorACACAC,
                       decoration: TextDecoration.lineThrough,
                       decorationColor: AppColors.colorACACAC,
+                      height: 1.3,
                     ),
                   ),
                 ),
                 const SizedBox(width: 5),
-                Image.asset(
-                  IconConst.heart,
-                  width: 22,
-                  height: 20,
-                )
+                if (isShowLike)
+                  Image.asset(
+                    IconConst.heart,
+                    width: 22,
+                    height: 20,
+                  )
               ],
             ),
           ),

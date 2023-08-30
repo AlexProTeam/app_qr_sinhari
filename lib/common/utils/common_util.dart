@@ -45,6 +45,10 @@ class CommonUtil {
   }
 
   static Future<void> runUrl(String url) async {
+    if (url.isEmpty) {
+      return;
+    }
+
     Uri dataUrl = Uri.parse(url);
     await canLaunchUrl(dataUrl)
         ? await launchUrl(dataUrl)

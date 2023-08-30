@@ -7,8 +7,8 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
-import '../../../common/const/icon_constant.dart';
-import '../../../common/utils/date_utils.dart';
+import '../../../../../common/const/icon_constant.dart';
+import '../../../../../common/utils/date_utils.dart';
 
 class ArgumentDetailNewScreen {
   final int? newsDetail;
@@ -40,8 +40,11 @@ class DetailNewScreenState extends State<DetailNewScreen> {
   void _initData() async {
     try {
       isLoadding = true;
+
+      ///todo: change to base later
+
       var request = http.MultipartRequest(
-          'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/news_detail'));
+          'POST', Uri.parse('https://beta.sinhairvietnam.vn/api/news_detail'));
       request.fields.addAll({'news_id': '${widget.argument?.newsDetail}'});
 
       http.StreamedResponse response = await request.send();
@@ -50,12 +53,12 @@ class DetailNewScreenState extends State<DetailNewScreen> {
         final test = await response.stream.bytesToString();
         _data = json.decode(test)['data'];
       }
-      setState(() {});
     } catch (e) {
       CommonUtil.handleException(e, methodName: '');
-    } finally {
-      isLoadding = false;
     }
+    setState(() {
+      isLoadding = false;
+    });
   }
 
   @override
@@ -170,7 +173,11 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                             'img': Style(
                               width: Width(
                                   MediaQuery.of(context).size.width * 0.9),
-                            )
+                            ),
+                            'h1': _getWidthTitleHTML,
+                            'h2': _getWidthTitleHTML,
+                            'h3': _getWidthTitleHTML,
+                            'h4': _getWidthTitleHTML,
                           },
                         )
                     ],
@@ -180,4 +187,11 @@ class DetailNewScreenState extends State<DetailNewScreen> {
             ),
     );
   }
+
+  Style get _getWidthTitleHTML => Style(
+        width: Width(MediaQuery.of(context).size.width * 0.9),
+        fontSize: FontSize(
+          20,
+        ),
+      );
 }
