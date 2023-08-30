@@ -50,11 +50,14 @@ extension PersonalContactEnumEx on PersonalContactEnum {
         return Navigator.pushNamed(context, RouteName.webViewScreen,
             arguments: 'https://sinhairvietnam.vn/lien-he/');
       case PersonalContactEnum.provisionOrder:
-        return Navigator.pushNamed(context, RouteName.gioiThieuScreen);
+        return Navigator.pushNamed(context, RouteName.policyScreen,
+            arguments: 'Screen1');
       case PersonalContactEnum.provisionSecurity:
-        return Navigator.pushNamed(context, RouteName.huongDanScreen);
+        return Navigator.pushNamed(context, RouteName.policyScreen,
+            arguments: 'Screen2');
       case PersonalContactEnum.adjust:
-        return Navigator.pushNamed(context, RouteName.policyScreen);
+        return Navigator.pushNamed(context, RouteName.policyScreen,
+            arguments: 'Screen3');
     }
   }
 

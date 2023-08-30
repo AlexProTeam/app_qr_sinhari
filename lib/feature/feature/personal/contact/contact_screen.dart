@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 
-import '../../../common/utils/common_util.dart';
-import '../../themes/theme_color.dart';
-import '../../widgets/box_border_widget.dart';
-import '../../widgets/custom_scaffold.dart';
-import '../../widgets/icon_text_widget.dart';
-import '../../widgets/icon_tiltile_value_widget.dart';
-import 'enum/personal_menu_enum.dart';
+import '../../../../common/utils/common_util.dart';
+import '../../../themes/theme_color.dart';
+import '../../../widgets/box_border_widget.dart';
+import '../../../widgets/custom_scaffold.dart';
+import '../../../widgets/icon_text_widget.dart';
+import '../../../widgets/icon_tiltile_value_widget.dart';
+import '../enum/personal_menu_enum.dart';
 
 class WebViewScreen extends StatefulWidget {
   const WebViewScreen({
