@@ -9,6 +9,7 @@ import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/feature/injector_container.dart';
+import 'package:qrcode/feature/notification/firebase_config.dart';
 
 import 'bloc/bottom_bar_bloc.dart';
 import 'enum/bottom_bar_enum.dart';
@@ -42,8 +43,8 @@ class BottomBarScreenState extends State<BottomBarScreen> {
   Future<void> _addToken() async {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/add_device'));
-    request.fields
-        .addAll({'device_id': '${FirebaseNotification.instance.deviceToken}'});
+    final token = await FirebaseConfig.getTokenFcm();
+    request.fields.addAll({'device_id': token ?? ''});
 
     http.StreamedResponse response = await request.send();
 

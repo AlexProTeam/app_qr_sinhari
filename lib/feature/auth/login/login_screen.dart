@@ -8,6 +8,7 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/auth/login/widgets/input_phone_widget.dart';
+import 'package:qrcode/feature/notification/firebase_config.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
@@ -132,8 +133,8 @@ class LoginScreenState extends State<LoginScreen> {
   Future<void> _addToken() async {
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/add_device'));
-    request.fields
-        .addAll({'device_id': '${FirebaseNotification.instance.deviceToken}'});
+    final token = await FirebaseConfig.getTokenFcm();
+    request.fields.addAll({'device_id': token ?? ''});
 
     http.StreamedResponse response = await request.send();
 
