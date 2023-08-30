@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
-import 'package:qrcode/feature/widgets/gridview_product_item.dart';
 
 import '../themes/theme_color.dart';
+import 'category_product_item.dart';
 
 class GridViewDisplayProduct extends StatelessWidget {
   final int numberItem;
@@ -59,9 +59,10 @@ class GridViewDisplayProduct extends StatelessWidget {
             childAspectRatio: 0.61,
           ),
           itemBuilder: (context, index) {
-            return CategoryDetailWidgetItemProduct(
+            return CategoryItemProduct(
               itemWidth: itemWidth,
               productModel: products?[index],
+              isShowLike: false,
             );
           },
         ),

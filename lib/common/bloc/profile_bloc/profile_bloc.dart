@@ -42,7 +42,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     on<ClearProfileEvent>((event, emit) async {
       emit(state.copyWith(
-        profileModel: ProfileModel(),
+        profileModel: null,
       ));
     });
   }

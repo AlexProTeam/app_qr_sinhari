@@ -41,6 +41,8 @@ class BottomBarScreenState extends State<BottomBarScreen> {
   }
 
   Future<void> _addToken() async {
+    /// todo: change to base later.
+
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/add_device'));
     final token = await FirebaseConfig.getTokenFcm();

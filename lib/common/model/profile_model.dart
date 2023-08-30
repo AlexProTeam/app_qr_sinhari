@@ -51,7 +51,7 @@ class ProfileModel {
     address = json['address'];
     country = json['country'];
     if (json['avatar'] != null) {
-      avatar = 'https://admin.sinhairvietnam.vn/${json['avatar']}';
+      avatar = 'beta.sinhairvietnam.vn/${json['avatar']}';
     }
 
     city = json['city'];
