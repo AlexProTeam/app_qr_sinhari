@@ -14,8 +14,8 @@ import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart
 import 'package:qrcode/feature/feature/history_scan/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
-import 'package:qrcode/feature/feature/news/detail_new_screen.dart';
-import 'package:qrcode/feature/feature/news/news_screen.dart';
+import 'package:qrcode/feature/feature/news/details_news/ui/detail_new_screen.dart';
+import 'package:qrcode/feature/feature/news/news_screen/ui/news_screen.dart';
 import 'package:qrcode/feature/feature/notification/notification_screen.dart';
 import 'package:qrcode/feature/feature/personal/gioi_thieu.dart';
 import 'package:qrcode/feature/feature/personal/huong_dan.dart';

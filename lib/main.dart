@@ -81,7 +81,7 @@ class AppState extends State<App> {
             providers: [
               BlocProvider(
                 create: (context) => ProfileBloc(),
-              )
+              ),
             ],
             child: Scaffold(
                 resizeToAvoidBottomInset: false,
