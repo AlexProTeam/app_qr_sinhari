@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
+import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
@@ -9,16 +10,15 @@ import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
-import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_contact.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_slide.dart';
+import 'package:qrcode/feature/feature/detail_product/product_active/ui/detail_product_active.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
-import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../injector_container.dart';
 
 class ArgumentDetailProductScreen {
@@ -333,7 +333,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                         height: 45,
                         radius: 5,
                         onTap: () {
-                          if (widget.argument?.url != null) {
+                          if (widget.argument?.url == null) {
                             context.read<ProfileBloc>().state.profileModel !=
                                     null
                                 ? Navigator.pushNamed(
