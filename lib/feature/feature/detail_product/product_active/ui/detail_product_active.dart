@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/model/profile_model.dart';
-import 'package:qrcode/common/network/client.dart';
-import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/common/utils/enum_app_status.dart';
 import 'package:qrcode/common/utils/validate_utils.dart';
-import 'package:qrcode/feature/injector_container.dart';
+import 'package:qrcode/feature/feature/detail_product/product_active/bloc/details_product_active_bloc.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
@@ -36,25 +35,6 @@ class DetailProductActiveState extends State<DetailProductActive> {
   final _formKey = GlobalKey<FormState>();
   bool isLoadding = false;
 
-  void _onDone() async {
-    try {
-      if (!CommonUtil.validateAndSave(_formKey)) return;
-      isLoadding = true;
-      await injector<AppClient>().post(
-          'save-contact?product_id=${widget.argument?.productId}&content=${_contentController.text}&type=1');
-      if (mounted) {
-        await ToastManager.showToast(context, text: 'Kích hoạt thành công');
-      }
-
-      if (!mounted) return;
-      Navigator.pop(context);
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: 'getThemes CourseCubit');
-    } finally {
-      isLoadding = false;
-    }
-  }
-
   @override
   void initState() {
     _initData();
@@ -76,11 +56,25 @@ class DetailProductActiveState extends State<DetailProductActive> {
         title: 'Kích hoạt',
         iconLeftTap: () => Navigator.pop(context),
       ),
-      body: isLoadding
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : Padding(
+      body: BlocProvider(
+        create: (context) => DetailsProductActiveBloc(),
+        child: BlocConsumer<DetailsProductActiveBloc, DetailsProductState>(
+          listener: (BuildContext context, DetailsProductState state) {
+            switch (state.status) {
+              case ScreenStatus.success:
+                ToastManager.showToast(context, text: 'Kích hoạt thành công');
+                break;
+              case ScreenStatus.failed:
+                ToastManager.showToast(context, text: 'Kích hoạt thất bại');
+                break;
+              case ScreenStatus.init:
+                break;
+              case ScreenStatus.loading:
+                break;
+            }
+          },
+          builder: (context, state) {
+            return Padding(
               padding: const EdgeInsets.all(12.0),
               child: Form(
                 key: _formKey,
@@ -115,7 +109,7 @@ class DetailProductActiveState extends State<DetailProductActive> {
                           CustomTextField(
                             hintText: 'Nội dung',
                             controller: _contentController,
-                            validator: ValidateUtil.validEmpty,
+                            // validator: ValidateUtil.validEmpty,
                           ),
                           const SizedBox(height: 16),
                         ],
@@ -126,7 +120,21 @@ class DetailProductActiveState extends State<DetailProductActive> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            _onDone();
+                            DetailsProductActiveBloc().add(
+                                InitDetailsProductEvent(
+                                    widget.argument?.productId ?? 0,
+                                    context,
+                                    _contentController,
+                                    _formKey));
+                            if (mounted &&
+                                state.status == ScreenStatus.success) {
+                              ToastManager.showToast(context,
+                                  text: 'Kích hoạt thành công');
+                            }
+                            if (!mounted &&
+                                state.status == ScreenStatus.failed) {
+                              Navigator.pop(context);
+                            }
                             _contentController.clear();
                           },
                           child: Container(
@@ -153,7 +161,10 @@ class DetailProductActiveState extends State<DetailProductActive> {
                   ],
                 ),
               ),
-            ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
