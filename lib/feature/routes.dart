@@ -25,7 +25,7 @@ import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 
 import 'feature/bottom_bar_screen/bottom_bar_screen.dart';
-import 'feature/detail_product/detail_product_contact.dart';
+import 'feature/detail_product/product_contact/ui/detail_product_contact.dart';
 import 'feature/personal/contact/contact_screen.dart';
 
 class Routes {
