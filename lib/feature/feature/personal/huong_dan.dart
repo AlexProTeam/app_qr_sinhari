@@ -3,10 +3,11 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
+
+import '../../../re_base/app/di/injector_container.dart';
 
 class HuongDanScreen extends StatefulWidget {
   const HuongDanScreen({Key? key}) : super(key: key);

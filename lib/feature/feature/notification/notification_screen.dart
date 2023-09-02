@@ -6,7 +6,7 @@ import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 
-import '../../injector_container.dart';
+import '../../../re_base/app/di/injector_container.dart';
 import '../../themes/theme_color.dart';
 import 'noti_model.dart';
 

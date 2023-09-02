@@ -6,12 +6,13 @@ import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/validate_utils.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
+
+import '../../../re_base/app/di/injector_container.dart';
 
 class ArgumentActiveScreen {
   final int? productId;

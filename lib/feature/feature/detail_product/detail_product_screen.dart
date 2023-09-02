@@ -19,7 +19,7 @@ import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
 import '../../../common/bloc/profile_bloc/profile_bloc.dart';
-import '../../injector_container.dart';
+import '../../../re_base/app/di/injector_container.dart';
 
 class ArgumentDetailProductScreen {
   final int? productId;

@@ -6,7 +6,7 @@ import 'package:qrcode/common/utils/screen_utils.dart';
 import 'package:qrcode/feature/widgets/category_product_item.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
-import '../../injector_container.dart';
+import '../../../re_base/app/di/injector_container.dart';
 
 class ArgumentListProductScreen {
   final String? url;

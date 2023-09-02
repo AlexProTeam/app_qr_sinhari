@@ -16,20 +16,21 @@ Widget itemHistoryScan(BuildContext context, HistoryModel model) {
           ));
     },
     child: SizedBox(
-      height: 74,
+      height: 80,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomImageNetwork(
             url: model.image,
-            width: 74,
-            height: 74,
+            width: 80,
+            height: 80,
             border: 5,
             fit: BoxFit.cover,
           ),
           const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.64,

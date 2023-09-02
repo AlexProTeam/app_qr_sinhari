@@ -6,11 +6,11 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_model.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_point_widget.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 
 import '../../../common/const/icon_constant.dart';
+import '../../../re_base/app/di/injector_container.dart';
 import '../../widgets/custom_image_network.dart';
 
 class WelcomeScreen extends StatefulWidget {

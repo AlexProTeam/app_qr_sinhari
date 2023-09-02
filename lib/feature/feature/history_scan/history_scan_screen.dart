@@ -6,7 +6,7 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
 
-import '../../injector_container.dart';
+import '../../../re_base/app/di/injector_container.dart';
 import '../../routes.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
