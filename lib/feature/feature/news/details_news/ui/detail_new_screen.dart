@@ -7,6 +7,7 @@ import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 
 import '../../../../../common/const/icon_constant.dart';
+import '../../../../../common/utils/date_utils.dart';
 
 class ArgumentDetailNewScreen {
   final int? newsDetail;
@@ -28,7 +29,6 @@ class DetailNewScreenState extends State<DetailNewScreen> {
 
   @override
   void initState() {
-    print(widget.argument?.newsDetail);
     super.initState();
   }
 
@@ -143,10 +143,9 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                               width: 6,
                             ),
                             Text(
-                              // DateUtilsApp.formatterDetail(DateTime.parse(
-                              //     state.data['created_at'] ?? '')),
-                              state.data['created_at'] ?? '',
-                              style: TextStyle(
+                              DateUtilsApp.formatterDetail(DateTime.parse(
+                                  state.data['created_at'] ?? '')),
+                              style: const TextStyle(
                                 color: AppColors.colorACACAC,
                                 fontSize: 12,
                               ),

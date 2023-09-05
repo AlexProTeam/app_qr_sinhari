@@ -7,7 +7,6 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
 
 part 'details_news_event.dart';
-
 part 'details_news_state.dart';
 
 class DetailsNewsBloc extends Bloc<DetailsNewsEvent, DetailsNewsState> {
@@ -23,12 +22,12 @@ class DetailsNewsBloc extends Bloc<DetailsNewsEvent, DetailsNewsState> {
         request.fields.addAll({'news_id': '${event.arg}'});
 
         http.StreamedResponse response = await request.send();
-
         if (response.statusCode == 200) {
-          emit(state.copyWith(status: ScreenStatus.success));
           final test = await response.stream.bytesToString();
-          data = json.decode(test)['data'];
+          data.addAll(json.decode(test)['data']);
+          emit(state.copyWith(status: ScreenStatus.success, data: data));
         }
+        emit(state.copyWith(status: ScreenStatus.failed));
       } catch (e) {
         emit(state.copyWith(status: ScreenStatus.failed));
         CommonUtil.handleException(e, methodName: '');
