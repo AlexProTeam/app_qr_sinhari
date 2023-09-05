@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>340863169486-6vi1qho16k9r2pco0sfp9jsl8qkkni05.apps.googleusercontent.com</string>
+	<string>80204545113-842hid4bdpja1ihavsbio7cqi70cpitf.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.340863169486-6vi1qho16k9r2pco0sfp9jsl8qkkni05</string>
+	<string>com.googleusercontent.apps.80204545113-842hid4bdpja1ihavsbio7cqi70cpitf</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBbteoFczAuOBoC8x9oeQ5B-OIOUmPgQh8</string>
+	<string>AIzaSyDd1VNHHynsQSzHqSEwLqDQVDjuEYt-SlY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>340863169486</string>
+	<string>80204545113</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.qrcode.hair</string>
 	<key>PROJECT_ID</key>
-	<string>qrcode-8162b</string>
+	<string>sinhair-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>qrcode-8162b.appspot.com</string>
+	<string>sinhair-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:340863169486:ios:efb2c6b9d1623a4339319f</string>
+	<string>1:80204545113:ios:ae2ecde88f1cf201b3c548</string>
 </dict>
 </plist>
