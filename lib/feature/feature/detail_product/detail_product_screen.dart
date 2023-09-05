@@ -97,37 +97,6 @@ class DetailProductScreenState extends State<DetailProductScreen> {
   //   });
   // }
 
-  // Future _getProductByUrl() async {
-  //   try {
-  //     _isLoading = true;
-  //     final deviceId = injector<AppCache>().deviceId;
-  //     final data = await injector<AppClient>().get(
-  //         'scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url ?? ''}');
-  //     _detailProductModel = DetailProductModel.fromJson(data['data']['data']);
-  //     _detailProductModel?.serialCode = data['data']['code_active'];
-  //     if (data['data']['tracking'] != null) {
-  //       _detailProductModel?.countScan = data['data']['tracking']['totalScan'];
-  //       _detailProductModel?.countPersonScan =
-  //           data['data']['tracking']['totalUserScan'];
-  //       _detailProductModel?.limitScan = data['data']['tracking']['exceeded'];
-  //       _detailProductModel?.exceedingScan =
-  //           data['data']['tracking']['exceeding_scan'];
-  //       String? dateTimeScan = data['data']['tracking']['datetime_scan'];
-  //       if (dateTimeScan != null) {
-  //         DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-  //         DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
-  //         DateTime datetime = dateFormat.parse(dateTimeScan);
-  //         _detailProductModel?.dateTimeScanLimit =
-  //             dateFormatLast.format(datetime);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     CommonUtil.handleException(e, methodName: '');
-  //   } finally {
-  //     _isLoading = false;
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,8 +119,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           ],
         ),
         body: BlocProvider(
-          create: (context) =>
-              ProductDetailBloc()..add(const InitProductDetailEvent()),
+          create: (context) => ProductDetailBloc(ArgumentDetailProductScreen(
+              productId: widget.argument?.productId, url: widget.argument?.url))
+            ..add(const InitProductDetailEvent()),
           child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
             builder: (BuildContext context, state) {
               if (state.detailProductModel == null ||
