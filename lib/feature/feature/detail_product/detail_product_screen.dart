@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 
-
 import 'package:qrcode/common/const/icon_constant.dart';
 
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -42,6 +41,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
