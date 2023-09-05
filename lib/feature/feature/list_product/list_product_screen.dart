@@ -57,56 +57,32 @@ class ListProductScreenState extends State<ListProductScreen> {
             if (products.isEmpty || state.status == ScreenStatus.loading) {
               return const Center(child: CircularProgressIndicator());
             } else {
-              return GridView.builder(
-                shrinkWrap: true,
-                itemCount: products.length,
-                controller: _scrollController,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0)
-                        .copyWith(bottom: 100),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 12.0,
-                  childAspectRatio: MediaQuery.of(context).size.width /
-                      2 /
-                      (MediaQuery.of(context).size.height / 2.5),
-                ),
-                itemBuilder: (context, index) {
-                  return CategoryItemProduct(
-                    itemWidth: _itemWidth,
-                    productModel: products[index],
-                  );
-                },
-              );
-              //   Expanded(
-              //   child: products.isEmpty
-              //       ? const Center(
-              //           child: Text("Không có sản phẩm nào!"),
-              //         )
-              //       : GridView.builder(
-              //           shrinkWrap: true,
-              //           itemCount: products.length,
-              //           controller: _scrollController,
-              //           padding: const EdgeInsets.symmetric(
-              //                   horizontal: 12.0, vertical: 12.0)
-              //               .copyWith(bottom: 100),
-              //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //             crossAxisCount: 2,
-              //             crossAxisSpacing: 16.0,
-              //             mainAxisSpacing: 12.0,
-              //             childAspectRatio: MediaQuery.of(context).size.width /
-              //                 2 /
-              //                 (MediaQuery.of(context).size.height / 2.5),
-              //           ),
-              //           itemBuilder: (context, index) {
-              //             return CategoryItemProduct(
-              //               itemWidth: _itemWidth,
-              //               productModel: products[index],
-              //             );
-              //           },
-              //         ),
-              // );
+              return products.isEmpty
+                  ? const Center(
+                      child: Text("Không có sản phẩm nào!"),
+                    )
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: products.length,
+                      controller: _scrollController,
+                      padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 12.0)
+                          .copyWith(bottom: 100),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16.0,
+                        mainAxisSpacing: 12.0,
+                        childAspectRatio: MediaQuery.of(context).size.width /
+                            2 /
+                            (MediaQuery.of(context).size.height / 2.5),
+                      ),
+                      itemBuilder: (context, index) {
+                        return CategoryItemProduct(
+                          itemWidth: _itemWidth,
+                          productModel: products[index],
+                        );
+                      },
+                    );
             }
           },
         ),
