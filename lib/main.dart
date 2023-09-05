@@ -7,15 +7,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/notification/local_notification.dart';
 import 'package:qrcode/feature/injector_container.dart' as di;
 
 import 'common/bloc/profile_bloc/profile_bloc.dart';
 import 'common/navigation/route_names.dart';
 import 'common/notification/firebase_notification.dart';
 import 'common/utils/screen_utils.dart';
+import 'feature/notification/firebase_config.dart';
+import 'feature/notification/notification_service.dart';
 import 'feature/routes.dart';
 import 'feature/themes/theme_color.dart';
+import 'firebase_options.dart';
+//import 'feature/notification/firebase_config.dart';
 
 dynamic decodeIsolate(String response) => jsonDecode(response);
 
@@ -25,13 +28,28 @@ dynamic parseJson(String text) => compute(decodeIsolate, text);
 
 dynamic endCodeJson(dynamic json) => compute(endCodeIsolate, json);
 
+void listenFirebaseMessage() {
+  NotificationLocalService().initNotification();
+  FirebaseConfig.getInitialMessage();
+  FirebaseConfig.receiveFromBackgroundState();
+  FirebaseConfig.onMessage();
+}
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  LocalNotification.instance.setUp();
-  await Firebase.initializeApp();
-  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
-
+  // LocalNotification.instance.setUp();
+  // Config Firebase:
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform, name: 'ALo');
+  // FlutterAppBadger.isAppBadgeSupported();
+  listenFirebaseMessage();
+  await FirebaseConfig.requestPermission();
+  await FirebaseConfig.showNotificationForeground();
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  FirebaseConfig.onBackgroundPressed();
+  await NotificationLocalService().createChanel();
+  await FirebaseConfig.getTokenFcm();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,
@@ -50,9 +68,9 @@ class App extends StatefulWidget {
 class AppState extends State<App> {
   @override
   void initState() {
-    FirebaseNotification.instance.initFirebaseNotification();
-    LocalNotification.instance
-        .configureDidReceiveLocalNotificationSubject(context);
+    // FirebaseNotification.instance.initFirebaseNotification();
+    // LocalNotification.instance
+    //     .configureDidReceiveLocalNotificationSubject(context);
     super.initState();
   }
 
@@ -81,7 +99,7 @@ class AppState extends State<App> {
             providers: [
               BlocProvider(
                 create: (context) => ProfileBloc(),
-              )
+              ),
             ],
             child: Scaffold(
                 resizeToAvoidBottomInset: false,

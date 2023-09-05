@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 
-import '../../themes/theme_text.dart';
-import '../../widgets/custom_image_network.dart';
-import '../detail_product/detail_product_screen.dart';
-import 'history_model.dart';
+import '../../../themes/theme_text.dart';
+import '../../../widgets/custom_image_network.dart';
+import '../../detail_product/detail_product_screen.dart';
+import '../history_model.dart';
 
 Widget itemHistoryScan(BuildContext context, HistoryModel model) {
   return InkWell(
