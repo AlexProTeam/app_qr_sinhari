@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 
+
 import 'package:qrcode/common/const/icon_constant.dart';
 
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -41,62 +42,6 @@ class DetailProductScreenState extends State<DetailProductScreen> {
   void initState() {
     super.initState();
   }
-
-  // void _onInitData() async {
-  //   try {
-  //     _isLoading = true;
-  //     if ((widget.argument?.url ?? '').isNotEmpty) {
-  //       await _getProductByUrl();
-  //       return;
-  //     }
-  //     await injector<AppClient>()
-  //         .get('products/show/${widget.argument?.productId}');
-  //     // _detailProductModel = DetailProductModel.fromJson(data['data']);
-  //     if (mounted) {
-  //       await ToastManager.showToast(context, text: 'Kích hoạt thành công');
-  //       // _isLoading = false;
-  //     }
-  //
-  //     if (!mounted) return;
-  //     Navigator.pop(context);
-  //     // _isLoading = false;
-  //   } catch (e) {
-  //     CommonUtil.handleException(e, methodName: 'getThemes CourseCubit');
-  //     Navigator.pop(context);
-  //   } finally {
-  //     _isLoading = false;
-  //   }
-  // }
-  // void _initData() async {
-  //   DetailProductModel? detailProductModel = context.read<DetailProductModel>().state.profileModel;
-  //   _detailProductModel?.photos = profileModel?.i ?? '';
-  //   _phoneController.text = profileModel?.phone ?? '';
-  //   _adddressController.text = profileModel?.address ?? '';
-  //   _contentController.text = "Tôi muốn kích hoạt sản phẩm này";
-  // }
-  //
-  // void _initData() async {
-  //   try {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     if ((widget.argument?.url ?? '').isNotEmpty) {
-  //       await _getProductByUrl();
-  //       return;
-  //     }
-  //     final data = await injector<AppClient>()
-  //         .get('products/show/${widget.argument?.productId}');
-  //     _detailProductModel = DetailProductModel.fromJson(data['data']);
-  //     setState(() {});
-  //   } catch (e) {
-  //     CommonUtil.handleException(e, methodName: 'getThemes CourseCubit');
-  //     Navigator.pop(context);
-  //   }
-  //   setState(() {
-  //     _isLoading = false;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -546,7 +491,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-      color: Colors.red,
+      color: AppColors.red,
       child: Center(
         child: Text(
           'Sản phẩm này đã vượt quá giới hạn quét, được quét vào $dateTime. $notify',
