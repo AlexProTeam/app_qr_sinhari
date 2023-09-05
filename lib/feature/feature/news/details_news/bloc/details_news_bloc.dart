@@ -14,7 +14,7 @@ class DetailsNewsBloc extends Bloc<DetailsNewsEvent, DetailsNewsState> {
   DetailsNewsBloc() : super(const DetailsNewsState()) {
     on<DetailsNewsEvent>((event, emit) {});
     on<InitDetailsNewsEvent>((event, emit) async {
-      Map data;
+      Map data = {};
       try {
         emit(state.copyWith(status: ScreenStatus.loading));
 
