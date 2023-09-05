@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:intl/intl.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
+
 import 'package:qrcode/common/const/icon_constant.dart';
 
 import 'package:qrcode/common/navigation/route_names.dart';
@@ -18,7 +18,7 @@ import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
-import '../../injector_container.dart';
+import 'bloc/product_detail_bloc.dart';
 
 class ArgumentDetailProductScreen {
   final int? productId;
@@ -42,92 +42,6 @@ class DetailProductScreenState extends State<DetailProductScreen> {
     super.initState();
   }
 
-  // void _onInitData() async {
-  //   try {
-  //     _isLoading = true;
-  //     if ((widget.argument?.url ?? '').isNotEmpty) {
-  //       await _getProductByUrl();
-  //       return;
-  //     }
-  //     await injector<AppClient>()
-  //         .get('products/show/${widget.argument?.productId}');
-  //     // _detailProductModel = DetailProductModel.fromJson(data['data']);
-  //     if (mounted) {
-  //       await ToastManager.showToast(context, text: 'Kích hoạt thành công');
-  //       // _isLoading = false;
-  //     }
-  //
-  //     if (!mounted) return;
-  //     Navigator.pop(context);
-  //     // _isLoading = false;
-  //   } catch (e) {
-  //     CommonUtil.handleException(e, methodName: 'getThemes CourseCubit');
-  //     Navigator.pop(context);
-  //   } finally {
-  //     _isLoading = false;
-  //   }
-  // }
-  // void _initData() async {
-  //   DetailProductModel? detailProductModel = context.read<DetailProductModel>().state.profileModel;
-  //   _detailProductModel?.photos = profileModel?.i ?? '';
-  //   _phoneController.text = profileModel?.phone ?? '';
-  //   _adddressController.text = profileModel?.address ?? '';
-  //   _contentController.text = "Tôi muốn kích hoạt sản phẩm này";
-  // }
-  //
-  // void _initData() async {
-  //   try {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     if ((widget.argument?.url ?? '').isNotEmpty) {
-  //       await _getProductByUrl();
-  //       return;
-  //     }
-  //     final data = await injector<AppClient>()
-  //         .get('products/show/${widget.argument?.productId}');
-  //     _detailProductModel = DetailProductModel.fromJson(data['data']);
-  //     setState(() {});
-  //   } catch (e) {
-  //     CommonUtil.handleException(e, methodName: 'getThemes CourseCubit');
-  //     Navigator.pop(context);
-  //   }
-  //   setState(() {
-  //     _isLoading = false;
-  //   });
-  // }
-
-  // Future _getProductByUrl() async {
-  //   try {
-  //     _isLoading = true;
-  //     final deviceId = injector<AppCache>().deviceId;
-  //     final data = await injector<AppClient>().get(
-  //         'scan-qr-code?device_id=$deviceId&city=hanoi&region=vn&url=${widget.argument?.url ?? ''}');
-  //     _detailProductModel = DetailProductModel.fromJson(data['data']['data']);
-  //     _detailProductModel?.serialCode = data['data']['code_active'];
-  //     if (data['data']['tracking'] != null) {
-  //       _detailProductModel?.countScan = data['data']['tracking']['totalScan'];
-  //       _detailProductModel?.countPersonScan =
-  //           data['data']['tracking']['totalUserScan'];
-  //       _detailProductModel?.limitScan = data['data']['tracking']['exceeded'];
-  //       _detailProductModel?.exceedingScan =
-  //           data['data']['tracking']['exceeding_scan'];
-  //       String? dateTimeScan = data['data']['tracking']['datetime_scan'];
-  //       if (dateTimeScan != null) {
-  //         DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-  //         DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
-  //         DateTime datetime = dateFormat.parse(dateTimeScan);
-  //         _detailProductModel?.dateTimeScanLimit =
-  //             dateFormatLast.format(datetime);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     CommonUtil.handleException(e, methodName: '');
-  //   } finally {
-  //     _isLoading = false;
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,8 +64,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           ],
         ),
         body: BlocProvider(
-          create: (context) =>
-              ProductDetailBloc()..add(const InitProductDetailEvent()),
+          create: (context) => ProductDetailBloc(ArgumentDetailProductScreen(
+              productId: widget.argument?.productId, url: widget.argument?.url))
+            ..add(const InitProductDetailEvent()),
           child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
             builder: (BuildContext context, state) {
               if (state.detailProductModel == null ||
@@ -373,48 +288,53 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                               },
                             ),
                           ),
-                          'h1': _getWidthTitleHTML,
-                          'h2': _getWidthTitleHTML,
-                          'h3': _getWidthTitleHTML,
-                          'h4': _getWidthTitleHTML,
-                        },
-                      ),
-                    ),
-                  ],
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: CustomButton(
-                        width: 343,
-                        height: 45,
-                        radius: 5,
-                        onTap: () {
-                          if (widget.argument?.url == null) {
-                            context.read<ProfileBloc>().state.profileModel !=
-                                    null
-                                ? Navigator.pushNamed(
-                                    context, RouteName.activeScrene,
-                                    arguments: ArgumentActiveScreen(
-                                        productId: _detailProductModel?.id))
-                                : Navigator.pushNamed(
-                                    context, RouteName.loginScreen,
-                                    arguments: true);
-                          } else {
-                            context.read<ProfileBloc>().state.profileModel !=
-                                    null
-                                ? Navigator.pushNamed(
-                                    context, RouteName.muaHangScrene,
-                                    arguments: ArgumentContactScreen(
-                                        productId: _detailProductModel?.id))
-                                : Navigator.pushNamed(
-                                    context, RouteName.loginScreen,
-                                    arguments: true);
-                          }
-                        },
-                        text: widget.argument?.url != null
-                            ? 'Kích hoạt'
-                            : 'Mua ngay',
-                      ),
+                        ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child: CustomButton(
+                              width: 343,
+                              height: 45,
+                              radius: 5,
+                              onTap: () {
+                                if (widget.argument?.url != null) {
+                                  context
+                                              .read<ProfileBloc>()
+                                              .state
+                                              .profileModel !=
+                                          null
+                                      ? Navigator.pushNamed(
+                                          context, RouteName.activeScrene,
+                                          arguments: ArgumentActiveScreen(
+                                              productId:
+                                                  state.detailProductModel?.id))
+                                      : Navigator.pushNamed(
+                                          context, RouteName.loginScreen,
+                                          arguments: true);
+                                } else {
+                                  context
+                                              .read<ProfileBloc>()
+                                              .state
+                                              .profileModel !=
+                                          null
+                                      ? Navigator.pushNamed(
+                                          context, RouteName.muaHangScrene,
+                                          arguments: ArgumentContactScreen(
+                                              productId:
+                                                  state.detailProductModel?.id))
+                                      : Navigator.pushNamed(
+                                          context, RouteName.loginScreen,
+                                          arguments: true);
+                                }
+                              },
+                              text: widget.argument?.url != null
+                                  ? 'Kích hoạt'
+                                  : 'Mua ngay',
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 100),
+                      ],
                     ),
                   ),
                 );
