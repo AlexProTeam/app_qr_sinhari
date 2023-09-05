@@ -1,58 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
-import 'package:qrcode/common/network/client.dart';
-import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/injector_container.dart';
+import 'package:qrcode/common/utils/enum_app_status.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
-class HuongDanScreen extends StatefulWidget {
-  const HuongDanScreen({Key? key}) : super(key: key);
+import '../bloc/preferences_bloc.dart';
+
+class PolicyScreen extends StatefulWidget {
+  final String? arg;
+
+  const PolicyScreen({Key? key, this.arg}) : super(key: key);
 
   @override
-  HuongDanScreenState createState() => HuongDanScreenState();
+  PolicyScreenState createState() => PolicyScreenState();
 }
 
-class HuongDanScreenState extends State<HuongDanScreen> {
-  Map _data = {};
-  bool isLoadding = false;
+class PolicyScreenState extends State<PolicyScreen> {
 
   @override
   void initState() {
-    _initData();
     super.initState();
-  }
-
-  void _initData() async {
-    try {
-      isLoadding = true;
-      final data = await injector<AppClient>().post(
-        'policy?type=support_policy',
-        handleResponse: false,
-      );
-      _data = data['policy'];
-      setState(() {});
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: '');
-    } finally {
-      isLoadding = false;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.arg);
     return Scaffold(
       appBar: BaseAppBar(
-        title: 'Chính sách bảo mật',
+        title: widget.arg == 'Screen1'
+            ? 'Chính sách bán hàng'
+            : widget.arg == "Screen2"
+                ? 'Chính sách bảo mật'
+                : 'Điều khoản sử dụng',
         isShowBack: true,
       ),
-      body: isLoadding
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
+      body: BlocProvider(
+        create: (context) =>
+            PreferencesBloc()..add(InitDataEvent(widget.arg ?? '')),
+        child: BlocBuilder<PreferencesBloc, PreferencesState>(
+          builder: (context, state) {
+            if (state.status == ScreenStatus.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -69,10 +64,14 @@ class HuongDanScreenState extends State<HuongDanScreen> {
                           margin: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                               border:
-                                  Border.all(color: Colors.white, width: 2)),
+                              Border.all(color: Colors.white, width: 2)),
                           child: Center(
                             child: Text(
-                              'Chính sách bảo mật',
+                              widget.arg == 'Screen1'
+                                  ? 'Chính sách bán hàng'
+                                  : widget.arg == 'Screen2'
+                                      ? 'Chính sách bảo mật'
+                                      : 'ĐIỀU KHOẢN BẢO MẬT &\nCHÍNH SACH ỨNG DỤNG',
                               style: AppTextTheme.mediumBlack
                                   .copyWith(color: Colors.white),
                             ),
@@ -87,13 +86,13 @@ class HuongDanScreenState extends State<HuongDanScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 12),
-                        _data['content'] != null
+                        state.data['content'] != null
                             ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 4)
-                                        .copyWith(bottom: 100),
-                                child: Html(
-                                  data: _data['content'],
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 4)
+                              .copyWith(bottom: 100),
+                          child: Html(
+                            data: state.data['content'],
                                   style: {
                                     "html": Style(
                                       backgroundColor: Colors.white,
@@ -113,7 +112,10 @@ class HuongDanScreenState extends State<HuongDanScreen> {
                   ),
                 ],
               ),
-            ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
