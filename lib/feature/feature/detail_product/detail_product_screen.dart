@@ -9,9 +9,9 @@ import 'package:qrcode/common/navigation/route_names.dart';
 
 import 'package:qrcode/common/utils/enum_app_status.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
-import 'package:qrcode/feature/feature/detail_product/detail_product_contact.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_slide.dart';
 import 'package:qrcode/feature/feature/detail_product/product_active/ui/detail_product_active.dart';
+import 'package:qrcode/feature/feature/detail_product/product_contact/ui/detail_product_contact.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
