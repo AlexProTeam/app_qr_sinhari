@@ -19,6 +19,7 @@ import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
+
 import '../../injector_container.dart';
 
 class ArgumentDetailProductScreen {
