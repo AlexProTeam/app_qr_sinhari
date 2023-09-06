@@ -56,3 +56,29 @@ extension LoginEx on AppContact {
 
   String get _getUrl => '${Configurations.host}go_social?social_type=$name';
 }
+
+enum ListScreen { guide, introduce, policy }
+
+extension ListScreebEx on ListScreen {
+  String get getScreenTerms {
+    switch (this) {
+      case ListScreen.guide:
+        return 'Screen1';
+      case ListScreen.introduce:
+        return 'Screen2';
+      case ListScreen.policy:
+        return 'Screen3';
+    }
+  }
+
+  String get getNameTerms {
+    switch (this) {
+      case ListScreen.guide:
+        return 'Chính sách bán hàng';
+      case ListScreen.introduce:
+        return 'Chính sách bảo mật';
+      case ListScreen.policy:
+        return 'Điều khoản sử dụng';
+    }
+  }
+}

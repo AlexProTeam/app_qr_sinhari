@@ -7,9 +7,10 @@ import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/common/notification/firebase_notification.dart';
+import 'package:qrcode/feature/injector_container.dart';
+import 'package:qrcode/feature/notification/firebase_config.dart';
 
-import '../../../re_base/app/di/injector_container.dart';
-import '../../../re_base/firebase/notification/firebase_notification.dart';
 import 'bloc/bottom_bar_bloc.dart';
 import 'enum/bottom_bar_enum.dart';
 import 'widget/bottom_navigation.dart';
@@ -43,9 +44,9 @@ class BottomBarScreenState extends State<BottomBarScreen> {
     /// todo: change to base later.
 
     var request = http.MultipartRequest(
-        'POST', Uri.parse('https://beta.sinhairvietnam.vn/api/add_device'));
-    request.fields
-        .addAll({'device_id': '${FirebaseNotification.instance.deviceToken}'});
+        'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/add_device'));
+    final token = await FirebaseConfig.getTokenFcm();
+    request.fields.addAll({'device_id': token ?? ''});
 
     http.StreamedResponse response = await request.send();
 
