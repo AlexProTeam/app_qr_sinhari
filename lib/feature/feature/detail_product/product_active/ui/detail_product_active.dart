@@ -123,7 +123,6 @@ class DetailProductActiveState extends State<DetailProductActive> {
                             DetailsProductActiveBloc().add(
                                 InitDetailsProductEvent(
                                     widget.argument?.productId ?? 0,
-                                    context,
                                     _contentController,
                                     _formKey));
                             if (mounted &&
