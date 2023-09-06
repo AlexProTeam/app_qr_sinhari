@@ -19,7 +19,7 @@ import 'package:qrcode/feature/feature/news/news_screen/ui/news_screen.dart';
 import 'package:qrcode/feature/feature/notification/ui/notification_screen.dart';
 import 'package:qrcode/feature/feature/personal/personal_screen.dart';
 import 'package:qrcode/feature/feature/personal/terms/ui/terms_screen.dart';
-import 'package:qrcode/feature/feature/profile/profile_screen.dart';
+import 'package:qrcode/feature/feature/profile/ui/profile_screen.dart';
 import 'package:qrcode/feature/feature/scan/check_bill_screen.dart';
 import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
 import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
