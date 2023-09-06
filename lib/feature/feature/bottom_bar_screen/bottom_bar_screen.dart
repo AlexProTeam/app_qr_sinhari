@@ -7,9 +7,9 @@ import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
-import 'package:qrcode/common/notification/firebase_notification.dart';
 
 import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/firebase/notification/firebase_notification.dart';
 import 'bloc/bottom_bar_bloc.dart';
 import 'enum/bottom_bar_enum.dart';
 import 'widget/bottom_navigation.dart';
