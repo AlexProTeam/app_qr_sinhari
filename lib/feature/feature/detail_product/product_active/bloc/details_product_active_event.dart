@@ -6,12 +6,11 @@ abstract class DetailsProductActiveEvent extends Equatable {
 
 class InitDetailsProductEvent extends DetailsProductActiveEvent {
   final int arg;
-  final BuildContext context;
   final TextEditingController content;
   final GlobalKey<FormState> formKey;
 
-  const InitDetailsProductEvent(this.arg, this.context, this.content, this.formKey);
+  const InitDetailsProductEvent(this.arg, this.content, this.formKey);
 
   @override
-  List<Object?> get props => [arg];
+  List<Object?> get props => [arg, formKey, content];
 }
