@@ -12,7 +12,6 @@ import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
 import '../../../re_base/app/di/injector_container.dart';
-import '../../../re_base/firebase/notification/firebase_notification.dart';
 import '../../widgets/dialog_manager_custom.dart';
 import '../../widgets/follow_keyboard_widget.dart';
 

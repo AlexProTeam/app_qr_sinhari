@@ -5,13 +5,13 @@ import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
+import 'package:qrcode/feature/feature/history_scan/widget/item_history_scan_widget.dart';
 
 import '../../../re_base/app/di/injector_container.dart';
 import '../../routes.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
-import 'item_history_scan_widget.dart';
 
 class ScanHistoryNested extends StatelessWidget {
   const ScanHistoryNested({
