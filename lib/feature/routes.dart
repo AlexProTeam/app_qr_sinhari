@@ -9,18 +9,16 @@ import 'package:qrcode/feature/auth/register/register_screen.dart';
 import 'package:qrcode/feature/auth/splash/splash_screen.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_model.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_screen.dart';
-import 'package:qrcode/feature/feature/detail_product/detail_product_active.dart';
+import 'package:qrcode/feature/feature/detail_product/product_active/ui/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/feature/history_scan/ui/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 import 'package:qrcode/feature/feature/news/details_news/ui/detail_new_screen.dart';
-import 'package:qrcode/feature/feature/news/news_screen.dart';
-import 'package:qrcode/feature/feature/notification/notification_screen.dart';
-import 'package:qrcode/feature/feature/personal/gioi_thieu.dart';
-import 'package:qrcode/feature/feature/personal/huong_dan.dart';
+import 'package:qrcode/feature/feature/news/news_screen/ui/news_screen.dart';
+import 'package:qrcode/feature/feature/notification/ui/notification_screen.dart';
 import 'package:qrcode/feature/feature/personal/personal_screen.dart';
-import 'package:qrcode/feature/feature/personal/policy_screen.dart';
+import 'package:qrcode/feature/feature/personal/terms/ui/terms_screen.dart';
 import 'package:qrcode/feature/feature/profile/profile_screen.dart';
 import 'package:qrcode/feature/feature/scan/check_bill_screen.dart';
 import 'package:qrcode/feature/feature/scan_product/scan_qr.dart';
@@ -28,7 +26,7 @@ import 'package:qrcode/feature/feature/webview/webview_detail_screen.dart';
 
 import 'feature/bottom_bar_screen/bottom_bar_screen.dart';
 import 'feature/detail_product/detail_product_contact.dart';
-import 'feature/personal/contact_screen.dart';
+import 'feature/personal/contact/contact_screen.dart';
 
 class Routes {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -111,17 +109,12 @@ class Routes {
 
   static Route<dynamic> generateBottomBarRoute(RouteSettings settings) {
     switch (settings.name) {
-      case RouteName.gioiThieuScreen:
-        return SlideLeftRoute(
-          widget: const GioiThieuScreen(),
-        );
-      case RouteName.huongDanScreen:
-        return SlideLeftRoute(
-          widget: const HuongDanScreen(),
-        );
       case RouteName.policyScreen:
         return SlideLeftRoute(
-          widget: const PolicyScreen(),
+          widget: PolicyScreen(
+              arg: settings.arguments != null
+                  ? settings.arguments as String
+                  : null),
         );
       case RouteName.muaHangScrene:
         return SlideLeftRoute(
