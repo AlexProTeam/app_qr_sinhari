@@ -501,6 +501,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
     );
   }
 
+
   Widget _itemApccept() {
     return Container(
       width: double.infinity,
