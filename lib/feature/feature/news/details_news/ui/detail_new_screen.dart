@@ -1,11 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:http/http.dart' as http;
-import 'package:qrcode/common/utils/common_util.dart';
+import 'package:qrcode/common/utils/enum_app_status.dart';
+import 'package:qrcode/feature/feature/news/details_news/bloc/details_news_bloc.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
+
 
 import '../../../../../common/const/icon_constant.dart';
 import '../../../../../common/utils/date_utils.dart';
@@ -27,48 +27,50 @@ class DetailNewScreen extends StatefulWidget {
 }
 
 class DetailNewScreenState extends State<DetailNewScreen> {
-  bool isLoadding = false;
-
-  Map _data = {};
 
   @override
   void initState() {
-    _initData();
     super.initState();
   }
 
-  void _initData() async {
-    try {
-      isLoadding = true;
-
-      ///todo: change to base later
-
-      var request = http.MultipartRequest(
-          'POST', Uri.parse('https://beta.sinhairvietnam.vn/api/news_detail'));
-      request.fields.addAll({'news_id': '${widget.argument?.newsDetail}'});
-
-      http.StreamedResponse response = await request.send();
-
-      if (response.statusCode == 200) {
-        final test = await response.stream.bytesToString();
-        _data = json.decode(test)['data'];
-      }
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: '');
-    }
-    setState(() {
-      isLoadding = false;
-    });
-  }
+  // void _initData() async {
+  //   try {
+  //     isLoadding = true;
+  //
+  //     ///todo: change to base later
+  //
+  //     var request = http.MultipartRequest(
+  //         'POST', Uri.parse('https://beta.sinhairvietnam.vn/api/news_detail'));
+  //     request.fields.addAll({'news_id': '${widget.argument?.newsDetail}'});
+  //
+  //     http.StreamedResponse response = await request.send();
+  //
+  //     if (response.statusCode == 200) {
+  //       final test = await response.stream.bytesToString();
+  //       _data = json.decode(test)['data'];
+  //     }
+  //   } catch (e) {
+  //     CommonUtil.handleException(e, methodName: '');
+  //   }
+  //   setState(() {
+  //     isLoadding = false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoadding
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : CustomScrollView(
+      body: BlocProvider(
+        create: (context) => DetailsNewsBloc()
+          ..add(InitDetailsNewsEvent(widget.argument?.newsDetail ?? 0)),
+        child: BlocBuilder<DetailsNewsBloc, DetailsNewsState>(
+          builder: (context, state) {
+            if (state.status == ScreenStatus.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return CustomScrollView(
               slivers: [
                 SliverAppBar(
                   backgroundColor: AppColors.white,
@@ -118,7 +120,7 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          _data['title'] ?? '',
+                          state.data['title'] ?? '',
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -142,8 +144,8 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                               width: 6,
                             ),
                             Text(
-                              DateUtilsApp.formatterDetail(
-                                  DateTime.parse(_data['created_at'] ?? '')),
+                              DateUtilsApp.formatterDetail(DateTime.parse(
+                                  state.data['created_at'] ?? '')),
                               style: const TextStyle(
                                 color: AppColors.colorACACAC,
                                 fontSize: 12,
@@ -155,9 +157,9 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      if (_data['content'] != null)
+                      if (state.data['content'] != null)
                         Html(
-                          data: _data['content'],
+                          data: state.data['content'],
                           style: {
                             "html": Style(
                               backgroundColor: Colors.white,
@@ -184,7 +186,10 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                   ),
                 )
               ],
-            ),
+            );
+          },
+        ),
+      ),
     );
   }
 
