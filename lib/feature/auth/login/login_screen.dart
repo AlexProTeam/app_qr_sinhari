@@ -5,14 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
-import 'package:qrcode/common/notification/firebase_notification.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/auth/login/widgets/input_phone_widget.dart';
 import 'package:qrcode/feature/notification/firebase_config.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
-import '../../injector_container.dart';
+import '../../../re_base/app/di/injector_container.dart';
 import '../../widgets/dialog_manager_custom.dart';
 import '../../widgets/follow_keyboard_widget.dart';
 

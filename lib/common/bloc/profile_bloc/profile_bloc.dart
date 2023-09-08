@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../feature/injector_container.dart';
+import '../../../re_base/app/di/injector_container.dart';
 import '../../const/key_save_data_local.dart';
 import '../../const/status_bloc.dart';
 import '../../local/local_app.dart';

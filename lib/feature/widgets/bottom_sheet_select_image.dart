@@ -3,8 +3,9 @@ import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
+
+import '../../re_base/app/di/injector_container.dart';
 
 class BottomSheetSelectImage extends StatefulWidget {
   final Function? onPhotoTap;

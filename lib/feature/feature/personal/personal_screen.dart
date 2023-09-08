@@ -4,11 +4,11 @@ import 'package:qrcode/common/const/key_save_data_local.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 
 import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../../common/utils/common_util.dart';
+import '../../../re_base/app/di/injector_container.dart';
 import '../../routes.dart';
 import '../../themes/theme_color.dart';
 import '../../widgets/box_border_widget.dart';

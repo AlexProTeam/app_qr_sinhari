@@ -4,12 +4,13 @@ import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/model/profile_model.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/validate_utils.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
 import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
+
+import '../../../re_base/app/di/injector_container.dart';
 
 class ArgumentContactScreen {
   final int? productId;
