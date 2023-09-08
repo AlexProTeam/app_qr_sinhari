@@ -3,8 +3,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
+
+import '../../../../../re_base/app/di/injector_container.dart';
 
 part 'details_product_event.dart';
 
