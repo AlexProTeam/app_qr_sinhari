@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
@@ -80,6 +82,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             _emailController.text = state.profileModel?.email ?? '';
             _phoneController.text = state.profileModel?.phone ?? '';
             _addressController.text = state.profileModel?.address ?? '';
+            print(state.image);
             return FollowKeyBoardWidget(
               child: SingleChildScrollView(
                 child: Padding(
@@ -96,9 +99,11 @@ class ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               const SizedBox(height: 12),
                               GestureDetector(
-                                onTap: () => context
-                                    .read<ProfileBloc1>()
-                                    .add(OnChooseImageEvent(context)),
+                                onTap: () {
+                                  BlocProvider.of<ProfileBloc1>(context)
+                                      .add(OnChooseImageEvent(context));
+                                  setState(() {});
+                                },
                                 child: Container(
                                   width: 164,
                                   height: 164,
@@ -111,7 +116,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                       Radius.circular(12),
                                     ),
                                   ),
-                                  child: state.image != null
+                                  child: state.image.isNotEmpty
                                       ? Container(
                                           width: 164,
                                           height: 164,
@@ -126,7 +131,9 @@ class ProfileScreenState extends State<ProfileScreen> {
                                             ),
                                           ),
                                           child: Image.file(
-                                            state.image!,
+                                            // File(
+                                            //     '/Users/macbook2020/Library/Developer/CoreSimulator/Devices/F38135A9-8DA1-4CD6-9944-347B2D41AD78/data/Containers/Data/Application/A71E514C-558E-4C5C-A17B-BE667EE7B3F0/tmp/image_picker_1450B01E-F241-406C-A003-4511969FEA10-91210-0000412F73F39790.jpg'),
+                                            File(state.image),
                                             width: 112,
                                             height: 112,
                                             fit: BoxFit.contain,

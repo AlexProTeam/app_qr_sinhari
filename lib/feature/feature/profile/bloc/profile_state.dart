@@ -4,19 +4,19 @@ class ProfileState extends Equatable {
   final ScreenStatus status;
   final ProfileModel? profileModel;
   final StatusPost statusPost;
-  final File? image;
+  final String image;
 
   const ProfileState(
       {this.status = ScreenStatus.loading,
       this.profileModel,
       this.statusPost = StatusPost.loading,
-      this.image});
+      this.image = ''});
 
   ProfileState copyWith(
       {ScreenStatus? status,
       ProfileModel? profileModel,
       StatusPost? statusPost,
-      File? image}) {
+      String? image}) {
     return ProfileState(
         status: status ?? this.status,
         profileModel: profileModel ?? this.profileModel,

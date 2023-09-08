@@ -17,7 +17,6 @@ import '../../../widgets/bottom_sheet_select_image.dart';
 import '../../../widgets/dialog_manager_custom.dart';
 
 part 'profile_event.dart';
-
 part 'profile_state.dart';
 
 class ProfileBloc1 extends Bloc<ProfileEvent, ProfileState> {
@@ -79,18 +78,23 @@ class ProfileBloc1 extends Bloc<ProfileEvent, ProfileState> {
       final imagePick = await imagePicker.pickImage(
         source: event.isCamera ? ImageSource.camera : ImageSource.gallery,
       );
+      try {
+        if (imagePick != null) {
+          final localApp = injector<LocalApp>();
+          if (event.isCamera) {
+            localApp.saveBool(
+                KeySaveDataLocal.havedAcceptPermissionCamera, true);
+          } else {
+            localApp.saveBool(
+                KeySaveDataLocal.havedAcceptPermissionPhoto, true);
+          }
 
-      if (imagePick != null) {
-        final localApp = injector<LocalApp>();
-        if (event.isCamera) {
-          localApp.saveBool(KeySaveDataLocal.havedAcceptPermissionCamera, true);
-        } else {
-          localApp.saveBool(KeySaveDataLocal.havedAcceptPermissionPhoto, true);
+          // image = File(imagePick.path);
+          emit(state.copyWith(image: imagePick.path));
+          print(imagePick.path);
         }
-
-        image = File(imagePick.path);
-        print(image);
-        emit(state.copyWith(status: ScreenStatus.success, image: image));
+      } catch (e) {
+        CommonUtil.handleException(e, methodName: '');
       }
     });
     on<OnChooseImageEvent>((event, emit) async {
