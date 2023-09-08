@@ -1,13 +1,7 @@
-import 'dart:async';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:http/http.dart' as http;
-
-import '../../../../../common/utils/common_util.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'bloc_details_news_event.dart';
-
 part 'bloc_details_news_state.dart';
 
 class DetailsNewsBloc extends Bloc<DetailsNewsEvent, DetailsNewsState> {

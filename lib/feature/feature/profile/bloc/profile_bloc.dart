@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
-import 'package:qrcode/feature/injector_container.dart';
 
 import '../../../../common/const/key_save_data_local.dart';
 import '../../../../common/local/local_app.dart';
 import '../../../../common/model/profile_model.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
+import '../../../../re_base/app/di/injector_container.dart';
 import '../../../widgets/bottom_sheet_select_image.dart';
 import '../../../widgets/dialog_manager_custom.dart';
 

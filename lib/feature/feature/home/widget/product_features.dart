@@ -4,7 +4,7 @@ import '../../../../common/model/product_model.dart';
 import '../../../../common/navigation/route_names.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../injector_container.dart';
+import '../../../../re_base/app/di/injector_container.dart';
 import '../../../themes/theme_color.dart';
 import '../../../widgets/gridview_product.dart';
 import '../../list_product/list_product_screen.dart';

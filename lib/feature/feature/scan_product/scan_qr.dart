@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qrcode/common/const/icon_constant.dart';
@@ -16,6 +19,7 @@ import '../../routes.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../../widgets/qr_scanner_overlay.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
+import 'bloc/scan_qr_bloc.dart';
 import 'enum/scan_enum.dart';
 
 class ScanQrNested extends StatelessWidget {
@@ -42,7 +46,7 @@ class ScanQrScreen extends StatefulWidget {
 
 class ScanQrScreenState extends State<ScanQrScreen>
     with SingleTickerProviderStateMixin {
-  int _currentIndex = ScanTypeEnum.product.index;
+  //int _currentIndex = ScanTypeEnum.product.index;
   final ImagePicker _picker = ImagePicker();
 
   final MobileScannerController controller = MobileScannerController(
@@ -71,49 +75,57 @@ class ScanQrScreenState extends State<ScanQrScreen>
         title: 'Quét mã QR',
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 17),
-            _buildQrView(),
-            const SizedBox(height: 20),
-            const Text(
-              'Kiểm tra sản phẩm chính hãng',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.red,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: List.generate(
-                ScanTypeEnum.values.length,
-                (index) => _buildBottomScanQrItem(
-                  index == _currentIndex,
-                  onTap: () {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                    switch (ScanTypeEnum.values[index]) {
-                      case ScanTypeEnum.image:
-                        return _pickImage();
-                      case ScanTypeEnum.product:
-                        break;
-                      case ScanTypeEnum.invoice:
-                        return ToastManager.showToast(
-                          context,
-                          delaySecond: 1,
-                          text: 'chức năng sẽ sớm ra mắt',
-                          afterShowToast: () => _resetItemToScanCamera(),
-                        );
-                    }
-                  },
-                  enumData: ScanTypeEnum.values[index],
+        child: BlocProvider(
+          create: (context) => ScanBloc(),
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 17),
+              _buildQrView(),
+              const SizedBox(height: 20),
+              const Text(
+                'Kiểm tra sản phẩm chính hãng',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.red,
                 ),
               ),
-            ),
-            const SizedBox(height: 100),
-          ],
+              const SizedBox(height: 10),
+              BlocBuilder<ScanBloc, int>(
+                builder: (context, currentIndex) {
+                  return Row(
+                    children: List.generate(
+                      ScanTypeEnum.values.length,
+                      (index) => _buildBottomScanQrItem(
+                        index == currentIndex,
+                        onTap: () {
+                          switch (ScanTypeEnum.values[index]) {
+                            case ScanTypeEnum.image:
+                              return _pickImage();
+                            case ScanTypeEnum.product:
+                              break;
+                            case ScanTypeEnum.invoice:
+                              return ToastManager.showToast(
+                                context,
+                                delaySecond: 1,
+                                text: 'chức năng sẽ sớm ra mắt',
+                                afterShowToast: () => _resetItemToScanCamera(),
+                              );
+                          }
+                          // Dispatch the event to update currentIndex
+                          context
+                              .read<ScanBloc>()
+                              .add(UpdateCurrentIndex(index));
+                        },
+                        enumData: ScanTypeEnum.values[index],
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 100),
+            ],
+          ),
         ),
       ),
     );
@@ -276,9 +288,12 @@ class ScanQrScreenState extends State<ScanQrScreen>
   }
 
   void _resetItemToScanCamera() {
-    setState(() {
-      _currentIndex = ScanTypeEnum.product.index;
-    });
+    // setState(() {
+    //   _currentIndex = ScanTypeEnum.product.index;
+    // });
+    context
+        .read<ScanBloc>()
+        .add(UpdateCurrentIndex(ScanTypeEnum.product.index));
     controller.start();
   }
 }

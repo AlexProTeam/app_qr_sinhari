@@ -4,7 +4,7 @@ import 'package:qrcode/feature/widgets/toast_manager.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/response/home_response.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../injector_container.dart';
+import '../../../../re_base/app/di/injector_container.dart';
 import '../../../themes/theme_color.dart';
 import '../../../themes/theme_text.dart';
 import '../../../widgets/home_product_item.dart';

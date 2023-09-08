@@ -1,16 +1,15 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
 
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../injector_container.dart';
+import '../../../../re_base/app/di/injector_container.dart';
 import '../noti_model.dart';
 
 part 'notification_event.dart';
-
 part 'notification_state.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {

@@ -19,7 +19,6 @@ class PolicyScreen extends StatefulWidget {
 }
 
 class PolicyScreenState extends State<PolicyScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -27,7 +26,6 @@ class PolicyScreenState extends State<PolicyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.arg);
     return Scaffold(
       appBar: BaseAppBar(
         title: widget.arg == 'Screen1'
@@ -64,7 +62,7 @@ class PolicyScreenState extends State<PolicyScreen> {
                           margin: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                               border:
-                              Border.all(color: Colors.white, width: 2)),
+                                  Border.all(color: Colors.white, width: 2)),
                           child: Center(
                             child: Text(
                               widget.arg == 'Screen1'
@@ -88,11 +86,11 @@ class PolicyScreenState extends State<PolicyScreen> {
                         const SizedBox(height: 12),
                         state.data['content'] != null
                             ? Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 4)
-                              .copyWith(bottom: 100),
-                          child: Html(
-                            data: state.data['content'],
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 4)
+                                        .copyWith(bottom: 100),
+                                child: Html(
+                                  data: state.data['content'],
                                   style: {
                                     "html": Style(
                                       backgroundColor: Colors.white,
