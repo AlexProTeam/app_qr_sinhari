@@ -13,7 +13,7 @@ import '../../routes.dart';
 import '../../themes/theme_color.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
-import 'details_news/bloc/bloc_details_news_bloc.dart';
+import 'details_news/ui/detail_new_screen.dart';
 
 class NewsNested extends StatelessWidget {
   const NewsNested({
