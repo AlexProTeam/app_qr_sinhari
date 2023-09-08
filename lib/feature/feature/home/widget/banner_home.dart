@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/model/banner_model.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../injector_container.dart';
+import '../../../../re_base/app/di/injector_container.dart';
 import '../../../widgets/banner_slide_image.dart';
 
 class BannerHomeWidget extends StatefulWidget {

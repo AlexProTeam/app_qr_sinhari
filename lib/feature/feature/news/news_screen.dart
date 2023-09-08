@@ -3,17 +3,17 @@ import 'package:qrcode/common/const/icon_constant.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/feature/news/details_news/ui/detail_new_screen.dart';
 import 'package:qrcode/feature/feature/news/history_model.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
-import '../../injector_container.dart';
+import '../../../re_base/app/di/injector_container.dart';
 import '../../routes.dart';
 import '../../themes/theme_color.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
+import 'details_news/bloc/bloc_details_news_bloc.dart';
 
 class NewsNested extends StatelessWidget {
   const NewsNested({

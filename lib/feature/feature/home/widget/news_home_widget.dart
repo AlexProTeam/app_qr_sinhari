@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../injector_container.dart';
+import '../../../../re_base/app/di/injector_container.dart';
 import '../../../themes/theme_color.dart';
 import '../../news/history_model.dart';
 import 'item_news.dart';

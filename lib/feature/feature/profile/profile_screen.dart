@@ -20,7 +20,7 @@ import 'package:qrcode/feature/widgets/follow_keyboard_widget.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
 import '../../../common/bloc/profile_bloc/profile_bloc.dart';
-import '../../injector_container.dart';
+import '../../../re_base/app/di/injector_container.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);

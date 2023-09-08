@@ -7,11 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/feature/injector_container.dart' as di;
 
+import '../../../re_base/app/di/injector_container.dart' as di;
 import 'common/bloc/profile_bloc/profile_bloc.dart';
 import 'common/navigation/route_names.dart';
-import 'common/notification/firebase_notification.dart';
 import 'common/utils/screen_utils.dart';
 import 'feature/notification/firebase_config.dart';
 import 'feature/notification/notification_service.dart';

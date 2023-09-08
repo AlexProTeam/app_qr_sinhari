@@ -7,10 +7,10 @@ import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/feature/injector_container.dart';
 import 'package:qrcode/feature/routes.dart';
 
 import '../../../common/const/status_bloc.dart';
+import '../../../re_base/app/di/injector_container.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -31,7 +31,6 @@ class SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     _profileBloc = context.read<ProfileBloc>();
-    _profileBloc.add(const InitProfileEvent());
 
     _initData();
     super.initState();
@@ -60,6 +59,8 @@ class SplashScreenState extends State<SplashScreen>
 
       return;
     }
+
+    _profileBloc.add(const InitProfileEvent());
   }
 
   @override
