@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:qrcode/common/notification/local_notification.dart';
 import 'package:qrcode/common/utils/log_util.dart';
+
+import 'local_notification.dart';
 
 class FirebaseNotification {
   factory FirebaseNotification() => _instance;

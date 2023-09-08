@@ -35,7 +35,8 @@ class NotiScreenState extends State<NotiScreen> {
           builder: (context, state) {
             if (state.status == ScreenStatus.loading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state.histories.isEmpty) {
+            }
+            if (state.histories.isEmpty) {
               return const Center(
                 child: Text("Không có thông báo nào!"),
               );

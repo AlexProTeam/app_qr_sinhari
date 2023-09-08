@@ -5,7 +5,7 @@ import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../common/bloc/profile_bloc/profile_bloc.dart';
+import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 
 final injector = GetIt.instance;
 

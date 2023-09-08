@@ -1,12 +1,12 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
 
 import '../../../../common/local/app_cache.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../injector_container.dart';
+import '../../../../re_base/app/di/injector_container.dart';
 
 part 'history_scan_event.dart';
 part 'history_scan_state.dart';
