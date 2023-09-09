@@ -9,8 +9,8 @@ import 'package:qrcode/feature/auth/register/register_screen.dart';
 import 'package:qrcode/feature/auth/splash/splash_screen.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_model.dart';
 import 'package:qrcode/feature/auth/welcome/welcome_screen.dart';
-import 'package:qrcode/feature/feature/detail_product/product_active/ui/detail_product_active.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
+import 'package:qrcode/feature/feature/detail_product/product_active/ui/detail_product_active.dart';
 import 'package:qrcode/feature/feature/history_scan/ui/history_scan_screen.dart';
 import 'package:qrcode/feature/feature/home/home_screen.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
@@ -165,7 +165,7 @@ class Routes {
         );
       case RouteName.profileScreen:
         return SlideLeftRoute(
-          widget: const ProfileScreen(),
+          widget: getProfileScreenRoute,
         );
       case RouteName.personalScreen:
         return SlideLeftRoute(

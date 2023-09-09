@@ -6,24 +6,32 @@ class ProfileState extends Equatable {
   final StatusPost statusPost;
   final String image;
 
-  const ProfileState(
-      {this.status = ScreenStatus.loading,
-      this.profileModel,
-      this.statusPost = StatusPost.loading,
-      this.image = ''});
-
-  ProfileState copyWith(
-      {ScreenStatus? status,
-      ProfileModel? profileModel,
-      StatusPost? statusPost,
-      String? image}) {
-    return ProfileState(
-        status: status ?? this.status,
-        profileModel: profileModel ?? this.profileModel,
-        statusPost: statusPost ?? this.statusPost,
-        image: image ?? this.image);
-  }
+  const ProfileState({
+    this.status = ScreenStatus.loading,
+    this.profileModel,
+    this.statusPost = StatusPost.loading,
+    this.image = '',
+  });
 
   @override
-  List<Object?> get props => [status, profileModel, statusPost, image];
+  List<Object?> get props => [
+        status,
+        profileModel,
+        statusPost,
+        image,
+      ];
+
+  ProfileState copyWith({
+    ScreenStatus? status,
+    ProfileModel? profileModel,
+    StatusPost? statusPost,
+    String? image,
+  }) {
+    return ProfileState(
+      status: status ?? this.status,
+      profileModel: profileModel ?? this.profileModel,
+      statusPost: statusPost ?? this.statusPost,
+      image: image ?? this.image,
+    );
+  }
 }

@@ -10,40 +10,32 @@ class InitProfileEvent extends ProfileEvent {
 }
 
 class OnClickEvent extends ProfileEvent {
-  final BuildContext context;
-  final TextEditingController nameController;
-  final TextEditingController mailController;
-  final TextEditingController phoneController;
-  final TextEditingController andressController;
-  final GlobalKey<FormState> formKey;
+  final String nameController;
+  final String mailController;
+  final String phoneController;
+  final String andressController;
 
-  const OnClickEvent(this.context, this.nameController, this.mailController,
-      this.phoneController, this.andressController, this.formKey);
+  const OnClickEvent(
+    this.nameController,
+    this.mailController,
+    this.phoneController,
+    this.andressController,
+  );
 
   @override
   List<Object?> get props => [
-        context,
         nameController,
         mailController,
         phoneController,
         andressController,
-        formKey
       ];
 }
 
-class OnChooseImageEvent extends ProfileEvent {
-  final BuildContext context;
-
-  const OnChooseImageEvent(this.context);
-  @override
-  List<Object?> get props => [context];
-}
-
 class OnSelectImageEvent extends ProfileEvent {
-  final bool isCamera;
+  final String filePath;
 
-  const OnSelectImageEvent(this.isCamera);
+  const OnSelectImageEvent(this.filePath);
+
   @override
-  List<Object?> get props => [isCamera];
+  List<Object?> get props => [filePath];
 }
-
