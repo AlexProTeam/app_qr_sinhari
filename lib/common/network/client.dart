@@ -54,34 +54,40 @@ class AppClient {
 
   Future<Map> post(
     String endPoint, {
-    dynamic body,
+    File? body,
     String? contentType,
     bool handleResponse = true,
     bool encodeBody = true,
   }) async {
     await _checkConnectionAndPosition();
     var url = Uri.parse('${Configurations.host}$endPoint');
-    Response? response = await http
-        .post(url,
-            body: body != null ? (encodeBody ? json.encode(body) : body) : null,
-            headers: header?.toJson(contentType: contentType) ??
-                {'Content-Type': 'application/json'})
-        .timeout(const Duration(seconds: Configurations.connectTimeout),
-            onTimeout: () {
-      throw TimeOutException();
-    });
 
-    Map<String, dynamic> data = json.decode(response.body);
+    // Response? response = await http
+    //     .post(url,
+    //         body: body != null ? (encodeBody ? json.encode(body) : body) : null,
+    //         headers: header?.toJson(contentType: contentType) ??
+    //             {'Content-Type': 'application/json'})
+    //     .timeout(const Duration(seconds: Configurations.connectTimeout),
+    //         onTimeout: () {
+    //   throw TimeOutException();
+    // });
+
+    var request = http.MultipartRequest('Post', url);
+    request.files.add(await http.MultipartFile.fromPath('avatar', body!.path));
+    request.headers.addAll(header?.toJson(contentType: contentType) ??
+        {'Content-Type': 'application/json'});
+    http.StreamedResponse response = await request.send();
+    // Map<String, dynamic> data = json.decode(response);
 
     String fullRequets = 'endPoint: ${Configurations.host}$endPoint\n'
         'Token: ${header?.accessToken}\n'
         'body: $body\n'
-        'Response: ${response.body}';
+        'Response: ${response.stream.bytesToString()}';
     lOG.w('REQUEST_POST: $fullRequets');
-    if (!handleResponse) {
-      return data;
-    }
-    return _handleData(data);
+    // if (!handleResponse) {
+    //   return data;
+    // }
+    return Map();
   }
 
   Map<String, dynamic> _handleData(Map<String, dynamic> input) {

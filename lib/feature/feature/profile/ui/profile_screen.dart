@@ -151,7 +151,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                           fit: BoxFit.contain,
                                         ),
                                       )
-                                    : ((state.profileModel?.avatar?.isEmpty ==
+                                    : ((state.profileModel?.avatar?.isEmpty !=
                                             true)
                                         ? Stack(
                                             children: [
@@ -183,7 +183,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                           )
                                         : CustomImageNetwork(
                                             url:
-                                                '${state.profileModel?.avatar}',
+                                                'https://beta.sinhairvietnam.vn/api/auth/showProfile${state.profileModel?.avatar}',
                                             width: 112,
                                             height: 112,
                                             fit: BoxFit.cover,
@@ -225,15 +225,15 @@ class ProfileScreenState extends State<ProfileScreen> {
                               width: 100.44,
                               height: 45,
                               onTap: () {
-                                if (_formKey.currentState!.validate()) return;
+                                // if (_formKey.currentState!.validate()) return;
 
                                 CommonUtil.dismissKeyBoard(context);
-                                _bloc1.add(OnClickEvent(
-                                  _nameController.text,
-                                  _emailController.text,
-                                  _phoneController.text,
-                                  _addressController.text,
-                                ));
+                                context.read<ProfileBloc1>().add(OnClickEvent(
+                                    _nameController.text,
+                                    _emailController.text,
+                                    _phoneController.text,
+                                    _addressController.text,
+                                    state.image));
                               },
                               text: 'Lưu lại',
                             ),
@@ -263,6 +263,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         true,
       );
     }
+    context.read<ProfileBloc1>().add(OnSelectImageEvent(image?.path));
   }
 }
 // void _onDone() async {
