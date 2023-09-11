@@ -56,6 +56,7 @@ class ProfileBloc1 extends Bloc<ProfileEvent, ProfileState> {
         emit(state.copyWith(statusPost: StatusPost.failed));
       }
     });
+
     on<OnSelectImageEvent>((event, emit) async {
       emit(state.copyWith(image: event.filePath));
     });

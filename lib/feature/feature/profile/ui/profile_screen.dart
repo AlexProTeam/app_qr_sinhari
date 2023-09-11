@@ -9,7 +9,6 @@ import 'package:qrcode/feature/widgets/custom_button.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/custom_textfield.dart';
-import 'package:qrcode/feature/widgets/follow_keyboard_widget.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
 import '../../../../common/const/key_save_data_local.dart';
@@ -18,11 +17,13 @@ import '../../../../common/utils/common_util.dart';
 import '../../../../common/utils/enum_app_status.dart';
 import '../../../../re_base/app/di/injector_container.dart';
 import '../../../widgets/bottom_sheet_select_image.dart';
+import '../../../widgets/follow_keyboard_widget.dart';
 import '../bloc/profile_bloc.dart';
 
 Widget get getProfileScreenRoute => BlocProvider(
-    create: (BuildContext context) => ProfileBloc1(),
-    child: const ProfileScreen());
+      create: (context) => ProfileBloc1(),
+      child: const ProfileScreen(),
+    );
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -41,9 +42,9 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
+    super.initState();
     _bloc1 = context.read<ProfileBloc1>();
     _bloc1.add(InitProfileEvent());
-    super.initState();
   }
 
   @override
@@ -71,6 +72,10 @@ class ProfileScreenState extends State<ProfileScreen> {
               // await DialogManager.showLoadingDialog(context);
               break;
             case StatusPost.success:
+              _nameController.text = state.profileModel?.name ?? '';
+              _emailController.text = state.profileModel?.email ?? '';
+              _phoneController.text = state.profileModel?.phone ?? '';
+              _addressController.text = state.profileModel?.address ?? '';
               ToastManager.showToast(
                 context,
                 text: 'Cập nhật thông tin thành công!',
@@ -87,10 +92,6 @@ class ProfileScreenState extends State<ProfileScreen> {
           }
         },
         builder: (context, state) {
-          _nameController.text = state.profileModel?.name ?? '';
-          _emailController.text = state.profileModel?.email ?? '';
-          _phoneController.text = state.profileModel?.phone ?? '';
-          _addressController.text = state.profileModel?.address ?? '';
           return FollowKeyBoardWidget(
             child: SingleChildScrollView(
               child: Padding(
@@ -131,63 +132,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                     Radius.circular(12),
                                   ),
                                 ),
-                                child: state.image.isNotEmpty
-                                    ? Container(
-                                        width: 164,
-                                        height: 164,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            width: 1,
-                                            color: const Color(0xFFD9D9D9),
-                                          ),
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(12),
-                                          ),
-                                        ),
-                                        child: Image.file(
-                                          File(state.image),
-                                          width: 112,
-                                          height: 112,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      )
-                                    : ((state.profileModel?.avatar?.isEmpty ==
-                                            true)
-                                        ? Stack(
-                                            children: [
-                                              Center(
-                                                child: Image.asset(
-                                                  IconConst.logoLogin,
-                                                  width: 145,
-                                                  height: 145,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    Image.asset(
-                                                      IconConst.camera,
-                                                      width: 24,
-                                                      height: 24,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : CustomImageNetwork(
-                                            url:
-                                                '${state.profileModel?.avatar}',
-                                            width: 112,
-                                            height: 112,
-                                            fit: BoxFit.cover,
-                                          )),
+                                child: _buildProfileImage(state),
                               ),
                             ),
                             const SizedBox(height: 27),
@@ -224,17 +169,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                             CustomButton(
                               width: 100.44,
                               height: 45,
-                              onTap: () {
-                                if (_formKey.currentState!.validate()) return;
-
-                                CommonUtil.dismissKeyBoard(context);
-                                _bloc1.add(OnClickEvent(
-                                  _nameController.text,
-                                  _emailController.text,
-                                  _phoneController.text,
-                                  _addressController.text,
-                                ));
-                              },
+                              onTap: () => _saveProfile(),
                               text: 'Lưu lại',
                             ),
                           ],
@@ -246,6 +181,51 @@ class ProfileScreenState extends State<ProfileScreen> {
         },
       ),
     );
+  }
+
+  Widget _buildProfileImage(ProfileState state) {
+    if (state.image.isNotEmpty) {
+      return Image.file(
+        File(state.image),
+        width: 112,
+        height: 112,
+        fit: BoxFit.contain,
+      );
+    } else if (state.profileModel?.avatar?.isEmpty == true) {
+      return Stack(
+        children: [
+          Center(
+            child: Image.asset(
+              IconConst.logoLogin,
+              width: 145,
+              height: 145,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Image.asset(
+                  IconConst.camera,
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.cover,
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else {
+      return CustomImageNetwork(
+        url: '${state.profileModel?.avatar}',
+        width: 112,
+        height: 112,
+        fit: BoxFit.cover,
+      );
+    }
   }
 
   void _onSelectImage(bool isCamera) async {
@@ -264,38 +244,16 @@ class ProfileScreenState extends State<ProfileScreen> {
       );
     }
   }
-}
-// void _onDone() async {
-//   CommonUtil.dismissKeyBoard(context);
-//   if (!_formKey.currentState!.validate()) return;
-//   try {
-//     await DialogManager.showLoadingDialog(context);
-//
-//     final client = injector<AppClient>();
-//     final name = _nameController.text;
-//     final email = _emailController.text;
-//     final phone = _phoneController.text;
-//     final address = _addressController.text;
-//
-//     await client.post(
-//         'auth/saveProfile?name=$name&email=$email&phone=$phone&address=$address');
-//
-//     if (mounted) {
-//       context.read<ProfileBloc>().add(const InitProfileEvent());
-//       DialogManager.hideLoadingDialog;
-//       await ToastManager.showToast(
-//         context,
-//         text: 'Cập nhật thông tin thành công!',
-//         afterShowToast: () => Navigator.pop(context),
-//       );
-//     }
-//     return;
-//   } catch (e) {
-//     CommonUtil.handleException(e, methodName: '');
-//   }
-//
-//   DialogManager.hideLoadingDialog;
-//   setState(() {});
-// }
 
-//
+  void _saveProfile() {
+    if (_formKey.currentState!.validate()) return;
+
+    CommonUtil.dismissKeyBoard(context);
+    _bloc1.add(OnClickEvent(
+      _nameController.text,
+      _emailController.text,
+      _phoneController.text,
+      _addressController.text,
+    ));
+  }
+}
