@@ -14,25 +14,29 @@ class OnClickEvent extends ProfileEvent {
   final String mailController;
   final String phoneController;
   final String andressController;
+  final String imageController;
 
   const OnClickEvent(
     this.nameController,
     this.mailController,
     this.phoneController,
     this.andressController,
+    this.imageController,
   );
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props =>
+      [
         nameController,
         mailController,
         phoneController,
         andressController,
+        imageController,
       ];
 }
 
 class OnSelectImageEvent extends ProfileEvent {
-  final String filePath;
+  final String? filePath;
 
   const OnSelectImageEvent(this.filePath);
 

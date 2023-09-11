@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:qrcode/common/network/app_header.dart';
@@ -48,9 +50,11 @@ class ProfileBloc1 extends Bloc<ProfileEvent, ProfileState> {
         final email = event.mailController;
         final phone = event.phoneController;
         final address = event.andressController;
+        final image = event.imageController;
 
         await client.post(
-            'auth/saveProfile?name=$name&email=$email&phone=$phone&address=$address');
+            'auth/saveProfile?name=$name&email=$email&phone=$phone&address=$address',
+            body: File(image));
         emit(state.copyWith(statusPost: StatusPost.success));
       } catch (e) {
         emit(state.copyWith(statusPost: StatusPost.failed));
