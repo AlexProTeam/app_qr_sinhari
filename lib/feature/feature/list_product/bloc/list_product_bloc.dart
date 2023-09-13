@@ -6,7 +6,7 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/list_product/list_product_screen.dart';
 
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 
 part 'list_product_event.dart';
 part 'list_product_state.dart';
@@ -21,7 +21,7 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
       try {
         emit(state.copyWith(status: StatusBloc.loading));
 
-        final dataSeller = await injector<AppClient>()
+        final dataSeller = await getIt<AppClient>()
             .get('${argumentListProductScreen.url}?page=1');
         String? key =
             (argumentListProductScreen.url ?? '').contains('product-seller')

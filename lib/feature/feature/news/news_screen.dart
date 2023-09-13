@@ -8,7 +8,7 @@ import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 import '../../routes.dart';
 import '../../themes/theme_color.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -151,7 +151,7 @@ class NewsScreenState extends State<NewsScreen> {
         _isLoading = true;
       });
       final data =
-          await injector<AppClient>().post('list_news', handleResponse: false);
+          await getIt<AppClient>().post('list_news', handleResponse: false);
       data['data'].forEach((e) {
         _histories.add(NewsModel.fromJson(e));
       });

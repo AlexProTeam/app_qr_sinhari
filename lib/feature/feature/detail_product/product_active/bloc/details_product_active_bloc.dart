@@ -5,7 +5,7 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
 
-import '../../../../../re_base/app/di/injector_container.dart';
+import '../../../../../re_base/app/di/injection.dart';
 
 part 'details_product_active_event.dart';
 part 'details_product_active_state.dart';
@@ -18,7 +18,7 @@ class DetailsProductActiveBloc
       try {
         if (!CommonUtil.validateAndSave(event.formKey)) return;
         emit(state.copyWith(status: ScreenStatus.loading));
-        await injector<AppClient>().post(
+        await getIt<AppClient>().post(
             'save-contact?product_id=${event.arg}&content=${event.content.text}&type=1');
         emit(state.copyWith(status: ScreenStatus.success));
       } catch (e) {

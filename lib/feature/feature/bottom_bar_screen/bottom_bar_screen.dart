@@ -9,7 +9,7 @@ import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/feature/notification/firebase_config.dart';
 
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 import 'bloc/bottom_bar_bloc.dart';
 import 'enum/bottom_bar_enum.dart';
 import 'widget/bottom_navigation.dart';
@@ -31,11 +31,11 @@ class BottomBarScreenState extends State<BottomBarScreen> {
   }
 
   void _initData() async {
-    String? accessToken = injector<LocalApp>()
+    String? accessToken = getIt<LocalApp>()
         .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
     AppHeader appHeader = AppHeader();
     appHeader.accessToken = accessToken;
-    injector<AppClient>().header = appHeader;
+    getIt<AppClient>().header = appHeader;
     await _addToken();
   }
 

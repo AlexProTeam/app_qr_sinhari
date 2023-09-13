@@ -4,7 +4,7 @@ import 'package:qrcode/feature/widgets/toast_manager.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/response/home_response.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 import '../../../themes/theme_color.dart';
 import '../../../themes/theme_text.dart';
 import '../../../widgets/home_product_item.dart';
@@ -120,7 +120,7 @@ class _SilverCoatedShampooWidgetState extends State<SilverCoatedShampooWidget> {
 
       await Future.delayed(const Duration(milliseconds: 2500));
 
-      final dataHomeCategory = await injector<AppClient>()
+      final dataHomeCategory = await getIt<AppClient>()
           .post('get_home_category', handleResponse: false);
       dataHomeCategory['data'].forEach((e) {
         _homeCategory.add(HomeCategoryResponse.fromJson(e));

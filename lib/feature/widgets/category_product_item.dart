@@ -8,8 +8,8 @@ import 'package:qrcode/common/navigation/route_names.dart';
 import 'package:qrcode/common/utils/format_utils.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 import 'package:qrcode/feature/widgets/custom_image_network.dart';
-import 'package:qrcode/re_base/app/di/injector_container.dart';
 
+import '../../re_base/app/di/injection.dart';
 import '../themes/theme_color.dart';
 
 ///todo: use same a base item with home screen
@@ -30,7 +30,7 @@ class CategoryItemProduct extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (context.read<ProfileBloc>().state.profileModel == null) {
-          injector<AppCache>().cacheProductId = productModel?.id;
+          getIt<AppCache>().cacheProductId = productModel?.id;
         }
         Navigator.pushNamed(context, RouteName.detailProductScreen,
             arguments: ArgumentDetailProductScreen(

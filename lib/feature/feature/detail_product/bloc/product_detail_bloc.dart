@@ -8,7 +8,7 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/detail_product/detail_product_screen.dart';
 
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 
 part 'product_detail_event.dart';
 part 'product_detail_state.dart';
@@ -22,8 +22,8 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       try {
         emit(state.copyWith(status: StatusBloc.loading));
         if ((argument.url ?? '').isNotEmpty) {
-          final data = await injector<AppClient>().get(
-              'scan-qr-code?device_id=${injector<AppCache>().deviceId}&city=hanoi&region=vn&url=${argument.url ?? ''}');
+          final data = await getIt<AppClient>().get(
+              'scan-qr-code?device_id=${getIt<AppCache>().deviceId}&city=hanoi&region=vn&url=${argument.url ?? ''}');
           detailProductModel =
               DetailProductModel.fromJson(data['data']['data']);
           detailProductModel?.serialCode = data['data']['code_active'];
@@ -46,7 +46,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
             }
           }
         } else {
-          final data = await injector<AppClient>()
+          final data = await getIt<AppClient>()
               .get('products/show/${argument.productId}');
           detailProductModel = DetailProductModel.fromJson(data['data']);
         }

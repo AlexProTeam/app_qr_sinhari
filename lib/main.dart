@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../re_base/app/di/injector_container.dart' as di;
 import 'common/bloc/profile_bloc/profile_bloc.dart';
 import 'common/navigation/route_names.dart';
 import 'common/utils/screen_utils.dart';
@@ -17,6 +16,7 @@ import 'feature/notification/notification_service.dart';
 import 'feature/routes.dart';
 import 'feature/themes/theme_color.dart';
 import 'firebase_options.dart';
+import 're_base/app/di/injection.dart' as di;
 //import 'feature/notification/firebase_config.dart';
 
 dynamic decodeIsolate(String response) => jsonDecode(response);

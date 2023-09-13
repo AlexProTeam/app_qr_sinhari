@@ -4,7 +4,7 @@ import '../../../../common/model/product_model.dart';
 import '../../../../common/navigation/route_names.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 import '../../../themes/theme_color.dart';
 import '../../../widgets/gridview_product.dart';
 import '../../list_product/list_product_screen.dart';
@@ -85,7 +85,7 @@ class _ProductFeaturesWidgetState extends State<ProductFeaturesWidget> {
       await Future.delayed(const Duration(seconds: 1));
 
       final datafeature =
-          await injector<AppClient>().get('product-feature?page=1');
+          await getIt<AppClient>().get('product-feature?page=1');
       datafeature['data']['productFeatures']['data'].forEach((e) {
         _productFeatures.add(ProductResponse.fromJson(e));
       });

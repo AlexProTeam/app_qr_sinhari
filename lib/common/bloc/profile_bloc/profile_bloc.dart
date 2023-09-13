@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 import '../../const/key_save_data_local.dart';
 import '../../const/status_bloc.dart';
 import '../../local/local_app.dart';
@@ -19,13 +19,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       try {
         emit(state.copyWith(status: StatusBloc.loading));
 
-        String? accessToken = injector<LocalApp>()
+        String? accessToken = getIt<LocalApp>()
             .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
         AppHeader appHeader = AppHeader();
         appHeader.accessToken = accessToken;
-        injector<AppClient>().header = appHeader;
+        getIt<AppClient>().header = appHeader;
 
-        final data = await injector<AppClient>().get('auth/showProfile');
+        final data = await getIt<AppClient>().get('auth/showProfile');
         ProfileModel profileModel = ProfileModel.fromJson(data['data']);
 
         emit(state.copyWith(

@@ -16,7 +16,7 @@ import '../../../../common/const/key_save_data_local.dart';
 import '../../../../common/local/local_app.dart';
 import '../../../../common/utils/common_util.dart';
 import '../../../../common/utils/enum_app_status.dart';
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 import '../../../widgets/bottom_sheet_select_image.dart';
 import '../bloc/profile_bloc.dart';
 
@@ -255,7 +255,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     );
 
     if (image != null) {
-      final localApp = injector<LocalApp>();
+      final localApp = getIt<LocalApp>();
       localApp.saveBool(
         isCamera
             ? KeySaveDataLocal.havedAcceptPermissionCamera
@@ -263,7 +263,9 @@ class ProfileScreenState extends State<ProfileScreen> {
         true,
       );
     }
-    context.read<ProfileBloc1>().add(OnSelectImageEvent(image?.path));
+    if (mounted) {
+      context.read<ProfileBloc1>().add(OnSelectImageEvent(image?.path));
+    }
   }
 }
 // void _onDone() async {

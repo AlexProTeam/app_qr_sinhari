@@ -10,7 +10,7 @@ import 'package:qrcode/feature/routes.dart';
 import 'package:qrcode/feature/themes/theme_color.dart';
 
 import '../../../common/const/icon_constant.dart';
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 import '../../widgets/custom_image_network.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -37,10 +37,9 @@ class WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   Future<void> _initData() async {
-    await injector<LocalApp>()
-        .saveBool(KeySaveDataLocal.showWelcomeScreen, true);
+    await getIt<LocalApp>().saveBool(KeySaveDataLocal.showWelcomeScreen, true);
     try {
-      final data = await injector<AppClient>()
+      final data = await getIt<AppClient>()
           .post('get_image_introduction', handleResponse: false);
       final banners = data['banners'] as List<dynamic>;
       _welcomeModel = banners.map((e) => WelcomeModel.fromJson(e)).toList();

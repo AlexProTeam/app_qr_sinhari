@@ -13,7 +13,7 @@ import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
 import '../../../common/bloc/profile_bloc/profile_bloc.dart';
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
 
@@ -133,14 +133,14 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
     try {
       await DialogManager.showLoadingDialog(context);
-      final data = await injector<AppClient>()
+      final data = await getIt<AppClient>()
           .post('confirm-otp?phone=${widget.phone}&otp=${_controller.text}');
       String? accessToken = data['data']['result']['accessToken'];
       if (accessToken != null) {
         AppHeader appHeader = AppHeader();
         appHeader.accessToken = accessToken;
-        injector<AppClient>().header = appHeader;
-        injector<LocalApp>().saveStringSharePreference(
+        getIt<AppClient>().header = appHeader;
+        getIt<LocalApp>().saveStringSharePreference(
             KeySaveDataLocal.keySaveAccessToken, accessToken);
 
         if (mounted) {

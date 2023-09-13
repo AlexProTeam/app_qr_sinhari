@@ -7,7 +7,7 @@ import 'package:qrcode/feature/themes/theme_color.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 
 class HuongDanScreen extends StatefulWidget {
   const HuongDanScreen({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class HuongDanScreenState extends State<HuongDanScreen> {
   void _initData() async {
     try {
       isLoadding = true;
-      final data = await injector<AppClient>().post(
+      final data = await getIt<AppClient>().post(
         'policy?type=support_policy',
         handleResponse: false,
       );

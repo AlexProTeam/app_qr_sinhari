@@ -7,7 +7,7 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/feature/history_scan/history_model.dart';
 import 'package:qrcode/feature/feature/history_scan/widget/item_history_scan_widget.dart';
 
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 import '../../routes.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -99,8 +99,8 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
         isLoading = true;
       });
       histories.clear();
-      final data = await injector<AppClient>().get(
-          'history-scan-qr-code?device_id=${injector<AppCache>().deviceId}');
+      final data = await getIt<AppClient>()
+          .get('history-scan-qr-code?device_id=${getIt<AppCache>().deviceId}');
       data['data'][0].forEach((e) {
         histories.add(HistoryModel.fromJson(e));
       });

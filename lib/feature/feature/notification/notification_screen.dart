@@ -6,7 +6,7 @@ import 'package:qrcode/feature/widgets/custom_image_network.dart';
 import 'package:qrcode/feature/widgets/custom_scaffold.dart';
 import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 import '../../themes/theme_color.dart';
 import 'noti_model.dart';
 
@@ -33,8 +33,8 @@ class NotiScreenState extends State<NotiScreen> {
         await DialogManager.showLoadingDialog(context);
       }
 
-      final data = await injector<AppClient>()
-          .post('notifications', handleResponse: false);
+      final data =
+          await getIt<AppClient>().post('notifications', handleResponse: false);
       data['notifications'].forEach((e) {
         histories.add(NotiModel.fromJson(e));
       });

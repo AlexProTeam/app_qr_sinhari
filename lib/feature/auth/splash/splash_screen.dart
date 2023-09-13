@@ -10,7 +10,7 @@ import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/routes.dart';
 
 import '../../../common/const/status_bloc.dart';
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class SplashScreenState extends State<SplashScreen>
   late AnimationController controller;
   late ProfileBloc _profileBloc;
 
-  String? accessToken = injector<LocalApp>()
+  String? accessToken = getIt<LocalApp>()
       .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
 
   @override
@@ -48,7 +48,7 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _initData() async {
-    injector<AppCache>().deviceId = await CommonUtil.getDeviceId();
+    getIt<AppCache>().deviceId = await CommonUtil.getDeviceId();
     await Future.delayed(const Duration(seconds: 3));
 
     if ((accessToken ?? '').isEmpty) {
@@ -69,7 +69,7 @@ class SplashScreenState extends State<SplashScreen>
       listener: (context, state) async {
         switch (state.status) {
           case StatusBloc.failed:
-            injector<LocalApp>().saveStringSharePreference(
+            getIt<LocalApp>().saveStringSharePreference(
                 KeySaveDataLocal.keySaveAccessToken, '');
             break;
           case StatusBloc.success:

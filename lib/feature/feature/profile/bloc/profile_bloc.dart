@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
 
@@ -10,7 +10,7 @@ import '../../../../common/local/local_app.dart';
 import '../../../../common/model/profile_model.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -21,13 +21,13 @@ class ProfileBloc1 extends Bloc<ProfileEvent, ProfileState> {
       try {
         emit(state.copyWith(status: ScreenStatus.loading));
 
-        String? accessToken = injector<LocalApp>()
+        String? accessToken = getIt<LocalApp>()
             .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
         AppHeader appHeader = AppHeader();
         appHeader.accessToken = accessToken;
-        injector<AppClient>().header = appHeader;
+        getIt<AppClient>().header = appHeader;
 
-        final data = await injector<AppClient>().get('auth/showProfile');
+        final data = await getIt<AppClient>().get('auth/showProfile');
         ProfileModel profileModel = ProfileModel.fromJson(data['data']);
 
         emit(state.copyWith(
@@ -45,7 +45,7 @@ class ProfileBloc1 extends Bloc<ProfileEvent, ProfileState> {
       try {
         emit(state.copyWith(statusPost: StatusPost.loading));
 
-        final client = injector<AppClient>();
+        final client = getIt<AppClient>();
         final name = event.nameController;
         final email = event.mailController;
         final phone = event.phoneController;

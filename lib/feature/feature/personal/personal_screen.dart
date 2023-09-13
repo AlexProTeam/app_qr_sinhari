@@ -8,7 +8,7 @@ import 'package:qrcode/feature/widgets/custom_button.dart';
 
 import '../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../../common/utils/common_util.dart';
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 import '../../routes.dart';
 import '../../themes/theme_color.dart';
 import '../../widgets/box_border_widget.dart';
@@ -135,8 +135,8 @@ class PersonalScreenState extends State<PersonalScreen> {
 
   void _onTapLogout() async {
     context.read<ProfileBloc>().add(const ClearProfileEvent());
-    injector<AppCache>().havedLogin = false;
-    await injector<LocalApp>()
+    getIt<AppCache>().havedLogin = false;
+    await getIt<LocalApp>()
         .saveStringSharePreference(KeySaveDataLocal.keySaveAccessToken, '');
     if (mounted) {
       context.read<BottomBarBloc>().add(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 import '../../../themes/theme_color.dart';
 import '../../news/history_model.dart';
 import 'item_news.dart';
@@ -94,7 +94,7 @@ class _NewsHomeWidgetState extends State<NewsHomeWidget> {
       });
 
       final dataNew =
-          await injector<AppClient>().post('list_news', handleResponse: false);
+          await getIt<AppClient>().post('list_news', handleResponse: false);
       dataNew['data'].forEach((e) {
         _newsModel.add(NewsModel.fromJson(e));
       });

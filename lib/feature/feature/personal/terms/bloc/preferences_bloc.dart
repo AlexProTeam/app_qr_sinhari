@@ -4,7 +4,7 @@ import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
 
-import '../../../../../re_base/app/di/injector_container.dart';
+import '../../../../../re_base/app/di/injection.dart';
 
 part 'preferences_event.dart';
 part 'preferences_state.dart';
@@ -18,7 +18,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         case "Screen1":
           try {
             emit(state.copyWith(status: ScreenStatus.loading));
-            final data1 = await injector<AppClient>().post(
+            final data1 = await getIt<AppClient>().post(
               'policy?type=introduce',
               handleResponse: false,
             );
@@ -32,7 +32,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         case "Screen2":
           try {
             emit(state.copyWith(status: ScreenStatus.loading));
-            final data1 = await injector<AppClient>().post(
+            final data1 = await getIt<AppClient>().post(
               'policy?type=support_policy',
               handleResponse: false,
             );
@@ -46,7 +46,7 @@ class PreferencesBloc extends Bloc<PreferencesEvent, PreferencesState> {
         case "Screen3":
           try {
             emit(state.copyWith(status: ScreenStatus.loading));
-            final data1 = await injector<AppClient>()
+            final data1 = await getIt<AppClient>()
                 .post('policy?type=terms', handleResponse: false);
             data = data1['policy'];
             emit(state.copyWith(status: ScreenStatus.success, data: data));

@@ -6,7 +6,7 @@ import 'package:qrcode/common/utils/enum_app_status.dart';
 
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 import '../noti_model.dart';
 
 part 'notification_event.dart';
@@ -20,7 +20,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       try {
         await Future.delayed(const Duration(milliseconds: 100));
         emit(state.copyWith(status: ScreenStatus.loading));
-        final data = await injector<AppClient>()
+        final data = await getIt<AppClient>()
             .post('notifications', handleResponse: false);
         data['notifications'].forEach((e) {
           histories.add(NotiModel.fromJson(e));

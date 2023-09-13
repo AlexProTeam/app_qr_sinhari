@@ -4,7 +4,7 @@ import '../../../../common/model/product_model.dart';
 import '../../../../common/navigation/route_names.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 import '../../../themes/theme_color.dart';
 import '../../../themes/theme_text.dart';
 import '../../../widgets/home_product_item.dart';
@@ -103,8 +103,7 @@ class _ProductSellersWidgetState extends State<ProductSellersWidget> {
 
       await Future.delayed(const Duration(seconds: 2));
 
-      final dataSeller =
-          await injector<AppClient>().get('product-seller?page=1');
+      final dataSeller = await getIt<AppClient>().get('product-seller?page=1');
       dataSeller['data']['productSellers']['data'].forEach((e) {
         _productSellers.add(ProductResponse.fromJson(e));
       });

@@ -87,7 +87,7 @@ class AppClient {
     // if (!handleResponse) {
     //   return data;
     // }
-    return Map();
+    return {};
   }
 
   Map<String, dynamic> _handleData(Map<String, dynamic> input) {

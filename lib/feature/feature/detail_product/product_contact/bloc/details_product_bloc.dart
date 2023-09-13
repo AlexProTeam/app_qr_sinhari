@@ -1,14 +1,13 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/network/client.dart';
 import 'package:qrcode/common/utils/enum_app_status.dart';
 import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 
-import '../../../../../re_base/app/di/injector_container.dart';
+import '../../../../../re_base/app/di/injection.dart';
 
 part 'details_product_event.dart';
-
 part 'details_product_state.dart';
 
 class DetailsProductBloc
@@ -20,7 +19,7 @@ class DetailsProductBloc
         // if (!event.formKey.currentState!.validate()) return;
         emit(state.copyWith(status: ScreenStatus.loading));
 
-        await injector<AppClient>().post(
+        await getIt<AppClient>().post(
             'save-contact?product_id=${event.arg}&content=${event.content.text}&type=0');
         emit(state.copyWith(status: ScreenStatus.success));
       } catch (e) {

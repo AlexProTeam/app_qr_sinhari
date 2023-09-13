@@ -10,7 +10,7 @@ import 'package:qrcode/feature/widgets/custom_textfield.dart';
 import 'package:qrcode/feature/widgets/dialog_manager_custom.dart';
 import 'package:qrcode/feature/widgets/toast_manager.dart';
 
-import '../../../re_base/app/di/injector_container.dart';
+import '../../../re_base/app/di/injection.dart';
 
 class ArgumentContactScreen {
   final int? productId;
@@ -103,7 +103,7 @@ class DetailProductContactState extends State<DetailProductContact> {
       if (!_formKey.currentState!.validate()) return;
       await DialogManager.showLoadingDialog(context);
 
-      await injector<AppClient>().post(
+      await getIt<AppClient>().post(
           'save-contact?product_id=${widget.argument?.productId}&content=${_contentController.text}&type=0');
 
       if (mounted) {

@@ -5,7 +5,7 @@ import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/utils/common_util.dart';
 import 'package:qrcode/feature/themes/theme_text.dart';
 
-import '../../re_base/app/di/injector_container.dart';
+import '../../re_base/app/di/injection.dart';
 
 class BottomSheetSelectImage extends StatefulWidget {
   final Function? onPhotoTap;
@@ -20,10 +20,10 @@ class BottomSheetSelectImage extends StatefulWidget {
 
 class BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
   void _requestPermission(context, bool camera) async {
-    bool? checkPermissionCamera = injector<LocalApp>()
+    bool? checkPermissionCamera = getIt<LocalApp>()
             .getBool(KeySaveDataLocal.havedAcceptPermissionCamera) ??
         false;
-    bool? checkPermissionPhoto = injector<LocalApp>()
+    bool? checkPermissionPhoto = getIt<LocalApp>()
             .getBool(KeySaveDataLocal.havedAcceptPermissionPhoto) ??
         false;
     if (camera && checkPermissionCamera) {

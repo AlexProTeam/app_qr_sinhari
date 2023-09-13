@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/model/banner_model.dart';
 import '../../../../common/network/client.dart';
 import '../../../../common/utils/common_util.dart';
-import '../../../../re_base/app/di/injector_container.dart';
+import '../../../../re_base/app/di/injection.dart';
 import '../../../widgets/banner_slide_image.dart';
 
 class BannerHomeWidget extends StatefulWidget {
@@ -54,7 +54,7 @@ class _BannerHomeWidgetState extends State<BannerHomeWidget> {
         _isBannerLoading = true;
       });
 
-      final data = await injector<AppClient>().get('banners');
+      final data = await getIt<AppClient>().get('banners');
 
       data['data'].forEach((e) {
         _bannerModel.add(BannerResponse.fromJson(e));
