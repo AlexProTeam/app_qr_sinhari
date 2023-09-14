@@ -10,9 +10,9 @@ import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/configs.dart';
-import 'package:qrcode/common/utils/log_util.dart';
 
-import '../../re_base/app/managers/const/string_const.dart';
+import '../../app/managers/const/string_const.dart';
+import '../../app/route/log_util.dart';
 
 class AppClient {
   AppHeader? header;

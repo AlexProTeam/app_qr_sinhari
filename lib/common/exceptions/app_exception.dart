@@ -1,4 +1,4 @@
-import '../../re_base/app/managers/const/string_const.dart';
+import '../../app/managers/const/string_const.dart';
 
 class AppException implements Exception {
   String message;

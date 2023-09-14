@@ -1,4 +1,4 @@
-import 'package:qrcode/common/utils/format_utils.dart';
+import 'format_utils.dart';
 
 class ValidateUtil {
   static const String textValidPrice =

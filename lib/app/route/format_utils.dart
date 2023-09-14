@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
-import 'package:qrcode/common/utils/common_util.dart';
-import 'package:qrcode/common/utils/log_util.dart';
+
+import 'common_util.dart';
+import 'log_util.dart';
 
 class FormatUtils {
   static double? formatMoneyFromStringTextField(String? input) {
