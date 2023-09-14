@@ -8,6 +8,11 @@
 - Xcode: 14.2
 - CocoaPods version 1.11.3
 
+# FVM install
+- `There are a few ways to install FVM, and we are working on other ways to make it even simpler.`
+- FVM Docs: `https://fvm.app/docs/getting_started/installation/`
+- Run: `fvm use`
+
 # How to gen all file
 - run this code in terminal: `flutter packages pub run build_runner build --delete-conflicting-outputs`
 
@@ -20,3 +25,4 @@
 
 - `flutter run --release --flavor "your_flavor" -t lib/"your_main_file_name".dart`
 - Example: `flutter run --release --flavor dev -t lib/main.dart`
+

@@ -103,7 +103,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _onLogin() async {
-    if (!CommonUtil.validateAndSave(_formKey)) return;
+    if (CommonUtil.validateAndSave(_formKey)) return;
     await DialogManager.showLoadingDialog(context);
 
     String text = _phoneController.text;

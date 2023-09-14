@@ -25,7 +25,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ));
       } on ApiException catch (e) {
         emit(state.copyWith(
-          mesErr: e.errorMessage,
+          mesErr: e.message,
           status: BlocStatusEnum.failed,
         ));
       }

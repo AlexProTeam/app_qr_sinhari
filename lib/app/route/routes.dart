@@ -6,7 +6,6 @@ import '../../presentation/auth/login/login_screen.dart';
 import '../../presentation/auth/login/verify_otp_screen.dart';
 import '../../presentation/auth/register/register_screen.dart';
 import '../../presentation/auth/splash/splash_screen.dart';
-import '../../presentation/auth/welcome/welcome_model.dart';
 import '../../presentation/auth/welcome/welcome_screen.dart';
 import '../../presentation/feature/bottom_bar_screen/bottom_bar_screen.dart';
 import '../../presentation/feature/detail_product/detail_product_contact.dart';
@@ -92,11 +91,7 @@ class Routes {
         );
       case RouteDefine.welcomeScreen:
         return SlideLeftRoute(
-          widget: WelcomeScreen(
-            welcomeModel: settings.arguments != null
-                ? settings.arguments as List<WelcomeModel>
-                : [],
-          ),
+          widget: welcomeScreenRoute,
         );
       case RouteDefine.bottomBarScreen:
         return SlideLeftRoute(

@@ -7,18 +7,18 @@ import 'package:intl/intl.dart';
 // Project imports:
 
 class ApiException {
-  final int errorCode;
-  final String errorMessage;
+  final int status;
+  final String message;
   final Object exception;
   final DioException? networkError;
 
   ApiException._({
     required this.exception,
-    this.errorCode = 0,
-    this.errorMessage = '',
+    this.status = 0,
+    this.message = '',
   }) : networkError = exception is DioException ? exception : null;
 
-  String get displayError => toBeginningOfSentenceCase(errorMessage) ?? '';
+  String get displayError => toBeginningOfSentenceCase(message) ?? '';
 
   factory ApiException.customError({
     int? errorCode,
@@ -26,8 +26,8 @@ class ApiException {
   }) =>
       ApiException._(
         exception: Object(),
-        errorCode: errorCode ?? 404,
-        errorMessage: errorMessage ?? '',
+        status: errorCode ?? 404,
+        message: errorMessage ?? '',
       );
 
   factory ApiException.error(
@@ -39,8 +39,8 @@ class ApiException {
 
     return ApiException._(
       exception: error,
-      errorCode: 0,
-      errorMessage: error.toString(),
+      status: 0,
+      message: error.toString(),
     );
   }
 
@@ -51,27 +51,27 @@ class ApiException {
       case DioExceptionType.cancel:
         return ApiException._(
           exception: exception,
-          errorMessage: 'Cancelled',
+          message: 'Cancelled',
         );
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.receiveTimeout:
       case DioExceptionType.sendTimeout:
         return ApiException._(
           exception: exception,
-          errorMessage: _timeOutMessages[exception.type]!,
+          message: _timeOutMessages[exception.type]!,
         );
       default:
         if (exception.error is SocketException ||
             exception.error is HttpException) {
           return ApiException._(
             exception: exception,
-            errorMessage: 'ConnectionProblem',
+            message: 'ConnectionProblem',
           );
         }
         if (exception.error != null) {
           return ApiException._(
             exception: exception,
-            errorMessage: exception.error.toString(),
+            message: exception.error.toString(),
           );
         }
     }
@@ -95,8 +95,8 @@ ApiException _handleErrorWithResponse(DioException exception) {
 
       return ApiException._(
         exception: exception,
-        errorMessage: errorMessages,
-        errorCode: errorBody['statusCode'],
+        message: errorMessages,
+        status: errorBody['statusCode'],
       );
     }
 
@@ -104,8 +104,8 @@ ApiException _handleErrorWithResponse(DioException exception) {
 
     return ApiException._(
       exception: exception,
-      errorMessage: message,
-      errorCode:
+      message: message,
+      status:
           errorBody['statusCode'] ?? exception.response!.statusCode.toString(),
     );
   } catch (e) {
@@ -114,14 +114,14 @@ ApiException _handleErrorWithResponse(DioException exception) {
         exception.response!.statusMessage!.isNotEmpty) {
       return ApiException._(
         exception: exception,
-        errorMessage: exception.response!.statusMessage.toString(),
-        errorCode: exception.response?.statusCode ?? 0,
+        message: exception.response!.statusMessage.toString(),
+        status: exception.response?.statusCode ?? 0,
       );
     }
 
     return ApiException._(
       exception: exception,
-      errorMessage: e.toString(),
+      message: e.toString(),
     );
   }
 }

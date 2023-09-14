@@ -1,11 +1,11 @@
 class PageEntity<T> {
   final List<T> items;
   final int? total;
-  final int? statusCode;
+  final int? status;
 
   PageEntity({
     required this.items,
     this.total,
-    this.statusCode,
+    this.status,
   });
 }

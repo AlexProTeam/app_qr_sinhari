@@ -7,7 +7,7 @@ class ObjectResponse<T> {
   final T? result;
   final bool? success;
   final String? message;
-  final int? statusCode;
+  final int? status;
 
   factory ObjectResponse.fromJson(
     Map<String, dynamic> json,
@@ -22,6 +22,6 @@ class ObjectResponse<T> {
     this.success,
     this.message,
     this.result,
-    this.statusCode,
+    this.status,
   });
 }

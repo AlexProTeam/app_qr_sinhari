@@ -18,12 +18,12 @@ class ErrorInterceptor extends Interceptor {
     );
     if (StatusCodeManager.unAuthorize == err.response?.statusCode &&
         err.response?.data != null) {
-      if (objectResponse.statusCode == StatusCodeManager.userPaused) {
+      if (objectResponse.status == StatusCodeManager.userPaused) {
         SessionUtils.deleteAccessToken;
         return;
       }
 
-      if (objectResponse.statusCode == StatusCodeManager.loginMultiDevice) {
+      if (objectResponse.status == StatusCodeManager.loginMultiDevice) {
         _logout(objectResponse, err);
 
         return;
@@ -48,7 +48,7 @@ class ErrorInterceptor extends Interceptor {
 
     await Future.delayed(const Duration(milliseconds: 100));
 
-    final message = (objectResponse.statusCode ?? 0)
+    final message = (objectResponse.status ?? 0)
         .toErrorMessage((objectResponse.message ?? err.message) ?? "Error");
 
     if (displayToast) {

@@ -9,7 +9,7 @@ class ArrayResponse<T> {
   final PageResponse<T>? result;
   final bool? success;
   final String? message;
-  final int? statusCode;
+  final int? status;
 
   factory ArrayResponse.fromJson(
     Map<String, dynamic> json,
@@ -24,7 +24,7 @@ class ArrayResponse<T> {
     this.success,
     this.message,
     this.result,
-    this.statusCode,
+    this.status,
   });
 }
 
@@ -38,7 +38,7 @@ class PageResponse<T> extends PageEntity<T> {
   final int? total;
   @override
   // ignore: overridden_fields
-  final int? statusCode;
+  final int? status;
 
   factory PageResponse.fromJson(
     Map<String, dynamic> json,
@@ -52,6 +52,6 @@ class PageResponse<T> extends PageEntity<T> {
   PageResponse({
     required this.items,
     this.total,
-    this.statusCode,
+    this.status,
   }) : super(items: []);
 }

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 
 import '../../../domain/entity/profile_model.dart';
 import '../../../domain/login/repositories/app_repository.dart';
+import '../../../presentation/auth/welcome/welcome_model.dart';
 import '../../utils/exceptions/api_exception.dart';
 import '../api/app_api.dart';
 import '../models/request/login_request.dart';
@@ -32,6 +33,17 @@ class AppRepositoryImpl implements AppRepository {
   Future<ProfileModel> getShowProfile() async {
     try {
       final response = await api.getShowProfile();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<WelcomeModel> getImageIntroduction() async {
+    try {
+      final response = await api.getImageIntroduction();
 
       return response;
     } on DioException catch (e) {
