@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_point_widget.dart';
-import 'package:qrcode/presentation/widgets/widget_loading.dart';
+import 'package:qrcode/presentation/widgets/dialog_manager_custom.dart';
 
 import '../../../app/di/injection.dart';
 import '../../../app/managers/color_manager.dart';
@@ -12,6 +12,7 @@ import '../../../app/route/navigation/route_names.dart';
 import '../../../app/route/routes.dart';
 import '../../../domain/login/usecases/app_usecase.dart';
 import '../../widgets/custom_image_network.dart';
+import '../../widgets/toast_manager.dart';
 import 'bloc/welcome_bloc.dart';
 
 Widget get welcomeScreenRoute => BlocProvider(
@@ -32,33 +33,49 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class WelcomeScreenState extends State<WelcomeScreen> {
-  int _currentIndex = 0;
+  final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<WelcomeBloc, WelcomeState>(
+      body: BlocConsumer<WelcomeBloc, WelcomeState>(
+        listener: (context, state) {
+          if (state.status == BlocStatusEnum.loading) {
+            DialogManager.showLoadingDialog(context);
+          }
+          if (state.status == BlocStatusEnum.failed) {
+            DialogManager.hideLoadingDialog;
+            ToastManager.showToast(context, text: state.errMes);
+          }
+          if (state.status == BlocStatusEnum.success) {
+            DialogManager.hideLoadingDialog;
+          }
+        },
         buildWhen: (previous, current) => previous != current,
         builder: (context, state) {
-          if (state.status == BlocStatusEnum.loading) {
-            return const WidgetLoading();
-          }
           final listData = state.welcomeModel?.banners ?? [];
 
           return Stack(
             children: [
-              IndexedStack(
-                index: _currentIndex,
-                children: listData.map((e) => _buildPageView(e.url)).toList(),
+              ValueListenableBuilder<int>(
+                valueListenable: _currentIndex,
+                builder: (context, value, child) => IndexedStack(
+                  index: value,
+                  children:
+                      listData.map((e) => _buildPageView(e.photo)).toList(),
+                ),
               ),
               SizedBox(
                 width: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    PointWidget(
-                      currentIndex: _currentIndex,
-                      dotSize: listData.length,
+                    ValueListenableBuilder<int>(
+                      valueListenable: _currentIndex,
+                      builder: (context, value, child) => PointWidget(
+                        currentIndex: value,
+                        dotSize: listData.length,
+                      ),
                     ),
                     const SizedBox(height: 65),
                     Padding(
@@ -90,12 +107,11 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () => _currentIndex != listData.length - 1
-                                ? {
-                                    setState(() => _currentIndex++),
-                                  }
-                                : Routes.instance.navigateAndRemove(
-                                    RouteDefine.bottomBarScreen),
+                            onTap: () =>
+                                _currentIndex.value != listData.length - 1
+                                    ? _currentIndex.value++
+                                    : Routes.instance.navigateAndRemove(
+                                        RouteDefine.bottomBarScreen),
                             child: Container(
                               width: 45,
                               height: 45,

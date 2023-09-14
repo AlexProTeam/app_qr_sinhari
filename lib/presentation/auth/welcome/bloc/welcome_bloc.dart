@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
 
 import '../../../../app/managers/const/status_bloc.dart';
-import '../../../../app/route/common_util.dart';
 import '../../../../data/utils/exceptions/api_exception.dart';
 import '../../../../domain/login/usecases/app_usecase.dart';
 
@@ -30,7 +29,6 @@ class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
           status: BlocStatusEnum.failed,
           errMes: e.message,
         ));
-        CommonUtil.handleException(e, methodName: '_initData');
       }
     });
   }
