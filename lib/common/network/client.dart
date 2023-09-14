@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/exceptions/connect_exception.dart';
 import 'package:qrcode/common/exceptions/server_exception.dart';
 import 'package:qrcode/common/exceptions/timeout_exception.dart';
@@ -12,6 +11,8 @@ import 'package:qrcode/common/local/local_app.dart';
 import 'package:qrcode/common/network/app_header.dart';
 import 'package:qrcode/common/network/configs.dart';
 import 'package:qrcode/common/utils/log_util.dart';
+
+import '../../re_base/app/managers/const/string_const.dart';
 
 class AppClient {
   AppHeader? header;

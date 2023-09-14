@@ -1,5 +1,6 @@
-import 'package:qrcode/common/const/string_const.dart';
 import 'package:qrcode/common/exceptions/app_exception.dart';
+
+import '../../re_base/app/managers/const/string_const.dart';
 
 class ServerException extends AppException {
   ServerException({

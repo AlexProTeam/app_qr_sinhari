@@ -1,10 +1,11 @@
-
-import 'package:qrcode/common/const/string_const.dart';
+import '../../re_base/app/managers/const/string_const.dart';
 
 class AppException implements Exception {
   String message;
 
-  AppException({this.message = StringConst.someThingWentWrong,});
+  AppException({
+    this.message = StringConst.someThingWentWrong,
+  });
 }
 
 class ExceptionConstants {

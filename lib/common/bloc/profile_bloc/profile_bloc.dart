@@ -1,42 +1,33 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../re_base/app/di/injection.dart';
-import '../../const/key_save_data_local.dart';
-import '../../const/status_bloc.dart';
-import '../../local/local_app.dart';
-import '../../model/profile_model.dart';
-import '../../network/app_header.dart';
-import '../../network/client.dart';
-import '../../utils/common_util.dart';
+import '../../../app/managers/const/status_bloc.dart';
+import '../../../data/utils/exceptions/api_exception.dart';
+import '../../../domain/entity/profile_model.dart';
+import '../../../domain/login/usecases/app_usecase.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(const ProfileState()) {
+  final AppUseCase appUseCase;
+
+  ProfileBloc(this.appUseCase) : super(const ProfileState()) {
     on<InitProfileEvent>((event, emit) async {
       try {
-        emit(state.copyWith(status: StatusBloc.loading));
+        emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        String? accessToken = getIt<LocalApp>()
-            .getStringSharePreference(KeySaveDataLocal.keySaveAccessToken);
-        AppHeader appHeader = AppHeader();
-        appHeader.accessToken = accessToken;
-        getIt<AppClient>().header = appHeader;
-
-        final data = await getIt<AppClient>().get('auth/showProfile');
-        ProfileModel profileModel = ProfileModel.fromJson(data['data']);
+        final result = await appUseCase.getShowProfile();
 
         emit(state.copyWith(
-          status: StatusBloc.success,
-          profileModel: profileModel,
+          status: BlocStatusEnum.success,
+          profileModel: result,
         ));
-      } catch (e) {
+      } on ApiException catch (e) {
         emit(state.copyWith(
-          status: StatusBloc.failed,
+          mesErr: e.errorMessage,
+          status: BlocStatusEnum.failed,
         ));
-        CommonUtil.handleException(e, methodName: '');
       }
     });
 
