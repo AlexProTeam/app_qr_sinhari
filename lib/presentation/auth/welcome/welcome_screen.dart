@@ -87,44 +87,18 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                           GestureDetector(
                             onTap: () => Routes.instance
                                 .navigateAndRemove(RouteDefine.bottomBarScreen),
-                            child: Container(
-                              height: 45,
-                              width: 45,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black.withOpacity(0.06)),
-                              child: const Center(
-                                child: Text(
-                                  'Skip',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.white,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: _buildSkipButton(),
                           ),
                           GestureDetector(
-                            onTap: () =>
-                                _currentIndex.value != listData.length - 1
-                                    ? _currentIndex.value++
-                                    : Routes.instance.navigateAndRemove(
-                                        RouteDefine.bottomBarScreen),
-                            child: Container(
-                              width: 45,
-                              height: 45,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.colorEF4948,
-                              ),
-                              child: const Icon(
-                                Icons.keyboard_arrow_right,
-                                size: 30,
-                                color: Colors.white,
-                              ),
-                            ),
+                            onTap: () {
+                              if (_currentIndex.value != listData.length - 1) {
+                                _currentIndex.value++;
+                              } else {
+                                Routes.instance.navigateAndRemove(
+                                    RouteDefine.bottomBarScreen);
+                              }
+                            },
+                            child: _buildNextButton(),
                           ),
                         ],
                       ),
@@ -153,5 +127,43 @@ class WelcomeScreenState extends State<WelcomeScreen> {
             height: double.infinity,
             fit: BoxFit.cover,
           );
+  }
+
+  Widget _buildSkipButton() {
+    return Container(
+      height: 45,
+      width: 45,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.black.withOpacity(0.06),
+      ),
+      child: const Center(
+        child: Text(
+          'Skip',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: AppColors.white,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNextButton() {
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.colorEF4948,
+      ),
+      child: const Icon(
+        Icons.keyboard_arrow_right,
+        size: 30,
+        color: Colors.white,
+      ),
+    );
   }
 }
