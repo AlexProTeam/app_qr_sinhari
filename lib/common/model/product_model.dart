@@ -1,3 +1,59 @@
+class Data {
+  Product? data;
+
+  Data({this.data});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? Product.fromJson(json['data']) : null;
+  }
+}
+
+class Product {
+  ProductFeatures? productFeatures;
+  ProductSellers? productSellers;
+
+  Product({this.productFeatures, this.productSellers});
+
+  Product.fromJson(Map<String, dynamic> json) {
+    productFeatures = json['productFeatures'] != null
+        ? ProductFeatures.fromJson(json['productFeatures'])
+        : null;
+    productSellers = json['productSellers'] != null
+        ? ProductSellers.fromJson(json['productSellers'])
+        : null;
+  }
+}
+
+class ProductSellers {
+  List<ProductResponse>? list;
+
+  ProductSellers({this.list});
+
+  ProductSellers.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      list = <ProductResponse>[];
+      json['data'].forEach((v) {
+        list!.add(ProductResponse.fromJson(v));
+      });
+    }
+  }
+}
+
+class ProductFeatures {
+  List<ProductResponse>? list;
+
+  ProductFeatures({this.list});
+
+  ProductFeatures.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      list = <ProductResponse>[];
+      json['data'].forEach((v) {
+        list!.add(ProductResponse.fromJson(v));
+      });
+    }
+  }
+}
+
 class ProductResponse {
   int? id;
   dynamic productIdVtap;

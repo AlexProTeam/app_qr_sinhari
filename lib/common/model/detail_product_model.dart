@@ -1,5 +1,16 @@
 import 'dart:convert';
 
+class DataDetail {
+  DetailProductModel? data;
+
+  DataDetail({this.data});
+
+  DataDetail.fromJson(Map<String, dynamic> json) {
+    data =
+        json['data'] != null ? DetailProductModel.fromJson(json['data']) : null;
+  }
+}
+
 class DetailProductModel {
   int? id;
   dynamic productIdVtap;

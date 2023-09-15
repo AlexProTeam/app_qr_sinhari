@@ -1,6 +1,8 @@
 // Project imports:
 
 import 'package:dio/dio.dart';
+import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/common/model/product_model.dart';
 
 import '../../../domain/entity/profile_model.dart';
 import '../../../domain/login/repositories/app_repository.dart';
@@ -44,6 +46,52 @@ class AppRepositoryImpl implements AppRepository {
   Future<WelcomeModel> getImageIntroduction() async {
     try {
       final response = await api.getImageIntroduction();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<Data> getListFeature() async {
+    try {
+      final response = await api.getListFeature();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<Data> getListSeller() async {
+    try {
+      final response = await api.getListSeller();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<DataDetail> getDetaiProduct(int productId) async {
+    try {
+      final response = await api.getDetaiProduct(productId);
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<DataDetail> getDetaiProductByQr(
+      String deviceId, String city, String region, String url) async {
+    try {
+      final response =
+          await api.getDetaiProductByQr(deviceId, city, region, url);
 
       return response;
     } on DioException catch (e) {

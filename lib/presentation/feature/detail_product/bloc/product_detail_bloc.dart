@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/const/status_bloc.dart';
@@ -11,13 +12,16 @@ import '../../../../app/route/common_util.dart';
 import '../detail_product_screen.dart';
 
 part 'product_detail_event.dart';
+
 part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   final ArgumentDetailProductScreen argument;
   DetailProductModel? detailProductModel;
+  final AppUseCase appUseCase;
 
-  ProductDetailBloc(this.argument) : super(const ProductDetailState()) {
+  ProductDetailBloc(this.argument, this.appUseCase)
+      : super(const ProductDetailState()) {
     on<InitProductDetailEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
@@ -46,9 +50,9 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
             }
           }
         } else {
-          final data = await getIt<AppClient>()
-              .get('products/show/${argument.productId}');
-          detailProductModel = DetailProductModel.fromJson(data['data']);
+          final data =
+              await appUseCase.getDetaiProduct(argument.productId ?? 0);
+          detailProductModel = data.data;
         }
 
         emit(state.copyWith(

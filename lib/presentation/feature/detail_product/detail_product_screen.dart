@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:qrcode/app/di/injection.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
+import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 import 'package:qrcode/presentation/feature/detail_product/product_active/ui/detail_product_active.dart';
 
 import '../../../app/managers/color_manager.dart';
@@ -61,8 +63,11 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           ],
         ),
         body: BlocProvider(
-          create: (context) => ProductDetailBloc(ArgumentDetailProductScreen(
-              productId: widget.argument?.productId, url: widget.argument?.url))
+          create: (context) => ProductDetailBloc(
+              ArgumentDetailProductScreen(
+                  productId: widget.argument?.productId,
+                  url: widget.argument?.url),
+              getIt<AppUseCase>())
             ..add(const InitProductDetailEvent()),
           child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
             builder: (BuildContext context, state) {

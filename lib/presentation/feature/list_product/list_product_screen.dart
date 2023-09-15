@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/di/injection.dart';
+import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../app/route/enum_app_status.dart';
 import '../../../app/route/screen_utils.dart';
@@ -48,9 +50,9 @@ class ListProductScreenState extends State<ListProductScreen> {
         isShowBack: true,
       ),
       body: BlocProvider(
-        create: (context) => ListProductBloc(ArgumentListProductScreen(
-            url: widget.argument?.url, label: widget.argument?.label))
-          ..add(const InitListProductEvent()),
+        create: (context) =>
+            ListProductBloc(getIt<AppUseCase>(), widget.argument?.url ?? '')
+              ..add(const InitListProductEvent()),
         child: BlocBuilder<ListProductBloc, ListProductState>(
           builder: (BuildContext context, state) {
             final products = state.products ?? [];
