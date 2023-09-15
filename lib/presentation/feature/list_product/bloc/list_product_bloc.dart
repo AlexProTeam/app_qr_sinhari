@@ -1,35 +1,41 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/model/product_model.dart';
-import 'package:qrcode/common/network/client.dart';
 
-import '../../../../app/di/injection.dart';
+import 'package:qrcode/common/model/product_model.dart';
+
+import 'package:qrcode/domain/login/usecases/app_usecase.dart';
+
 import '../../../../app/managers/const/status_bloc.dart';
 import '../../../../app/route/common_util.dart';
-import '../list_product_screen.dart';
 
 part 'list_product_event.dart';
+
 part 'list_product_state.dart';
 
 class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
-  final List<ProductResponse> _products = [];
-  final ArgumentListProductScreen argumentListProductScreen;
+  late List<ProductResponse> _products;
+  final AppUseCase appUseCase;
+  final String title;
 
-  ListProductBloc(this.argumentListProductScreen)
+  ListProductBloc(this.appUseCase, this.title)
       : super(const ListProductState()) {
     on<InitListProductEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        final dataSeller = await getIt<AppClient>()
-            .get('${argumentListProductScreen.url}?page=1');
-        String? key =
-            (argumentListProductScreen.url ?? '').contains('product-seller')
-                ? 'productSellers'
-                : null;
-        dataSeller['data'][key ?? 'productFeatures']['data'].forEach((e) {
-          _products.add(ProductResponse.fromJson(e));
-        });
+        if (title == 'product-seller') {
+          final result = await appUseCase.getListSeller();
+          if ((result.data?.productSellers?.list ?? []).isNotEmpty) {
+            _products =
+                result.data?.productSellers?.list as List<ProductResponse>;
+          }
+        } else {
+          final result = await appUseCase.getListFeature();
+          if ((result.data?.productFeatures?.list ?? []).isNotEmpty) {
+            _products =
+                result.data?.productFeatures?.list as List<ProductResponse>;
+          }
+        }
 
         emit(state.copyWith(
           status: BlocStatusEnum.success,

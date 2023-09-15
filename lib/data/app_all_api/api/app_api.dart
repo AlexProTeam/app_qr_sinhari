@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/common/model/product_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../domain/entity/profile_model.dart';
@@ -22,4 +24,20 @@ abstract class AppApi {
 
   @POST('get_image_introduction')
   Future<WelcomeModel> getImageIntroduction();
+
+  @GET('product-feature?page=1')
+  Future<Data> getListFeature();
+
+  @GET('product-seller?page=1')
+  Future<Data> getListSeller();
+
+  @GET('scan-qr-code')
+  Future<DataDetail> getDetaiProductByQr(
+      @Query('device_id') String deviceId,
+      @Query('city') String city,
+      @Query('region') String region,
+      @Query('url') String url);
+
+  @GET('products/show/{productId}')
+  Future<DataDetail> getDetaiProduct(@Path("productId") int productId);
 }
