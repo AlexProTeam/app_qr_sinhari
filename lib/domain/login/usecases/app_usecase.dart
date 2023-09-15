@@ -28,7 +28,7 @@ class AppUseCase {
   Future<DataDetail> getDetaiProduct(int productId) =>
       _repository.getDetaiProduct(productId);
 
-  Future<DataDetail> getDetaiProductByQr(
+  Future<DetailByQr> getDetaiProductByQr(
           String deviceId, String city, String region, String url) =>
       _repository.getDetaiProductByQr(deviceId, city, region, url);
 }

@@ -2,7 +2,7 @@ part of 'product_detail_bloc.dart';
 
 class ProductDetailState extends Equatable {
   final BlocStatusEnum status;
-  final DetailProductModel? detailProductModel;
+  final DataDetail? detailProductModel;
 
   const ProductDetailState({
     this.detailProductModel,
@@ -14,7 +14,7 @@ class ProductDetailState extends Equatable {
 
   ProductDetailState copyWith({
     BlocStatusEnum? status,
-    DetailProductModel? detailProductModel,
+    DataDetail? detailProductModel,
   }) {
     return ProductDetailState(
       status: status ?? this.status,

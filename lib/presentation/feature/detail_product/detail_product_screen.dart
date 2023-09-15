@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
 import 'package:qrcode/app/di/injection.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
@@ -88,7 +89,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                       children: [
                         if (state.detailProductModel != null)
                           DetailProductSlide(
-                            images: state.detailProductModel?.photos,
+                            images: state.detailProductModel?.data?.photos ?? [],
                           ),
                         const SizedBox(height: 18.5),
                         Padding(
@@ -97,7 +98,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                state.detailProductModel?.name ?? '',
+                                state.detailProductModel?.data?.name ?? '',
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
@@ -115,7 +116,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                   const SizedBox(width: 6),
                                   RichText(
                                       text: TextSpan(
-                                          text: (state.detailProductModel
+                                          text: (state.detailProductModel?.data
                                                       ?.rating ??
                                                   0)
                                               .toString(),
@@ -126,7 +127,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                           children: [
                                         TextSpan(
                                           text:
-                                              ' (${(state.detailProductModel?.quantity ?? 0).toString()} sản phẩm)',
+                                              ' (${(state.detailProductModel?.data?.quantity ?? 0).toString()} sản phẩm)',
                                           style: const TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w300,
@@ -141,7 +142,8 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                 children: [
                                   Text(
                                     FormatUtils.formatCurrencyDoubleToString(
-                                        state.detailProductModel?.unitPrice),
+                                        state.detailProductModel?.data
+                                            ?.unitPrice),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 14,
@@ -153,6 +155,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                       text: FormatUtils
                                           .formatCurrencyDoubleToString(state
                                               .detailProductModel
+                                              ?.data
                                               ?.purchasePrice),
                                       style: const TextStyle(
                                         fontSize: 10,
@@ -175,16 +178,17 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                child:
-                                    state.detailProductModel?.limitScan == true
-                                        ? _itemLimit(
-                                            state.detailProductModel
-                                                    ?.dateTimeScanLimit ??
-                                                '',
-                                            state.detailProductModel
-                                                    ?.exceedingScan ??
-                                                '')
-                                        : _itemApccept(),
+                                child: state.detailProductModel?.tracking
+                                            ?.exceeded ==
+                                        true
+                                    ? _itemLimit(
+                                        getDate(state.detailProductModel
+                                                ?.tracking?.datetimeScan ??
+                                            ''),
+                                        state.detailProductModel?.tracking
+                                                ?.exceedingScan ??
+                                            '')
+                                    : _itemApccept(),
                               ),
                               Padding(
                                 padding:
@@ -193,7 +197,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Serial: ${state.detailProductModel?.serialCode ?? ''}',
+                                      'Serial: ${state.detailProductModel?.codeActive ?? ''}',
                                       style: TextStyleManager.normalBlue,
                                     )
                                   ],
@@ -212,7 +216,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                     Expanded(
                                         child: _itemRow(
                                       Icons.qr_code_scanner,
-                                      state.detailProductModel?.countScan ?? 0,
+                                      state.detailProductModel?.tracking
+                                              ?.totalScan ??
+                                          0,
                                       'Số lần quét',
                                     )),
                                     Container(
@@ -223,8 +229,8 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                     Expanded(
                                         child: _itemRow(
                                       Icons.person,
-                                      state.detailProductModel
-                                              ?.countPersonScan ??
+                                      state.detailProductModel?.tracking
+                                              ?.totalUserScan ??
                                           0,
                                       'Số người quét',
                                     )),
@@ -265,7 +271,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Html(
-                              data: state.detailProductModel?.description ?? "",
+                              data:
+                                  state.detailProductModel?.data?.description ??
+                                      "",
                               style: {
                                 "html": Style(
                                   backgroundColor: Colors.transparent,
@@ -309,7 +317,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                           context, RouteDefine.activeScrene,
                                           arguments: ArgumentActiveScreen(
                                               productId:
-                                                  state.detailProductModel?.id))
+                                                  state.detailProductModel?.data?.id))
                                       : Navigator.pushNamed(
                                           context, RouteDefine.loginScreen,
                                           arguments: true);
@@ -323,7 +331,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                           context, RouteDefine.muaHangScrene,
                                           arguments: ArgumentContactScreen(
                                               productId:
-                                                  state.detailProductModel?.id))
+                                                  state.detailProductModel?.data?.id))
                                       : Navigator.pushNamed(
                                           context, RouteDefine.loginScreen,
                                           arguments: true);
@@ -344,6 +352,14 @@ class DetailProductScreenState extends State<DetailProductScreen> {
             },
           ),
         ));
+  }
+
+  String getDate(String dateTimeScan) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+    DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
+    DateTime datetime = dateFormat.parse(dateTimeScan);
+    final date = dateFormatLast.format(datetime);
+    return date;
   }
 
   Widget _itemCompany({

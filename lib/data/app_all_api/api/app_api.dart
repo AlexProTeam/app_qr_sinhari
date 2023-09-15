@@ -32,7 +32,7 @@ abstract class AppApi {
   Future<Data> getListSeller();
 
   @GET('scan-qr-code')
-  Future<DataDetail> getDetaiProductByQr(
+  Future<DetailByQr> getDetaiProductByQr(
       @Query('device_id') String deviceId,
       @Query('city') String city,
       @Query('region') String region,
