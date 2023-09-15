@@ -87,7 +87,7 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<DataDetail> getDetaiProductByQr(
+  Future<DetailByQr> getDetaiProductByQr(
       String deviceId, String city, String region, String url) async {
     try {
       final response =

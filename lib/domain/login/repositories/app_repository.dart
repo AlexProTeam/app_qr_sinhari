@@ -21,6 +21,6 @@ abstract class AppRepository {
 
   Future<DataDetail> getDetaiProduct(int productId);
 
-  Future<DataDetail> getDetaiProductByQr(
+  Future<DetailByQr> getDetaiProductByQr(
       String deviceId, String city, String region, String url);
 }
