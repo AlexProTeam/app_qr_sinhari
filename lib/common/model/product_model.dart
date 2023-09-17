@@ -1,9 +1,9 @@
-class Data {
+class DataProduct {
   Product? data;
 
-  Data({this.data});
+  DataProduct({this.data});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataProduct.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? Product.fromJson(json['data']) : null;
   }
 }

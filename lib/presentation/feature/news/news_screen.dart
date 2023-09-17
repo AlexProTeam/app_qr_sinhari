@@ -38,7 +38,7 @@ class NewsScreen extends StatefulWidget {
 }
 
 class NewsScreenState extends State<NewsScreen> {
-  final List<NewsModel> _histories = [];
+  final List<NewsModelResponse> _histories = [];
   bool _isLoading = false;
 
   @override
@@ -87,7 +87,7 @@ class NewsScreenState extends State<NewsScreen> {
     );
   }
 
-  Widget _item(NewsModel model) {
+  Widget _item(NewsModelResponse model) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, RouteDefine.detailNewScreen,
@@ -153,7 +153,7 @@ class NewsScreenState extends State<NewsScreen> {
       final data =
           await getIt<AppClient>().post('list_news', handleResponse: false);
       data['data'].forEach((e) {
-        _histories.add(NewsModel.fromJson(e));
+        _histories.add(NewsModelResponse.fromJson(e));
       });
       if (mounted) setState(() {});
     } catch (e) {

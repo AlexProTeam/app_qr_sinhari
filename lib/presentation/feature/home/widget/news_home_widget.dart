@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../common/network/client.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/color_manager.dart';
-import '../../../../app/route/common_util.dart';
+import '../../../../data/utils/exceptions/api_exception.dart';
+import '../../../../domain/login/usecases/app_usecase.dart';
+import '../../../widgets/toast_manager.dart';
 import '../../news/history_model.dart';
 import 'item_news.dart';
 
@@ -16,7 +17,8 @@ class NewsHomeWidget extends StatefulWidget {
 
 class _NewsHomeWidgetState extends State<NewsHomeWidget> {
   bool _isLoading = false;
-  final List<NewsModel> _newsModel = [];
+  final List<NewsModelResponse> _newsModel = [];
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
 
   @override
   void initState() {
@@ -93,14 +95,13 @@ class _NewsHomeWidgetState extends State<NewsHomeWidget> {
         _isLoading = true;
       });
 
-      final dataNew =
-          await getIt<AppClient>().post('list_news', handleResponse: false);
-      dataNew['data'].forEach((e) {
-        _newsModel.add(NewsModel.fromJson(e));
-      });
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: '');
+      final result = await _appUseCase.getListNews();
+
+      _newsModel.addAll(result);
+    } on ApiException catch (e) {
+      ToastManager.showToast(context, text: e.message);
     }
+
     setState(() {
       _isLoading = false;
     });

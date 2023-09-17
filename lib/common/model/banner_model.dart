@@ -10,4 +10,11 @@ class BannerResponse {
     title = data['title_1'];
     urlLink = data['url_1'];
   }
+
+  BannerResponse({
+    this.id,
+    this.title,
+    this.urlLink,
+    this.url,
+  });
 }

@@ -6,7 +6,7 @@ part 'array_response.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true, explicitToJson: true)
 class ArrayResponse<T> {
-  final PageResponse<T>? result;
+  final PageResponse<T>? data;
   final bool? success;
   final String? message;
   final int? status;
@@ -23,7 +23,7 @@ class ArrayResponse<T> {
   const ArrayResponse({
     this.success,
     this.message,
-    this.result,
+    this.data,
     this.status,
   });
 }

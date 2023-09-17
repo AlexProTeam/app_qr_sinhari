@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../common/network/client.dart';
 import '../../../../../common/response/home_response.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
-import '../../../../app/route/common_util.dart';
+import '../../../../data/utils/exceptions/api_exception.dart';
+import '../../../../domain/login/usecases/app_usecase.dart';
 import '../../../widgets/home_product_item.dart';
 import '../../../widgets/toast_manager.dart';
 
@@ -18,6 +18,7 @@ class SilverCoatedShampooWidget extends StatefulWidget {
 }
 
 class _SilverCoatedShampooWidgetState extends State<SilverCoatedShampooWidget> {
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
   bool _isLoading = false;
   final List<HomeCategoryResponse> _homeCategory = [];
 
@@ -76,13 +77,20 @@ class _SilverCoatedShampooWidgetState extends State<SilverCoatedShampooWidget> {
                   height: 22,
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(e.title ?? 'Dầu gội phủ bạc',
+                    Expanded(
+                      child: Text(
+                        e.title ?? 'Dầu gội phủ bạc',
                         style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
-                            color: AppColors.colorEF4948)),
+                            color: AppColors.colorEF4948),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ),
                     InkWell(
                       onTap: () => ToastManager.showToast(
                         context,
@@ -118,16 +126,13 @@ class _SilverCoatedShampooWidgetState extends State<SilverCoatedShampooWidget> {
         _isLoading = true;
       });
 
-      await Future.delayed(const Duration(milliseconds: 2500));
+      final result = await _appUseCase.getHomeCategory();
 
-      final dataHomeCategory = await getIt<AppClient>()
-          .post('get_home_category', handleResponse: false);
-      dataHomeCategory['data'].forEach((e) {
-        _homeCategory.add(HomeCategoryResponse.fromJson(e));
-      });
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: '');
+      _homeCategory.addAll(result);
+    } on ApiException catch (e) {
+      ToastManager.showToast(context, text: e.message);
     }
+
     setState(() {
       _isLoading = false;
     });

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../common/model/product_model.dart';
-import '../../../../../common/network/client.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/color_manager.dart';
-import '../../../../app/route/common_util.dart';
 import '../../../../app/route/navigation/route_names.dart';
+import '../../../../data/utils/exceptions/api_exception.dart';
+import '../../../../domain/login/usecases/app_usecase.dart';
 import '../../../widgets/gridview_product.dart';
+import '../../../widgets/toast_manager.dart';
 import '../../list_product/list_product_screen.dart';
 
 class ProductFeaturesWidget extends StatefulWidget {
@@ -17,6 +18,7 @@ class ProductFeaturesWidget extends StatefulWidget {
 }
 
 class _ProductFeaturesWidgetState extends State<ProductFeaturesWidget> {
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
   bool _isLoading = false;
   final List<ProductResponse> _productFeatures = [];
 
@@ -82,16 +84,13 @@ class _ProductFeaturesWidgetState extends State<ProductFeaturesWidget> {
         _isLoading = true;
       });
 
-      await Future.delayed(const Duration(seconds: 1));
+      final result = await _appUseCase.getListFeature();
 
-      final datafeature =
-          await getIt<AppClient>().get('product-feature?page=1');
-      datafeature['data']['productFeatures']['data'].forEach((e) {
-        _productFeatures.add(ProductResponse.fromJson(e));
-      });
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: '');
+      _productFeatures.addAll(result.data?.productFeatures?.list ?? []);
+    } on ApiException catch (e) {
+      ToastManager.showToast(context, text: e.message);
     }
+
     setState(() {
       _isLoading = false;
     });

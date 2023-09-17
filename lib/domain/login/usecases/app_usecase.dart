@@ -4,7 +4,10 @@ import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
 
+import '../../../common/model/banner_model.dart';
+import '../../../common/response/home_response.dart';
 import '../../../data/app_all_api/models/request/login_request.dart';
+import '../../../presentation/feature/news/history_model.dart';
 import '../../entity/profile_model.dart';
 import '../entities/user_entitiy.dart';
 import '../repositories/app_repository.dart';
@@ -21,14 +24,30 @@ class AppUseCase {
   Future<WelcomeModel> getImageIntroduction() =>
       _repository.getImageIntroduction();
 
-  Future<Data> getListFeature() => _repository.getListFeature();
+  Future<DataProduct> getListFeature() => _repository.getListFeature();
 
-  Future<Data> getListSeller() => _repository.getListSeller();
+  Future<DataProduct> getListSeller() => _repository.getListSeller();
 
   Future<DataDetail> getDetaiProduct(int productId) =>
       _repository.getDetaiProduct(productId);
 
   Future<DetailByQr> getDetaiProductByQr(
-          String deviceId, String city, String region, String url) =>
-      _repository.getDetaiProductByQr(deviceId, city, region, url);
+    String deviceId,
+    String city,
+    String region,
+    String url,
+  ) =>
+      _repository.getDetaiProductByQr(
+        deviceId,
+        city,
+        region,
+        url,
+      );
+
+  Future<List<BannerResponse>> getBannerHome() => _repository.getBannerHome();
+
+  Future<List<HomeCategoryResponse>> getHomeCategory() =>
+      _repository.getHomeCategory();
+
+  Future<List<NewsModelResponse>> getListNews() => _repository.getListNews();
 }

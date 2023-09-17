@@ -1,13 +1,21 @@
 import 'package:intl/intl.dart';
 
-class NewsModel {
+class NewsModelResponse {
   int? id;
   String? title;
   String? image;
   String? imageThumbs;
   String? createdAt;
 
-  NewsModel.fromJson(Map<String, dynamic> json) {
+  NewsModelResponse(
+    this.id,
+    this.title,
+    this.image,
+    this.imageThumbs,
+    this.createdAt,
+  );
+
+  NewsModelResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     image = json['image'];

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../common/model/product_model.dart';
-import '../../../../../common/network/client.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
-import '../../../../app/route/common_util.dart';
 import '../../../../app/route/navigation/route_names.dart';
+import '../../../../data/utils/exceptions/api_exception.dart';
+import '../../../../domain/login/usecases/app_usecase.dart';
 import '../../../widgets/home_product_item.dart';
+import '../../../widgets/toast_manager.dart';
 import '../../list_product/list_product_screen.dart';
 
 class ProductSellersWidget extends StatefulWidget {
@@ -20,6 +21,7 @@ class ProductSellersWidget extends StatefulWidget {
 class _ProductSellersWidgetState extends State<ProductSellersWidget> {
   bool _isLoading = false;
   final List<ProductResponse> _productSellers = [];
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
 
   @override
   void initState() {
@@ -101,15 +103,13 @@ class _ProductSellersWidgetState extends State<ProductSellersWidget> {
         _isLoading = true;
       });
 
-      await Future.delayed(const Duration(seconds: 2));
+      final result = await _appUseCase.getListFeature();
 
-      final dataSeller = await getIt<AppClient>().get('product-seller?page=1');
-      dataSeller['data']['productSellers']['data'].forEach((e) {
-        _productSellers.add(ProductResponse.fromJson(e));
-      });
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: '');
+      _productSellers.addAll(result.data?.productSellers?.list ?? []);
+    } on ApiException catch (e) {
+      ToastManager.showToast(context, text: e.message);
     }
+
     setState(() {
       _isLoading = false;
     });

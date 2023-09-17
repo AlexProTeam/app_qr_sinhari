@@ -7,7 +7,7 @@ import '../../../../widgets/custom_image_network.dart';
 import '../../details_news/ui/detail_new_screen.dart';
 import '../../history_model.dart';
 
-Widget itemNews(NewsModel model, BuildContext context) {
+Widget itemNews(NewsModelResponse model, BuildContext context) {
   return InkWell(
     onTap: () {
       Navigator.pushNamed(context, RouteDefine.detailNewScreen,

@@ -15,13 +15,13 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     on<NewsEvent>((event, emit) {});
 
     on<InitNewsDataEvent>((event, emit) async {
-      List<NewsModel> histories = [];
+      List<NewsModelResponse> histories = [];
       try {
         emit(state.copyWith(status: ScreenStatus.loading));
         final data =
             await getIt<AppClient>().post('list_news', handleResponse: false);
         data['data'].forEach((e) {
-          histories.add(NewsModel.fromJson(e));
+          histories.add(NewsModelResponse.fromJson(e));
         });
         emit(
             state.copyWith(status: ScreenStatus.success, histories: histories));

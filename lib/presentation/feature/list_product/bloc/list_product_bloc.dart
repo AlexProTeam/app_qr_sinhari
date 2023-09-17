@@ -1,29 +1,25 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:qrcode/common/model/product_model.dart';
-
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../app/managers/const/status_bloc.dart';
 import '../../../../app/route/common_util.dart';
 
 part 'list_product_event.dart';
-
 part 'list_product_state.dart';
 
 class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
   late List<ProductResponse> _products;
   final AppUseCase appUseCase;
-  final String title;
+  final String url;
 
-  ListProductBloc(this.appUseCase, this.title)
-      : super(const ListProductState()) {
+  ListProductBloc(this.appUseCase, this.url) : super(const ListProductState()) {
     on<InitListProductEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        if (title == 'product-seller') {
+        if (url == 'product-seller') {
           final result = await appUseCase.getListSeller();
           if ((result.data?.productSellers?.list ?? []).isNotEmpty) {
             _products =

@@ -8,7 +8,7 @@ import '../../news/details_news/ui/detail_new_screen.dart';
 import '../../news/history_model.dart';
 
 class ItemNews extends StatelessWidget {
-  final NewsModel model;
+  final NewsModelResponse model;
 
   const ItemNews({Key? key, required this.model}) : super(key: key);
 

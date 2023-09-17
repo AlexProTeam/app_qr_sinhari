@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../common/model/banner_model.dart';
-import '../../../../../common/network/client.dart';
 import '../../../../app/di/injection.dart';
-import '../../../../app/route/common_util.dart';
+import '../../../../data/utils/exceptions/api_exception.dart';
+import '../../../../domain/login/usecases/app_usecase.dart';
 import '../../../widgets/banner_slide_image.dart';
 
 class BannerHomeWidget extends StatefulWidget {
@@ -14,6 +15,7 @@ class BannerHomeWidget extends StatefulWidget {
 }
 
 class _BannerHomeWidgetState extends State<BannerHomeWidget> {
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
   final List<BannerResponse> _bannerModel = [];
   bool _isBannerLoading = false;
 
@@ -54,14 +56,13 @@ class _BannerHomeWidgetState extends State<BannerHomeWidget> {
         _isBannerLoading = true;
       });
 
-      final data = await getIt<AppClient>().get('banners');
+      final result = await _appUseCase.getBannerHome();
 
-      data['data'].forEach((e) {
-        _bannerModel.add(BannerResponse.fromJson(e));
-      });
-    } catch (e) {
-      CommonUtil.handleException(e, methodName: '');
+      _bannerModel.addAll(result);
+    } on ApiException catch (e) {
+      ToastManager.showToast(context, text: e.message);
     }
+
     setState(() {
       _isBannerLoading = false;
     });

@@ -29,19 +29,6 @@ class ListProductScreen extends StatefulWidget {
 }
 
 class ListProductScreenState extends State<ListProductScreen> {
-  final ScrollController _scrollController = ScrollController();
-  final _itemWidth = (GScreenUtil.screenWidthDp - 48) / 2;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +53,6 @@ class ListProductScreenState extends State<ListProductScreen> {
                   : GridView.builder(
                       shrinkWrap: true,
                       itemCount: products.length,
-                      controller: _scrollController,
                       padding: const EdgeInsets.symmetric(
                               horizontal: 12.0, vertical: 12.0)
                           .copyWith(bottom: 100),
@@ -80,7 +66,7 @@ class ListProductScreenState extends State<ListProductScreen> {
                       ),
                       itemBuilder: (context, index) {
                         return CategoryItemProduct(
-                          itemWidth: _itemWidth,
+                          itemWidth: (GScreenUtil.screenWidthDp - 48) / 2,
                           productModel: products[index],
                         );
                       },
