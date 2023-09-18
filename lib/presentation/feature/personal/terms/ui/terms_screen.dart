@@ -84,13 +84,13 @@ class PolicyScreenState extends State<PolicyScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 12),
-                        state.data['content'] != null
+                        state.data?.policy?.content != null
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 4)
                                         .copyWith(bottom: 100),
                                 child: Html(
-                                  data: state.data['content'],
+                                  data: state.data?.policy?.content,
                                   style: {
                                     "html": Style(
                                       backgroundColor: Colors.white,

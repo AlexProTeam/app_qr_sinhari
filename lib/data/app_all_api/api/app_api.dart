@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:qrcode/common/model/Introduce_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -60,4 +61,13 @@ abstract class AppApi {
   Future<ObjectResponse<List<HistoryModel>>> getHistoryScanQrCode(
     @Query('device_id') String? deviceId,
   );
+
+  @POST('policy?type=introduce')
+  Future<Introduce> getIntroduce();
+
+  @POST('policy?type=support_policy')
+  Future<Introduce> getSupportPolicy();
+
+  @POST('policy?type=terms')
+  Future<Introduce> getTerms();
 }

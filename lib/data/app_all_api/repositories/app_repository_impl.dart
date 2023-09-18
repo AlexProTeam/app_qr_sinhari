@@ -1,6 +1,7 @@
 // Project imports:
 
 import 'package:dio/dio.dart';
+import 'package:qrcode/common/model/Introduce_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 
@@ -143,6 +144,39 @@ class AppRepositoryImpl implements AppRepository {
       final response = await api.getHistoryScanQrCode(deviceId);
 
       return response.data ?? [];
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<Introduce> getIntroduce() async {
+    try {
+      final response = await api.getIntroduce();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<Introduce> getSupportPolicy() async {
+    try {
+      final response = await api.getSupportPolicy();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<Introduce> geTerms() async {
+    try {
+      final response = await api.getTerms();
+
+      return response;
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

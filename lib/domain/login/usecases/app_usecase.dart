@@ -4,6 +4,7 @@ import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
 
+import '../../../common/model/Introduce_model.dart';
 import '../../../common/model/banner_model.dart';
 import '../../../common/response/home_response.dart';
 import '../../../data/app_all_api/models/request/login_request.dart';
@@ -54,4 +55,11 @@ class AppUseCase {
 
   Future<List<HistoryModel>> getHistoryScanQrCode(String deviceId) =>
       _repository.getHistoryScanQrCode(deviceId: deviceId);
+
+  Future<Introduce> getIntroduce() => _repository.getIntroduce();
+
+  Future<Introduce> getSupport() => _repository.getSupportPolicy();
+
+  Future<Introduce> getTerms() => _repository.geTerms();
+
 }

@@ -1,5 +1,6 @@
 // Project imports:
 
+import 'package:qrcode/common/model/Introduce_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 
@@ -35,4 +36,10 @@ abstract class AppRepository {
   Future<List<NewsModelResponse>> getListNews();
 
   Future<List<HistoryModel>> getHistoryScanQrCode({required String deviceId});
+
+  Future<Introduce> getIntroduce();
+
+  Future<Introduce> getSupportPolicy();
+
+  Future<Introduce> geTerms();
 }
