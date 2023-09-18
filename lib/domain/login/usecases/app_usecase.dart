@@ -54,4 +54,5 @@ class AppUseCase {
 
   Future<List<HistoryModel>> getHistoryScanQrCode(String deviceId) =>
       _repository.getHistoryScanQrCode(deviceId: deviceId);
+
 }
