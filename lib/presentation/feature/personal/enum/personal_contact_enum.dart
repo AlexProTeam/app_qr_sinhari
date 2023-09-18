@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
+import 'package:qrcode/presentation/feature/personal/enum/personal_menu_enum.dart';
 
 import '../../../../app/managers/const/icon_constant.dart';
 
@@ -51,13 +52,13 @@ extension PersonalContactEnumEx on PersonalContactEnum {
             arguments: 'https://sinhairvietnam.vn/lien-he/');
       case PersonalContactEnum.provisionOrder:
         return Navigator.pushNamed(context, RouteDefine.policyScreen,
-            arguments: 'Screen1');
+            arguments: PolicyEnum.guide);
       case PersonalContactEnum.provisionSecurity:
         return Navigator.pushNamed(context, RouteDefine.policyScreen,
-            arguments: 'Screen2');
+            arguments: PolicyEnum.introduce);
       case PersonalContactEnum.adjust:
         return Navigator.pushNamed(context, RouteDefine.policyScreen,
-            arguments: 'Screen3');
+            arguments: PolicyEnum.policy);
     }
   }
 

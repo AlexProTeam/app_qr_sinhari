@@ -1,5 +1,6 @@
 // Project imports:
 
+import 'package:qrcode/common/model/Introduce_model.dart';
 import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/details_news_model.dart';
@@ -46,4 +47,6 @@ abstract class AppRepository {
   Future<ConfirmModel> comfirmOtp({required String phone, required String otp});
 
   Future<ObjectResponse> addDevice({required String deviceId});
+
+  Future<Introduce> getSupportPolicy(String policyType);
 }

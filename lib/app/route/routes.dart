@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/presentation/feature/personal/enum/personal_menu_enum.dart';
 
 import '../../presentation/auth/change_pass/change_pass_screen.dart';
 import '../../presentation/auth/forgot_pass/forgot_pass_screen.dart';
@@ -107,9 +108,8 @@ class Routes {
       case RouteDefine.policyScreen:
         return SlideLeftRoute(
           widget: PolicyScreen(
-              arg: settings.arguments != null
-                  ? settings.arguments as String
-                  : null),
+            policy: settings.arguments as PolicyEnum,
+          ),
         );
       case RouteDefine.muaHangScrene:
         return SlideLeftRoute(

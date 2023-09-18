@@ -1,6 +1,7 @@
 // Project imports:
 
 import 'package:dio/dio.dart';
+import 'package:qrcode/common/model/Introduce_model.dart';
 import 'package:qrcode/common/model/banner_model.dart';
 import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
@@ -190,6 +191,16 @@ class AppRepositoryImpl implements AppRepository {
     try {
       final response = await api.addDevice(deviceId);
 
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<Introduce> getSupportPolicy(String policyType) async {
+    try {
+      final response = await api.policy(policyType);
       return response;
     } on DioException catch (e) {
       throw (ApiException.error(e));

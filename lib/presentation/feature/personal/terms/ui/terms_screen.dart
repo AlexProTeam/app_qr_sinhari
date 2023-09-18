@@ -7,12 +7,13 @@ import '../../../../../app/managers/const/icon_constant.dart';
 import '../../../../../app/managers/style_manager.dart';
 import '../../../../../app/route/enum_app_status.dart';
 import '../../../../widgets/custom_scaffold.dart';
+import '../../enum/personal_menu_enum.dart';
 import '../bloc/preferences_bloc.dart';
 
 class PolicyScreen extends StatefulWidget {
-  final String? arg;
+  final PolicyEnum policy;
 
-  const PolicyScreen({Key? key, this.arg}) : super(key: key);
+  const PolicyScreen({Key? key, required this.policy}) : super(key: key);
 
   @override
   PolicyScreenState createState() => PolicyScreenState();
@@ -28,16 +29,12 @@ class PolicyScreenState extends State<PolicyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-        title: widget.arg == 'Screen1'
-            ? 'Chính sách bán hàng'
-            : widget.arg == "Screen2"
-                ? 'Chính sách bảo mật'
-                : 'Điều khoản sử dụng',
+        title: widget.policy.getNameTerms,
         isShowBack: true,
       ),
       body: BlocProvider(
         create: (context) =>
-            PreferencesBloc()..add(InitDataEvent(widget.arg ?? '')),
+            PreferencesBloc()..add(InitPreferencesEvent(widget.policy)),
         child: BlocBuilder<PreferencesBloc, PreferencesState>(
           builder: (context, state) {
             if (state.status == ScreenStatus.loading) {
@@ -45,6 +42,7 @@ class PolicyScreenState extends State<PolicyScreen> {
                 child: CircularProgressIndicator(),
               );
             }
+
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,13 +63,10 @@ class PolicyScreenState extends State<PolicyScreen> {
                                   Border.all(color: Colors.white, width: 2)),
                           child: Center(
                             child: Text(
-                              widget.arg == 'Screen1'
-                                  ? 'Chính sách bán hàng'
-                                  : widget.arg == 'Screen2'
-                                      ? 'Chính sách bảo mật'
-                                      : 'ĐIỀU KHOẢN BẢO MẬT &\nCHÍNH SACH ỨNG DỤNG',
-                              style: TextStyleManager.mediumBlack
-                                  .copyWith(color: Colors.white),
+                              widget.policy.getSubTitleTerms,
+                              style: TextStyleManager.mediumBlack.copyWith(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -84,13 +79,13 @@ class PolicyScreenState extends State<PolicyScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 12),
-                        state.data['content'] != null
+                        state.data?.policy?.content != null
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 4)
                                         .copyWith(bottom: 100),
                                 child: Html(
-                                  data: state.data['content'],
+                                  data: state.data?.policy?.content,
                                   style: {
                                     "html": Style(
                                       backgroundColor: Colors.white,

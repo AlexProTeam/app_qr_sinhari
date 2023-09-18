@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:qrcode/common/model/Introduce_model.dart';
 import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
@@ -82,5 +83,10 @@ abstract class AppApi {
   @POST('add_device')
   Future<ObjectResponse> addDevice(
     @Part(name: "device_id") String deviceId,
+  );
+
+  @POST('policy')
+  Future<Introduce> policy(
+    @Query('type') String? typePolicy,
   );
 }

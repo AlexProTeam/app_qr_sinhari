@@ -11,11 +11,12 @@ part 'news_event.dart';
 part 'news_state.dart';
 
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
+  final AppUseCase repository = getIt<AppUseCase>();
+
   NewsBloc() : super(const NewsState()) {
     on<NewsEvent>((event, emit) {});
 
     on<InitNewsDataEvent>((event, emit) async {
-      final AppUseCase repository = getIt<AppUseCase>();
       try {
         emit(state.copyWith(status: ScreenStatus.loading));
         final data = await repository.getListNews();

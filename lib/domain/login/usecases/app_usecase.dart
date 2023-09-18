@@ -7,6 +7,7 @@ import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/data/responses/object_response.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
 
+import '../../../common/model/Introduce_model.dart';
 import '../../../common/model/banner_model.dart';
 import '../../../common/response/home_response.dart';
 import '../../../data/app_all_api/models/request/login_request.dart';
@@ -69,4 +70,7 @@ class AppUseCase {
 
   Future<ObjectResponse> addDevice(String deviceId) =>
       _repository.addDevice(deviceId: deviceId);
+
+  Future<Introduce> getSupportPolicy(String policyType) =>
+      _repository.getSupportPolicy(policyType);
 }
