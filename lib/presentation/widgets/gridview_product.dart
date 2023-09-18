@@ -56,7 +56,7 @@ class GridViewDisplayProduct extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 16.0,
-            childAspectRatio: 0.61,
+            childAspectRatio: 0.55,
           ),
           itemBuilder: (context, index) {
             return CategoryItemProduct(

@@ -38,7 +38,7 @@ class IconConst {
   static const String info = '${_pathIcons}User.png';
   static const String contact = '${_pathIcons}contact_support.png';
   static const String provisionOrder = '${_pathIcons}adjust.png';
-  static const String adjust = '${_pathIcons}3p.png';
+  static const String adjust = '${_pathIcons}chat_contact.png';
   static const String provisionSecurity = '${_pathIcons}gpp_maybe.png';
   static const String gmail = '${_pathIcons}Gmail.png';
   static const String facebook = '${_pathIcons}Facebook.png';

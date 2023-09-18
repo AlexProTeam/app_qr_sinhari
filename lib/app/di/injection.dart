@@ -9,6 +9,7 @@ import '../../../common/local/local_app.dart';
 import '../../../common/network/client.dart';
 import '../../data/app_all_api/api/app_api.dart';
 import '../../data/app_all_api/repositories/app_repository_impl.dart';
+import '../../data/utils/interceptor/token_interceptor.dart';
 import '../../domain/login/repositories/app_repository.dart';
 import '../../domain/login/usecases/app_usecase.dart';
 import '../managers/config_manager.dart';
@@ -55,6 +56,7 @@ Future<void> _registerNetworkComponents() async {
 
   dio.interceptors.addAll(
     [
+      TokenInterceptors(),
       PrettyDioLogger(
         requestHeader: true,
         requestBody: true,

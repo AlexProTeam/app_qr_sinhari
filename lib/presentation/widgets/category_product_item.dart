@@ -12,7 +12,6 @@ import '../../app/route/navigation/route_names.dart';
 import '../feature/detail_product/detail_product_screen.dart';
 import 'custom_image_network.dart';
 
-///todo: use same a base item with home screen
 class CategoryItemProduct extends StatelessWidget {
   final double itemWidth;
   final ProductResponse? productModel;
@@ -70,17 +69,18 @@ class CategoryItemProduct extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               RichText(
-                  text: const TextSpan(
-                      text: '4.9 ',
-                      style: TextStyle(
-                          fontSize: 10,
+                  text: TextSpan(
+                      text: (productModel?.rating ?? 0).toString(),
+                      style: const TextStyle(
+                          fontSize: 12,
                           fontWeight: FontWeight.w300,
                           color: Colors.black),
                       children: [
                     TextSpan(
-                      text: '(122 sản phẩm)',
-                      style: TextStyle(
-                          fontSize: 10,
+                      text:
+                          ' (${(productModel?.quantity ?? 0).toString()} sản phẩm)',
+                      style: const TextStyle(
+                          fontSize: 12,
                           fontWeight: FontWeight.w300,
                           color: AppColors.colorACACAC),
                     )
