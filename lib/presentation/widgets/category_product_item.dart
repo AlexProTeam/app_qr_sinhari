@@ -70,17 +70,18 @@ class CategoryItemProduct extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               RichText(
-                  text: const TextSpan(
-                      text: '4.9 ',
-                      style: TextStyle(
+                  text: TextSpan(
+                      text: (productModel?.rating ?? 0).toString(),
+                      style: const TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w300,
                           color: Colors.black),
                       children: [
                     TextSpan(
-                      text: '(122 sản phẩm)',
-                      style: TextStyle(
-                          fontSize: 10,
+                      text:
+                          ' (${(productModel?.quantity ?? 0).toString()} sản phẩm)',
+                      style: const TextStyle(
+                          fontSize: 12,
                           fontWeight: FontWeight.w300,
                           color: AppColors.colorACACAC),
                     )
