@@ -4,6 +4,7 @@ import 'package:qrcode/common/model/product_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../common/model/banner_model.dart';
+import '../../../common/model/details_news_model.dart';
 import '../../../common/response/home_response.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/auth/welcome/welcome_model.dart';
@@ -60,4 +61,9 @@ abstract class AppApi {
   Future<ObjectResponse<List<HistoryModel>>> getHistoryScanQrCode(
     @Query('device_id') String? deviceId,
   );
+
+  @GET('https://beta.sinhairvietnam.vn/api/news_detail')
+  Future<NewsDetails> getDetailsNews(
+      @Query('news_id') int? idNews,
+      );
 }

@@ -118,7 +118,7 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          state.data['title'] ?? '',
+                          state.data?.data?.title ?? '',
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -143,7 +143,7 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                             ),
                             Text(
                               DateUtilsApp.formatterDetail(DateTime.parse(
-                                  state.data['created_at'] ?? '')),
+                                  state.data?.data?.createdAt ?? '')),
                               style: const TextStyle(
                                 color: AppColors.colorACACAC,
                                 fontSize: 12,
@@ -155,9 +155,9 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      if (state.data['content'] != null)
+                      if (state.data?.data?.content != null)
                         Html(
-                          data: state.data['content'],
+                          data: state.data?.data?.content,
                           style: {
                             "html": Style(
                               backgroundColor: Colors.white,

@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/common/model/details_news_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 
 import '../../../common/model/banner_model.dart';
@@ -143,6 +144,17 @@ class AppRepositoryImpl implements AppRepository {
       final response = await api.getHistoryScanQrCode(deviceId);
 
       return response.data ?? [];
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<NewsDetails> getNewsDetails({required int idNews}) async {
+    try {
+      final response = await api.getDetailsNews(idNews);
+
+      return response;
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }
