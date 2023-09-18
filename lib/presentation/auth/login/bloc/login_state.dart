@@ -2,22 +2,23 @@ part of 'login_bloc.dart';
 
 class LoginState extends Equatable {
   final BlocStatusEnum status;
- // final List<ProductResponse>? products;
+  final String mesErr;
 
   const LoginState({
-  //  this.products,
     this.status = BlocStatusEnum.init,
+    this.mesErr = '',
   });
 
   @override
-  List<Object?> get props => [ status];
+  List<Object?> get props => [status, mesErr];
 
   LoginState copyWith({
     BlocStatusEnum? status,
-    List<ProductResponse>? products,
+    String? mesErr,
   }) {
     return LoginState(
       status: status ?? this.status,
+      mesErr: mesErr ?? '',
     );
   }
 }

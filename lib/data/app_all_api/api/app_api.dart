@@ -26,7 +26,7 @@ abstract class AppApi {
   Future<LoginResponse> login(@Body() LoginRequest request);
 
   @GET('auth/showProfile')
-  Future<ProfileModel> getShowProfile();
+  Future<ObjectResponse<ProfileModel>> getShowProfile();
 
   @POST('get_image_introduction')
   Future<WelcomeModel> getImageIntroduction();

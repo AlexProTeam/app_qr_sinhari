@@ -41,7 +41,7 @@ class AppRepositoryImpl implements AppRepository {
     try {
       final response = await api.getShowProfile();
 
-      return response;
+      return response.data ?? ProfileModel();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }
@@ -173,8 +173,9 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<ObjectResponse> addDevice(
-      {required String deviceId,}) async {
+  Future<ObjectResponse> addDevice({
+    required String deviceId,
+  }) async {
     try {
       final response = await api.addDevice(deviceId);
 

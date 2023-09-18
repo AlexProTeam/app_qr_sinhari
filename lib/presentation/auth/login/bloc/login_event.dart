@@ -8,20 +8,18 @@ abstract class LoginEvent extends Equatable {
   const LoginEvent();
 }
 
-class InitLoginEvent extends LoginEvent {
-  const InitLoginEvent();
+class AddDeviceLoginEvent extends LoginEvent {
+  const AddDeviceLoginEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class TapEvent extends LoginEvent {
+class LoginWithOtpEvent extends LoginEvent {
   final String phone;
-  final GlobalKey<FormState> formKey;
 
-  const TapEvent(this.phone, this.formKey);
+  const LoginWithOtpEvent(this.phone);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [phone];
 }
