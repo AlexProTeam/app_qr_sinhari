@@ -103,7 +103,7 @@ class _ProductSellersWidgetState extends State<ProductSellersWidget> {
         _isLoading = true;
       });
 
-      final result = await _appUseCase.getListFeature();
+      final result = await _appUseCase.getListSeller();
 
       _productSellers.addAll(result.data?.productSellers?.list ?? []);
     } on ApiException catch (e) {

@@ -28,7 +28,7 @@ class HistoryScanBloc extends Bloc<HistoryScanEvent, HistoryScanState> {
         final data = await getIt<AppClient>().get(
             'history-scan-qr-code?device_id=${getIt<AppCache>().deviceId}');
         data['data'][0].forEach((e) {
-          histories.addAll(data[0]);
+          histories.add(data as HistoryModel);
         });
         emit(
             state.copyWith(status: ScreenStatus.success, histories: histories));
