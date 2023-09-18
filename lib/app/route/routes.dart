@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../presentation/auth/change_pass/change_pass_screen.dart';
 import '../../presentation/auth/forgot_pass/forgot_pass_screen.dart';
 import '../../presentation/auth/login/login_screen.dart';
-import '../../presentation/auth/login/verify_otp_screen.dart';
+import '../../presentation/auth/login/verify/verify_otp_screen.dart';
 import '../../presentation/auth/register/register_screen.dart';
 import '../../presentation/auth/splash/splash_screen.dart';
 import '../../presentation/auth/welcome/welcome_screen.dart';

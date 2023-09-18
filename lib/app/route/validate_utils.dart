@@ -103,6 +103,8 @@ class ValidateUtil {
     final RegExp regExp = RegExp(patttern);
     if (phone?.isEmpty ?? true) {
       return typePhoneNumber;
+    } else if ((phone?.length ?? 0) < 10) {
+      return inValidPhoneNumber;
     } else if (!regExp.hasMatch(phone ?? '')) {
       return inValidPhoneNumber;
     }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -59,5 +60,21 @@ abstract class AppApi {
   @GET('history-scan-qr-code')
   Future<ObjectResponse<List<HistoryModel>>> getHistoryScanQrCode(
     @Query('device_id') String? deviceId,
+  );
+
+  @POST('auth-with-otp?phone=')
+  Future<ObjectResponse> requestOtp(
+    @Part(name: "phone") String phone,
+  );
+
+  @POST('confirm-otp')
+  Future<ConfirmModel> comfirmOtp(
+    @Part(name: "phone") String phone,
+    @Part(name: "otp") String otp,
+  );
+
+  @POST('add_device')
+  Future<ObjectResponse> addDevice(
+    @Part(name: "device_id") String deviceId,
   );
 }

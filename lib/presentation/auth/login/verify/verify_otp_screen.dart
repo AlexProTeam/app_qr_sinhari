@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:qrcode/common/network/app_header.dart';
-import 'package:qrcode/common/network/client.dart';
-
-import '../../../../common/bloc/profile_bloc/profile_bloc.dart';
-import '../../../app/di/injection.dart';
-import '../../../app/managers/color_manager.dart';
-import '../../../app/route/common_util.dart';
-import '../../../app/utils/session_utils.dart';
-import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
-import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_scaffold.dart';
-import '../../widgets/dialog_manager_custom.dart';
-import '../../widgets/toast_manager.dart';
+import 'package:qrcode/app/di/injection.dart';
+import 'package:qrcode/app/managers/color_manager.dart';
+import 'package:qrcode/domain/login/usecases/app_usecase.dart';
+import 'package:qrcode/presentation/auth/login/verify/bloc/verify_bloc.dart';
+import 'package:qrcode/presentation/widgets/custom_button.dart';
+import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   final String phone;
@@ -32,6 +24,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
   final TextEditingController _controller = TextEditingController();
   final _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
+  AppUseCase appUseCase = getIt<AppUseCase>();
 
   @override
   void initState() {
@@ -96,71 +89,33 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
               ),
             ),
             const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                  width: 128,
-                  height: 45,
-                  onTap: _onContinue,
-                  text: 'Đăng nhập',
-                ),
-              ],
+            BlocProvider(
+              create: (context) => VerifyBloc(appUseCase, context),
+              child: BlocBuilder<VerifyBloc, VerifyState>(
+                  builder: (context, state) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomButton(
+                      width: 128,
+                      height: 45,
+                      onTap: () {
+                        context.read<VerifyBloc>().add(TapEvent(
+                            widget.phone,
+                            _formKey,
+                            _controller.text,
+                            _controller,
+                            _focusNode));
+                      },
+                      text: 'Đăng nhập',
+                    ),
+                  ],
+                );
+              }),
             ),
           ],
         ),
       ),
     );
-  }
-
-  Future<void> _onContinue() async {
-    if (!CommonUtil.validateAndSave(_formKey)) return;
-    if (_controller.text.isEmpty) {
-      return await ToastManager.showToast(
-        context,
-        text: 'bạn chưa nhập mã',
-        delaySecond: 1,
-      );
-    }
-    if (_controller.text.length < 6) {
-      return await ToastManager.showToast(
-        context,
-        text: 'Chưa nhập đủ mã',
-        delaySecond: 1,
-      );
-    }
-
-    try {
-      await DialogManager.showLoadingDialog(context);
-      final data = await getIt<AppClient>()
-          .post('confirm-otp?phone=${widget.phone}&otp=${_controller.text}');
-      String? accessToken = data['data']['result']['accessToken'];
-      if (accessToken != null) {
-        AppHeader appHeader = AppHeader();
-        appHeader.accessToken = accessToken;
-        getIt<AppClient>().header = appHeader;
-        SessionUtils.saveAccessToken(accessToken);
-
-        if (mounted) {
-          context.read<ProfileBloc>().add(const InitProfileEvent());
-
-          _focusNode.unfocus();
-          context.read<BottomBarBloc>().add(const ChangeTabBottomBarEvent(
-                bottomBarEnum: BottomBarEnum.home,
-                isRefresh: true,
-              ));
-          Navigator.popUntil(context, (route) => route.isFirst);
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        await ToastManager.showToast(
-          context,
-          text: 'Mã không đúng',
-        );
-      }
-      _controller.clear();
-    }
-    DialogManager.hideLoadingDialog;
   }
 }
