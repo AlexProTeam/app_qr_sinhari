@@ -9,6 +9,7 @@ import '../../../common/response/home_response.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../domain/login/repositories/app_repository.dart';
 import '../../../presentation/auth/welcome/welcome_model.dart';
+import '../../../presentation/feature/history_scan/history_model.dart';
 import '../../../presentation/feature/news/history_model.dart';
 import '../../utils/exceptions/api_exception.dart';
 import '../api/app_api.dart';
@@ -128,6 +129,18 @@ class AppRepositoryImpl implements AppRepository {
   Future<List<NewsModelResponse>> getListNews() async {
     try {
       final response = await api.getListNews();
+
+      return response.data ?? [];
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<List<HistoryModel>> getHistoryScanQrCode(
+      {required String deviceId}) async {
+    try {
+      final response = await api.getHistoryScanQrCode(deviceId);
 
       return response.data ?? [];
     } on DioException catch (e) {

@@ -11,7 +11,7 @@ import '../../presentation/feature/bottom_bar_screen/bottom_bar_screen.dart';
 import '../../presentation/feature/detail_product/detail_product_contact.dart';
 import '../../presentation/feature/detail_product/detail_product_screen.dart';
 import '../../presentation/feature/detail_product/product_active/ui/detail_product_active.dart';
-import '../../presentation/feature/history_scan/history_scan_screen.dart';
+import '../../presentation/feature/history_scan/ui/history_scan_screen.dart';
 import '../../presentation/feature/home/home_screen.dart';
 import '../../presentation/feature/list_product/list_product_screen.dart';
 import '../../presentation/feature/news/details_news/ui/detail_new_screen.dart';

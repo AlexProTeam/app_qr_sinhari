@@ -7,6 +7,7 @@ import '../../../common/model/banner_model.dart';
 import '../../../common/response/home_response.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/auth/welcome/welcome_model.dart';
+import '../../../presentation/feature/history_scan/history_model.dart';
 import '../../../presentation/feature/news/history_model.dart';
 import '../../responses/object_response.dart';
 import '../models/request/login_request.dart';
@@ -54,4 +55,9 @@ abstract class AppApi {
 
   @POST('list_news')
   Future<ObjectResponse<List<NewsModelResponse>>> getListNews();
+
+  @GET('history-scan-qr-code')
+  Future<ObjectResponse<List<HistoryModel>>> getHistoryScanQrCode(
+    @Query('device_id') String? deviceId,
+  );
 }

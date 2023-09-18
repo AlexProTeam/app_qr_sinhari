@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/network/client.dart';
 
 import '../../../app/di/injection.dart';
 import '../../../app/managers/color_manager.dart';
@@ -8,6 +7,7 @@ import '../../../app/managers/style_manager.dart';
 import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../../app/route/routes.dart';
+import '../../../domain/login/usecases/app_usecase.dart';
 import '../../widgets/custom_image_network.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -38,6 +38,7 @@ class NewsScreen extends StatefulWidget {
 }
 
 class NewsScreenState extends State<NewsScreen> {
+  final AppUseCase _repository = getIt<AppUseCase>();
   final List<NewsModelResponse> _histories = [];
   bool _isLoading = false;
 
@@ -150,12 +151,9 @@ class NewsScreenState extends State<NewsScreen> {
       setState(() {
         _isLoading = true;
       });
-      final data =
-          await getIt<AppClient>().post('list_news', handleResponse: false);
-      data['data'].forEach((e) {
-        _histories.add(NewsModelResponse.fromJson(e));
-      });
-      if (mounted) setState(() {});
+      final listData = await _repository.getListNews();
+
+      _histories.addAll(listData);
     } catch (e) {
       CommonUtil.handleException(e, methodName: '');
     }
