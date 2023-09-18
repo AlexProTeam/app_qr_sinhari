@@ -12,7 +12,6 @@ import '../../app/route/navigation/route_names.dart';
 import '../feature/detail_product/detail_product_screen.dart';
 import 'custom_image_network.dart';
 
-///todo: use same a base item with home screen
 class CategoryItemProduct extends StatelessWidget {
   final double itemWidth;
   final ProductResponse? productModel;
@@ -73,7 +72,7 @@ class CategoryItemProduct extends StatelessWidget {
                   text: TextSpan(
                       text: (productModel?.rating ?? 0).toString(),
                       style: const TextStyle(
-                          fontSize: 10,
+                          fontSize: 12,
                           fontWeight: FontWeight.w300,
                           color: Colors.black),
                       children: [

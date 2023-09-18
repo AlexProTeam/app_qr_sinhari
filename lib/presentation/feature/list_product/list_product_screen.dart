@@ -43,35 +43,34 @@ class ListProductScreenState extends State<ListProductScreen> {
         child: BlocBuilder<ListProductBloc, ListProductState>(
           builder: (BuildContext context, state) {
             final products = state.products ?? [];
-            if (products.isEmpty || state.status == ScreenStatus.loading) {
+            if (state.status == ScreenStatus.loading) {
               return const Center(child: CircularProgressIndicator());
-            } else {
-              return products.isEmpty
-                  ? const Center(
-                      child: Text("Không có sản phẩm nào!"),
-                    )
-                  : GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: products.length,
-                      padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 12.0)
-                          .copyWith(bottom: 100),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16.0,
-                        mainAxisSpacing: 12.0,
-                        childAspectRatio: MediaQuery.of(context).size.width /
-                            2 /
-                            (MediaQuery.of(context).size.height / 2.5),
-                      ),
-                      itemBuilder: (context, index) {
-                        return CategoryItemProduct(
-                          itemWidth: (GScreenUtil.screenWidthDp - 48) / 2,
-                          productModel: products[index],
-                        );
-                      },
-                    );
             }
+            if (products.isEmpty) {
+              return const Center(
+                child: Text("Không có sản phẩm nào!"),
+              );
+            }
+
+            return GridView.builder(
+              shrinkWrap: true,
+              itemCount: products.length,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0)
+                      .copyWith(bottom: 120),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16.0,
+                mainAxisSpacing: 12.0,
+                childAspectRatio: 0.6,
+              ),
+              itemBuilder: (context, index) {
+                return CategoryItemProduct(
+                  itemWidth: (GScreenUtil.screenWidthDp - 48) / 2,
+                  productModel: products[index],
+                );
+              },
+            );
           },
         ),
       ),
