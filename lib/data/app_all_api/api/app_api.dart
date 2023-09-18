@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:qrcode/common/model/Introduce_model.dart';
+import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../common/model/banner_model.dart';
+import '../../../common/model/details_news_model.dart';
 import '../../../common/response/home_response.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/auth/welcome/welcome_model.dart';
@@ -26,7 +28,7 @@ abstract class AppApi {
   Future<LoginResponse> login(@Body() LoginRequest request);
 
   @GET('auth/showProfile')
-  Future<ProfileModel> getShowProfile();
+  Future<ObjectResponse<ProfileModel>> getShowProfile();
 
   @POST('get_image_introduction')
   Future<WelcomeModel> getImageIntroduction();
@@ -62,12 +64,29 @@ abstract class AppApi {
     @Query('device_id') String? deviceId,
   );
 
-  @POST('policy?type=introduce')
-  Future<Introduce> getIntroduce();
+  @GET('https://beta.sinhairvietnam.vn/api/news_detail')
+  Future<ObjectResponse<NewsDetails>> getDetailsNews(
+    @Query('news_id') int? idNews,
+  );
 
-  @POST('policy?type=support_policy')
-  Future<Introduce> getSupportPolicy();
+  @POST('auth-with-otp?phone=')
+  Future<ObjectResponse> requestOtp(
+    @Part(name: "phone") String phone,
+  );
 
-  @POST('policy?type=terms')
-  Future<Introduce> getTerms();
+  @POST('confirm-otp')
+  Future<ConfirmModel> comfirmOtp(
+    @Part(name: "phone") String phone,
+    @Part(name: "otp") String otp,
+  );
+
+  @POST('add_device')
+  Future<ObjectResponse> addDevice(
+    @Part(name: "device_id") String deviceId,
+  );
+
+  @POST('policy')
+  Future<Introduce> policy(
+    @Query('type') String? typePolicy,
+  );
 }

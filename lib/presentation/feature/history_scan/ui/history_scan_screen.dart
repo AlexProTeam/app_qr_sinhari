@@ -44,51 +44,51 @@ class HistoryScanScreenState extends State<HistoryScanScreen> {
       body: BlocProvider(
         create: (context) => HistoryScanBloc()..add(InitDataHistoryEvent()),
         child: BlocBuilder<HistoryScanBloc, HistoryScanState>(
+          buildWhen: (previous, current) => previous != current,
           builder: (BuildContext context, state) {
             if (state.status == ScreenStatus.loading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state.histories.isEmpty &&
-                state.status != ScreenStatus.loading) {
-              return const Center(child: Text("Không có lịch sử nào!"));
-            } else {
-              return RefreshIndicator(
-                onRefresh: () async {
-                  context.read<HistoryScanBloc>().add(InitDataHistoryEvent());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 16),
-                      Text(
-                        '${state.histories.length} Sản phẩm',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.red,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Expanded(
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 12,
-                          ),
-                          padding: const EdgeInsets.only(bottom: 100),
-                          itemBuilder: (_, index) {
-                            return itemHistoryScan(
-                                context, state.histories[index]);
-                          },
-                          itemCount: state.histories.length,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
             }
+            if (state.histories.isEmpty) {
+              return const Center(child: Text("Không có lịch sử nào!"));
+            }
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<HistoryScanBloc>().add(InitDataHistoryEvent());
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 16),
+                    Text(
+                      '${state.histories.length} Sản phẩm',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 12,
+                        ),
+                        padding: const EdgeInsets.only(bottom: 100),
+                        itemBuilder: (_, index) {
+                          return itemHistoryScan(
+                              context, state.histories[index]);
+                        },
+                        itemCount: state.histories.length,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
           },
         ),
       ),

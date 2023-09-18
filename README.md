@@ -26,3 +26,7 @@
 - `flutter run --release --flavor "your_flavor" -t lib/"your_main_file_name".dart`
 - Example: `flutter run --release --flavor dev -t lib/main.dart`
 
+
+# how to use icon and font gen
+- Example: `Assets.images.logo.image()`
+- Example: `Assets.images.logo.path`

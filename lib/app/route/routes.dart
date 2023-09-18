@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/presentation/feature/personal/enum/personal_menu_enum.dart';
 
 import '../../presentation/auth/change_pass/change_pass_screen.dart';
 import '../../presentation/auth/forgot_pass/forgot_pass_screen.dart';
 import '../../presentation/auth/login/login_screen.dart';
-import '../../presentation/auth/login/verify_otp_screen.dart';
 import '../../presentation/auth/register/register_screen.dart';
 import '../../presentation/auth/splash/splash_screen.dart';
+import '../../presentation/auth/verify/verify_otp_screen.dart';
 import '../../presentation/auth/welcome/welcome_screen.dart';
 import '../../presentation/feature/bottom_bar_screen/bottom_bar_screen.dart';
 import '../../presentation/feature/detail_product/detail_product_contact.dart';
@@ -15,7 +16,7 @@ import '../../presentation/feature/history_scan/ui/history_scan_screen.dart';
 import '../../presentation/feature/home/home_screen.dart';
 import '../../presentation/feature/list_product/list_product_screen.dart';
 import '../../presentation/feature/news/details_news/ui/detail_new_screen.dart';
-import '../../presentation/feature/news/news_screen.dart';
+import '../../presentation/feature/news/news_screen/ui/news_screen.dart';
 import '../../presentation/feature/notification/notification_screen.dart';
 import '../../presentation/feature/personal/contact/contact_screen.dart';
 import '../../presentation/feature/personal/personal_screen.dart';
@@ -107,9 +108,8 @@ class Routes {
       case RouteDefine.policyScreen:
         return SlideLeftRoute(
           widget: PolicyScreen(
-              arg: settings.arguments != null
-                  ? settings.arguments as String
-                  : null),
+            policy: settings.arguments as PolicyEnum,
+          ),
         );
       case RouteDefine.muaHangScrene:
         return SlideLeftRoute(

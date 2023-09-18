@@ -4,10 +4,10 @@ abstract class PreferencesEvent extends Equatable {
   const PreferencesEvent();
 }
 
-class InitDataEvent extends PreferencesEvent {
-  final String arg;
+class InitPreferencesEvent extends PreferencesEvent {
+  final PolicyEnum policyEnum;
 
-  const InitDataEvent(this.arg);
+  const InitPreferencesEvent(this.policyEnum);
   @override
-  List<Object?> get props => [arg];
+  List<Object?> get props => [policyEnum];
 }

@@ -2,20 +2,22 @@
 
 import 'package:dio/dio.dart';
 import 'package:qrcode/common/model/Introduce_model.dart';
+import 'package:qrcode/common/model/banner_model.dart';
+import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/common/model/details_news_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
-
-import '../../../common/model/banner_model.dart';
-import '../../../common/response/home_response.dart';
-import '../../../domain/entity/profile_model.dart';
-import '../../../domain/login/repositories/app_repository.dart';
-import '../../../presentation/auth/welcome/welcome_model.dart';
-import '../../../presentation/feature/history_scan/history_model.dart';
-import '../../../presentation/feature/news/history_model.dart';
-import '../../utils/exceptions/api_exception.dart';
-import '../api/app_api.dart';
-import '../models/request/login_request.dart';
-import '../models/response/login_response.dart';
+import 'package:qrcode/common/response/home_response.dart';
+import 'package:qrcode/data/app_all_api/api/app_api.dart';
+import 'package:qrcode/data/app_all_api/models/request/login_request.dart';
+import 'package:qrcode/data/app_all_api/models/response/login_response.dart';
+import 'package:qrcode/data/responses/object_response.dart';
+import 'package:qrcode/data/utils/exceptions/api_exception.dart';
+import 'package:qrcode/domain/entity/profile_model.dart';
+import 'package:qrcode/domain/login/repositories/app_repository.dart';
+import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
+import 'package:qrcode/presentation/feature/history_scan/history_model.dart';
+import 'package:qrcode/presentation/feature/news/history_model.dart';
 
 class AppRepositoryImpl implements AppRepository {
   final AppApi api;
@@ -41,7 +43,7 @@ class AppRepositoryImpl implements AppRepository {
     try {
       final response = await api.getShowProfile();
 
-      return response;
+      return response.data ?? ProfileModel();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }
@@ -150,9 +152,19 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<Introduce> getIntroduce() async {
+  Future<NewsDetails> getNewsDetails({required int idNews}) async {
     try {
-      final response = await api.getIntroduce();
+      final response = await api.getDetailsNews(idNews);
+      return response.data ?? NewsDetails();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse> requestOtp({required String phone}) async {
+    try {
+      final response = await api.requestOtp(phone);
 
       return response;
     } on DioException catch (e) {
@@ -161,9 +173,10 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<Introduce> getSupportPolicy() async {
+  Future<ConfirmModel> comfirmOtp(
+      {required String phone, required String otp}) async {
     try {
-      final response = await api.getSupportPolicy();
+      final response = await api.comfirmOtp(phone, otp);
 
       return response;
     } on DioException catch (e) {
@@ -172,10 +185,22 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<Introduce> geTerms() async {
+  Future<ObjectResponse> addDevice({
+    required String deviceId,
+  }) async {
     try {
-      final response = await api.getTerms();
+      final response = await api.addDevice(deviceId);
 
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<Introduce> getSupportPolicy(String policyType) async {
+    try {
+      final response = await api.policy(policyType);
       return response;
     } on DioException catch (e) {
       throw (ApiException.error(e));

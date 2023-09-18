@@ -57,28 +57,39 @@ extension LoginEx on AppContact {
   String get _getUrl => '${Configurations.host}go_social?social_type=$name';
 }
 
-enum ListScreen { guide, introduce, policy }
+enum PolicyEnum { guide, introduce, policy }
 
-extension ListScreebEx on ListScreen {
+extension ListScreebEx on PolicyEnum {
   String get getScreenTerms {
     switch (this) {
-      case ListScreen.guide:
-        return 'Screen1';
-      case ListScreen.introduce:
-        return 'Screen2';
-      case ListScreen.policy:
-        return 'Screen3';
+      case PolicyEnum.guide:
+        return 'terms';
+      case PolicyEnum.introduce:
+        return 'introduce';
+      case PolicyEnum.policy:
+        return 'support_policy';
     }
   }
 
   String get getNameTerms {
     switch (this) {
-      case ListScreen.guide:
+      case PolicyEnum.guide:
         return 'Chính sách bán hàng';
-      case ListScreen.introduce:
+      case PolicyEnum.introduce:
         return 'Chính sách bảo mật';
-      case ListScreen.policy:
+      case PolicyEnum.policy:
         return 'Điều khoản sử dụng';
+    }
+  }
+
+  String get getSubTitleTerms {
+    switch (this) {
+      case PolicyEnum.guide:
+        return 'Chính sách bán hàng';
+      case PolicyEnum.introduce:
+        return 'Chính sách bảo mật';
+      case PolicyEnum.policy:
+        return 'ĐIỀU KHOẢN BẢO MẬT &\nCHÍNH SACH ỨNG DỤNG';
     }
   }
 }

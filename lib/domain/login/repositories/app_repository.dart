@@ -1,8 +1,11 @@
 // Project imports:
 
 import 'package:qrcode/common/model/Introduce_model.dart';
+import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/common/model/details_news_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
+import 'package:qrcode/data/responses/object_response.dart';
 
 import '../../../common/model/banner_model.dart';
 import '../../../common/response/home_response.dart';
@@ -37,9 +40,13 @@ abstract class AppRepository {
 
   Future<List<HistoryModel>> getHistoryScanQrCode({required String deviceId});
 
-  Future<Introduce> getIntroduce();
+  Future<NewsDetails> getNewsDetails({required int idNews});
 
-  Future<Introduce> getSupportPolicy();
+  Future<ObjectResponse> requestOtp({required String phone});
 
-  Future<Introduce> geTerms();
+  Future<ConfirmModel> comfirmOtp({required String phone, required String otp});
+
+  Future<ObjectResponse> addDevice({required String deviceId});
+
+  Future<Introduce> getSupportPolicy(String policyType);
 }
