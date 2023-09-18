@@ -19,6 +19,7 @@ class HistoryScanBloc extends Bloc<HistoryScanEvent, HistoryScanState> {
     on<HistoryScanEvent>((event, emit) {});
 
     on<InitDataHistoryEvent>((event, emit) async {
+      ///todo: api đang trả ra "[[]] cần refactor lại data"
       List<HistoryModel> histories = [];
       try {
         emit(state.copyWith(status: ScreenStatus.loading));
