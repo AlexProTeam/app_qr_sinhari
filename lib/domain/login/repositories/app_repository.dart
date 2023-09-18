@@ -2,6 +2,7 @@
 
 import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/common/model/details_news_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/data/responses/object_response.dart';
 
@@ -37,6 +38,8 @@ abstract class AppRepository {
   Future<List<NewsModelResponse>> getListNews();
 
   Future<List<HistoryModel>> getHistoryScanQrCode({required String deviceId});
+
+  Future<NewsDetails> getNewsDetails({required int idNews});
 
   Future<ObjectResponse> requestOtp({required String phone});
 

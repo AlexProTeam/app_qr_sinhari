@@ -2,6 +2,7 @@
 
 import 'package:qrcode/common/model/confirm_model.dart';
 import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/common/model/details_news_model.dart';
 import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/data/responses/object_response.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
@@ -56,6 +57,9 @@ class AppUseCase {
 
   Future<List<HistoryModel>> getHistoryScanQrCode(String deviceId) =>
       _repository.getHistoryScanQrCode(deviceId: deviceId);
+
+  Future<NewsDetails> getNewsDetails(int idNews) =>
+      _repository.getNewsDetails(idNews: idNews);
 
   Future<ObjectResponse> requestOtp(String phone) =>
       _repository.requestOtp(phone: phone);
