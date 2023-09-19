@@ -64,7 +64,7 @@ abstract class AppApi {
     @Query('device_id') String? deviceId,
   );
 
-  @GET('https://beta.sinhairvietnam.vn/api/news_detail')
+  @GET('news_detail')
   Future<ObjectResponse<NewsDetails>> getDetailsNews(
     @Query('news_id') int? idNews,
   );
