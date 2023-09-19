@@ -64,9 +64,9 @@ abstract class AppApi {
     @Query('device_id') String? deviceId,
   );
 
-  @GET('news_detail')
+  @POST('news_detail')
   Future<ObjectResponse<NewsDetails>> getDetailsNews(
-    @Query('news_id') int? idNews,
+    @Part(name: 'news_id') int? idNews,
   );
 
   @POST('auth-with-otp?phone=')
