@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../common/model/product_model.dart';
@@ -97,35 +98,7 @@ class ProductItem extends StatelessWidget {
                         )
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          FormatUtils.formatCurrencyDoubleToString(
-                              productModel?.unitPrice),
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.colorFFC700),
-                        ),
-                        const SizedBox(width: 15),
-                        RichText(
-                          text: TextSpan(
-                            text: FormatUtils.formatCurrencyDoubleToString(
-                              productModel?.purchasePrice,
-                            ),
-                            style: const TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.colorACACAC,
-                              decoration: TextDecoration.lineThrough,
-                              decorationColor: AppColors.colorACACAC,
-                              height: 2,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    itemPrice(),
                     InkWell(
                       onTap: () => ToastManager.showToast(
                         context,
@@ -148,5 +121,73 @@ class ProductItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget itemPrice() {
+    if (Helper.getPrice(
+            productModel?.unitPrice ?? 0, productModel?.purchasePrice ?? 0) ==
+        false) {
+      return Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (productModel?.unitPrice == null) ...[
+                const SizedBox(height: 5),
+                Text(
+                  FormatUtils.formatCurrencyDoubleToString(
+                      productModel?.purchasePrice),
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.colorFFC700),
+                ),
+              ],
+              if (productModel?.unitPrice != null) ...[
+                const SizedBox(height: 5),
+                Text(
+                  FormatUtils.formatCurrencyDoubleToString(
+                      productModel?.unitPrice),
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.colorFFC700),
+                ),
+                const SizedBox(width: 15),
+                RichText(
+                  text: TextSpan(
+                    text: FormatUtils.formatCurrencyDoubleToString(
+                      productModel?.purchasePrice,
+                    ),
+                    style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.colorACACAC,
+                      decoration: TextDecoration.lineThrough,
+                      decorationColor: AppColors.colorACACAC,
+                      height: 2,
+                    ),
+                  ),
+                ),
+              ]
+            ],
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          const SizedBox(height: 5),
+          Text(
+            FormatUtils.formatCurrencyDoubleToString(
+                productModel?.purchasePrice),
+            style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: AppColors.colorFFC700),
+          ),
+        ],
+      );
+    }
   }
 }
