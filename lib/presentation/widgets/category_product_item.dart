@@ -42,13 +42,13 @@ class CategoryItemProduct extends StatelessWidget {
           CustomImageNetwork(
             url: '${productModel?.thumbnailImg}',
             fit: BoxFit.cover,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width / 2,
             height: 164,
             border: 12,
           ),
           const SizedBox(height: 16.25),
           SizedBox(
-            height: 36,
+            // height: 36,
             child: Text('${productModel?.name}',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
@@ -87,7 +87,7 @@ class CategoryItemProduct extends StatelessWidget {
                   ]))
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2),
             child: Row(
@@ -118,16 +118,16 @@ class CategoryItemProduct extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 5),
-                if (isShowLike)
-                  Image.asset(
-                    IconConst.heart,
-                    width: 22,
-                    height: 20,
-                  )
               ],
             ),
           ),
+          const SizedBox(height: 5),
+          if (isShowLike)
+            Image.asset(
+              IconConst.heart,
+              width: 22,
+              height: 20,
+            )
         ],
       ),
     );

@@ -57,12 +57,12 @@ class ListProductScreenState extends State<ListProductScreen> {
               itemCount: products.length,
               padding:
                   const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0)
-                      .copyWith(bottom: 120),
+                      .copyWith(bottom: getPadding(context)),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 16.0,
+                crossAxisSpacing: 12.0,
                 mainAxisSpacing: 12.0,
-                childAspectRatio: 0.6,
+                childAspectRatio: 0.5,
               ),
               itemBuilder: (context, index) {
                 return CategoryItemProduct(
@@ -75,5 +75,13 @@ class ListProductScreenState extends State<ListProductScreen> {
         ),
       ),
     );
+  }
+
+  double getPadding(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    if (height < 800) {
+      return 100;
+    }
+    return 20;
   }
 }
