@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/const/icon_constant.dart';
@@ -142,8 +143,7 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                               width: 6,
                             ),
                             Text(
-                              DateUtilsApp.formatterDetail(
-                                  DateTime.parse(state.data?.createdAt ?? '')),
+                              getDate(state.data?.createdAt ?? ''),
                               style: const TextStyle(
                                 color: AppColors.colorACACAC,
                                 fontSize: 12,
@@ -189,6 +189,14 @@ class DetailNewScreenState extends State<DetailNewScreen> {
         ),
       ),
     );
+  }
+
+  String getDate(String dateTimeScan) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+    DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
+    DateTime datetime = dateFormat.parse(dateTimeScan);
+    final date = dateFormatLast.format(datetime);
+    return date;
   }
 
   Style get _getWidthTitleHTML => Style(

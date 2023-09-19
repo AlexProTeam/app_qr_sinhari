@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +10,7 @@ import '../../../../../data/utils/exceptions/api_exception.dart';
 import '../../../../../domain/login/usecases/app_usecase.dart';
 
 part 'details_news_event.dart';
+
 part 'details_news_state.dart';
 
 class DetailsNewsBloc extends Bloc<DetailsNewsEvent, DetailsNewsState> {
