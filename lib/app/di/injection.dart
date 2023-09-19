@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../common/bloc/event_bus/event_bus_bloc.dart';
 import '../../../common/local/app_cache.dart';
 import '../../../common/local/local_app.dart';
 import '../../../common/network/client.dart';
@@ -77,7 +76,6 @@ void _registerRepository() {
     () => AppRepositoryImpl(getIt<AppApi>()),
   );
 
-  getIt.registerLazySingleton(() => EventBusBloc());
   getIt.registerLazySingleton(() => AppCache());
 }
 
