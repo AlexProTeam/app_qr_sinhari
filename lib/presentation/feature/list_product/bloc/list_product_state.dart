@@ -6,7 +6,7 @@ class ListProductState extends Equatable {
 
   const ListProductState({
     this.products,
-    this.status = BlocStatusEnum.init,
+    this.status = BlocStatusEnum.loading,
   });
 
   @override

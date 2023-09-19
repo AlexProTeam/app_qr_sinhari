@@ -4,6 +4,7 @@ import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/product_model.dart';
+import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../app/di/injection.dart';
 import '../../app/managers/color_manager.dart';
@@ -37,65 +38,78 @@ class CategoryItemProduct extends StatelessWidget {
               productId: productModel?.id,
             ));
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          CustomImageNetwork(
-            url: '${productModel?.thumbnailImg}',
-            fit: BoxFit.cover,
-            width: MediaQuery.of(context).size.width / 2,
-            height: 164,
-            border: 12,
-          ),
-          const SizedBox(height: 16.25),
-          SizedBox(
-            // height: 36,
-            child: Text('${productModel?.name}',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                textAlign: TextAlign.start,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Colors.black)),
-          ),
-          const SizedBox(height: 5),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                IconConst.star,
-                width: 13.5,
-                height: 13,
+              CustomImageNetwork(
+                url: '${productModel?.thumbnailImg}',
+                fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width / 2,
+                height: 164,
+                border: 12,
               ),
-              const SizedBox(width: 6),
-              RichText(
-                  text: TextSpan(
-                      text: (productModel?.rating ?? 0).toString(),
-                      style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black),
-                      children: [
-                    TextSpan(
-                      text:
-                          ' (${(productModel?.quantity ?? 0).toString()} sản phẩm)',
-                      style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w300,
-                          color: AppColors.colorACACAC),
-                    )
-                  ]))
+              const SizedBox(height: 16.25),
+              SizedBox(
+                // height: 36,
+                child: Text('${productModel?.name}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black)),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Image.asset(
+                    IconConst.star,
+                    width: 13.5,
+                    height: 13,
+                  ),
+                  const SizedBox(width: 6),
+                  RichText(
+                      text: TextSpan(
+                          text: (productModel?.rating ?? 0).toString(),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.black),
+                          children: [
+                        TextSpan(
+                          text:
+                              ' (${(productModel?.quantity ?? 0).toString()} sản phẩm)',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                              color: AppColors.colorACACAC),
+                        )
+                      ]))
+                ],
+              ),
+              itemPrice(),
             ],
           ),
-          itemPrice(),
-          const SizedBox(height: 5),
           if (isShowLike)
-            Image.asset(
-              IconConst.heart,
-              width: 22,
-              height: 20,
-            )
+            Positioned(
+              top: 5,
+              right: 5,
+              child: GestureDetector(
+                onTap: () => ToastManager.showToast(
+                  context,
+                  text: 'Chức năng đang phát triển',
+                ),
+                child: Image.asset(
+                  IconConst.heart,
+                  width: 22,
+                  height: 20,
+                ),
+              ),
+            ),
         ],
       ),
     );
