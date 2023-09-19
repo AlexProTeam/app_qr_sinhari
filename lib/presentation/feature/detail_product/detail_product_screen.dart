@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:qrcode/app/di/injection.dart';
+import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 import 'package:qrcode/presentation/feature/detail_product/product_active/ui/detail_product_active.dart';
@@ -89,7 +90,8 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                       children: [
                         if (state.detailProductModel != null)
                           DetailProductSlide(
-                            images: state.detailProductModel?.data?.photos ?? [],
+                            images:
+                                state.detailProductModel?.data?.photos ?? [],
                           ),
                         const SizedBox(height: 18.5),
                         Padding(
@@ -136,38 +138,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                       ]))
                                 ],
                               ),
-                              const SizedBox(height: 16),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    FormatUtils.formatCurrencyDoubleToString(
-                                        state.detailProductModel?.data
-                                            ?.unitPrice),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                        color: AppColors.colorFFC700),
-                                  ),
-                                  const SizedBox(width: 15),
-                                  RichText(
-                                    text: TextSpan(
-                                      text: FormatUtils
-                                          .formatCurrencyDoubleToString(state
-                                              .detailProductModel
-                                              ?.data
-                                              ?.purchasePrice),
-                                      style: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.colorACACAC,
-                                        decoration: TextDecoration.lineThrough,
-                                        decorationColor: AppColors.colorACACAC,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              itemPrice(
+                                  state.detailProductModel?.data?.unitPrice ??
+                                      0,
+                                  state.detailProductModel?.data?.price ?? 0),
                               const SizedBox(height: 10)
                             ],
                           ),
@@ -316,8 +290,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                       ? Navigator.pushNamed(
                                           context, RouteDefine.activeScrene,
                                           arguments: ArgumentActiveScreen(
-                                              productId:
-                                                  state.detailProductModel?.data?.id))
+                                              productId: state
+                                                  .detailProductModel
+                                                  ?.data
+                                                  ?.id))
                                       : Navigator.pushNamed(
                                           context, RouteDefine.loginScreen,
                                           arguments: true);
@@ -330,8 +306,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                       ? Navigator.pushNamed(
                                           context, RouteDefine.muaHangScrene,
                                           arguments: ArgumentContactScreen(
-                                              productId:
-                                                  state.detailProductModel?.data?.id))
+                                              productId: state
+                                                  .detailProductModel
+                                                  ?.data
+                                                  ?.id))
                                       : Navigator.pushNamed(
                                           context, RouteDefine.loginScreen,
                                           arguments: true);
@@ -352,6 +330,53 @@ class DetailProductScreenState extends State<DetailProductScreen> {
             },
           ),
         ));
+  }
+
+  Widget itemPrice(int unitPrice, int purchasePrice) {
+    if (Helper.getPrice(unitPrice, purchasePrice) == false) {
+      return Column(
+        children: [
+          const SizedBox(height: 16),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                FormatUtils.formatCurrencyDoubleToString(unitPrice),
+                style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: AppColors.colorFFC700),
+              ),
+              const SizedBox(width: 15),
+              RichText(
+                text: TextSpan(
+                  text: FormatUtils.formatCurrencyDoubleToString(purchasePrice),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.colorACACAC,
+                    decoration: TextDecoration.lineThrough,
+                    decorationColor: AppColors.colorACACAC,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Text(
+            FormatUtils.formatCurrencyDoubleToString(purchasePrice),
+            style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                color: AppColors.colorFFC700),
+          ),
+        ],
+      );
+    }
   }
 
   String getDate(String dateTimeScan) {

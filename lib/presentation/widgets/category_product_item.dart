@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 import 'package:qrcode/common/model/product_model.dart';
@@ -87,6 +88,25 @@ class CategoryItemProduct extends StatelessWidget {
                   ]))
             ],
           ),
+          itemPrice(),
+          const SizedBox(height: 5),
+          if (isShowLike)
+            Image.asset(
+              IconConst.heart,
+              width: 22,
+              height: 20,
+            )
+        ],
+      ),
+    );
+  }
+
+  Widget itemPrice() {
+    if (Helper.getPrice(
+            productModel?.unitPrice ?? 0, productModel?.purchasePrice ?? 0) ==
+        false) {
+      return Column(
+        children: [
           const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -121,15 +141,31 @@ class CategoryItemProduct extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 5),
-          if (isShowLike)
-            Image.asset(
-              IconConst.heart,
-              width: 22,
-              height: 20,
-            )
         ],
-      ),
-    );
+      );
+    } else {
+      return Column(
+        children: [
+          const SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  FormatUtils.formatCurrencyDoubleToString(
+                      productModel?.purchasePrice),
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.colorFFC700),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
   }
 }
