@@ -60,20 +60,17 @@ class _ProductFeaturesWidgetState extends State<ProductFeaturesWidget> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 22, top: 10),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: GridViewDisplayProduct(
-          label: 'Sản phẩm nổi bật',
-          products: _productFeatures,
-          notExpand: true,
-          onMore: () =>
-              Navigator.pushNamed(context, RouteDefine.listProductScreen,
-                  arguments: ArgumentListProductScreen(
-                    url: 'product-feature',
-                    label: 'Sản phẩm nổi bật',
-                  )),
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: GridViewDisplayProduct(
+        label: 'Sản phẩm nổi bật',
+        products: _productFeatures,
+        notExpand: true,
+        onMore: () =>
+            Navigator.pushNamed(context, RouteDefine.listProductScreen,
+                arguments: ArgumentListProductScreen(
+                  url: 'product-feature',
+                  label: 'Sản phẩm nổi bật',
+                )),
       ),
     );
   }

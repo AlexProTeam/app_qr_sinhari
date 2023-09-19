@@ -66,13 +66,12 @@ class NewsScreenState extends State<NewsScreen> {
                         itemCount: state.histories.length,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 12.0),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          crossAxisSpacing: 8.0,
-                          mainAxisSpacing: 8.0,
-                          childAspectRatio: MediaQuery.of(context).size.width /
-                              2 /
-                              (MediaQuery.of(context).size.height / 2.5),
+                          crossAxisSpacing: 12.0,
+                          mainAxisSpacing: 12.0,
+                          childAspectRatio: 0.5,
                         ),
                         itemBuilder: (context, index) {
                           return itemNews(state.histories[index], context);
