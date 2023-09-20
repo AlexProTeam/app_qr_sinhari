@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/model/banner_model.dart';
+import 'package:qrcode/domain/entity/banner_model.dart';
 
 import '../../app/managers/color_manager.dart';
 import '../../app/route/navigation/route_names.dart';

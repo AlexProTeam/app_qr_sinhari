@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 
 import '../../../../../app/route/enum_app_status.dart';
 import '../../../../../app/route/validate_utils.dart';
 import '../../../../../domain/entity/profile_model.dart';
+import '../../../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_scaffold.dart';
 import '../../../../widgets/custom_textfield.dart';

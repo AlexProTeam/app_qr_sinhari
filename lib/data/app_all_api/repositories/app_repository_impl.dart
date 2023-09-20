@@ -1,18 +1,18 @@
 // Project imports:
 
 import 'package:dio/dio.dart';
-import 'package:qrcode/common/model/Introduce_model.dart';
-import 'package:qrcode/common/model/banner_model.dart';
-import 'package:qrcode/common/model/confirm_model.dart';
-import 'package:qrcode/common/model/detail_product_model.dart';
-import 'package:qrcode/common/model/details_news_model.dart';
-import 'package:qrcode/common/model/product_model.dart';
-import 'package:qrcode/common/response/home_response.dart';
 import 'package:qrcode/data/app_all_api/api/app_api.dart';
 import 'package:qrcode/data/app_all_api/models/request/login_request.dart';
 import 'package:qrcode/data/app_all_api/models/response/login_response.dart';
 import 'package:qrcode/data/responses/object_response.dart';
 import 'package:qrcode/data/utils/exceptions/api_exception.dart';
+import 'package:qrcode/domain/entity/Introduce_model.dart';
+import 'package:qrcode/domain/entity/banner_model.dart';
+import 'package:qrcode/domain/entity/confirm_model.dart';
+import 'package:qrcode/domain/entity/detail_product_model.dart';
+import 'package:qrcode/domain/entity/details_news_model.dart';
+import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/domain/login/repositories/app_repository.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
@@ -198,7 +198,7 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<Introduce> getSupportPolicy(String policyType) async {
+  Future<IntroduceResponse> getSupportPolicy(String policyType) async {
     try {
       final response = await api.policy(policyType);
       return response;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/helper.dart';
+import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
-import '../../../common/model/product_model.dart';
 import '../../app/managers/color_manager.dart';
 import '../../app/managers/const/icon_constant.dart';
 import '../../app/managers/const/string_const.dart';

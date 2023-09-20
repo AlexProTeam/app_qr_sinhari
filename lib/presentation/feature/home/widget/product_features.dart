@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/domain/entity/product_model.dart';
 
-import '../../../../../common/model/product_model.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/route/navigation/route_names.dart';

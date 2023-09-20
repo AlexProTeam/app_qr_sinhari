@@ -1,16 +1,13 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/domain/entity/details_news_model.dart';
 
 import '../../../../../app/di/injection.dart';
 import '../../../../../app/route/enum_app_status.dart';
-import '../../../../../common/model/details_news_model.dart';
 import '../../../../../data/utils/exceptions/api_exception.dart';
 import '../../../../../domain/login/usecases/app_usecase.dart';
 
 part 'details_news_event.dart';
-
 part 'details_news_state.dart';
 
 class DetailsNewsBloc extends Bloc<DetailsNewsEvent, DetailsNewsState> {

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/model/product_model.dart';
+import 'package:qrcode/domain/entity/product_model.dart';
 
 import '../../app/managers/color_manager.dart';
 import '../../app/managers/style_manager.dart';

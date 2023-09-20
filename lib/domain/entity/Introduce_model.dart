@@ -1,15 +1,14 @@
-class Introduce {
+class IntroduceResponse {
   int? status;
   String? message;
   Policy? policy;
 
-  Introduce({this.status, this.message, this.policy});
+  IntroduceResponse({this.status, this.message, this.policy});
 
-  Introduce.fromJson(Map<String, dynamic> json) {
+  IntroduceResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    policy =
-    json['policy'] != null ? Policy.fromJson(json['policy']) : null;
+    policy = json['policy'] != null ? Policy.fromJson(json['policy']) : null;
   }
 
   Map<String, dynamic> toJson() {

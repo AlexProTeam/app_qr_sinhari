@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
 
-import '../../../../common/bloc/profile_bloc/profile_bloc.dart';
 import '../../../app/di/injection.dart';
 import '../../../app/managers/color_manager.dart';
 import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../../app/route/routes.dart';
 import '../../../app/utils/session_utils.dart';
+import '../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../widgets/box_border_widget.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';

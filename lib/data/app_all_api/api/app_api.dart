@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:qrcode/common/model/Introduce_model.dart';
-import 'package:qrcode/common/model/confirm_model.dart';
-import 'package:qrcode/common/model/detail_product_model.dart';
-import 'package:qrcode/common/model/product_model.dart';
+import 'package:qrcode/domain/entity/Introduce_model.dart';
+import 'package:qrcode/domain/entity/confirm_model.dart';
+import 'package:qrcode/domain/entity/detail_product_model.dart';
+import 'package:qrcode/domain/entity/details_news_model.dart';
+import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../../common/model/banner_model.dart';
-import '../../../common/model/details_news_model.dart';
-import '../../../common/response/home_response.dart';
+import '../../../domain/entity/banner_model.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/auth/welcome/welcome_model.dart';
 import '../../../presentation/feature/history_scan/history_model.dart';
@@ -86,7 +86,7 @@ abstract class AppApi {
   );
 
   @POST('policy')
-  Future<Introduce> policy(
+  Future<IntroduceResponse> policy(
     @Query('type') String? typePolicy,
   );
 }

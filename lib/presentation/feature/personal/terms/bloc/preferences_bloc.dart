@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/model/Introduce_model.dart';
+import 'package:qrcode/domain/entity/Introduce_model.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../../app/di/injection.dart';

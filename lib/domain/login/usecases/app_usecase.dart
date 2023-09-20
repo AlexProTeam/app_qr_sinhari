@@ -1,18 +1,17 @@
 // Project imports:
-
-import 'package:qrcode/common/model/confirm_model.dart';
-import 'package:qrcode/common/model/detail_product_model.dart';
-import 'package:qrcode/common/model/details_news_model.dart';
-import 'package:qrcode/common/model/product_model.dart';
 import 'package:qrcode/data/responses/object_response.dart';
+import 'package:qrcode/domain/entity/Introduce_model.dart';
+import 'package:qrcode/domain/entity/confirm_model.dart';
+import 'package:qrcode/domain/entity/detail_product_model.dart';
+import 'package:qrcode/domain/entity/details_news_model.dart';
+import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
 
-import '../../../common/model/Introduce_model.dart';
-import '../../../common/model/banner_model.dart';
-import '../../../common/response/home_response.dart';
 import '../../../data/app_all_api/models/request/login_request.dart';
 import '../../../presentation/feature/history_scan/history_model.dart';
 import '../../../presentation/feature/news/history_model.dart';
+import '../../entity/banner_model.dart';
 import '../../entity/profile_model.dart';
 import '../entities/user_entitiy.dart';
 import '../repositories/app_repository.dart';
@@ -71,6 +70,6 @@ class AppUseCase {
   Future<ObjectResponse> addDevice(String deviceId) =>
       _repository.addDevice(deviceId: deviceId);
 
-  Future<Introduce> getSupportPolicy(String policyType) =>
+  Future<IntroduceResponse> getSupportPolicy(String policyType) =>
       _repository.getSupportPolicy(policyType);
 }

@@ -1,4 +1,4 @@
-import '../model/product_model.dart';
+import '../../domain/entity/product_model.dart';
 
 class HomeCategoryResponse {
   int? id;

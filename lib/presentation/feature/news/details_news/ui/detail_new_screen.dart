@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/const/icon_constant.dart';
-import '../../../../../app/route/date_utils.dart';
 import '../../../../../app/route/enum_app_status.dart';
 import '../../../../widgets/custom_image_network.dart';
 import '../bloc/details_news_bloc.dart';

@@ -4,7 +4,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:qrcode/app/di/injection.dart';
 import 'package:qrcode/app/managers/helper.dart';
-import 'package:qrcode/common/bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 import 'package:qrcode/presentation/feature/detail_product/product_active/ui/detail_product_active.dart';
 
@@ -14,6 +13,7 @@ import '../../../app/managers/style_manager.dart';
 import '../../../app/route/enum_app_status.dart';
 import '../../../app/route/format_utils.dart';
 import '../../../app/route/navigation/route_names.dart';
+import '../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/toast_manager.dart';

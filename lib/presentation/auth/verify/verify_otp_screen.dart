@@ -10,7 +10,7 @@ import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
 import '../../../app/managers/const/status_bloc.dart';
-import '../../../common/bloc/profile_bloc/profile_bloc.dart';
+import '../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
 import '../../widgets/dialog_manager_custom.dart';

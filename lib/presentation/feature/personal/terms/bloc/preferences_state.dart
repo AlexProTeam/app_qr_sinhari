@@ -2,7 +2,7 @@ part of 'preferences_bloc.dart';
 
 class PreferencesState extends Equatable {
   final ScreenStatus status;
-  final Introduce? data;
+  final IntroduceResponse? data;
   final String mesErr;
 
   const PreferencesState({
@@ -16,7 +16,7 @@ class PreferencesState extends Equatable {
 
   PreferencesState copyWith({
     ScreenStatus? status,
-    Introduce? data,
+    IntroduceResponse? data,
     String? mesErr,
   }) {
     return PreferencesState(

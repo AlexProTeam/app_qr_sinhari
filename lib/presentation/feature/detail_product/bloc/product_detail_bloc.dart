@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
-import 'package:qrcode/common/model/detail_product_model.dart';
+import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../app/di/injection.dart';
@@ -10,7 +10,6 @@ import '../../../../app/route/common_util.dart';
 import '../detail_product_screen.dart';
 
 part 'product_detail_event.dart';
-
 part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {

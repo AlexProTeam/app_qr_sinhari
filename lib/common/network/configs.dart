@@ -8,6 +8,6 @@ class Configurations {
 
   static String host = 'https://beta.sinhairvietnam.vn/api/';
 
-  static const int connectTimeout = 30; // second
+  static const int connectTimeout = 30;
   static const int pageSize = 12;
 }

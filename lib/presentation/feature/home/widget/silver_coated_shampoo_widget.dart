@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/domain/entity/home_response.dart';
 
-import '../../../../../common/response/home_response.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
