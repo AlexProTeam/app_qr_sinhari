@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/const/icon_constant.dart';
-import '../../../../../app/route/enum_app_status.dart';
 import '../../../../widgets/custom_image_network.dart';
 import '../bloc/details_news_bloc.dart';
 
@@ -27,35 +27,6 @@ class DetailNewScreen extends StatefulWidget {
 
 class DetailNewScreenState extends State<DetailNewScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  // void _initData() async {
-  //   try {
-  //     isLoadding = true;
-  //
-  //     ///todo: change to base later
-  //
-  //     var request = http.MultipartRequest(
-  //         'POST', Uri.parse('https://beta.sinhairvietnam.vn/api/news_detail'));
-  //     request.fields.addAll({'news_id': '${widget.argument?.newsDetail}'});
-  //
-  //     http.StreamedResponse response = await request.send();
-  //
-  //     if (response.statusCode == 200) {
-  //       final test = await response.stream.bytesToString();
-  //       _data = json.decode(test)['data'];
-  //     }
-  //   } catch (e) {
-  //     CommonUtil.handleException(e, methodName: '');
-  //   }
-  //   setState(() {
-  //     isLoadding = false;
-  //   });
-  // }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
@@ -63,7 +34,7 @@ class DetailNewScreenState extends State<DetailNewScreen> {
           ..add(InitDetailsNewsEvent(widget.argument?.newsDetail ?? 0)),
         child: BlocBuilder<DetailsNewsBloc, DetailsNewsState>(
           builder: (context, state) {
-            if (state.status == ScreenStatus.loading) {
+            if (state.status == BlocStatusEnum.loading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/common/local/app_cache.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import '../../../app/di/injection.dart';
 import '../../../app/managers/const/icon_constant.dart';
@@ -9,7 +10,6 @@ import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../../app/route/routes.dart';
 import '../../../app/utils/session_utils.dart';
-import '../../app_bloc/profile_bloc/profile_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -58,7 +58,7 @@ class SplashScreenState extends State<SplashScreen>
       return;
     }
 
-    _profileBloc.add(const InitProfileEvent());
+    _profileBloc.add(InitProfileEvent());
   }
 
   @override

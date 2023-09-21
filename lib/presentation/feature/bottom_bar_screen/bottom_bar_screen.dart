@@ -1,13 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:qrcode/common/network/app_header.dart';
-import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../app/di/injection.dart';
-import '../../../app/utils/session_utils.dart';
 import '../../../firebase/firebase_config.dart';
 import 'bloc/bottom_bar_bloc.dart';
 import 'enum/bottom_bar_enum.dart';
@@ -22,6 +17,7 @@ class BottomBarScreen extends StatefulWidget {
 
 class BottomBarScreenState extends State<BottomBarScreen> {
   final PageController _controller = PageController();
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
 
   @override
   void initState() {
@@ -30,30 +26,12 @@ class BottomBarScreenState extends State<BottomBarScreen> {
   }
 
   void _initData() async {
-    String? accessToken = SessionUtils.accessToken;
-    AppHeader appHeader = AppHeader();
-    appHeader.accessToken = accessToken;
-    getIt<AppClient>().header = appHeader;
     await _addToken();
   }
 
   Future<void> _addToken() async {
-    /// todo: change to base later.
-
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/add_device'));
     final token = await FirebaseConfig.getTokenFcm();
-    request.fields.addAll({'device_id': token ?? ''});
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      final responseBody = await response.stream.bytesToString();
-      log('Token added successfully: $responseBody');
-    } else {
-      log('Failed to add token: ${response.reasonPhrase}',
-          error: response.reasonPhrase);
-    }
+    _appUseCase.addDevice(token ?? '');
   }
 
   @override

@@ -5,15 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/presentation/app_bloc/profile_bloc/profile_bloc.dart';
 import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import 'app/di/injection.dart';
 import 'app/managers/color_manager.dart';
 import 'app/route/navigation/route_names.dart';
 import 'app/route/routes.dart';
 import 'app/route/screen_utils.dart';
-import 'domain/login/usecases/app_usecase.dart';
 import 'firebase/firebase_config.dart';
 
 dynamic decodeIsolate(String response) => jsonDecode(response);
@@ -62,12 +61,12 @@ class AppState extends State<App> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ProfileBloc(getIt<AppUseCase>()),
+          create: (context) => ProfileBloc(),
         ),
 
         ///todo: add this bloc to nested of login follow later
         BlocProvider(
-          create: (context) => LoginBloc(getIt<AppUseCase>(), context),
+          create: (context) => LoginBloc(),
         )
       ],
       child: MaterialApp(

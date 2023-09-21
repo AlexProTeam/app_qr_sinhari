@@ -6,11 +6,11 @@ import 'package:qrcode/presentation/feature/home/widget/news_home_widget.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_features.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/presentation/feature/home/widget/silver_coated_shampoo_widget.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import '../../../app/managers/const/icon_constant.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../../app/route/routes.dart';
-import '../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';

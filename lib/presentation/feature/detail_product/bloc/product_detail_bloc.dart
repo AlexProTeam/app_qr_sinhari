@@ -6,7 +6,6 @@ import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/const/status_bloc.dart';
-import '../../../../app/route/common_util.dart';
 import '../detail_product_screen.dart';
 
 part 'product_detail_event.dart';
@@ -28,8 +27,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
               'hanoi',
               'vn',
               argument.url ?? '');
-          // getIt<AppClient>().get(
-          //     'scan-qr-code?device_id=${getIt<AppCache>().deviceId}&city=hanoi&region=vn&url=${argument.url ?? ''}');
+
           detailProductModel = data.data;
         } else {
           final data =
@@ -45,7 +43,6 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
         ));
-        CommonUtil.handleException(e, methodName: '');
       }
     });
 

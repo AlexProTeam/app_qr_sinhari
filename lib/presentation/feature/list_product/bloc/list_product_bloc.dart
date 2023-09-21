@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/data/utils/exceptions/api_exception.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../app/managers/const/status_bloc.dart';
-import '../../../../app/route/common_util.dart';
 
 part 'list_product_event.dart';
 part 'list_product_state.dart';
@@ -19,6 +19,7 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
+        /// todo: check with enum or bool
         if (url == 'product-seller') {
           final result = await appUseCase.getListSeller();
           if ((result.data?.productSellers?.list ?? []).isNotEmpty) {
@@ -37,11 +38,11 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
           status: BlocStatusEnum.success,
           products: _products,
         ));
-      } catch (e) {
+      } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
+          mesErr: e.message,
         ));
-        CommonUtil.handleException(e, methodName: '');
       }
     });
 

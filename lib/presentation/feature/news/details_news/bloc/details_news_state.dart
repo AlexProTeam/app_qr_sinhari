@@ -1,12 +1,12 @@
 part of 'details_news_bloc.dart';
 
 class DetailsNewsState extends Equatable {
-  final ScreenStatus status;
+  final BlocStatusEnum status;
   final NewsDetails? data;
   final String? errMes;
 
   const DetailsNewsState({
-    this.status = ScreenStatus.loading,
+    this.status = BlocStatusEnum.loading,
     this.data,
     this.errMes,
   });
@@ -15,7 +15,7 @@ class DetailsNewsState extends Equatable {
   List<Object?> get props => [status, data, errMes];
 
   DetailsNewsState copyWith({
-    ScreenStatus? status,
+    BlocStatusEnum? status,
     NewsDetails? data,
     String? errMes,
   }) {

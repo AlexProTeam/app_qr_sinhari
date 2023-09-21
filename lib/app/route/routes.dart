@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/presentation/feature/notification/ui/notification_screen.dart';
 import 'package:qrcode/presentation/feature/personal/enum/personal_menu_enum.dart';
 
 import '../../presentation/auth/change_pass/change_pass_screen.dart';
@@ -17,7 +18,6 @@ import '../../presentation/feature/home/home_screen.dart';
 import '../../presentation/feature/list_product/list_product_screen.dart';
 import '../../presentation/feature/news/details_news/ui/detail_new_screen.dart';
 import '../../presentation/feature/news/news_screen/ui/news_screen.dart';
-import '../../presentation/feature/notification/notification_screen.dart';
 import '../../presentation/feature/personal/contact/contact_screen.dart';
 import '../../presentation/feature/personal/personal_screen.dart';
 import '../../presentation/feature/personal/terms/ui/terms_screen.dart';

@@ -1,35 +1,35 @@
-import 'dart:async';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/data/utils/exceptions/api_exception.dart';
+import 'package:qrcode/domain/entity/noti_model.dart';
+import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../app/di/injection.dart';
-import '../../../../app/route/common_util.dart';
-import '../../../../app/route/enum_app_status.dart';
-import '../../../../common/network/client.dart';
-import '../noti_model.dart';
 
 part 'notification_event.dart';
 part 'notification_state.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
+
   NotificationBloc() : super(const NotificationState()) {
     on<NotificationEvent>((event, emit) {});
     on<InitNotification>((event, emit) async {
-      List<NotiModel> histories = [];
       try {
-        await Future.delayed(const Duration(milliseconds: 100));
-        emit(state.copyWith(status: ScreenStatus.loading));
-        final data = await getIt<AppClient>()
-            .post('notifications', handleResponse: false);
-        data['notifications'].forEach((e) {
-          histories.add(NotiModel.fromJson(e));
-        });
-        emit(
-            state.copyWith(status: ScreenStatus.success, histories: histories));
-      } catch (e) {
-        emit(state.copyWith(status: ScreenStatus.failed));
-        CommonUtil.handleException(e, methodName: '');
+        emit(state.copyWith(
+          status: BlocStatusEnum.loading,
+        ));
+        final data = await _appUseCase.getNotifications();
+        emit(state.copyWith(
+          status: BlocStatusEnum.success,
+          histories: data,
+        ));
+      } on ApiException catch (e) {
+        emit(state.copyWith(
+          status: BlocStatusEnum.failed,
+          errMes: e.message,
+        ));
       }
     });
   }

@@ -5,11 +5,11 @@ abstract class DetailsProductActiveState extends Equatable {
 }
 
 class DetailsProductState extends Equatable {
-  final ScreenStatus status;
+  final BlocStatusEnum status;
 
-  const DetailsProductState({this.status = ScreenStatus.loading});
+  const DetailsProductState({this.status = BlocStatusEnum.loading});
 
-  DetailsProductState copyWith({ScreenStatus? status}) {
+  DetailsProductState copyWith({BlocStatusEnum? status}) {
     return DetailsProductState(status: status ?? this.status);
   }
 

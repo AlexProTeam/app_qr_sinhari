@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/local/app_cache.dart';
 import '../../../common/local/local_app.dart';
-import '../../../common/network/client.dart';
 import '../../data/app_all_api/api/app_api.dart';
 import '../../data/app_all_api/repositories/app_repository_impl.dart';
 import '../../data/utils/interceptor/token_interceptor.dart';
@@ -29,10 +28,6 @@ Future setupInjection() async {
 void _initCommon() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerLazySingleton(() => sharedPreferences);
-  getIt.registerLazySingleton(() => AppClient(
-        getIt(),
-        getIt(),
-      ));
   getIt.registerLazySingleton(() => LocalApp(getIt()));
 }
 
@@ -49,7 +44,9 @@ Future<void> _registerNetworkComponents() async {
   final dio = Dio(
     BaseOptions(
       baseUrl: ConfigManager.getInstance().apiBaseUrl,
-      connectTimeout: const Duration(seconds: 10),
+
+      /// todo: add to app const
+      connectTimeout: const Duration(seconds: 30),
     ),
   );
 

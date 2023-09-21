@@ -1,16 +1,19 @@
 // Project imports:
+import 'dart:io';
+
 import 'package:qrcode/data/responses/object_response.dart';
-import 'package:qrcode/domain/entity/Introduce_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/noti_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
 
 import '../../../data/app_all_api/models/request/login_request.dart';
 import '../../../presentation/feature/history_scan/history_model.dart';
 import '../../../presentation/feature/news/history_model.dart';
+import '../../entity/Introduce_model.dart';
 import '../../entity/banner_model.dart';
 import '../../entity/profile_model.dart';
 import '../entities/user_entitiy.dart';
@@ -72,4 +75,32 @@ class AppUseCase {
 
   Future<IntroduceResponse> getSupportPolicy(String policyType) =>
       _repository.getSupportPolicy(policyType);
+
+  Future<ObjectResponse> saveProfile({
+    required String? name,
+    required String? email,
+    required String? phone,
+    required String? address,
+    required File? avatar,
+  }) =>
+      _repository.saveProfile(
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+        avatar: avatar,
+      );
+
+  Future<List<NotiModel>> getNotifications() => _repository.getNotifications();
+
+  Future<ObjectResponse> saveContact({
+    String? productId,
+    String? content,
+    int? type,
+  }) =>
+      _repository.saveContact(
+        content: content,
+        productId: productId,
+        type: type,
+      );
 }

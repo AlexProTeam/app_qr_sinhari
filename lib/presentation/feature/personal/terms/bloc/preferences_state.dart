@@ -1,12 +1,12 @@
 part of 'preferences_bloc.dart';
 
 class PreferencesState extends Equatable {
-  final ScreenStatus status;
+  final BlocStatusEnum status;
   final IntroduceResponse? data;
   final String mesErr;
 
   const PreferencesState({
-    this.status = ScreenStatus.loading,
+    this.status = BlocStatusEnum.loading,
     this.data,
     this.mesErr = '',
   });
@@ -15,7 +15,7 @@ class PreferencesState extends Equatable {
   List<Object?> get props => [status, data, mesErr];
 
   PreferencesState copyWith({
-    ScreenStatus? status,
+    BlocStatusEnum? status,
     IntroduceResponse? data,
     String? mesErr,
   }) {

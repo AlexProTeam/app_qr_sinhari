@@ -5,15 +5,10 @@ import 'dart:ui' as ui;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qrcode/app/route/routes.dart';
 import 'package:qrcode/app/route/screen_utils.dart';
-import 'package:qrcode/common/exceptions/app_exception.dart';
-import 'package:qrcode/common/exceptions/connect_exception.dart';
-import 'package:qrcode/common/exceptions/timeout_exception.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../presentation/widgets/alert_dialog_container.dart';
-import '../../presentation/widgets/toast_manager.dart';
 import 'log_util.dart';
 
 class CommonUtil {
@@ -227,29 +222,6 @@ class CommonUtil {
             (1 - c(((lon2 ?? 0) - (lon1 ?? 0)) * p)) /
             2;
     return 12742 * asin(sqrt(a));
-  }
-
-  static void handleException(
-    e, {
-    required String methodName,
-    String? exceptionName,
-    bool showSnackbar = true,
-    bool logBug = true,
-    String? text,
-  }) async {
-    lOG.e('GstoreException: ${e.toString()} \n$methodName \n $exceptionName');
-    if ((e is TimeOutException || e is ConnectException)) {
-      await ToastManager.showToast(Routes.instance.navigatorKey.currentContext!,
-          text: 'Đường truyền của bạn không ổn định, vui lòng thử lại');
-      return;
-    }
-
-    final message = (e is AppException) ? e.message : 'Lỗi không xác định';
-
-    await ToastManager.showToast(
-      Routes.instance.navigatorKey.currentContext!,
-      text: message,
-    );
   }
 
   static String getTwoCharOfName(String? name) {

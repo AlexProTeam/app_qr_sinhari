@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
+import 'package:qrcode/presentation/widgets/dialog_manager_custom.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/const/string_const.dart';
 import '../../../../../app/managers/style_manager.dart';
-import '../../../../../app/route/enum_app_status.dart';
 import '../../../../../app/route/validate_utils.dart';
 import '../../../../../domain/entity/profile_model.dart';
-import '../../../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../../../widgets/custom_scaffold.dart';
 import '../../../../widgets/custom_textfield.dart';
 import '../../../../widgets/toast_manager.dart';
@@ -62,15 +63,17 @@ class DetailProductActiveState extends State<DetailProductActive> {
         child: BlocConsumer<DetailsProductActiveBloc, DetailsProductState>(
           listener: (BuildContext context, DetailsProductState state) {
             switch (state.status) {
-              case ScreenStatus.success:
+              case BlocStatusEnum.success:
+                DialogManager.hideLoadingDialog;
                 ToastManager.showToast(context, text: 'Kích hoạt thành công');
                 break;
-              case ScreenStatus.failed:
+              case BlocStatusEnum.failed:
+                DialogManager.hideLoadingDialog;
                 ToastManager.showToast(context, text: 'Kích hoạt thất bại');
                 break;
-              case ScreenStatus.init:
-                break;
-              case ScreenStatus.loading:
+              case BlocStatusEnum.init:
+              case BlocStatusEnum.loading:
+                DialogManager.showLoadingDialog(context);
                 break;
             }
           },
@@ -127,12 +130,12 @@ class DetailProductActiveState extends State<DetailProductActive> {
                                     _contentController,
                                     _formKey));
                             if (mounted &&
-                                state.status == ScreenStatus.success) {
+                                state.status == BlocStatusEnum.success) {
                               ToastManager.showToast(context,
                                   text: 'Kích hoạt thành công');
                             }
                             if (!mounted &&
-                                state.status == ScreenStatus.failed) {
+                                state.status == BlocStatusEnum.failed) {
                               Navigator.pop(context);
                             }
                             _contentController.clear();

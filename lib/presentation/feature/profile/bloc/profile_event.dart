@@ -25,8 +25,7 @@ class OnClickEvent extends ProfileEvent {
   );
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         nameController,
         mailController,
         phoneController,
@@ -42,4 +41,11 @@ class OnSelectImageEvent extends ProfileEvent {
 
   @override
   List<Object?> get props => [filePath];
+}
+
+class ClearProfileEvent extends ProfileEvent {
+  const ClearProfileEvent();
+
+  @override
+  List<Object?> get props => [];
 }

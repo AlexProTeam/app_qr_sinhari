@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
 
 import '../../../../app/managers/color_manager.dart';
-import '../../../../app/route/enum_app_status.dart';
 import '../../../widgets/custom_scaffold.dart';
 import '../bloc/notification_bloc.dart';
 import '../widget/notification_widget.dart';
@@ -16,11 +16,6 @@ class NotiScreen extends StatefulWidget {
 
 class NotiScreenState extends State<NotiScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
@@ -32,7 +27,7 @@ class NotiScreenState extends State<NotiScreen> {
         create: (context) => NotificationBloc()..add(InitNotification()),
         child: BlocBuilder<NotificationBloc, NotificationState>(
           builder: (context, state) {
-            if (state.status == ScreenStatus.loading) {
+            if (state.status == BlocStatusEnum.loading) {
               return const Center(child: CircularProgressIndicator());
             }
             if (state.histories.isEmpty) {

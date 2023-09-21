@@ -10,6 +10,16 @@ class NotiModel {
   String? imageThumbs;
   String? createdAt;
 
+  NotiModel(
+    this.id,
+    this.title,
+    this.des,
+    this.content,
+    this.image,
+    this.imageThumbs,
+    this.createdAt,
+  );
+
   NotiModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];

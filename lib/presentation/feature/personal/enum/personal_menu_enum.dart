@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:qrcode/app/managers/config_manager.dart';
 
 import '../../../../app/managers/const/icon_constant.dart';
-import '../../../../common/network/configs.dart';
 
 enum AppContact { facebook, titok, website }
 
@@ -54,7 +54,8 @@ extension LoginEx on AppContact {
         height: 30,
       );
 
-  String get _getUrl => '${Configurations.host}go_social?social_type=$name';
+  String get _getUrl =>
+      '${ConfigManager.getInstance()}go_social?social_type=$name';
 }
 
 enum PolicyEnum { guide, introduce, policy }

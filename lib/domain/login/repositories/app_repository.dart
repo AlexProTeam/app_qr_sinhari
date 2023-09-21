@@ -1,10 +1,13 @@
 // Project imports:
+import 'dart:io';
+
 import 'package:qrcode/data/responses/object_response.dart';
 import 'package:qrcode/domain/entity/Introduce_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/noti_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 
 import '../../../data/app_all_api/models/request/login_request.dart';
@@ -48,4 +51,20 @@ abstract class AppRepository {
   Future<ObjectResponse> addDevice({required String deviceId});
 
   Future<IntroduceResponse> getSupportPolicy(String policyType);
+
+  Future<ObjectResponse> saveProfile({
+    required String? name,
+    required String? email,
+    required String? phone,
+    required String? address,
+    required File? avatar,
+  });
+
+  Future<List<NotiModel>> getNotifications();
+
+  Future<ObjectResponse> saveContact({
+    String? productId,
+    String? content,
+    int? type,
+  });
 }

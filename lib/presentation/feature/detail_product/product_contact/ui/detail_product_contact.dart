@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
-import '../../../../../app/route/enum_app_status.dart';
 import '../../../../../app/route/validate_utils.dart';
 import '../../../../../domain/entity/profile_model.dart';
-import '../../../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_scaffold.dart';
 import '../../../../widgets/custom_textfield.dart';
@@ -52,20 +52,20 @@ class DetailProductContactState extends State<DetailProductContact> {
         child: BlocConsumer<DetailsProductBloc, DetailsProductState>(
           listener: (context, state) async {
             switch (state.status) {
-              case ScreenStatus.init:
+              case BlocStatusEnum.init:
                 DialogManager.hideLoadingDialog;
                 break;
-              case ScreenStatus.loading:
+              case BlocStatusEnum.loading:
                 DialogManager.showLoadingDialog(context);
                 break;
-              case ScreenStatus.success:
+              case BlocStatusEnum.success:
                 await ToastManager.showToast(
                   context,
                   text: 'Mua hàng thành công',
                   afterShowToast: () => Navigator.pop(context),
                 );
                 break;
-              case ScreenStatus.failed:
+              case BlocStatusEnum.failed:
                 await ToastManager.showToast(
                   context,
                   text: 'Mua hàng thất bại',

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/di/injection.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
-import '../../../app/route/enum_app_status.dart';
 import '../../../app/route/screen_utils.dart';
 import '../../widgets/category_product_item.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -43,7 +43,7 @@ class ListProductScreenState extends State<ListProductScreen> {
         child: BlocBuilder<ListProductBloc, ListProductState>(
           builder: (BuildContext context, state) {
             final products = state.products ?? [];
-            if (state.status == ScreenStatus.loading) {
+            if (state.status == BlocStatusEnum.loading) {
               return const Center(child: CircularProgressIndicator());
             }
             if (products.isEmpty) {

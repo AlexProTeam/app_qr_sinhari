@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:qrcode/domain/entity/Introduce_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/noti_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -88,5 +91,24 @@ abstract class AppApi {
   @POST('policy')
   Future<IntroduceResponse> policy(
     @Query('type') String? typePolicy,
+  );
+
+  @POST('policy')
+  Future<ObjectResponse> saveProfile(
+    @Query('name') String? name,
+    @Query('email') String? email,
+    @Query('phone') String? phone,
+    @Query('address') String? address,
+    @Path() File? avatar,
+  );
+
+  @POST('notifications')
+  Future<ObjectResponse<List<NotiModel>>> getNotifications();
+
+  @POST('save-contact')
+  Future<ObjectResponse> saveContact(
+    @Query('product_id') String? productId,
+    @Query('content') String? content,
+    @Query('type') int? type,
   );
 }

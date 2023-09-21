@@ -1,37 +1,37 @@
 part of 'profile_bloc.dart';
 
 class ProfileState extends Equatable {
-  final ScreenStatus status;
+  final BlocStatusEnum status;
   final ProfileModel? profileModel;
-  final StatusPost statusPost;
   final String image;
+  final String errMes;
 
   const ProfileState({
-    this.status = ScreenStatus.loading,
+    this.status = BlocStatusEnum.loading,
     this.profileModel,
-    this.statusPost = StatusPost.loading,
     this.image = '',
+    this.errMes = '',
   });
 
   @override
   List<Object?> get props => [
         status,
         profileModel,
-        statusPost,
         image,
+        errMes,
       ];
 
   ProfileState copyWith({
-    ScreenStatus? status,
+    BlocStatusEnum? status,
     ProfileModel? profileModel,
-    StatusPost? statusPost,
     String? image,
+    String? errMes,
   }) {
     return ProfileState(
       status: status ?? this.status,
-      profileModel: profileModel ?? this.profileModel,
-      statusPost: statusPost ?? this.statusPost,
+      profileModel: profileModel,
       image: image ?? this.image,
+      errMes: errMes ?? this.errMes,
     );
   }
 }

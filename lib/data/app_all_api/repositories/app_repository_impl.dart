@@ -1,5 +1,7 @@
 // Project imports:
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:qrcode/data/app_all_api/api/app_api.dart';
 import 'package:qrcode/data/app_all_api/models/request/login_request.dart';
@@ -12,6 +14,7 @@ import 'package:qrcode/domain/entity/confirm_model.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/noti_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/domain/login/repositories/app_repository.dart';
@@ -201,6 +204,47 @@ class AppRepositoryImpl implements AppRepository {
   Future<IntroduceResponse> getSupportPolicy(String policyType) async {
     try {
       final response = await api.policy(policyType);
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse> saveProfile({
+    required String? name,
+    required String? email,
+    required String? phone,
+    required String? address,
+    required File? avatar,
+  }) async {
+    try {
+      final response =
+          await api.saveProfile(name, email, phone, address, avatar);
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<List<NotiModel>> getNotifications() async {
+    try {
+      final response = await api.getNotifications();
+      return response.data ?? [];
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse> saveContact({
+    String? productId,
+    String? content,
+    int? type,
+  }) async {
+    try {
+      final response = await api.saveContact(productId, content, type);
       return response;
     } on DioException catch (e) {
       throw (ApiException.error(e));

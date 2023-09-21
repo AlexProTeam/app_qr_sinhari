@@ -3,25 +3,26 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
 
 import '../../../../../common/local/local_app.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../app/managers/const/icon_constant.dart';
 import '../../../../app/managers/const/key_save_data_local.dart';
 import '../../../../app/route/common_util.dart';
-import '../../../../app/route/enum_app_status.dart';
 import '../../../../app/route/validate_utils.dart';
 import '../../../widgets/bottom_sheet_select_image.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_image_network.dart';
 import '../../../widgets/custom_scaffold.dart';
 import '../../../widgets/custom_textfield.dart';
+import '../../../widgets/dialog_manager_custom.dart';
 import '../../../widgets/follow_keyboard_widget.dart';
 import '../../../widgets/toast_manager.dart';
 import '../bloc/profile_bloc.dart';
 
 Widget get getProfileScreenRoute => BlocProvider(
-    create: (BuildContext context) => ProfileBloc1(),
+    create: (BuildContext context) => ProfileBloc(),
     child: const ProfileScreen());
 
 class ProfileScreen extends StatefulWidget {
@@ -37,11 +38,11 @@ class ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late final ProfileBloc1 _bloc1;
+  late final ProfileBloc _bloc1;
 
   @override
   void initState() {
-    _bloc1 = context.read<ProfileBloc1>();
+    _bloc1 = context.read<ProfileBloc>();
     _bloc1.add(InitProfileEvent());
     super.initState();
   }
@@ -63,27 +64,30 @@ class ProfileScreenState extends State<ProfileScreen> {
         isShowBack: true,
       ),
       resizeToAvoidBottomInset: false,
-      body: BlocConsumer<ProfileBloc1, ProfileState>(
+      body: BlocConsumer<ProfileBloc, ProfileState>(
         buildWhen: (previous, current) => previous != current,
         listener: (context, state) async {
-          switch (state.statusPost) {
-            case StatusPost.loading:
-              // await DialogManager.showLoadingDialog(context);
+          switch (state.status) {
+            case BlocStatusEnum.loading:
+              DialogManager.showLoadingDialog(context);
               break;
-            case StatusPost.success:
+            case BlocStatusEnum.success:
+              DialogManager.hideLoadingDialog;
               ToastManager.showToast(
                 context,
                 text: 'Cập nhật thông tin thành công!',
                 afterShowToast: () => Navigator.pop(context),
               );
               break;
-            case StatusPost.failed:
+            case BlocStatusEnum.failed:
+              DialogManager.hideLoadingDialog;
               ToastManager.showToast(
                 context,
                 text: 'Cập nhật thông tin thất bại!',
                 afterShowToast: () => Navigator.pop(context),
               );
               break;
+            default:
           }
         },
         builder: (context, state) {
@@ -95,7 +99,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: (state.status == ScreenStatus.loading)
+                child: (state.status == BlocStatusEnum.loading)
                     ? const Center(
                         heightFactor: 15,
                         child: CircularProgressIndicator(),
@@ -228,7 +232,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                 // if (_formKey.currentState!.validate()) return;
 
                                 CommonUtil.dismissKeyBoard(context);
-                                context.read<ProfileBloc1>().add(OnClickEvent(
+                                context.read<ProfileBloc>().add(OnClickEvent(
                                     _nameController.text,
                                     _emailController.text,
                                     _phoneController.text,
@@ -264,7 +268,7 @@ class ProfileScreenState extends State<ProfileScreen> {
       );
     }
     if (mounted) {
-      context.read<ProfileBloc1>().add(OnSelectImageEvent(image?.path));
+      context.read<ProfileBloc>().add(OnSelectImageEvent(image?.path));
     }
   }
 }

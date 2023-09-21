@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../../app/di/injection.dart';
-import '../../../../../app/route/enum_app_status.dart';
 import '../../../../../data/utils/exceptions/api_exception.dart';
 import '../../history_model.dart';
 
@@ -18,15 +18,15 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
 
     on<InitNewsDataEvent>((event, emit) async {
       try {
-        emit(state.copyWith(status: ScreenStatus.loading));
+        emit(state.copyWith(status: BlocStatusEnum.loading));
         final data = await repository.getListNews();
         emit(state.copyWith(
-          status: ScreenStatus.success,
+          status: BlocStatusEnum.success,
           histories: data,
         ));
       } on ApiException catch (e) {
         emit(state.copyWith(
-          status: ScreenStatus.failed,
+          status: BlocStatusEnum.failed,
           mesErr: e.message,
         ));
       }

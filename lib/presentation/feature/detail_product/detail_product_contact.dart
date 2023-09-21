@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/network/client.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import '../../../app/di/injection.dart';
 import '../../../app/route/validate_utils.dart';
 import '../../../domain/entity/profile_model.dart';
-import '../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/custom_textfield.dart';

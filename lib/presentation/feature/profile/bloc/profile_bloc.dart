@@ -2,64 +2,69 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/network/app_header.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/data/utils/exceptions/api_exception.dart';
+import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 
 import '../../../../app/di/injection.dart';
-import '../../../../app/route/common_util.dart';
-import '../../../../app/route/enum_app_status.dart';
-import '../../../../app/utils/session_utils.dart';
-import '../../../../common/network/client.dart';
 import '../../../../domain/entity/profile_model.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
 
-class ProfileBloc1 extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc1() : super(const ProfileState()) {
+class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
+
+  ProfileBloc() : super(const ProfileState()) {
     on<InitProfileEvent>((event, emit) async {
       try {
-        emit(state.copyWith(status: ScreenStatus.loading));
+        emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        AppHeader appHeader = AppHeader();
-        appHeader.accessToken = SessionUtils.accessToken;
-        getIt<AppClient>().header = appHeader;
-
-        final data = await getIt<AppClient>().get('auth/showProfile');
-        ProfileModel profileModel = ProfileModel.fromJson(data['data']);
+        final data = await _appUseCase.getShowProfile();
 
         emit(state.copyWith(
-          status: ScreenStatus.success,
-          profileModel: profileModel,
+          status: BlocStatusEnum.success,
+          profileModel: data,
         ));
-      } catch (e) {
+      } on ApiException catch (e) {
         emit(state.copyWith(
-          status: ScreenStatus.failed,
+          status: BlocStatusEnum.failed,
+          errMes: e.message,
         ));
-        CommonUtil.handleException(e, methodName: '');
       }
     });
+
     on<OnClickEvent>((event, emit) async {
       try {
-        emit(state.copyWith(statusPost: StatusPost.loading));
+        emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        final client = getIt<AppClient>();
-        final name = event.nameController;
-        final email = event.mailController;
-        final phone = event.phoneController;
-        final address = event.andressController;
-        final image = event.imageController;
+        await _appUseCase.saveProfile(
+          name: event.nameController,
+          email: event.mailController,
+          phone: event.phoneController,
+          address: event.andressController,
+          avatar: event.imageController.isNotEmpty
+              ? File(event.imageController)
+              : null,
+        );
 
-        await client.post(
-            'auth/saveProfile?name=$name&email=$email&phone=$phone&address=$address',
-            body: File(image));
-        emit(state.copyWith(statusPost: StatusPost.success));
-      } catch (e) {
-        emit(state.copyWith(statusPost: StatusPost.failed));
+        emit(state.copyWith(status: BlocStatusEnum.success));
+      } on ApiException catch (e) {
+        emit(state.copyWith(
+          status: BlocStatusEnum.failed,
+          errMes: e.message,
+        ));
       }
     });
 
     on<OnSelectImageEvent>((event, emit) async {
       emit(state.copyWith(image: event.filePath));
+    });
+
+    on<ClearProfileEvent>((event, emit) async {
+      emit(state.copyWith(
+        profileModel: ProfileModel(),
+      ));
     });
   }
 }

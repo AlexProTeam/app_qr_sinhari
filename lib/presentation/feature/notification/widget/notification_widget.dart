@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/domain/entity/noti_model.dart';
 
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
 import '../../../widgets/custom_image_network.dart';
-import '../noti_model.dart';
 
 Widget itemNotification(NotiModel model) => Container(
       decoration: const BoxDecoration(

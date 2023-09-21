@@ -1,11 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/managers/const/status_bloc.dart';
 
 import '../../../../app/di/injection.dart';
-import '../../../../app/route/common_util.dart';
-import '../../../../app/route/enum_app_status.dart';
 import '../../../../common/local/app_cache.dart';
-import '../../../../common/network/client.dart';
 import '../../../../domain/login/usecases/app_usecase.dart';
 import '../history_model.dart';
 
@@ -20,22 +18,15 @@ class HistoryScanBloc extends Bloc<HistoryScanEvent, HistoryScanState> {
 
     on<InitDataHistoryEvent>((event, emit) async {
       ///todo: api đang trả ra "[[]] cần refactor lại data"
-      List<HistoryModel> histories = [];
       try {
-        emit(state.copyWith(status: ScreenStatus.loading));
-        // final listData = await _repository
-        //     .getHistoryScanQrCode(getIt<AppCache>().deviceId ?? '');
+        emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        final data = await getIt<AppClient>().get(
-            'history-scan-qr-code?device_id=${getIt<AppCache>().deviceId}');
-        data['data'][0].forEach((e) {
-          histories.add(data as HistoryModel);
-        });
-        emit(
-            state.copyWith(status: ScreenStatus.success, histories: histories));
+        final data = await _repository
+            .getHistoryScanQrCode(getIt<AppCache>().deviceId ?? '');
+
+        emit(state.copyWith(status: BlocStatusEnum.success, histories: data));
       } catch (e) {
-        emit(state.copyWith(status: ScreenStatus.failed));
-        CommonUtil.handleException(e, methodName: '');
+        emit(state.copyWith(status: BlocStatusEnum.failed));
       }
     });
   }

@@ -6,11 +6,11 @@ import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/utils/session_utils.dart';
 import 'package:qrcode/domain/login/usecases/app_usecase.dart';
 import 'package:qrcode/presentation/auth/verify/bloc/verify_bloc.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
 import '../../../app/managers/const/status_bloc.dart';
-import '../../app_bloc/profile_bloc/profile_bloc.dart';
 import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
 import '../../widgets/dialog_manager_custom.dart';
@@ -32,7 +32,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
   final TextEditingController _controller = TextEditingController();
   final _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
-  AppUseCase appUseCase = getIt<AppUseCase>();
+  AppUseCase _appUseCase = getIt<AppUseCase>();
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
       backgroundColor: AppColors.bgrScafold,
       body: BlocProvider(
         create: (context) => VerifyBloc(
-          appUseCase,
+          _appUseCase,
         ),
         child: BlocConsumer<VerifyBloc, VerifyState>(
           listener: (context, state) {
@@ -60,7 +60,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
             if (state.status == BlocStatusEnum.success) {
               DialogManager.hideLoadingDialog;
               SessionUtils.saveAccessToken(state.token);
-              context.read<ProfileBloc>().add(const InitProfileEvent());
+              context.read<ProfileBloc>().add(InitProfileEvent());
               _focusNode.unfocus();
               Navigator.popUntil(context, (route) => route.isFirst);
               context.read<BottomBarBloc>().add(const ChangeTabBottomBarEvent(
