@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/data/utils/exceptions/api_exception.dart';
-import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 
-import '../../../../app/managers/const/status_bloc.dart';
+import '../../../../app/managers/status_bloc.dart';
 
 part 'list_product_event.dart';
 part 'list_product_state.dart';

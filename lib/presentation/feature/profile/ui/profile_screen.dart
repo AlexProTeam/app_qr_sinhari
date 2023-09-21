@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/app/managers/status_bloc.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
-import '../../../../app/managers/const/icon_constant.dart';
 import '../../../../app/route/common_util.dart';
 import '../../../../app/route/validate_utils.dart';
 import '../../../widgets/bottom_sheet_select_image.dart';
@@ -157,8 +157,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                                         ? Stack(
                                             children: [
                                               Center(
-                                                child: Image.asset(
-                                                  IconConst.logoLogin,
+                                                child: Assets.images.logoMain
+                                                    .image(
                                                   width: 145,
                                                   height: 145,
                                                   fit: BoxFit.cover,
@@ -171,8 +171,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
                                                   children: [
-                                                    Image.asset(
-                                                      IconConst.camera,
+                                                    Assets.icons.camera.image(
                                                       width: 24,
                                                       height: 24,
                                                       fit: BoxFit.cover,

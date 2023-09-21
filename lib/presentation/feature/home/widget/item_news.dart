@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/app/app.dart';
 
-import '../../../../app/managers/const/string_const.dart';
 import '../../../../app/managers/style_manager.dart';
 import '../../../../app/route/navigation/route_names.dart';
 import '../../../widgets/custom_image_network.dart';
@@ -22,7 +22,7 @@ class ItemNews extends StatelessWidget {
         width: 250,
         margin: const EdgeInsets.only(right: 16),
         decoration: BoxDecoration(
-            boxShadow: StringConst.defaultShadow,
+            boxShadow: AppConstant.defaultShadow,
             borderRadius: BorderRadius.circular(12),
             color: Colors.white),
         child: Column(

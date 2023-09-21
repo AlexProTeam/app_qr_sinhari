@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
-import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/app/managers/status_bloc.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 import '../../../../../app/managers/color_manager.dart';
-import '../../../../../app/managers/const/icon_constant.dart';
 import '../../../../widgets/custom_image_network.dart';
 import '../bloc/details_news_bloc.dart';
 
@@ -104,8 +104,7 @@ class DetailNewScreenState extends State<DetailNewScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
                           children: [
-                            Image.asset(
-                              IconConst.miniClock,
+                            Assets.icons.miniClock.image(
                               width: 14,
                               height: 14,
                             ),

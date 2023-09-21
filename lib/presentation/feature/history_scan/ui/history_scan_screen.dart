@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/app/managers/status_bloc.dart';
 
 import '../../../widgets/custom_scaffold.dart';
 import '../../../widgets/nested_route_wrapper.dart';

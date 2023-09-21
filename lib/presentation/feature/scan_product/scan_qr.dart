@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qrcode/app/app.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:scan/scan.dart';
 
 import '../../../app/managers/color_manager.dart';
-import '../../../app/managers/const/icon_constant.dart';
 import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -181,8 +181,7 @@ class ScanQrScreenState extends State<ScanQrScreen>
                       valueListenable: controller.torchState,
                       builder: (context, state, child) {
                         if (state == null) {
-                          return Image.asset(
-                            IconConst.flash,
+                          return Assets.icons.flash.image(
                             width: 24,
                             height: 24,
                           );
@@ -195,8 +194,7 @@ class ScanQrScreenState extends State<ScanQrScreen>
                               color: Colors.white,
                             );
                           case TorchState.on:
-                            return Image.asset(
-                              IconConst.flash,
+                            return Assets.icons.flash.image(
                               width: 24,
                               height: 24,
                             );

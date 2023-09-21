@@ -1,3 +1,4 @@
+// Project imports:
 part of app_layer;
 
 Widget get welcomeScreenRoute => BlocProvider(
@@ -106,8 +107,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
             height: double.infinity,
             fit: BoxFit.cover,
           )
-        : Image.asset(
-            IconConst.welcome,
+        : Assets.images.welcome.image(
             width: double.maxFinite,
             height: double.infinity,
             fit: BoxFit.cover,

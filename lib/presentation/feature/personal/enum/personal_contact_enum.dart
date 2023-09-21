@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/personal/enum/personal_menu_enum.dart';
-
-import '../../../../app/managers/const/icon_constant.dart';
 
 enum PersonalContactEnum {
   account,
@@ -16,15 +15,17 @@ extension PersonalContactEnumEx on PersonalContactEnum {
   Widget getIcon() {
     switch (this) {
       case PersonalContactEnum.account:
-        return _icon(IconConst.info);
+        return _icon(
+          Assets.icons.user.path,
+        );
       case PersonalContactEnum.contact:
-        return _icon(IconConst.contact);
+        return _icon(Assets.icons.contactSupport.path);
       case PersonalContactEnum.provisionOrder:
-        return _icon(IconConst.provisionOrder);
+        return _icon(Assets.icons.adjust.path);
       case PersonalContactEnum.provisionSecurity:
-        return _icon(IconConst.provisionSecurity);
+        return _icon(Assets.icons.gppMaybe.path);
       case PersonalContactEnum.adjust:
-        return _icon(IconConst.adjust);
+        return _icon(Assets.icons.chatContact.path);
     }
   }
 

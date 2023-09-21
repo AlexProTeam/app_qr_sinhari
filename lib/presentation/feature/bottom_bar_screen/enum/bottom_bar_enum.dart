@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
-import '../../../../app/managers/const/icon_constant.dart';
 import '../../../../app/route/navigation/route_names.dart';
 import '../../history_scan/ui/history_scan_screen.dart';
 import '../../home/home_screen.dart';
@@ -20,15 +20,15 @@ extension BottomBarEx on BottomBarEnum {
   String get getIcon {
     switch (this) {
       case BottomBarEnum.home:
-        return IconConst.home;
+        return Assets.images.home.path;
       case BottomBarEnum.lichSuQuet:
-        return IconConst.lichSuQuet;
+        return Assets.images.clock.path;
       case BottomBarEnum.scan:
         return '';
       case BottomBarEnum.tinTuc:
-        return IconConst.tinTuc;
+        return Assets.images.paper.path;
       case BottomBarEnum.caNhan:
-        return IconConst.caNhan;
+        return Assets.images.user.path;
     }
   }
 

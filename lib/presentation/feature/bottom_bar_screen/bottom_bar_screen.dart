@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 
 import '../../../firebase/firebase_config.dart';
 import 'bloc/bottom_bar_bloc.dart';

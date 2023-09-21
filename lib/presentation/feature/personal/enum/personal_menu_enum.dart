@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:qrcode/app/managers/config_manager.dart';
-
-import '../../../../app/managers/const/icon_constant.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 enum AppContact { facebook, titok, website }
 
@@ -9,11 +8,11 @@ extension LoginEx on AppContact {
   Widget getIcon() {
     switch (this) {
       case AppContact.facebook:
-        return _icon(IconConst.facebook);
+        return _icon(Assets.icons.facebook.path);
       case AppContact.titok:
-        return _icon(IconConst.iconTictok);
+        return _icon(Assets.icons.iconTictok.path);
       case AppContact.website:
-        return _icon(IconConst.logoMain);
+        return _icon(Assets.images.logoMain.path);
     }
   }
 

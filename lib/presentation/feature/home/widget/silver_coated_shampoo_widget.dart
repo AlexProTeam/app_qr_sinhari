@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
 
 import '../../../../app/managers/color_manager.dart';

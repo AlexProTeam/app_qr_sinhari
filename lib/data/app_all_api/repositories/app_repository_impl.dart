@@ -1,5 +1,4 @@
 // Project imports:
-
 part of app_layer;
 
 class AppRepositoryImpl implements AppRepository {

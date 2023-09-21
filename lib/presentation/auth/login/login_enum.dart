@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
-import '../../../app/managers/const/icon_constant.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 enum LoginEnum { gmail, facebook, zalo, apple }
 
@@ -23,14 +22,14 @@ extension LoginEx on LoginEnum {
   Widget getIcon() {
     switch (this) {
       case LoginEnum.gmail:
-        return _icon(IconConst.gmail, getOnTap());
+        return _icon(Assets.icons.gmail.path, getOnTap());
       case LoginEnum.facebook:
-        return _icon(IconConst.facebook, getOnTap());
+        return _icon(Assets.icons.facebook.path, getOnTap());
       case LoginEnum.zalo:
-        return _icon(IconConst.zalo, getOnTap());
+        return _icon(Assets.icons.zalo.path, getOnTap());
       case LoginEnum.apple:
         if (Platform.isAndroid) return const SizedBox.shrink();
-        return _icon(IconConst.apple, getOnTap());
+        return _icon(Assets.icons.apple.path, getOnTap());
     }
   }
 

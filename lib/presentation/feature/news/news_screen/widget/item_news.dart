@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
-import '../../../../../app/managers/const/icon_constant.dart';
 import '../../../../../app/managers/style_manager.dart';
 import '../../../../../app/route/navigation/route_names.dart';
 import '../../../../widgets/custom_image_network.dart';
@@ -45,8 +45,7 @@ Widget itemNews(NewsModelResponse model, BuildContext context) {
               const SizedBox(height: 7),
               Row(
                 children: [
-                  Image.asset(
-                    IconConst.miniClock,
+                  Assets.icons.miniClock.image(
                     width: 14,
                     height: 14,
                   ),

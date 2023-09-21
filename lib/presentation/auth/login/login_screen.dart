@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
 import 'package:qrcode/presentation/auth/login/widgets/input_phone_widget.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
-import '../../../app/managers/const/icon_constant.dart';
-import '../../../app/managers/const/status_bloc.dart';
+import '../../../app/managers/status_bloc.dart';
 import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/custom_button.dart';
@@ -64,11 +64,10 @@ class LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          IconConst.logoLogin,
+                        Assets.icons.logoLogin.image(
                           width: 232,
                           height: 232,
-                        ),
+                        )
                       ],
                     ),
                     const SizedBox(height: 12),

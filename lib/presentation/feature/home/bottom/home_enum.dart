@@ -1,4 +1,4 @@
-import '../../../../app/managers/const/icon_constant.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 enum IconHomeEnum {
   all,
@@ -12,15 +12,15 @@ extension IconHomeEx on IconHomeEnum {
   String get getIcon {
     switch (this) {
       case IconHomeEnum.all:
-        return IconConst.icon1;
+        return Assets.images.icon1.path;
       case IconHomeEnum.shampoo:
-        return IconConst.icon2;
+        return Assets.images.icon2.path;
       case IconHomeEnum.news:
-        return IconConst.icon3;
+        return Assets.images.icon3.path;
       case IconHomeEnum.favourite:
-        return IconConst.icon4;
+        return Assets.images.icon4.path;
       case IconHomeEnum.tool:
-        return IconConst.icon5;
+        return Assets.images.icon5.path;
     }
   }
 

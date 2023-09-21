@@ -1,4 +1,4 @@
-import '../../../../app/managers/const/icon_constant.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 enum ScanTypeEnum {
   image,
@@ -10,22 +10,22 @@ extension IconHomeEx on ScanTypeEnum {
   String get getIconSelect {
     switch (this) {
       case ScanTypeEnum.image:
-        return IconConst.scanImageSelect;
+        return Assets.icons.scanImgSelect.path;
       case ScanTypeEnum.product:
-        return IconConst.scanProductSelect;
+        return Assets.icons.scanProduct.path;
       case ScanTypeEnum.invoice:
-        return IconConst.scanInvoiceSelect;
+        return Assets.icons.scanBillSelect.path;
     }
   }
 
   String get getIconUnSelect {
     switch (this) {
       case ScanTypeEnum.image:
-        return IconConst.scanUnImage;
+        return Assets.icons.scanImage.path;
       case ScanTypeEnum.product:
-        return IconConst.scanProductUnSelect;
+        return Assets.icons.scanProductUnselect.path;
       case ScanTypeEnum.invoice:
-        return IconConst.scanInvoiceUnSelect;
+        return Assets.icons.scanInvoice.path;
     }
   }
 

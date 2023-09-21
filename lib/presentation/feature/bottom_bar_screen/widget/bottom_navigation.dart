@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 import '../../../../app/managers/color_manager.dart';
-import '../../../../app/managers/const/icon_constant.dart';
 import '../../../../app/route/screen_utils.dart';
 import '../bloc/bottom_bar_bloc.dart';
 import '../enum/bottom_bar_enum.dart';
@@ -25,8 +25,7 @@ class BottomNavigationState extends State<BottomNavigation> {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        Image.asset(
-          IconConst.backGroupBottomBar,
+        Assets.icons.backGroupBottomBar.image(
           width: double.infinity,
           height: _heightItem,
           fit: BoxFit.cover,
@@ -83,8 +82,7 @@ class BottomNavigationState extends State<BottomNavigation> {
         child: InkWell(
           onTap: () => changeToTab(BottomBarEnum.scan),
           child: Center(
-            child: Image.asset(
-              IconConst.iconScanHome,
+            child: Assets.icons.iconScanHome.image(
               width: 70,
               fit: BoxFit.cover,
             ),

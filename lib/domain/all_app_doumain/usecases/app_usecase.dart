@@ -1,23 +1,5 @@
 // Project imports:
-import 'dart:io';
-
-import 'package:qrcode/data/responses/object_response.dart';
-import 'package:qrcode/domain/entity/confirm_model.dart';
-import 'package:qrcode/domain/entity/detail_product_model.dart';
-import 'package:qrcode/domain/entity/details_news_model.dart';
-import 'package:qrcode/domain/entity/home_response.dart';
-import 'package:qrcode/domain/entity/noti_model.dart';
-import 'package:qrcode/domain/entity/product_model.dart';
-import 'package:qrcode/domain/entity/welcome_model.dart';
-
-import '../../../data/app_all_api/models/request/login_request.dart';
-import '../../../presentation/feature/history_scan/history_model.dart';
-import '../../../presentation/feature/news/history_model.dart';
-import '../../entity/Introduce_model.dart';
-import '../../entity/banner_model.dart';
-import '../../entity/profile_model.dart';
-import '../entities/user_entitiy.dart';
-import '../repositories/app_repository.dart';
+part of app_layer;
 
 class AppUseCase {
   final AppRepository _repository;

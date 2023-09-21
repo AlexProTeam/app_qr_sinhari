@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/managers/const/status_bloc.dart';
 import 'package:qrcode/app/managers/helper.dart';
-import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
+import 'package:qrcode/app/managers/status_bloc.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_active.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
@@ -14,7 +14,6 @@ import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../app/managers/color_manager.dart';
-import '../../../../../app/managers/const/icon_constant.dart';
 import '../../../../../app/managers/style_manager.dart';
 import '../../../../../app/route/format_utils.dart';
 import '../../../../../app/route/navigation/route_names.dart';
@@ -55,8 +54,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                   text: 'Chức năng sẽ sớm ra mắt,'),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Image.asset(
-                  IconConst.heart,
+                child: Assets.icons.heart.image(
                   width: 22,
                   height: 20,
                 ),
@@ -109,8 +107,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Image.asset(
-                                  IconConst.star,
+                                Assets.icons.star.image(
                                   width: 13.5,
                                   height: 16,
                                 ),

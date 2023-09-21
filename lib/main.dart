@@ -1,4 +1,15 @@
-part of app_layer;
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/app.dart';
+import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
+
+import 'app/managers/color_manager.dart';
+import 'app/route/navigation/route_names.dart';
+import 'app/route/screen_utils.dart';
+import 'firebase/firebase_config.dart';
 
 Future main() async {
   await _beforeRunApp();

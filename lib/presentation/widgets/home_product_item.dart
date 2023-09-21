@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../app/managers/color_manager.dart';
-import '../../app/managers/const/icon_constant.dart';
-import '../../app/managers/const/string_const.dart';
 import '../../app/route/format_utils.dart';
 import '../../app/route/navigation/route_names.dart';
 import 'custom_image_network.dart';
@@ -21,7 +21,7 @@ class ProductItem extends StatelessWidget {
       margin: const EdgeInsets.only(top: 12),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       decoration: BoxDecoration(
-        boxShadow: StringConst.defaultShadow,
+        boxShadow: AppConstant.defaultShadow,
         color: AppColors.bgrScafold,
         borderRadius: const BorderRadius.all(
           Radius.circular(
@@ -71,8 +71,7 @@ class ProductItem extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Image.asset(
-                          IconConst.star,
+                        Assets.icons.star.image(
                           width: 16,
                           height: 16,
                         ),
@@ -106,8 +105,7 @@ class ProductItem extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(5),
-                        child: Image.asset(
-                          IconConst.heart,
+                        child: Assets.icons.heart.image(
                           width: 22,
                           height: 20,
                         ),

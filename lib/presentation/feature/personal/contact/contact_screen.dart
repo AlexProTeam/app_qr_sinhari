@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 import '../../../../app/managers/color_manager.dart';
-import '../../../../app/managers/const/icon_constant.dart';
 import '../../../../app/route/common_util.dart';
 import '../../../widgets/box_border_widget.dart';
 import '../../../widgets/custom_scaffold.dart';
@@ -31,8 +31,7 @@ class WebviewScreenState extends State<WebViewScreen> {
         padding: const EdgeInsets.only(bottom: 100),
         child: Column(
           children: [
-            Image.asset(
-              IconConst.logoLogin,
+            Assets.icons.logoLogin.image(
               width: 140,
               height: 140,
             ),
@@ -42,7 +41,7 @@ class WebviewScreenState extends State<WebViewScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   titleValueWidget(
-                    icon: IconConst.location,
+                    icon: Assets.icons.location.path,
                     title: 'Trụ sở: ',
                     value:
                         'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên,Thành phố Hà Nội, Việt Nam',
@@ -53,7 +52,7 @@ class WebviewScreenState extends State<WebViewScreen> {
             const SizedBox(height: 12),
             boxBorderApp(
               child: titleValueWidget(
-                icon: IconConst.hotline,
+                icon: Assets.icons.hotline.path,
                 title: 'Hotline: ',
                 value: '19003065',
               ),
@@ -61,7 +60,7 @@ class WebviewScreenState extends State<WebViewScreen> {
             const SizedBox(height: 12),
             boxBorderApp(
               child: titleValueWidget(
-                icon: IconConst.mail,
+                icon: Assets.icons.gmail.path,
                 title: 'Email: ',
                 value: 'info@sinhairvietnam.vn',
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qrcode/app/app.dart';
 
-import '../../app/managers/const/string_const.dart';
 import '../../app/managers/style_manager.dart';
 import '../../app/route/common_util.dart';
 
@@ -36,9 +36,9 @@ class BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
       context,
       showCancel: true,
       title: camera ? 'Camera' : 'Bộ sưu tập',
-      message: StringConst.contentCamera,
-      textOk: StringConst.allow,
-      textCancel: StringConst.notAllow,
+      message: AppConstant.contentCamera,
+      textOk: AppConstant.allow,
+      textCancel: AppConstant.notAllow,
       onOk: () {
         if (camera) {
           widget.onCameraTap!();

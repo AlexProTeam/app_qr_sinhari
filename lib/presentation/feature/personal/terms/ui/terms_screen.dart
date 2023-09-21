@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/app/managers/status_bloc.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 import '../../../../../app/managers/color_manager.dart';
-import '../../../../../app/managers/const/icon_constant.dart';
 import '../../../../../app/managers/style_manager.dart';
 import '../../../../widgets/custom_scaffold.dart';
 import '../../enum/personal_menu_enum.dart';
@@ -49,8 +49,7 @@ class PolicyScreenState extends State<PolicyScreen> {
                 children: [
                   Stack(
                     children: [
-                      Image.asset(
-                        IconConst.policyBackground,
+                      Assets.icons.facebook.image(
                         width: double.infinity,
                         height: 120,
                         fit: BoxFit.cover,

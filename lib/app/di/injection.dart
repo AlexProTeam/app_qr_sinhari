@@ -1,3 +1,4 @@
+// Project imports:
 part of app_layer;
 
 GetIt getIt = GetIt.instance;
@@ -22,9 +23,7 @@ Future<void> _registerNetworkComponents() async {
   final dio = Dio(
     BaseOptions(
       baseUrl: ConfigManager.getInstance().apiBaseUrl,
-
-      /// todo: add to app const
-      connectTimeout: const Duration(seconds: 30),
+      connectTimeout: AppConstant.connectionTimeOutApp,
     ),
   );
 

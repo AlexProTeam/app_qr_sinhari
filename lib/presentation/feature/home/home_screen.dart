@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/home/widget/banner_home.dart';
 import 'package:qrcode/presentation/feature/home/widget/filter_item.dart';
 import 'package:qrcode/presentation/feature/home/widget/news_home_widget.dart';
@@ -9,7 +10,6 @@ import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/presentation/feature/home/widget/silver_coated_shampoo_widget.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
-import '../../../app/managers/const/icon_constant.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -114,8 +114,7 @@ class HomeScreenState extends State<HomeScreen>
       ? Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              IconConst.logoMain,
+            Assets.images.logoMain.image(
               width: 40,
               height: 40,
             ),
@@ -147,8 +146,7 @@ class HomeScreenState extends State<HomeScreen>
         )
       : Padding(
           padding: const EdgeInsets.only(left: 16),
-          child: Image.asset(
-            IconConst.logoMain,
+          child: Assets.images.logoMain.image(
             width: 40,
             height: 40,
           ),

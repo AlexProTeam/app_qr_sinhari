@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../app/managers/color_manager.dart';
-import '../../app/managers/const/icon_constant.dart';
 import '../../app/managers/style_manager.dart';
 import '../../app/route/common_util.dart';
 
@@ -103,8 +103,7 @@ class CustomImageNetwork extends StatelessWidget {
 
   Widget _widgetImagePlaceHolder() => ClipRRect(
         borderRadius: BorderRadius.circular(56),
-        child: Image.asset(
-          IconConst.logo,
+        child: Assets.images.logo.image(
           width: width,
           height: height,
           fit: BoxFit.cover,

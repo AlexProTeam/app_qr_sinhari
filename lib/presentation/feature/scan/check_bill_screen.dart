@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 import '../../../app/managers/color_manager.dart';
-import '../../../app/managers/const/icon_constant.dart';
 
 class CheckBillScreen extends StatefulWidget {
   const CheckBillScreen({Key? key}) : super(key: key);
@@ -78,7 +78,10 @@ Widget _itemBill() {
         width: 300,
         child: Row(
           children: [
-            Image.asset(IconConst.car, width: 24, height: 24),
+            Assets.icons.car.image(
+              width: 24,
+              height: 24,
+            ),
             Column(
               children: [
                 const Text(
@@ -90,8 +93,7 @@ Widget _itemBill() {
                 ),
                 Row(
                   children: [
-                    Image.asset(
-                      IconConst.ellipse,
+                    Assets.icons.ellipse69.image(
                       width: 5,
                       height: 5,
                     ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/managers/const/status_bloc.dart';
-import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
+import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
@@ -11,7 +10,6 @@ import 'package:qrcode/presentation/widgets/custom_textfield.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../app/managers/color_manager.dart';
-import '../../../../../app/managers/const/string_const.dart';
 import '../../../../../app/managers/style_manager.dart';
 import '../../../../../app/route/validate_utils.dart';
 import '../../../../../domain/entity/profile_model.dart';
@@ -153,9 +151,10 @@ class DetailProductActiveState extends State<DetailProductActive> {
                             width: 200,
                             height: 40,
                             decoration: BoxDecoration(
-                                color: AppColors.primaryColor,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: StringConst.defaultShadow),
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: AppConstant.defaultShadow,
+                            ),
                             child: Center(
                               child: Text(
                                 'Kích hoạt',

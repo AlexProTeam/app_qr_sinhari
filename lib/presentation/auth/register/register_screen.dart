@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
-import '../../../app/managers/const/icon_constant.dart';
 import '../../../app/managers/style_manager.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -24,8 +24,7 @@ class RegisterScreenState extends State<RegisterScreen> {
             onTap: () => Navigator.pop(context),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Image.asset(
-                IconConst.back,
+              child: Assets.icons.back.image(
                 width: 24,
                 height: 24,
               ),
@@ -34,10 +33,9 @@ class RegisterScreenState extends State<RegisterScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                IconConst.logo,
-                width: 117,
-                height: 117,
+              Assets.images.logo.image(
+                width: 24,
+                height: 24,
               )
             ],
           ),
