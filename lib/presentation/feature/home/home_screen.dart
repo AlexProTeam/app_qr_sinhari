@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/feature/home/widget/banner_home.dart';
 import 'package:qrcode/presentation/feature/home/widget/filter_item.dart';
 import 'package:qrcode/presentation/feature/home/widget/news_home_widget.dart';
@@ -10,7 +11,6 @@ import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import '../../../app/managers/const/icon_constant.dart';
 import '../../../app/route/navigation/route_names.dart';
-import '../../../app/route/routes.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';

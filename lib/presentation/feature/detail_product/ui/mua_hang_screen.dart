@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_scaffold.dart';
-import '../../widgets/custom_textfield.dart';
+import 'package:qrcode/presentation/widgets/custom_button.dart';
+import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
+import 'package:qrcode/presentation/widgets/custom_textfield.dart';
 
 class MuaHangScrene extends StatefulWidget {
   // int productId;

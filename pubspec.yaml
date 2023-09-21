@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  permission_handler: ^10.2.0 # permission
+  permission_handler: ^11.0.0 # permission
   image_picker: ^0.8.7+4 # image picker
   logger: ^1.1.0  # logger
   flutter_bloc: ^8.1.2 # state management

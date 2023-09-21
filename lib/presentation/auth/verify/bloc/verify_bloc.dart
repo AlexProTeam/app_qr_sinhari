@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/managers/const/status_bloc.dart';
-import 'package:qrcode/domain/login/usecases/app_usecase.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 
 import '../../../../data/utils/exceptions/api_exception.dart';
 

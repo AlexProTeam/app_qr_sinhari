@@ -1,10 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 
-import '../../../../app/di/injection.dart';
-import '../../../../common/local/app_cache.dart';
-import '../../../../domain/login/usecases/app_usecase.dart';
 import '../history_model.dart';
 
 part 'history_scan_event.dart';
@@ -21,8 +20,8 @@ class HistoryScanBloc extends Bloc<HistoryScanEvent, HistoryScanState> {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        final data = await _repository
-            .getHistoryScanQrCode(getIt<AppCache>().deviceId ?? '');
+        final data =
+            await _repository.getHistoryScanQrCode(SessionUtils.deviceId);
 
         emit(state.copyWith(status: BlocStatusEnum.success, histories: data));
       } catch (e) {

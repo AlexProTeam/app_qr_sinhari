@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/domain/login/usecases/app_usecase.dart';
+import 'package:qrcode/app/app.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 
-import '../../../app/di/injection.dart';
 import '../../../firebase/firebase_config.dart';
 import 'bloc/bottom_bar_bloc.dart';
 import 'enum/bottom_bar_enum.dart';

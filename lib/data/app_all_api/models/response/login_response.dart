@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../../../domain/login/entities/user_entitiy.dart';
+import 'package:qrcode/domain/all_app_doumain/entities/user_entitiy.dart';
 
 part 'login_response.g.dart';
 

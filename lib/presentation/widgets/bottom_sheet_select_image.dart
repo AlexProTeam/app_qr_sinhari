@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode/common/local/local_app.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-import '../../app/di/injection.dart';
-import '../../app/managers/const/key_save_data_local.dart';
 import '../../app/managers/const/string_const.dart';
 import '../../app/managers/style_manager.dart';
 import '../../app/route/common_util.dart';
@@ -20,18 +18,15 @@ class BottomSheetSelectImage extends StatefulWidget {
 
 class BottomSheetSelectImageState extends State<BottomSheetSelectImage> {
   void _requestPermission(context, bool camera) async {
-    bool? checkPermissionCamera = getIt<LocalApp>()
-            .getBool(KeySaveDataLocal.havedAcceptPermissionCamera) ??
-        false;
-    bool? checkPermissionPhoto = getIt<LocalApp>()
-            .getBool(KeySaveDataLocal.havedAcceptPermissionPhoto) ??
-        false;
-    if (camera && checkPermissionCamera) {
+    var statusCamera = await Permission.camera.status;
+    var statusPhoto = await Permission.photos.status;
+
+    if (camera && statusCamera.isGranted) {
       Navigator.pop(context);
       widget.onCameraTap!();
       return;
     }
-    if (!camera && checkPermissionPhoto) {
+    if (!camera && statusPhoto.isGranted) {
       widget.onPhotoTap!();
       Navigator.pop(context);
       return;

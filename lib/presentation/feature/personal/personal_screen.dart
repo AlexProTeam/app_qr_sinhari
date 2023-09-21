@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/local/app_cache.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
-import '../../../app/di/injection.dart';
 import '../../../app/managers/color_manager.dart';
 import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
-import '../../../app/route/routes.dart';
-import '../../../app/utils/session_utils.dart';
 import '../../widgets/box_border_widget.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -134,11 +131,7 @@ class PersonalScreenState extends State<PersonalScreen> {
 
   void _onTapLogout() async {
     context.read<ProfileBloc>().add(const ClearProfileEvent());
-
-    ///todo:
-    getIt<AppCache>().havedLogin = false;
     SessionUtils.clearLogout;
-
     if (mounted) {
       context.read<BottomBarBloc>().add(
             const ChangeTabBottomBarEvent(

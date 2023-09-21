@@ -17,3 +17,19 @@ class ClearProductDetailEvent extends ProductDetailEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnClickBuyEvent extends ProductDetailEvent {
+  final int id;
+  final TextEditingController content;
+
+  const OnClickBuyEvent({
+    required this.id,
+    required this.content,
+  });
+
+  @override
+  List<Object?> get props => [
+        id,
+        content,
+      ];
+}

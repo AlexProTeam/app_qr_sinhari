@@ -1,10 +1,4 @@
-import 'package:dio/dio.dart';
-
-import '../../../app/managers/status_code_manager.dart';
-import '../../../app/utils/navigation_util.dart';
-import '../../../app/utils/session_utils.dart';
-import '../../../presentation/widgets/toast_manager.dart';
-import '../../responses/object_response.dart';
+part of app_layer;
 
 class ErrorInterceptor extends Interceptor {
   @override

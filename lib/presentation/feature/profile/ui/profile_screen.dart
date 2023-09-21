@@ -3,12 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/const/status_bloc.dart';
 
-import '../../../../../common/local/local_app.dart';
-import '../../../../app/di/injection.dart';
 import '../../../../app/managers/const/icon_constant.dart';
-import '../../../../app/managers/const/key_save_data_local.dart';
 import '../../../../app/route/common_util.dart';
 import '../../../../app/route/validate_utils.dart';
 import '../../../widgets/bottom_sheet_select_image.dart';
@@ -16,7 +14,6 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_image_network.dart';
 import '../../../widgets/custom_scaffold.dart';
 import '../../../widgets/custom_textfield.dart';
-import '../../../widgets/dialog_manager_custom.dart';
 import '../../../widgets/follow_keyboard_widget.dart';
 import '../../../widgets/toast_manager.dart';
 import '../bloc/profile_bloc.dart';
@@ -258,15 +255,6 @@ class ProfileScreenState extends State<ProfileScreen> {
       source: isCamera ? ImageSource.camera : ImageSource.gallery,
     );
 
-    if (image != null) {
-      final localApp = getIt<LocalApp>();
-      localApp.saveBool(
-        isCamera
-            ? KeySaveDataLocal.havedAcceptPermissionCamera
-            : KeySaveDataLocal.havedAcceptPermissionPhoto,
-        true,
-      );
-    }
     if (mounted) {
       context.read<ProfileBloc>().add(OnSelectImageEvent(image?.path));
     }

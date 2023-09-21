@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/app/app.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
-import '../../../../app/di/injection.dart';
 import '../../../../data/utils/exceptions/api_exception.dart';
 import '../../../../domain/entity/banner_model.dart';
-import '../../../../domain/login/usecases/app_usecase.dart';
 import '../../../widgets/banner_slide_image.dart';
 
 class BannerHomeWidget extends StatefulWidget {

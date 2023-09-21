@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:qrcode/presentation/feature/scan/scanner_error_widget.dart';
 
 import '../../../app/route/common_util.dart';
 import '../../../app/route/log_util.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/custom_scaffold.dart';
-import '../detail_product/detail_product_screen.dart';
 
 class QrcodeScannerWithController extends StatefulWidget {
   const QrcodeScannerWithController({Key? key}) : super(key: key);

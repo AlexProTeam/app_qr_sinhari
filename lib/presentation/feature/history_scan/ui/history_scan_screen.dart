@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/const/status_bloc.dart';
 
-import '../../../../app/route/routes.dart';
 import '../../../widgets/custom_scaffold.dart';
 import '../../../widgets/nested_route_wrapper.dart';
 import '../../bottom_bar_screen/enum/bottom_bar_enum.dart';

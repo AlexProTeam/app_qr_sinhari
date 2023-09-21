@@ -2,6 +2,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum SharedPreferenceKey {
   keyAccessToken,
+  havedLogin,
+  deviceId,
 }
 
 class SharedPreferencesManager {
@@ -26,8 +28,8 @@ class SharedPreferencesManager {
 
   int? getInt(SharedPreferenceKey key) => _sharedPreferences!.getInt(key.name);
 
-  Future<bool> putBool(SharedPreferenceKey key, String value) =>
-      _sharedPreferences!.setString(key.name, value);
+  Future<bool> putBool(SharedPreferenceKey key, bool value) =>
+      _sharedPreferences!.setBool(key.name, value);
 
   bool? getBool(SharedPreferenceKey key) =>
       _sharedPreferences!.getBool(key.name);

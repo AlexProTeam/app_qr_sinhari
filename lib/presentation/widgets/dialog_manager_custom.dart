@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:qrcode/presentation/widgets/widget_loading.dart';
-
-import '../../app/route/routes.dart';
+part of app_layer;
 
 class DialogManager {
   static void get hideLoadingDialog {

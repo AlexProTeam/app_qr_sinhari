@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qrcode/app/app.dart';
+import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:scan/scan.dart';
 
 import '../../../app/managers/color_manager.dart';
 import '../../../app/managers/const/icon_constant.dart';
 import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
-import '../../../app/route/routes.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../../widgets/qr_scanner_overlay.dart';
 import '../../widgets/toast_manager.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
-import '../detail_product/detail_product_screen.dart';
 import '../scan/scanner_error_widget.dart';
 import 'bloc/scan_qr_bloc.dart';
 import 'enum/scan_enum.dart';
@@ -261,6 +261,7 @@ class ScanQrScreenState extends State<ScanQrScreen>
     if (url.contains('http://qcheck.vn/')) {
       CommonUtil.runUrl(url);
     } else {
+      ///todo: change to route later
       Navigator.pushNamed(
         context,
         RouteDefine.detailProductScreen,

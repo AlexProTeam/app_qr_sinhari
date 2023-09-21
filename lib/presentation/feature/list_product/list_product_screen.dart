@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/app/di/injection.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/const/status_bloc.dart';
-import 'package:qrcode/domain/login/usecases/app_usecase.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 
 import '../../../app/route/screen_utils.dart';
 import '../../widgets/category_product_item.dart';

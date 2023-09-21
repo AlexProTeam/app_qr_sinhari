@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/local/app_cache.dart';
+import 'package:qrcode/app/app.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
-import 'package:qrcode/domain/login/usecases/app_usecase.dart';
+import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 
-import '../../../../app/di/injection.dart';
 import '../../../../app/managers/const/status_bloc.dart';
-import '../detail_product_screen.dart';
+import '../../../../data/utils/exceptions/api_exception.dart';
 
 part 'product_detail_event.dart';
 part 'product_detail_state.dart';
@@ -23,10 +24,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
         emit(state.copyWith(status: BlocStatusEnum.loading));
         if ((argument.url ?? '').isNotEmpty) {
           final data = await appUseCase.getDetaiProductByQr(
-              getIt<AppCache>().deviceId ?? '',
-              'hanoi',
-              'vn',
-              argument.url ?? '');
+              SessionUtils.deviceId, 'hanoi', 'vn', argument.url ?? '');
 
           detailProductModel = data.data;
         } else {
@@ -50,6 +48,25 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       emit(state.copyWith(
         detailProductModel: null,
       ));
+    });
+
+    on<OnClickBuyEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(status: BlocStatusEnum.loading));
+        await appUseCase.saveContact(
+          productId: event.id.toString(),
+          content: event.content.text,
+          type: 0,
+        );
+
+        emit(state.copyWith(
+          status: BlocStatusEnum.success,
+        ));
+      } on ApiException catch (e) {
+        emit(state.copyWith(
+          status: BlocStatusEnum.failed,
+        ));
+      }
     });
   }
 }

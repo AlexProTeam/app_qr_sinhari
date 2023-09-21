@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../di/injection.dart';
-import '../managers/shared_pref_manager.dart';
-import '../managers/theme_manager.dart';
+part of app_layer;
 
 class SessionUtils {
   static bool get isDarkTheme =>
@@ -26,7 +22,40 @@ class SessionUtils {
         SharedPreferenceKey.keyAccessToken,
       );
 
+  static bool get havedLogin =>
+      pref.getBool(
+        SharedPreferenceKey.havedLogin,
+      ) ??
+      false;
+
+  static void saveHavedLogin(bool data) =>
+      getIt<SharedPreferencesManager>().putBool(
+        SharedPreferenceKey.havedLogin,
+        data,
+      );
+
+  static Future<void> get deleteHavedLogin => pref.removeByKey(
+        SharedPreferenceKey.havedLogin,
+      );
+
+  static String get deviceId =>
+      pref.getString(
+        SharedPreferenceKey.deviceId,
+      ) ??
+      '';
+
+  static void saveDeviceId(String accessToken) =>
+      getIt<SharedPreferencesManager>().putString(
+        SharedPreferenceKey.deviceId,
+        accessToken,
+      );
+
+  static Future<void> get deleteDeviceId => pref.removeByKey(
+        SharedPreferenceKey.deviceId,
+      );
+
   static Future<void> get clearLogout async {
     deleteAccessToken;
+    deleteHavedLogin;
   }
 }

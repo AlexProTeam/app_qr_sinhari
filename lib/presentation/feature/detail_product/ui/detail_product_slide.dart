@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:qrcode/presentation/widgets/custom_image_network.dart';
 
-import '../../../app/managers/color_manager.dart';
-import '../../widgets/custom_image_network.dart';
+import '../../../../../app/managers/color_manager.dart';
 
 class DetailProductSlide extends StatefulWidget {
   final List<String>? images;

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/const/status_bloc.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
+import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
+import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
-import 'package:qrcode/presentation/widgets/dialog_manager_custom.dart';
+import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
+import 'package:qrcode/presentation/widgets/custom_textfield.dart';
+import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/const/string_const.dart';
 import '../../../../../app/managers/style_manager.dart';
 import '../../../../../app/route/validate_utils.dart';
 import '../../../../../domain/entity/profile_model.dart';
-import '../../../../widgets/custom_scaffold.dart';
-import '../../../../widgets/custom_textfield.dart';
-import '../../../../widgets/toast_manager.dart';
-import '../bloc/details_product_active_bloc.dart';
 
 class ArgumentActiveScreen {
   final int? productId;
@@ -35,7 +37,6 @@ class DetailProductActiveState extends State<DetailProductActive> {
   final TextEditingController _adddressController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool isLoadding = false;
 
   @override
   void initState() {
@@ -52,6 +53,15 @@ class DetailProductActiveState extends State<DetailProductActive> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _adddressController.dispose();
+    _contentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppBar: CustomAppBar(
@@ -59,13 +69,19 @@ class DetailProductActiveState extends State<DetailProductActive> {
         iconLeftTap: () => Navigator.pop(context),
       ),
       body: BlocProvider(
-        create: (context) => DetailsProductActiveBloc(),
-        child: BlocConsumer<DetailsProductActiveBloc, DetailsProductState>(
-          listener: (BuildContext context, DetailsProductState state) {
+        create: (context) => ProductDetailBloc(
+            ArgumentDetailProductScreen(), getIt<AppUseCase>()),
+        child: BlocConsumer<ProductDetailBloc, ProductDetailState>(
+          listener: (BuildContext context, state) {
             switch (state.status) {
               case BlocStatusEnum.success:
                 DialogManager.hideLoadingDialog;
-                ToastManager.showToast(context, text: 'Kích hoạt thành công');
+                _contentController.clear();
+                ToastManager.showToast(
+                  context,
+                  text: 'Kích hoạt thành công',
+                  afterShowToast: () => Navigator.pop(context),
+                );
                 break;
               case BlocStatusEnum.failed:
                 DialogManager.hideLoadingDialog;
@@ -124,21 +140,14 @@ class DetailProductActiveState extends State<DetailProductActive> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            DetailsProductActiveBloc().add(
-                                InitDetailsProductEvent(
-                                    widget.argument?.productId ?? 0,
-                                    _contentController,
-                                    _formKey));
-                            if (mounted &&
-                                state.status == BlocStatusEnum.success) {
-                              ToastManager.showToast(context,
-                                  text: 'Kích hoạt thành công');
+                            if (_formKey.currentState?.validate() == false) {
+                              return;
                             }
-                            if (!mounted &&
-                                state.status == BlocStatusEnum.failed) {
-                              Navigator.pop(context);
-                            }
-                            _contentController.clear();
+
+                            context.read<ProductDetailBloc>().add(
+                                OnClickBuyEvent(
+                                    id: widget.argument?.productId ?? 0,
+                                    content: _contentController));
                           },
                           child: Container(
                             width: 200,

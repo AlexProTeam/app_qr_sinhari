@@ -1,26 +1,6 @@
 // Project imports:
 
-import 'dart:io';
-
-import 'package:dio/dio.dart';
-import 'package:qrcode/data/app_all_api/api/app_api.dart';
-import 'package:qrcode/data/app_all_api/models/request/login_request.dart';
-import 'package:qrcode/data/app_all_api/models/response/login_response.dart';
-import 'package:qrcode/data/responses/object_response.dart';
-import 'package:qrcode/data/utils/exceptions/api_exception.dart';
-import 'package:qrcode/domain/entity/Introduce_model.dart';
-import 'package:qrcode/domain/entity/banner_model.dart';
-import 'package:qrcode/domain/entity/confirm_model.dart';
-import 'package:qrcode/domain/entity/detail_product_model.dart';
-import 'package:qrcode/domain/entity/details_news_model.dart';
-import 'package:qrcode/domain/entity/home_response.dart';
-import 'package:qrcode/domain/entity/noti_model.dart';
-import 'package:qrcode/domain/entity/product_model.dart';
-import 'package:qrcode/domain/entity/profile_model.dart';
-import 'package:qrcode/domain/login/repositories/app_repository.dart';
-import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
-import 'package:qrcode/presentation/feature/history_scan/history_model.dart';
-import 'package:qrcode/presentation/feature/news/history_model.dart';
+part of app_layer;
 
 class AppRepositoryImpl implements AppRepository {
   final AppApi api;

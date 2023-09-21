@@ -1,20 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:qrcode/app/di/injection.dart';
-import 'package:qrcode/app/managers/color_manager.dart';
-import 'package:qrcode/app/utils/session_utils.dart';
-import 'package:qrcode/domain/login/usecases/app_usecase.dart';
-import 'package:qrcode/presentation/auth/verify/bloc/verify_bloc.dart';
-import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
-import 'package:qrcode/presentation/widgets/custom_button.dart';
-import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
-
-import '../../../app/managers/const/status_bloc.dart';
-import '../../feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
-import '../../feature/bottom_bar_screen/enum/bottom_bar_enum.dart';
-import '../../widgets/dialog_manager_custom.dart';
-import '../../widgets/toast_manager.dart';
+part of app_layer;
 
 class VerifyOtpScreen extends StatefulWidget {
   final String phone;
@@ -32,7 +16,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
   final TextEditingController _controller = TextEditingController();
   final _focusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
-  AppUseCase _appUseCase = getIt<AppUseCase>();
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
 
   @override
   void initState() {
@@ -136,6 +120,8 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           width: 128,
                           height: 45,
                           onTap: () {
+                            /// todo: refactor logic to bloc
+
                             if (_controller.text.isEmpty) {
                               return ToastManager.showToast(
                                 context,

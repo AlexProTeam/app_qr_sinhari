@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
+import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../app/managers/color_manager.dart';
@@ -8,7 +9,6 @@ import '../../app/managers/const/icon_constant.dart';
 import '../../app/managers/const/string_const.dart';
 import '../../app/route/format_utils.dart';
 import '../../app/route/navigation/route_names.dart';
-import '../feature/detail_product/detail_product_screen.dart';
 import 'custom_image_network.dart';
 
 class ProductItem extends StatelessWidget {

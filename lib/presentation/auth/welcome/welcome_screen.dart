@@ -1,19 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
-import 'package:qrcode/presentation/auth/welcome/welcome_point_widget.dart';
-import 'package:qrcode/presentation/widgets/dialog_manager_custom.dart';
-
-import '../../../app/di/injection.dart';
-import '../../../app/managers/color_manager.dart';
-import '../../../app/managers/const/icon_constant.dart';
-import '../../../app/managers/const/status_bloc.dart';
-import '../../../app/route/navigation/route_names.dart';
-import '../../../app/route/routes.dart';
-import '../../../domain/login/usecases/app_usecase.dart';
-import '../../widgets/custom_image_network.dart';
-import '../../widgets/toast_manager.dart';
-import 'bloc/welcome_bloc.dart';
+part of app_layer;
 
 Widget get welcomeScreenRoute => BlocProvider(
       create: (context) =>

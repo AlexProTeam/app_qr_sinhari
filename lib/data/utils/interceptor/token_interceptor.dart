@@ -1,6 +1,7 @@
-import 'package:dio/dio.dart';
+library app_layer;
 
-import '../../../app/utils/session_utils.dart';
+import 'package:dio/dio.dart';
+import 'package:qrcode/app/app.dart';
 
 class TokenInterceptors extends Interceptor {
   @override

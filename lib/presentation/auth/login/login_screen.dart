@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
 import 'package:qrcode/presentation/auth/login/widgets/input_phone_widget.dart';
-import 'package:qrcode/presentation/widgets/dialog_manager_custom.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../app/managers/const/icon_constant.dart';

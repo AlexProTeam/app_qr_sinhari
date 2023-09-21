@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/presentation/auth/welcome/welcome_model.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
+import 'package:qrcode/domain/entity/welcome_model.dart';
 
 import '../../../../app/managers/const/status_bloc.dart';
 import '../../../../data/utils/exceptions/api_exception.dart';
-import '../../../../domain/login/usecases/app_usecase.dart';
 
 part 'welcome_event.dart';
 part 'welcome_state.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/app/app.dart';
+import 'package:qrcode/domain/all_app_doumain/usecases/app_usecase.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
 
-import '../../../../app/di/injection.dart';
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
 import '../../../../data/utils/exceptions/api_exception.dart';
-import '../../../../domain/login/usecases/app_usecase.dart';
 import '../../../widgets/home_product_item.dart';
 import '../../../widgets/toast_manager.dart';
 

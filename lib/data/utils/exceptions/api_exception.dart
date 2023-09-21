@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
-// Project imports:
-
 class ApiException {
   final int status;
   final String message;
@@ -65,7 +63,7 @@ class ApiException {
             exception.error is HttpException) {
           return ApiException._(
             exception: exception,
-            message: 'ConnectionProblem',
+            message: 'Connection Problem',
           );
         }
         if (exception.error != null) {
@@ -127,7 +125,7 @@ ApiException _handleErrorWithResponse(DioException exception) {
 }
 
 final _timeOutMessages = {
-  DioExceptionType.connectionTimeout: 'ConnectTimeout',
-  DioExceptionType.receiveTimeout: 'ReceiveTimeout',
-  DioExceptionType.sendTimeout: 'SendTimeout',
+  DioExceptionType.connectionTimeout: 'Connect Timeout',
+  DioExceptionType.receiveTimeout: 'Receive Timeout',
+  DioExceptionType.sendTimeout: 'Send Timeout',
 };
