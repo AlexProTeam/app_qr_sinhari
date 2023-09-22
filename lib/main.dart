@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
+import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import 'app/managers/color_manager.dart';
@@ -55,6 +56,10 @@ class AppState extends State<App> {
         ///todo: add this bloc to nested of login follow later
         BlocProvider(
           create: (context) => LoginBloc(),
+        ),
+
+        BlocProvider(
+          create: (context) => ProductDetailBloc(),
         )
       ],
       child: MaterialApp(

@@ -67,8 +67,7 @@ class DetailProductActiveState extends State<DetailProductActive> {
         iconLeftTap: () => Navigator.pop(context),
       ),
       body: BlocProvider(
-        create: (context) => ProductDetailBloc(
-            ArgumentDetailProductScreen(), getIt<AppUseCase>()),
+        create: (context) => ProductDetailBloc(),
         child: BlocConsumer<ProductDetailBloc, ProductDetailState>(
           listener: (BuildContext context, state) {
             switch (state.status) {
@@ -145,7 +144,8 @@ class DetailProductActiveState extends State<DetailProductActive> {
                             context.read<ProductDetailBloc>().add(
                                 OnClickBuyEvent(
                                     id: widget.argument?.productId ?? 0,
-                                    content: _contentController));
+                                    content: _contentController,
+                                    appUseCase: getIt<AppUseCase>()));
                           },
                           child: Container(
                             width: 200,

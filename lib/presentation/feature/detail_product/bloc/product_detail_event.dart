@@ -5,10 +5,13 @@ abstract class ProductDetailEvent extends Equatable {
 }
 
 class InitProductDetailEvent extends ProductDetailEvent {
-  const InitProductDetailEvent();
+  final ArgumentDetailProductScreen argument;
+  final AppUseCase appUseCase;
+
+  const InitProductDetailEvent(this.argument, this.appUseCase);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [argument, appUseCase];
 }
 
 class ClearProductDetailEvent extends ProductDetailEvent {
@@ -19,10 +22,12 @@ class ClearProductDetailEvent extends ProductDetailEvent {
 }
 
 class OnClickBuyEvent extends ProductDetailEvent {
+  final AppUseCase appUseCase;
   final int id;
   final TextEditingController content;
 
   const OnClickBuyEvent({
+    required this.appUseCase,
     required this.id,
     required this.content,
   });

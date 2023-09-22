@@ -9,26 +9,24 @@ import '../../../../app/managers/status_bloc.dart';
 import '../../../../data/utils/exceptions/api_exception.dart';
 
 part 'product_detail_event.dart';
+
 part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
-  final ArgumentDetailProductScreen argument;
   DataDetail? detailProductModel;
-  final AppUseCase appUseCase;
 
-  ProductDetailBloc(this.argument, this.appUseCase)
-      : super(const ProductDetailState()) {
+  ProductDetailBloc() : super(const ProductDetailState()) {
     on<InitProductDetailEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
-        if ((argument.url ?? '').isNotEmpty) {
-          final data = await appUseCase.getDetaiProductByQr(
-              SessionUtils.deviceId, 'hanoi', 'vn', argument.url ?? '');
+        if ((event.argument.url ?? '').isNotEmpty) {
+          final data = await event.appUseCase.getDetaiProductByQr(
+              SessionUtils.deviceId, 'hanoi', 'vn', event.argument.url ?? '');
 
           detailProductModel = data.data;
         } else {
-          final data =
-              await appUseCase.getDetaiProduct(argument.productId ?? 0);
+          final data = await event.appUseCase
+              .getDetaiProduct(event.argument.productId ?? 0);
           detailProductModel = data;
         }
 
@@ -52,7 +50,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     on<OnClickBuyEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
-        await appUseCase.saveContact(
+        await event.appUseCase.saveContact(
           productId: event.id.toString(),
           content: event.content.text,
           type: 0,
