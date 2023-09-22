@@ -63,12 +63,12 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           ],
         ),
         body: BlocProvider(
-          create: (context) => ProductDetailBloc(
-              ArgumentDetailProductScreen(
-                  productId: widget.argument?.productId,
-                  url: widget.argument?.url),
-              getIt<AppUseCase>())
-            ..add(const InitProductDetailEvent()),
+          create: (context) => ProductDetailBloc()
+            ..add(InitProductDetailEvent(
+                ArgumentDetailProductScreen(
+                    productId: widget.argument?.productId,
+                    url: widget.argument?.url),
+                getIt<AppUseCase>())),
           child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
             builder: (BuildContext context, state) {
               if (state.detailProductModel == null ||
@@ -77,9 +77,11 @@ class DetailProductScreenState extends State<DetailProductScreen> {
               }
               return RefreshIndicator(
                 onRefresh: () async {
-                  context
-                      .read<ProductDetailBloc>()
-                      .add(const InitProductDetailEvent());
+                  context.read<ProductDetailBloc>().add(InitProductDetailEvent(
+                      ArgumentDetailProductScreen(
+                          productId: widget.argument?.productId,
+                          url: widget.argument?.url),
+                      getIt<AppUseCase>()));
                 },
                 child: SingleChildScrollView(
                   child: Column(
