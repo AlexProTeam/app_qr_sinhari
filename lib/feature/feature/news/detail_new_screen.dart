@@ -40,8 +40,11 @@ class DetailNewScreenState extends State<DetailNewScreen> {
   void _initData() async {
     try {
       isLoadding = true;
+
+      ///todo: change to base later
+
       var request = http.MultipartRequest(
-          'POST', Uri.parse('https://admin.sinhairvietnam.vn/api/news_detail'));
+          'POST', Uri.parse('https://beta.sinhairvietnam.vnapi/news_detail'));
       request.fields.addAll({'news_id': '${widget.argument?.newsDetail}'});
 
       http.StreamedResponse response = await request.send();
@@ -50,12 +53,12 @@ class DetailNewScreenState extends State<DetailNewScreen> {
         final test = await response.stream.bytesToString();
         _data = json.decode(test)['data'];
       }
-      setState(() {});
     } catch (e) {
       CommonUtil.handleException(e, methodName: '');
-    } finally {
-      isLoadding = false;
     }
+    setState(() {
+      isLoadding = false;
+    });
   }
 
   @override

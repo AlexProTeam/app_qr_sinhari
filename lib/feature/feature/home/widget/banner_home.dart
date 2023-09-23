@@ -41,7 +41,7 @@ class _BannerHomeWidgetState extends State<BannerHomeWidget> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 22, top: 10),
       child: BannerSlideImage(
-        height: MediaQuery.of(context).size.height * 0.2,
+        height: (MediaQuery.of(context).size.width - 32) * 4 / 9,
         banners: _bannerModel.map((e) => e).toList(),
         images: _bannerModel.map((e) => e.url ?? '').toList(),
       ),

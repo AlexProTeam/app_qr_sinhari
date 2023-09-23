@@ -88,7 +88,8 @@ class PolicyScreenState extends State<PolicyScreen> {
                         _data['content'] != null
                             ? Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 4),
+                                    const EdgeInsets.symmetric(horizontal: 4)
+                                        .copyWith(bottom: 100),
                                 child: Html(
                                   data: _data['content'],
                                   style: {

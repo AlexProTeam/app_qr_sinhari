@@ -24,7 +24,6 @@ class WelcomeScreen extends StatefulWidget {
 
 class WelcomeScreenState extends State<WelcomeScreen> {
   List<WelcomeModel> _welcomeModel = [];
-  final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
 
   @override
@@ -53,7 +52,6 @@ class WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void dispose() {
-    _pageController.dispose();
     super.dispose();
   }
 
@@ -62,13 +60,8 @@ class WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
-            controller: _pageController,
-            onPageChanged: (int index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
+          IndexedStack(
+            index: _currentIndex,
             children: _welcomeModel.map((e) => _buildPageView(e.url)).toList(),
           ),
           SizedBox(
@@ -113,7 +106,6 @@ class WelcomeScreenState extends State<WelcomeScreen> {
                         onTap: () => _currentIndex != _welcomeModel.length - 1
                             ? {
                                 setState(() => _currentIndex++),
-                                _pageController.jumpToPage(_currentIndex)
                               }
                             : Routes.instance
                                 .navigateAndRemove(RouteName.bottomBarScreen),

@@ -61,8 +61,8 @@ class BannerSlideImageState extends State<BannerSlideImage> {
               initialPage: 0,
               height: double.infinity,
               autoPlay: true,
-              autoPlayAnimationDuration:
-                  widget.duration ?? const Duration(seconds: 3),
+              autoPlayAnimationDuration: widget.duration ??
+                  Duration(seconds: (widget.images ?? []).length + 1),
               viewportFraction: 1.0,
               reverse: widget.revert,
               enableInfiniteScroll: true,
