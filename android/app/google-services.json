@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "340863169486",
-    "project_id": "qrcode-8162b",
-    "storage_bucket": "qrcode-8162b.appspot.com"
+    "project_number": "80204545113",
+    "project_id": "sinhair-app",
+    "storage_bucket": "sinhair-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:340863169486:android:99852f9c1ba1c5e539319f",
+        "mobilesdk_app_id": "1:80204545113:android:0f9a9c1cb3021fb4b3c548",
         "android_client_info": {
           "package_name": "com.qrsinhair.vn"
         }
       },
       "oauth_client": [
         {
-          "client_id": "340863169486-8dvvffu5jcpp4mvjmojbie0cr2psg0a4.apps.googleusercontent.com",
+          "client_id": "80204545113-35nci0attbtnn6iv3aju21m0s6t9mu76.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDnHEakfXPgeX_Egxlpz1asBSOUz4dVQiE"
+          "current_key": "AIzaSyDJf1ANdHIZp3LnJVzfa7m94GU3HtTB4go"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "340863169486-8dvvffu5jcpp4mvjmojbie0cr2psg0a4.apps.googleusercontent.com",
+              "client_id": "80204545113-35nci0attbtnn6iv3aju21m0s6t9mu76.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "80204545113-842hid4bdpja1ihavsbio7cqi70cpitf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qrcode.hair"
+              }
             }
           ]
         }

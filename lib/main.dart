@@ -1,43 +1,31 @@
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qrcode/common/notification/local_notification.dart';
-import 'package:qrcode/feature/injector_container.dart' as di;
+import 'package:qrcode/app/app.dart';
+import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
+import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
-import 'common/bloc/profile_bloc/profile_bloc.dart';
-import 'common/navigation/route_names.dart';
-import 'common/notification/firebase_notification.dart';
-import 'common/utils/screen_utils.dart';
-import 'feature/routes.dart';
-import 'feature/themes/theme_color.dart';
-
-dynamic decodeIsolate(String response) => jsonDecode(response);
-
-dynamic endCodeIsolate(dynamic json) => jsonEncode(json);
-
-dynamic parseJson(String text) => compute(decodeIsolate, text);
-
-dynamic endCodeJson(dynamic json) => compute(endCodeIsolate, json);
+import 'app/managers/color_manager.dart';
+import 'app/route/navigation/route_names.dart';
+import 'app/route/screen_utils.dart';
+import 'firebase/firebase_config.dart';
 
 Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
-  LocalNotification.instance.setUp();
-  await Firebase.initializeApp();
-  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions();
+  await _beforeRunApp();
+  runApp(const App());
+}
 
+Future<void> _beforeRunApp() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupFirebase();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,
   ));
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const App());
+  await setupInjection();
 }
 
 class App extends StatefulWidget {
@@ -50,9 +38,10 @@ class App extends StatefulWidget {
 class AppState extends State<App> {
   @override
   void initState() {
-    FirebaseNotification.instance.initFirebaseNotification();
-    LocalNotification.instance
-        .configureDidReceiveLocalNotificationSubject(context);
+    ///todo:
+    // FirebaseNotification.instance.initFirebaseNotification();
+    // LocalNotification.instance
+    //     .configureDidReceiveLocalNotificationSubject(context);
     super.initState();
   }
 
@@ -62,6 +51,15 @@ class AppState extends State<App> {
       providers: [
         BlocProvider(
           create: (context) => ProfileBloc(),
+        ),
+
+        ///todo: add this bloc to nested of login follow later
+        BlocProvider(
+          create: (context) => LoginBloc(),
+        ),
+
+        BlocProvider(
+          create: (context) => ProductDetailBloc(),
         )
       ],
       child: MaterialApp(
@@ -69,7 +67,7 @@ class AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         title: 'SinHair',
         onGenerateRoute: Routes.generateDefaultRoute,
-        initialRoute: RouteName.splashScreen,
+        initialRoute: RouteDefine.splashScreen,
         theme: ThemeData(
           primaryColor: AppColors.primaryColor,
           fontFamily: 'Montserrat',
@@ -77,16 +75,9 @@ class AppState extends State<App> {
         ),
         builder: (context, widget) {
           GScreenUtil.init(context);
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => ProfileBloc(),
-              )
-            ],
-            child: Scaffold(
-                resizeToAvoidBottomInset: false,
-                body: widget ?? const SizedBox()),
-          );
+          return Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: widget ?? const SizedBox());
         },
       ),
     );
