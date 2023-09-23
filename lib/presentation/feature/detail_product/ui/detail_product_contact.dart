@@ -6,7 +6,7 @@ import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_b
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
-import 'package:qrcode/presentation/widgets/custom_textfield.dart';
+import 'package:qrcode/presentation/widgets/input_custom.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../app/route/validate_utils.dart';
@@ -79,41 +79,46 @@ class DetailProductContactState extends State<DetailProductContact> {
             );
           }
         },
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Form(
+              key: _formKey,
               child: Column(
                 children: [
-                  const SizedBox(height: 20),
-                  CustomTextField(
-                    hintText: 'Họ và tên',
+                  MBPTextField(
+                    title: 'Nhập họ và tên',
+                    hint: 'Họ và tên',
                     controller: _nameController,
+                    onChanged: (_) {},
                     validator: ValidateUtil.validEmpty,
                   ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    hintText: 'Số điện thoại',
-                    validator: ValidateUtil.validPhone,
+                  MBPTextField(
+                    title: 'Nhập số điện thoại',
+                    hint: 'Số điện thoại',
                     controller: _phoneController,
+                    onChanged: (_) {},
+                    validator: ValidateUtil.validPhone,
                     keyboardType: TextInputType.phone,
                   ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    hintText: 'Địa chỉ',
+                  MBPTextField(
+                    title: 'Nhập địa chỉ',
+                    hint: 'Địa chỉ',
                     controller: _addressController,
+                    onChanged: (_) {},
                     validator: ValidateUtil.validEmpty,
                   ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    hintText: 'Nội dung',
+                  MBPTextField(
+                    title: 'Nhập nội dung',
+                    hint: 'Nội dung',
                     controller: _contentController,
+                    onChanged: (_) {},
                     validator: ValidateUtil.validEmpty,
                   ),
-                  const SizedBox(height: 30),
-                  CustomButton(width: 150, text: 'Lưu lại', onTap: _onDone)
+                  const SizedBox(height: 10),
+                  CustomButton(width: 150, text: 'Lưu lại', onTap: _onDone),
+                  const SizedBox(height: 100),
                 ],
               ),
             ),
@@ -134,6 +139,9 @@ class DetailProductContactState extends State<DetailProductContact> {
   void _onDone() async {
     if (!_formKey.currentState!.validate()) return;
     context.read<ProductDetailBloc>().add(OnClickBuyEvent(
-        id: widget.argument?.productId ?? 0, content: _contentController));
+          id: widget.argument?.productId ?? 0,
+          content: _contentController,
+          appUseCase: getIt<AppUseCase>(),
+        ));
   }
 }
