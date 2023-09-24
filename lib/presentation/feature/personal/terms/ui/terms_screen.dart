@@ -49,7 +49,7 @@ class PolicyScreenState extends State<PolicyScreen> {
                 children: [
                   Stack(
                     children: [
-                      Assets.icons.facebook.image(
+                      Assets.icons.policyBackground.image(
                         width: double.infinity,
                         height: 120,
                         fit: BoxFit.cover,

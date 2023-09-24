@@ -28,7 +28,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
-          errMes: e.message,
+          mes: e.message,
         ));
       }
     });
@@ -37,32 +37,40 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        await _appUseCase.saveProfile(
-          name: event.nameController,
-          email: event.mailController,
-          phone: event.phoneController,
-          address: event.andressController,
-          avatar: event.imageController.isNotEmpty
-              ? File(event.imageController)
-              : null,
+        final result = await _appUseCase.saveProfile(
+          name: event.name,
+          email: event.mail,
+          phone: event.phone,
+          address: event.andres,
+          avatar: event.image.isNotEmpty ? File(event.image) : null,
         );
 
-        emit(state.copyWith(status: BlocStatusEnum.success));
+        emit(
+          state.copyWith(
+            status: BlocStatusEnum.success,
+            mes: 'Cập nhật thông tin thành công',
+            profileModel: result.data,
+          ),
+        );
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
-          errMes: e.message,
+          mes: e.message,
         ));
       }
     });
 
     on<OnSelectImageEvent>((event, emit) async {
-      emit(state.copyWith(image: event.filePath));
+      emit(state.copyWith(
+        image: event.filePath,
+        profileModel: state.profileModel,
+      ));
     });
 
     on<ClearProfileEvent>((event, emit) async {
       emit(state.copyWith(
-        profileModel: ProfileModel(),
+        profileModel: null,
+        status: BlocStatusEnum.init,
       ));
     });
   }

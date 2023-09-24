@@ -58,7 +58,7 @@ class AppUseCase {
   Future<IntroduceResponse> getSupportPolicy(String policyType) =>
       _repository.getSupportPolicy(policyType);
 
-  Future<ObjectResponse> saveProfile({
+  Future<ObjectResponse<ProfileModel>> saveProfile({
     required String? name,
     required String? email,
     required String? phone,
