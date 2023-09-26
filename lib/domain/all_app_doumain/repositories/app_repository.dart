@@ -35,7 +35,7 @@ abstract class AppRepository {
 
   Future<IntroduceResponse> getSupportPolicy(String policyType);
 
-  Future<ObjectResponse> saveProfile({
+  Future<ObjectResponse<ProfileModel>> saveProfile({
     required String? name,
     required String? email,
     required String? phone,

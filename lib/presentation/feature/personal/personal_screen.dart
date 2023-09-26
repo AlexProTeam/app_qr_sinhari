@@ -49,7 +49,9 @@ class PersonalScreenState extends State<PersonalScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100),
         child: BlocBuilder<ProfileBloc, ProfileState>(
-          buildWhen: (previous, current) => previous != current,
+          buildWhen: (previous, current) =>
+              previous != current ||
+              previous.profileModel != current.profileModel,
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,13 +134,11 @@ class PersonalScreenState extends State<PersonalScreen> {
   void _onTapLogout() async {
     context.read<ProfileBloc>().add(const ClearProfileEvent());
     SessionUtils.clearLogout;
-    if (mounted) {
-      context.read<BottomBarBloc>().add(
-            const ChangeTabBottomBarEvent(
-              bottomBarEnum: BottomBarEnum.home,
-              isRefresh: true,
-            ),
-          );
-    }
+    context.read<BottomBarBloc>().add(
+          const ChangeTabBottomBarEvent(
+            bottomBarEnum: BottomBarEnum.home,
+            isRefresh: true,
+          ),
+        );
   }
 }

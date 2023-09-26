@@ -10,27 +10,27 @@ class InitProfileEvent extends ProfileEvent {
 }
 
 class OnClickEvent extends ProfileEvent {
-  final String nameController;
-  final String mailController;
-  final String phoneController;
-  final String andressController;
-  final String imageController;
+  final String name;
+  final String mail;
+  final String phone;
+  final String andres;
+  final String image;
 
   const OnClickEvent(
-    this.nameController,
-    this.mailController,
-    this.phoneController,
-    this.andressController,
-    this.imageController,
+    this.name,
+    this.mail,
+    this.phone,
+    this.andres,
+    this.image,
   );
 
   @override
   List<Object?> get props => [
-        nameController,
-        mailController,
-        phoneController,
-        andressController,
-        imageController,
+        name,
+        mail,
+        phone,
+        andres,
+        image,
       ];
 }
 

@@ -93,8 +93,8 @@ abstract class AppApi {
     @Query('type') String? typePolicy,
   );
 
-  @POST('policy')
-  Future<ObjectResponse> saveProfile(
+  @POST('auth/saveProfile')
+  Future<ObjectResponse<ProfileModel>> saveProfile(
     @Query('name') String? name,
     @Query('email') String? email,
     @Query('phone') String? phone,
