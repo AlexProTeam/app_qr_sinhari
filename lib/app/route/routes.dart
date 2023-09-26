@@ -104,7 +104,18 @@ class Routes {
         return SlideLeftRoute(
           widget: const NotiScreen(),
         );
-
+      case RouteDefine.informationCustomer:
+        return SlideLeftRoute(
+          widget: const InfomationCustomer(),
+        );
+      case RouteDefine.historyDetb:
+        return SlideLeftRoute(
+          widget: const HistoryDetbScreen(),
+        );
+      case RouteDefine.detailOrder:
+        return SlideLeftRoute(
+          widget: const DetailOderScreen(),
+        );
       case RouteDefine.verifyOtpScreen:
         return SlideLeftRoute(
           widget: VerifyOtpScreen(

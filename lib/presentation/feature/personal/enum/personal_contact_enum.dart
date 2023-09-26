@@ -6,9 +6,11 @@ import 'package:qrcode/presentation/feature/personal/enum/personal_menu_enum.dar
 enum PersonalContactEnum {
   account,
   contact,
+  infoOrder,
+  historyDebt,
   provisionOrder,
   provisionSecurity,
-  adjust
+  adjust,
 }
 
 extension PersonalContactEnumEx on PersonalContactEnum {
@@ -26,6 +28,10 @@ extension PersonalContactEnumEx on PersonalContactEnum {
         return _icon(Assets.icons.gppMaybe.path);
       case PersonalContactEnum.adjust:
         return _icon(Assets.icons.chatContact.path);
+      case PersonalContactEnum.infoOrder:
+        return _icon(Assets.icons.iconCard.path);
+      case PersonalContactEnum.historyDebt:
+        return _icon(Assets.icons.iconApp.path);
     }
   }
 
@@ -35,6 +41,10 @@ extension PersonalContactEnumEx on PersonalContactEnum {
         return 'Thông tin cá nhân';
       case PersonalContactEnum.contact:
         return 'Liên hệ';
+      case PersonalContactEnum.infoOrder:
+        return 'Thông tin đơn hàng';
+      case PersonalContactEnum.historyDebt:
+        return 'Lịch sử công nợ';
       case PersonalContactEnum.provisionOrder:
         return 'Chính sách bán hàng';
       case PersonalContactEnum.provisionSecurity:
@@ -59,6 +69,14 @@ extension PersonalContactEnumEx on PersonalContactEnum {
             arguments: PolicyEnum.introduce);
       case PersonalContactEnum.adjust:
         return Navigator.pushNamed(context, RouteDefine.policyScreen,
+            arguments: PolicyEnum.policy);
+      case PersonalContactEnum.infoOrder:
+        return Navigator.pushNamed(
+          context,
+          RouteDefine.informationCustomer,
+        );
+      case PersonalContactEnum.historyDebt:
+        return Navigator.pushNamed(context, RouteDefine.historyDetb,
             arguments: PolicyEnum.policy);
     }
   }
