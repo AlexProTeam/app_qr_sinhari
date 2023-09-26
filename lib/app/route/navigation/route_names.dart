@@ -26,4 +26,7 @@ class RouteDefine {
   static const String checkBillScreen = 'CheckBillScreen';
   static const String bottomBarScreen = 'BottomBarScreen';
   static const String newsScreen = 'NewsScreen';
+  static const String informationCustomer = 'InformationCustomer';
+  static const String historyDetb = 'HistoryDetb';
+  static const String detailOrder = 'detailOrder';
 }

@@ -12,15 +12,15 @@ extension IconHomeEx on IconHomeEnum {
   String get getIcon {
     switch (this) {
       case IconHomeEnum.all:
-        return Assets.images.icon1.path;
+        return Assets.icons.icon1.path;
       case IconHomeEnum.shampoo:
-        return Assets.images.icon2.path;
+        return Assets.icons.icon2.path;
       case IconHomeEnum.news:
-        return Assets.images.icon3.path;
+        return Assets.icons.icon3.path;
       case IconHomeEnum.favourite:
-        return Assets.images.icon4.path;
+        return Assets.icons.icon4.path;
       case IconHomeEnum.tool:
-        return Assets.images.icon5.path;
+        return Assets.icons.icon5.path;
     }
   }
 
