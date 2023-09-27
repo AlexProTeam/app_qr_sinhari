@@ -29,4 +29,6 @@ class RouteDefine {
   static const String informationCustomer = 'InformationCustomer';
   static const String historyDetb = 'HistoryDetb';
   static const String detailOrder = 'detailOrder';
+  static const String payDebt = 'PayDebt';
+  static const String payDebtQrScreen = 'PayDebtQrScreen';
 }

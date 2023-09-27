@@ -116,6 +116,14 @@ class Routes {
         return SlideLeftRoute(
           widget: const DetailOderScreen(),
         );
+      case RouteDefine.payDebt:
+        return SlideLeftRoute(
+          widget: const PayDebt(),
+        );
+      case RouteDefine.payDebtQrScreen:
+        return SlideLeftRoute(
+          widget: const PayDebtQrScreen(),
+        );
       case RouteDefine.verifyOtpScreen:
         return SlideLeftRoute(
           widget: VerifyOtpScreen(
