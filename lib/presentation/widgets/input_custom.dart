@@ -25,6 +25,7 @@ class MBPTextField extends StatelessWidget {
       this.onTap,
       this.text,
       this.textStyle,
+      this.textTitleStyle,
       this.maxLine = 1,
       this.errorMaxLines = 1,
       this.borderColor,
@@ -61,6 +62,7 @@ class MBPTextField extends StatelessWidget {
   final Function? onTap;
   final String? text;
   final TextStyle? textStyle;
+  final TextStyle? textTitleStyle;
   final int? maxLine;
   final int? errorMaxLines;
   final Color? borderColor;
@@ -97,7 +99,8 @@ class MBPTextField extends StatelessWidget {
                   children: [
                     Text(
                       title ?? '',
-                      style: kTextMediumtStyle.copyWith(fontSize: 14),
+                      style: textTitleStyle ??
+                          kTextMediumtStyle.copyWith(fontSize: 14),
                     ),
                     if (suffixTitle != null) suffixTitle!,
                     if (isRequired)

@@ -59,6 +59,8 @@ import 'package:qrcode/presentation/feature/news/details_news/ui/detail_new_scre
 import 'package:qrcode/presentation/feature/news/history_model.dart';
 import 'package:qrcode/presentation/feature/news/news_screen/ui/news_screen.dart';
 import 'package:qrcode/presentation/feature/notification/ui/notification_screen.dart';
+import 'package:qrcode/presentation/feature/pay_debt/pay_debt_qr_screen.dart';
+import 'package:qrcode/presentation/feature/pay_debt/pay_debt_screen.dart';
 import 'package:qrcode/presentation/feature/personal/contact/contact_screen.dart';
 import 'package:qrcode/presentation/feature/personal/enum/personal_menu_enum.dart';
 import 'package:qrcode/presentation/feature/personal/personal_screen.dart';
