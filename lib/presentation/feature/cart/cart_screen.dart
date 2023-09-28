@@ -18,7 +18,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +42,9 @@ class _CartScreenState extends State<CartScreen> {
               icon: Image.asset(Assets.icons.icQuesition.path),
               onTapRight: () {},
               onTapLeft: () {
-                Navigator.pushReplacementNamed(
-                  Routes.instance.navigatorKey.currentContext!,
-                  RouteDefine.successScreen,
-                );
-                //  Navigator.pushNamed(context, RouteDefine.successScreen);
+                Navigator.pushNamed(
+                    Routes.instance.navigatorKey.currentContext!,
+                    RouteDefine.successScreen);
               },
               leftTitle: 'Mua',
               rightTitle: 'Huỷ',

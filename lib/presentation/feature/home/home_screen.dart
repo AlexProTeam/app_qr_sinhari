@@ -155,11 +155,10 @@ class HomeScreenState extends State<HomeScreen>
       context.read<ProfileBloc>().state.profileModel?.phone != null;
 
   Widget _notiIcon() => GestureDetector(
-        onTap: () => Navigator.pushReplacementNamed(
+        onTap: () => Navigator.pushNamed(
           Routes.instance.navigatorKey.currentContext!,
           RouteDefine.cartScreen,
         ),
-
         //     Navigator.pushNamed(
         //   context,
         //   RouteDefine.notiScreen,
