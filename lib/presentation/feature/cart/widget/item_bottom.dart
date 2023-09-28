@@ -3,12 +3,19 @@ import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/presentation/widgets/check_box_custom.dart';
 
-class ItemBottom extends StatelessWidget {
+class ItemBottom extends StatefulWidget {
   final Function onTap;
   final Function onChange;
 
   const ItemBottom({Key? key, required this.onTap, required this.onChange})
       : super(key: key);
+
+  @override
+  State<ItemBottom> createState() => _ItemBottomState();
+}
+
+class _ItemBottomState extends State<ItemBottom> {
+  bool isCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +44,12 @@ class ItemBottom extends StatelessWidget {
                   child: CheckBoxCustom(
                     enable: true,
                     title: 'Chọn tất cả',
-                    onChanged: (_) {
-                      onChange();
+                    onChanged: (value) {
+                      setState(() {
+                        isCheck = value ?? true;
+                      });
                     },
+                    value: isCheck,
                   )),
               Column(
                 children: [
@@ -70,7 +80,7 @@ class ItemBottom extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 32,
             child: GestureDetector(
               onTap: () {
-                onTap();
+                widget.onTap();
               },
               child: Container(
                 decoration: BoxDecoration(

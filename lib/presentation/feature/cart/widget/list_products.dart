@@ -25,8 +25,15 @@ class _ListProductsState extends State<ListProducts> {
   }
 }
 
-class ItemList extends StatelessWidget {
+class ItemList extends StatefulWidget {
   const ItemList({Key? key}) : super(key: key);
+
+  @override
+  State<ItemList> createState() => _ItemListState();
+}
+
+class _ItemListState extends State<ItemList> {
+  bool isCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +48,13 @@ class ItemList extends StatelessWidget {
               width: 30,
               height: 30,
               child: CheckBoxCustom(
-                enable: true,
-                onChanged: (_) {},
+                enable: false,
+                onChanged: (value) {
+                  setState(() {
+                    isCheck = value ?? true;
+                  });
+                },
+                value: isCheck,
               )),
           ClipRRect(
             borderRadius: BorderRadius.circular(8),

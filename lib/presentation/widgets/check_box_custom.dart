@@ -33,8 +33,8 @@ class CheckBoxCustom extends StatelessWidget {
               child: Theme(
                 data: ThemeData(unselectedWidgetColor: kBorderDividerColor),
                 child: Checkbox(
-                  checkColor: kThemeColorIcon,
-                  activeColor: kIconPrimaryColor,
+                  checkColor: AppColors.white,
+                  activeColor: AppColors.color7F2B81,
                   value: value ?? false,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
