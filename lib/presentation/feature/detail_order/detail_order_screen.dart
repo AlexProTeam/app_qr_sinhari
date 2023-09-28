@@ -19,21 +19,19 @@ class _DetailOderScreenState extends State<DetailOderScreen> {
         isShowBack: true,
         actions: const [],
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return const ItemList();
-                  }),
-              const AdressRecive()
-            ],
-          ),
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return const ItemList();
+                }),
+            const AdressRecive()
+          ],
         ),
       ),
     );

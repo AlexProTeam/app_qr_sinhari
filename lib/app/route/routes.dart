@@ -71,6 +71,14 @@ class Routes {
         return SlideLeftRoute(
           widget: const BottomBarScreen(),
         );
+      case RouteDefine.cartScreen:
+        return SlideLeftRoute(
+          widget: const CartScreen(),
+        );
+      case RouteDefine.successScreen:
+        return SlideLeftRoute(
+          widget: const SuccessScreen(),
+        );
       default:
         return _emptyRoute(settings);
     }
@@ -123,6 +131,14 @@ class Routes {
       case RouteDefine.payDebtQrScreen:
         return SlideLeftRoute(
           widget: const PayDebtQrScreen(),
+        );
+      case RouteDefine.cartScreen:
+        return SlideLeftRoute(
+          widget: const CartScreen(),
+        );
+      case RouteDefine.successScreen:
+        return SlideLeftRoute(
+          widget: const SuccessScreen(),
         );
       case RouteDefine.verifyOtpScreen:
         return SlideLeftRoute(
