@@ -45,8 +45,9 @@ dependencies:
   build_runner: 2.3.3
   json_serializable: ^6.6.1
   json_annotation: ^4.8.0
-
-
+  responsive_framework: ^0.2.0
+  get: ^4.6.1
+  flutter_screenutil: ^5.7.0
 dev_dependencies:
   flutter_lints: ^2.0.1
   retrofit_generator: ^7.0.1

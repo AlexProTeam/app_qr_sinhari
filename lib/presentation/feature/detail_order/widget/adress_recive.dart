@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 
+import 'item_row.dart';
+
 class AdressRecive extends StatefulWidget {
   const AdressRecive({Key? key}) : super(key: key);
 
@@ -18,58 +20,12 @@ class _AdressReciveState extends State<AdressRecive> {
           height: 10,
         ),
         infoReciver(),
-        line(),
+        const Divider(),
         infoOrder(),
         itemAmount(),
         const SizedBox(
           height: 100,
         )
-      ],
-    );
-  }
-
-  Widget line() {
-    return Container(
-      height: 1,
-      width: MediaQuery.of(context).size.width - 32,
-      color: AppColors.colorF1F1F1,
-    );
-  }
-
-  Widget itemRow(
-      {required String title,
-      TextStyle? textStyleTitle,
-      required String value,
-      TextStyle? textStyleValue}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Text(
-            title,
-            style: textStyleTitle ??
-                TextStyleManager.mediumBlack14px.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                  color: AppColors.black,
-                ),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: textStyleValue ??
-                TextStyleManager.mediumBlack14px.copyWith(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                    color: AppColors.black),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            textAlign: TextAlign.end,
-          ),
-        ),
       ],
     );
   }
@@ -97,7 +53,7 @@ class _AdressReciveState extends State<AdressRecive> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                itemRow(
+                ItemRow(
                     title: 'Hoang Huy',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
@@ -107,7 +63,7 @@ class _AdressReciveState extends State<AdressRecive> {
                 const SizedBox(
                   height: 6,
                 ),
-                itemRow(
+                ItemRow(
                     title: '0966 123 456',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
@@ -117,7 +73,7 @@ class _AdressReciveState extends State<AdressRecive> {
                 const SizedBox(
                   height: 6,
                 ),
-                itemRow(
+                ItemRow(
                     title: 'Hà Nội - Thanh Xuân',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
@@ -127,7 +83,7 @@ class _AdressReciveState extends State<AdressRecive> {
                 const SizedBox(
                   height: 6,
                 ),
-                itemRow(
+                ItemRow(
                     title: 'Số 123 Nguyễn Trãi',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
@@ -147,7 +103,7 @@ class _AdressReciveState extends State<AdressRecive> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          itemRow(
+          ItemRow(
               title: 'Thông tin đơn hàng',
               value: '',
               textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
@@ -155,9 +111,9 @@ class _AdressReciveState extends State<AdressRecive> {
                   fontSize: 16,
                   color: AppColors.black)),
           const SizedBox(height: 8),
-          itemRow(title: 'Mã đơn hàng', value: '12345678'),
+          ItemRow(title: 'Mã đơn hàng', value: '12345678'),
           const SizedBox(height: 8),
-          itemRow(
+          ItemRow(
               title: 'Trạng thái',
               value: 'Hoàn thành',
               textStyleValue: TextStyleManager.mediumBlack14px.copyWith(
@@ -165,16 +121,16 @@ class _AdressReciveState extends State<AdressRecive> {
                   fontSize: 16,
                   color: AppColors.green)),
           const SizedBox(height: 8),
-          itemRow(title: 'Thời gian đặt', value: '08:00 - 01/12/2021'),
+          ItemRow(title: 'Thời gian đặt', value: '08:00 - 01/12/2021'),
           const SizedBox(height: 8),
-          itemRow(title: 'Hình thức giao hàng', value: 'Giao hàng tiêu chuẩn'),
+          ItemRow(title: 'Hình thức giao hàng', value: 'Giao hàng tiêu chuẩn'),
           const SizedBox(height: 8),
-          itemRow(
+          ItemRow(
               title: 'Hình thức thanh toán', value: 'Thanh toán khi nhận hàng'),
           const SizedBox(
             height: 16,
           ),
-          line(),
+          const Divider(),
         ],
       ),
     );
@@ -185,19 +141,19 @@ class _AdressReciveState extends State<AdressRecive> {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Column(
         children: [
-          itemRow(title: 'Tổng tiền', value: '200.000 vnđ'),
+          ItemRow(title: 'Tổng tiền', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),
-          itemRow(title: 'Phí vận chuyển', value: '200.000 vnđ'),
+          ItemRow(title: 'Phí vận chuyển', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),
-          itemRow(title: 'Mã khuyến mại', value: '200.000 vnđ'),
+          ItemRow(title: 'Mã khuyến mại', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),
-          itemRow(
+          ItemRow(
               title: 'Tổng thanh toán',
               textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
                   fontWeight: FontWeight.w700,

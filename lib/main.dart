@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
 import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
@@ -75,9 +76,11 @@ class AppState extends State<App> {
         ),
         builder: (context, widget) {
           GScreenUtil.init(context);
-          return Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: widget ?? const SizedBox());
+          return ScreenUtilInit(builder: (context, child) {
+            return Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: widget ?? const SizedBox());
+          });
         },
       ),
     );

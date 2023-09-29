@@ -43,7 +43,9 @@ class MBPTextField extends StatelessWidget {
       this.validator,
       this.autovalidateMode,
       this.isMarginLeft = true,
-      this.enable})
+      this.enable,
+      this.boderRadius,
+      this.contentPadding})
       : super(key: key);
 
   final String? title;
@@ -81,6 +83,8 @@ class MBPTextField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final bool? isMarginLeft;
   final bool? enable;
+  final BorderRadius? boderRadius;
+  final EdgeInsetsGeometry? contentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +159,7 @@ class MBPTextField extends StatelessWidget {
           key: Key(text ?? ''),
           maxLines: maxLine,
           decoration: InputDecoration(
+              contentPadding: contentPadding,
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               hintText: hint ?? '',
@@ -163,11 +168,13 @@ class MBPTextField extends StatelessWidget {
               hintStyle: kTextMediumtStyle.copyWith(
                   fontSize: 14, color: hintColor ?? kTextSubduedColor),
               enabledBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                borderRadius:
+                    boderRadius ?? const BorderRadius.all(Radius.circular(12)),
                 borderSide: BorderSide(color: borderColor ?? kTextSubduedColor),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                borderRadius:
+                    boderRadius ?? const BorderRadius.all(Radius.circular(12)),
                 borderSide: BorderSide(color: borderColor ?? kTextSubduedColor),
               ),
               filled: true,

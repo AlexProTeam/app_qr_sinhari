@@ -25,7 +25,7 @@ class ItemList extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -42,20 +42,24 @@ class ItemList extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '120.000 vnđ',
-                        style: TextStyleManager.mediumBlack14px.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: AppColors.color7F2B81),
+                      Expanded(
+                        child: Text(
+                          '120.000 vnđ',
+                          style: TextStyleManager.mediumBlack14px.copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: AppColors.color7F2B81),
+                        ),
                       ),
-                      Text(
-                        'Sản phẩm số 1',
-                        style: TextStyleManager.mediumBlack14px.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            decoration: TextDecoration.lineThrough),
-                        textAlign: TextAlign.right,
+                      Expanded(
+                        child: Text(
+                          'Sản phẩm số 1',
+                          style: TextStyleManager.mediumBlack14px.copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              decoration: TextDecoration.lineThrough),
+                          textAlign: TextAlign.right,
+                        ),
                       ),
                     ],
                   ),

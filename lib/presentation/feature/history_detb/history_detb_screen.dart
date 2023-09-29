@@ -15,7 +15,6 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.color0A55BA,
-        automaticallyImplyLeading: false,
         title: Center(
           child: Text(
             'Lịch sử công nợ',
@@ -27,11 +26,13 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10))),
       ),
-      body: Container(
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
             ListView.builder(
               padding: const EdgeInsets.only(top: 16, bottom: 16),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return itemView();

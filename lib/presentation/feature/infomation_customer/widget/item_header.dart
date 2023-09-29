@@ -34,8 +34,8 @@ class ItemHeader extends StatelessWidget {
         const SizedBox(
           height: 6,
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
+        SizedBox(
+          width: MediaQuery.of(context).size.width - 44,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
