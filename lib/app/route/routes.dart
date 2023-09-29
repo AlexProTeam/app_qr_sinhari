@@ -79,6 +79,10 @@ class Routes {
         return SlideLeftRoute(
           widget: const SuccessScreen(),
         );
+      case RouteDefine.detailOrder:
+        return SlideLeftRoute(
+          widget: const DetailOderScreen(),
+        );
       default:
         return _emptyRoute(settings);
     }

@@ -58,7 +58,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 height: 44,
               ),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   Navigator.pushNamed(context, RouteDefine.detailOrder);
                 },
                 child: Text(
