@@ -17,15 +17,15 @@ class _ItemTotalAmountState extends State<ItemTotalAmount> {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Column(
         children: [
-          ItemRow(title: '2 sản phẩm', value: '200.000 vnđ'),
+          const ItemRow(title: '2 sản phẩm', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),
-          ItemRow(title: 'Mã khuyến mại', value: '200.000 vnđ'),
+          const ItemRow(title: 'Mã khuyến mại', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),
-          ItemRow(title: 'Giảm giá', value: '200.000 vnđ'),
+          const ItemRow(title: 'Giảm giá', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),

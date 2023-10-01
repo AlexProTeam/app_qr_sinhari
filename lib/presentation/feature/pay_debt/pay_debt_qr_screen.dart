@@ -142,7 +142,7 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
             ontap();
           },
           child: Image.asset(
-            Assets.icons.copy.path,
+            Assets.icons.icCopy.path,
             width: 43,
             height: 36,
           ),

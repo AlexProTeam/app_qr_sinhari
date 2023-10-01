@@ -4,11 +4,11 @@ import 'package:qrcode/app/managers/style_manager.dart';
 
 class ItemRow extends StatelessWidget {
   final String title;
-  TextStyle? textStyleTitle;
+  final TextStyle? textStyleTitle;
   final String value;
-  TextStyle? textStyleValue;
+  final TextStyle? textStyleValue;
 
-  ItemRow(
+  const ItemRow(
       {Key? key,
       required this.title,
       this.textStyleTitle,

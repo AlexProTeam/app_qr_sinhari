@@ -6,7 +6,7 @@ import 'package:qrcode/app/managers/color_manager.dart';
 enum StateButton { active, pressed, disable }
 
 class ActionButton extends StatelessWidget {
-  ActionButton({
+  const ActionButton({
     Key? key,
     this.height,
     this.width,
@@ -26,7 +26,7 @@ class ActionButton extends StatelessWidget {
   final Function onTap;
   final Widget? prefixIcon;
   final Widget? rightIcon;
-  int timeClick = 0;
+  final int timeClick = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +163,7 @@ class DialogDoubleButtonAction extends StatelessWidget {
 }
 
 class PrimaryButton extends StatelessWidget {
-  PrimaryButton(
+  const PrimaryButton(
       {Key? key,
       this.height,
       this.width,
@@ -188,10 +188,9 @@ class PrimaryButton extends StatelessWidget {
   final BoxBorder? border;
   final BorderRadiusGeometry? borderRadius;
 
-  int timeClick = 0;
-
   @override
   Widget build(BuildContext context) {
+    int timeClick = 0;
     return InkWell(
       onTap: () {
         if (state != StateButton.disable) {

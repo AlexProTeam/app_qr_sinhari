@@ -111,7 +111,7 @@ class _AdressReciveState extends State<AdressRecive> {
                   fontSize: 16,
                   color: AppColors.black)),
           const SizedBox(height: 8),
-          ItemRow(title: 'Mã đơn hàng', value: '12345678'),
+          const ItemRow(title: 'Mã đơn hàng', value: '12345678'),
           const SizedBox(height: 8),
           ItemRow(
               title: 'Trạng thái',
@@ -121,11 +121,12 @@ class _AdressReciveState extends State<AdressRecive> {
                   fontSize: 16,
                   color: AppColors.green)),
           const SizedBox(height: 8),
-          ItemRow(title: 'Thời gian đặt', value: '08:00 - 01/12/2021'),
+          const ItemRow(title: 'Thời gian đặt', value: '08:00 - 01/12/2021'),
           const SizedBox(height: 8),
-          ItemRow(title: 'Hình thức giao hàng', value: 'Giao hàng tiêu chuẩn'),
+          const ItemRow(
+              title: 'Hình thức giao hàng', value: 'Giao hàng tiêu chuẩn'),
           const SizedBox(height: 8),
-          ItemRow(
+          const ItemRow(
               title: 'Hình thức thanh toán', value: 'Thanh toán khi nhận hàng'),
           const SizedBox(
             height: 16,
@@ -141,15 +142,15 @@ class _AdressReciveState extends State<AdressRecive> {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Column(
         children: [
-          ItemRow(title: 'Tổng tiền', value: '200.000 vnđ'),
+          const ItemRow(title: 'Tổng tiền', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),
-          ItemRow(title: 'Phí vận chuyển', value: '200.000 vnđ'),
+          const ItemRow(title: 'Phí vận chuyển', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),
-          ItemRow(title: 'Mã khuyến mại', value: '200.000 vnđ'),
+          const ItemRow(title: 'Mã khuyến mại', value: '200.000 vnđ'),
           const SizedBox(
             height: 8,
           ),

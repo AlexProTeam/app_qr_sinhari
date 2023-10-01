@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/gen/assets.gen.dart';
