@@ -107,51 +107,58 @@ class HomeScreenState extends State<HomeScreen>
   }
 
   Widget _headerWidget() => SafeArea(
-        child: _isHasProfileData
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  16.horizontalSpace,
-                  Assets.images.logoMain.image(
+        child: Padding(
+          padding: EdgeInsets.only(top: 15.h),
+          child: _isHasProfileData
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    16.horizontalSpace,
+                    Assets.images.logoMain.image(
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(width: 12),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Xin chào,',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          context
+                                  .read<ProfileBloc>()
+                                  .state
+                                  .profileModel
+                                  ?.name ??
+                              "",
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    _notiIcon()
+                  ],
+                )
+              : Padding(
+                  padding: EdgeInsets.only(left: 16.w),
+                  child: Assets.images.logoMain.image(
                     width: 40,
                     height: 40,
                   ),
-                  const SizedBox(width: 12),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Xin chào,',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Text(
-                        context.read<ProfileBloc>().state.profileModel?.name ??
-                            "",
-                        style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  _notiIcon()
-                ],
-              )
-            : Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: Assets.images.logoMain.image(
-                  width: 40,
-                  height: 40,
                 ),
-              ),
+        ),
       );
 
   bool get _isHasProfileData =>
