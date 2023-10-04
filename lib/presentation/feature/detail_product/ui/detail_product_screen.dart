@@ -65,7 +65,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                   DialogManager.hideLoadingDialog;
                   ToastManager.showToast(
                     context,
-                    text: 'Thêm thất bại',
+                    text: 'Thêm thất bại (cần login trước)',
                     afterShowToast: () => Navigator.pop(context),
                   );
                 }
@@ -89,10 +89,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                       ));
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
                   child: Assets.icons.icCar.image(
-                    width: 22,
-                    height: 20,
+                    width: 30,
+                    height: 30,
                   ),
                 ),
               ),
