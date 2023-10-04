@@ -138,10 +138,11 @@ class DetailProductContactState extends State<DetailProductContact> {
 
   void _onDone() async {
     if (!_formKey.currentState!.validate()) return;
-    context.read<ProductDetailBloc>().add(OnClickBuyEvent(
-          id: widget.argument?.productId ?? 0,
-          content: _contentController,
-          appUseCase: getIt<AppUseCase>(),
-        ));
+    context.read<ProductDetailBloc>().add(
+          OnClickBuyEvent(
+            id: widget.argument?.productId ?? 0,
+            content: _contentController,
+          ),
+        );
   }
 }

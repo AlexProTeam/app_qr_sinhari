@@ -141,10 +141,11 @@ class DetailProductActiveState extends State<DetailProductActive> {
                             }
 
                             context.read<ProductDetailBloc>().add(
-                                OnClickBuyEvent(
+                                  OnClickBuyEvent(
                                     id: widget.argument?.productId ?? 0,
                                     content: _contentController,
-                                    appUseCase: getIt<AppUseCase>()));
+                                  ),
+                                );
                           },
                           child: Container(
                             width: 200,

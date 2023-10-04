@@ -83,10 +83,11 @@ class DetailProductScreenState extends State<DetailProductScreen> {
               },
               child: InkWell(
                 onTap: () {
-                  context.read<ProductDetailBloc>().add(OnClickAddToCartEvent(
-                        appUseCase: getIt<AppUseCase>(),
-                        proId: widget.argument?.productId ?? 0,
-                      ));
+                  context.read<ProductDetailBloc>().add(
+                        OnClickAddToCartEvent(
+                          proId: widget.argument?.productId ?? 0,
+                        ),
+                      );
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -112,11 +113,13 @@ class DetailProductScreenState extends State<DetailProductScreen> {
         ),
         body: BlocProvider(
           create: (context) => ProductDetailBloc()
-            ..add(InitProductDetailEvent(
+            ..add(
+              InitProductDetailEvent(
                 ArgumentDetailProductScreen(
                     productId: widget.argument?.productId,
                     url: widget.argument?.url),
-                getIt<AppUseCase>())),
+              ),
+            ),
           child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
             builder: (BuildContext context, state) {
               if (state.detailProductModel == null ||
@@ -125,11 +128,13 @@ class DetailProductScreenState extends State<DetailProductScreen> {
               }
               return RefreshIndicator(
                 onRefresh: () async {
-                  context.read<ProductDetailBloc>().add(InitProductDetailEvent(
-                      ArgumentDetailProductScreen(
-                          productId: widget.argument?.productId,
-                          url: widget.argument?.url),
-                      getIt<AppUseCase>()));
+                  context.read<ProductDetailBloc>().add(
+                        InitProductDetailEvent(
+                          ArgumentDetailProductScreen(
+                              productId: widget.argument?.productId,
+                              url: widget.argument?.url),
+                        ),
+                      );
                 },
                 child: SingleChildScrollView(
                   child: Column(
@@ -588,7 +593,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
       child: const Center(
         child: Text(
           'Sản phẩm chính hãng của CÔNG TY TNHH SIN HAIR JAPAN',
-          style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: AppColors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
