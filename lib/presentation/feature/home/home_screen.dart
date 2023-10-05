@@ -168,13 +168,9 @@ class HomeScreenState extends State<HomeScreen>
 
   Widget _notiIcon() => GestureDetector(
         onTap: () => Navigator.pushNamed(
-          Routes.instance.navigatorKey.currentContext!,
-          RouteDefine.cartScreen,
+          context,
+          RouteDefine.notiScreen,
         ),
-        //     Navigator.pushNamed(
-        //   context,
-        //   RouteDefine.notiScreen,
-        // ),
         child: const Padding(
           padding: EdgeInsets.all(16.0),
           child: Center(
