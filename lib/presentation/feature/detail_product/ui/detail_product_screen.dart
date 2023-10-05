@@ -96,26 +96,23 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                 ? DialogManager.showLoadingDialog(context)
                 : DialogManager.hideLoadingDialog;
 
-            if (state.status == BlocStatusEnum.failed) {
-              ToastManager.showToast(
-                context,
-                text: state.errMes,
-                afterShowToast: () => Navigator.pop(context),
-              );
-            }
             if (state.status == BlocStatusEnum.success) {
               if (state.addToCartModel?.carts != null) {
-                //todo: handle later by tungdx
-                // context
-                //     .read<BottomBarBloc>()
-                //     .add(const HideTabBottomBarEvent(false));
-                _navigateTo(
+                Navigator.pushNamed(
+                  Routes.instance.navigatorKey.currentContext!,
                   RouteDefine.cartScreen,
-                  ArgumentCartScreen(
+                  arguments: ArgumentCartScreen(
                     carts: state.addToCartModel?.carts,
                   ),
                 );
               }
+            }
+
+            if (state.errMes.isNotEmpty) {
+              ToastManager.showToast(
+                context,
+                text: state.errMes,
+              );
             }
           },
           builder: (context, state) {
@@ -571,13 +568,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
     );
   }
 
-  void _handleButtonTap() {
-    if (widget.argument?.url != null) {
-      _navigateBasedOnProfileAndUrl(RouteDefine.activeScrene);
-    } else {
-      _navigateBasedOnProfileAndUrl(RouteDefine.muaHangScrene);
-    }
-  }
+  void _handleButtonTap() =>
+      _navigateBasedOnProfileAndUrl(widget.argument?.url != null
+          ? RouteDefine.activeScrene
+          : RouteDefine.muaHangScrene);
 
   void _navigateBasedOnProfileAndUrl(String routeName) {
     final hasProfile = _profileBloc.state.profileModel != null;
