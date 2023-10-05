@@ -114,7 +114,7 @@ abstract class AppApi {
   );
 
   @POST('add_to_cart')
-  Future<AddToCartModel> addToCart(
+  Future<ObjectResponse<CartsResponse>> addToCart(
     @Part(name: "product_id") int productId,
   );
 }

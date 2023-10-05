@@ -71,10 +71,6 @@ class Routes {
         return SlideLeftRoute(
           widget: const BottomBarScreen(),
         );
-      case RouteDefine.cartScreen:
-        return SlideLeftRoute(
-          widget: const CartScreen(),
-        );
       case RouteDefine.successScreen:
         return SlideLeftRoute(
           widget: const SuccessScreen(),
@@ -248,20 +244,12 @@ class Routes {
   static MaterialPageRoute _emptyRoute(RouteSettings settings) {
     return MaterialPageRoute(
       builder: (context) => Scaffold(
-        backgroundColor: Colors.green,
-        appBar: AppBar(
-          leading: InkWell(
-            onTap: () => Navigator.of(context).pop(),
-            child: const Center(
-              child: Text(
-                'Back',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
+        backgroundColor: AppColors.mainRed,
+        body: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Center(
+            child: Text('No path for ${settings.name}'),
           ),
-        ),
-        body: Center(
-          child: Text('No path for ${settings.name}'),
         ),
       ),
     );

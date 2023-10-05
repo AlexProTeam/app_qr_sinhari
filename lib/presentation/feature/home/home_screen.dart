@@ -9,6 +9,7 @@ import 'package:qrcode/presentation/feature/home/widget/product_features.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/presentation/feature/home/widget/silver_coated_shampoo_widget.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
+
 import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -156,13 +157,9 @@ class HomeScreenState extends State<HomeScreen>
 
   Widget _notiIcon() => GestureDetector(
         onTap: () => Navigator.pushNamed(
-          Routes.instance.navigatorKey.currentContext!,
-          RouteDefine.cartScreen,
+          context,
+          RouteDefine.notiScreen,
         ),
-        //     Navigator.pushNamed(
-        //   context,
-        //   RouteDefine.notiScreen,
-        // ),
         child: const Padding(
           padding: EdgeInsets.all(16.0),
           child: Center(

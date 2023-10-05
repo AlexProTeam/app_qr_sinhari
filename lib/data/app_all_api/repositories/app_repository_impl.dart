@@ -253,12 +253,12 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<AddToCartModel> addToCart({
+  Future<CartsResponse> addToCart({
     int? productId,
   }) async {
     try {
       final response = await api.addToCart(productId ?? 0);
-      return response;
+      return response.data ?? CartsResponse();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }
