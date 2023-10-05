@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/gen/assets.gen.dart';
-import 'package:qrcode/presentation/feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
 import 'widget/item_bottom.dart';
@@ -22,7 +20,6 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
-    context.read<BottomBarBloc>().add(const HideTabBottomBarEvent(false));
     super.initState();
   }
 

@@ -105,6 +105,10 @@ class DetailProductScreenState extends State<DetailProductScreen> {
             }
             if (state.status == BlocStatusEnum.success) {
               if (state.addToCartModel?.carts != null) {
+                //todo: handle later by tungdx
+                // context
+                //     .read<BottomBarBloc>()
+                //     .add(const HideTabBottomBarEvent(false));
                 _navigateTo(
                   RouteDefine.cartScreen,
                   ArgumentCartScreen(
