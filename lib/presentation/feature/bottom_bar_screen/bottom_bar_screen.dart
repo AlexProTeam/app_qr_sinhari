@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/presentation/feature/bottom_bar_screen/widget/bottom_navigation.dart';
 
 import '../../../firebase/firebase_config.dart';
 import 'bloc/bottom_bar_bloc.dart';
 import 'enum/bottom_bar_enum.dart';
+import 'widget/bottom_navigation.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({Key? key}) : super(key: key);
@@ -53,15 +53,9 @@ class BottomBarScreenState extends State<BottomBarScreen> {
                   previous.bottomBarEnum != current.bottomBarEnum,
               listener: (context, state) =>
                   _controller.jumpToPage(state.bottomBarEnum.index),
-              buildWhen: (previous, current) => previous != current,
+              buildWhen: (previous, current) =>
+                  previous.bottomBarEnum != current.bottomBarEnum,
               builder: (context, state) {
-                print('------------------------------');
-                print(state.isShowBottomBarEvent);
-
-                if (!state.isShowBottomBarEvent) {
-                  return const SizedBox.shrink();
-                }
-
                 return BottomNavigation(
                   onChange: (bottomBarEnum) {
                     _controller.jumpToPage(bottomBarEnum.index);

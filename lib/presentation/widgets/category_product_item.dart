@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/helper.dart';
+import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
+import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../app/managers/color_manager.dart';
@@ -14,12 +16,16 @@ class CategoryItemProduct extends StatelessWidget {
   final double itemWidth;
   final ProductResponse? productModel;
   final bool isShowLike;
+  final bool isAgency;
+  final Function()? onTap;
 
   const CategoryItemProduct({
     Key? key,
     required this.itemWidth,
     this.productModel,
     this.isShowLike = true,
+    this.isAgency = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -56,34 +62,54 @@ class CategoryItemProduct extends StatelessWidget {
                         color: Colors.black)),
               ),
               const SizedBox(height: 5),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Assets.icons.star.image(
-                    width: 24,
-                    height: 24,
-                  ),
-                  const SizedBox(width: 6),
-                  RichText(
-                      text: TextSpan(
-                          text: (productModel?.rating ?? 0).toString(),
-                          style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.black),
-                          children: [
-                        TextSpan(
-                          text:
-                              ' (${(productModel?.quantity ?? 0).toString()} sản phẩm)',
-                          style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                              color: AppColors.colorACACAC),
-                        )
-                      ]))
-                ],
-              ),
+              if (!isAgency)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Assets.icons.star.image(
+                      width: 24,
+                      height: 24,
+                    ),
+                    const SizedBox(width: 6),
+                    RichText(
+                        text: TextSpan(
+                            text: (productModel?.rating ?? 0).toString(),
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black),
+                            children: [
+                          TextSpan(
+                            text:
+                                ' (${(productModel?.quantity ?? 0).toString()} sản phẩm)',
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                                color: AppColors.colorACACAC),
+                          )
+                        ]))
+                  ],
+                ),
               itemPrice(),
+              if (isAgency) ...[
+                const SizedBox(
+                  height: 4,
+                ),
+                CustomButton(
+                  height: 28,
+                  radius: 5,
+                  onTap: () {
+                    if (onTap != null) {
+                      onTap!();
+                    }
+                  },
+                  text: 'Mua ngay',
+                  styleTitle: TextStyleManager.normalWhite.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                  ),
+                )
+              ],
             ],
           ),
           if (isShowLike)

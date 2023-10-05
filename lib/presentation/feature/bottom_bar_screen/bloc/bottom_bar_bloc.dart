@@ -17,13 +17,5 @@ class BottomBarBloc extends Bloc<BottomBarEvent, BottomBarState> {
         isRefresh: event.isRefresh,
       ));
     });
-
-    on<HideTabBottomBarEvent>((event, emit) {
-      emit(
-        state.copyWith(
-          isShowBottomBarEvent: event.isShow,
-        ),
-      );
-    });
   }
 }

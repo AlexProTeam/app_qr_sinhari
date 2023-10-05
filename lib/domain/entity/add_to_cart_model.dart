@@ -1,9 +1,25 @@
-class CartsResponse {
+class AddToCartModel {
+  bool? error;
+  Data? data;
+  String? message;
+  bool? success;
+
+  AddToCartModel({this.error, this.data, this.message, this.success});
+
+  AddToCartModel.fromJson(Map<String, dynamic> json) {
+    error = json['error'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    message = json['message'];
+    success = json['success'];
+  }
+}
+
+class Data {
   Carts? carts;
 
-  CartsResponse({this.carts});
+  Data({this.carts});
 
-  CartsResponse.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     carts = json['carts'] != null ? Carts.fromJson(json['carts']) : null;
   }
 }

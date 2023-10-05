@@ -86,7 +86,7 @@ class AppUseCase {
         type: type,
       );
 
-  Future<CartsResponse> addToCart({
+  Future<AddToCartModel> addToCart( {
     int? productId,
   }) =>
       _repository.addToCart(productId: productId);

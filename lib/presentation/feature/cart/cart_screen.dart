@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/gen/assets.gen.dart';
-import 'package:qrcode/presentation/feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
 import 'widget/item_bottom.dart';
@@ -20,12 +18,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    context.read<BottomBarBloc>().add(const HideTabBottomBarEvent(false));
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,25 +39,21 @@ class _CartScreenState extends State<CartScreen> {
       bottomNavigationBar: ItemBottom(
         onTap: () {
           DialogManager.showDialogCustom(
-            icon: Image.asset(Assets.icons.icQuesition.path),
-            onTapRight: () {
-              ///todo: handel call api here
-            },
-            onTapLeft: () {
-              Navigator.pushNamed(
-                Routes.instance.navigatorKey.currentContext!,
-                RouteDefine.successScreen,
-              );
-            },
-            leftTitle: 'Mua',
-            rightTitle: 'Huỷ',
-            context: context,
-            bgColorLeft: AppColors.realEstate,
-            bgColorRight: AppColors.red,
-            content: 'Bạn có chắc hoàn thành đơn hàng ?',
-            styleContent: kTextRegularStyle.copyWith(
-                fontWeight: FontWeight.w500, fontSize: 20),
-          );
+              icon: Image.asset(Assets.icons.icQuesition.path),
+              onTapRight: () {},
+              onTapLeft: () {
+                Navigator.pushNamed(
+                    Routes.instance.navigatorKey.currentContext!,
+                    RouteDefine.successScreen);
+              },
+              leftTitle: 'Mua',
+              rightTitle: 'Huỷ',
+              context: context,
+              bgColorLeft: AppColors.realEstate,
+              bgColorRight: AppColors.red,
+              content: 'Bạn có chắc hoàn thành đơn hàng ?',
+              styleContent: kTextRegularStyle.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: 20));
         },
         onChange: () {},
       ),

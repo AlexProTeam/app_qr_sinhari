@@ -4,7 +4,7 @@ class ProductDetailState extends Equatable {
   final BlocStatusEnum status;
   final DataDetail? detailProductModel;
   final String errMes;
-  final CartsResponse? addToCartModel;
+  final AddToCartModel? addToCartModel;
 
   const ProductDetailState(
       {this.detailProductModel,
@@ -20,7 +20,7 @@ class ProductDetailState extends Equatable {
       {BlocStatusEnum? status,
       DataDetail? detailProductModel,
       String? errMes,
-      CartsResponse? addToCartModel}) {
+      AddToCartModel? addToCartModel}) {
     return ProductDetailState(
         status: status ?? this.status,
         detailProductModel: detailProductModel ?? this.detailProductModel,

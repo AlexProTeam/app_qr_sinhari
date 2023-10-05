@@ -16,12 +16,3 @@ class ChangeTabBottomBarEvent extends BottomBarEvent {
   @override
   List<Object?> get props => [bottomBarEnum, isRefresh];
 }
-
-class HideTabBottomBarEvent extends BottomBarEvent {
-  final bool isShow;
-
-  const HideTabBottomBarEvent(this.isShow);
-
-  @override
-  List<Object?> get props => [isShow];
-}

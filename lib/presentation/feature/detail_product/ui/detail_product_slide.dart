@@ -5,12 +5,9 @@ import 'package:qrcode/presentation/widgets/custom_image_network.dart';
 import '../../../../../app/managers/color_manager.dart';
 
 class DetailProductSlide extends StatefulWidget {
-  final List<String> images;
+  final List<String>? images;
 
-  const DetailProductSlide({
-    Key? key,
-    this.images = const [],
-  }) : super(key: key);
+  const DetailProductSlide({Key? key, this.images}) : super(key: key);
 
   @override
   DetailProductSlideState createState() => DetailProductSlideState();
@@ -29,10 +26,6 @@ class DetailProductSlideState extends State<DetailProductSlide> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.images.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
     return Stack(
       children: [
         SizedBox(
@@ -54,7 +47,7 @@ class DetailProductSlideState extends State<DetailProductSlide> {
               },
             ),
             items: widget.images
-                .map((e) => InkWell(
+                ?.map((e) => InkWell(
                       onTap: () {},
                       child: Container(
                         color: Colors.transparent,
@@ -78,7 +71,7 @@ class DetailProductSlideState extends State<DetailProductSlide> {
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: map<Widget>(widget.images, (index, obj) {
+                children: map<Widget>(widget.images ?? [], (index, obj) {
                   return Container(
                     width: 8.0,
                     height: 8.0,

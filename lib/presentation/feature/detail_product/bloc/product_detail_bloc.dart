@@ -13,27 +13,20 @@ part 'product_detail_event.dart';
 part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
-  final AppUseCase _appUseCase = getIt<AppUseCase>();
+  DataDetail? detailProductModel;
 
   ProductDetailBloc() : super(const ProductDetailState()) {
     on<InitProductDetailEvent>((event, emit) async {
-      DataDetail? detailProductModel;
-
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
         if ((event.argument.url ?? '').isNotEmpty) {
-          final data = await _appUseCase.getDetaiProductByQr(
-            SessionUtils.deviceId,
-            'hanoi',
-            'vn',
-            event.argument.url ?? '',
-          );
+          final data = await event.appUseCase.getDetaiProductByQr(
+              SessionUtils.deviceId, 'hanoi', 'vn', event.argument.url ?? '');
 
           detailProductModel = data.data;
         } else {
-          final data = await _appUseCase.getDetaiProduct(
-            event.argument.productId ?? 0,
-          );
+          final data = await event.appUseCase
+              .getDetaiProduct(event.argument.productId ?? 0);
           detailProductModel = data;
         }
 
@@ -41,10 +34,9 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
           status: BlocStatusEnum.success,
           detailProductModel: detailProductModel,
         ));
-      } on ApiException catch (e) {
+      } catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
-          errMes: e.message,
         ));
       }
     });
@@ -58,7 +50,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     on<OnClickBuyEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
-        await _appUseCase.saveContact(
+        await event.appUseCase.saveContact(
           productId: event.id.toString(),
           content: event.content.text,
           type: 0,
@@ -79,16 +71,13 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        final data = await _appUseCase.addToCart(productId: event.proId);
+        final data = await event.appUseCase.addToCart(productId: event.proId);
 
         emit(state.copyWith(
-          status: BlocStatusEnum.success,
-          addToCartModel: data,
-        ));
-      } on ApiException catch (e) {
+            status: BlocStatusEnum.success, addToCartModel: data));
+      } catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
-          errMes: e.message,
         ));
       }
     });
