@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/home/widget/banner_home.dart';
@@ -10,8 +11,8 @@ import 'package:qrcode/presentation/feature/home/widget/product_features.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/presentation/feature/home/widget/silver_coated_shampoo_widget.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
+
 import '../../../app/route/navigation/route_names.dart';
-import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
@@ -61,13 +62,6 @@ class HomeScreenState extends State<HomeScreen>
         }
       },
       child: Scaffold(
-        appBar: BaseAppBar(
-          leadingWidth: _isHasProfileData ? 153 : null,
-          leadingIcon: _headerWidget(),
-          actions: [
-            _notiIcon(),
-          ],
-        ),
         body: _isLoading
             ? const Center(
                 child: CircularProgressIndicator(),
@@ -85,6 +79,9 @@ class HomeScreenState extends State<HomeScreen>
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      ///header
+                      _headerWidget(),
+
                       ///banner Slider
                       const BannerHomeWidget(),
 
@@ -113,47 +110,53 @@ class HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget _headerWidget() => _isHasProfileData
-      ? Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Assets.images.logoMain.image(
-              width: 40,
-              height: 40,
-            ),
-            const SizedBox(width: 12),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Xin chào,',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
+  Widget _headerWidget() => SafeArea(
+        child: _isHasProfileData
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  16.horizontalSpace,
+                  Assets.images.logoMain.image(
+                    width: 40,
+                    height: 40,
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Xin chào,',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      Text(
+                        context.read<ProfileBloc>().state.profileModel?.name ??
+                            "",
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  _notiIcon(),
+                ],
+              )
+            : Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: Assets.images.logoMain.image(
+                  width: 40,
+                  height: 40,
                 ),
-                const SizedBox(
-                  height: 3,
-                ),
-                Text(
-                  context.read<ProfileBloc>().state.profileModel?.name ?? "",
-                  style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
-                ),
-              ],
-            )
-          ],
-        )
-      : Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: Assets.images.logoMain.image(
-            width: 40,
-            height: 40,
-          ),
-        );
+              ),
+      );
 
   bool get _isHasProfileData =>
       context.read<ProfileBloc>().state.profileModel?.phone != null;
