@@ -140,12 +140,12 @@ class DetailProductActiveState extends State<DetailProductActive> {
                               return;
                             }
 
-                            context.read<ProductDetailBloc>().add(
-                                  OnClickBuyEvent(
-                                    id: widget.argument?.productId ?? 0,
-                                    content: _contentController,
-                                  ),
-                                );
+                            context
+                                .read<ProductDetailBloc>()
+                                .add(OnClickBuyEvent(
+                                  id: widget.argument?.productId ?? 0,
+                                  content: _contentController,
+                                ));
                           },
                           child: Container(
                             width: 200,

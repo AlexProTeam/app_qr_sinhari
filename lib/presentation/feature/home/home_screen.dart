@@ -5,11 +5,11 @@ import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/home/widget/banner_home.dart';
 import 'package:qrcode/presentation/feature/home/widget/filter_item.dart';
 import 'package:qrcode/presentation/feature/home/widget/news_home_widget.dart';
+import 'package:qrcode/presentation/feature/home/widget/product_angecy.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_features.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/presentation/feature/home/widget/silver_coated_shampoo_widget.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
-
 import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
@@ -97,6 +97,9 @@ class HomeScreenState extends State<HomeScreen>
                       /// sản phẩm bán chạy
                       const ProductSellersWidget(),
 
+                      /// sản phẩm dai ly
+                      const ProductAngecyWidget(),
+
                       ///dầu gội phủ bạc
                       const SilverCoatedShampooWidget(),
 
@@ -157,9 +160,13 @@ class HomeScreenState extends State<HomeScreen>
 
   Widget _notiIcon() => GestureDetector(
         onTap: () => Navigator.pushNamed(
-          context,
-          RouteDefine.notiScreen,
+          Routes.instance.navigatorKey.currentContext!,
+          RouteDefine.cartScreen,
         ),
+        //     Navigator.pushNamed(
+        //   context,
+        //   RouteDefine.notiScreen,
+        // ),
         child: const Padding(
           padding: EdgeInsets.all(16.0),
           child: Center(

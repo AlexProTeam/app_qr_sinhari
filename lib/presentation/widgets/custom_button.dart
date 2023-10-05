@@ -9,15 +9,17 @@ class CustomButton extends StatelessWidget {
   final double? width;
   final double? height;
   final double? radius;
+  final TextStyle? styleTitle;
 
-  const CustomButton({
-    Key? key,
-    this.text,
-    this.height,
-    this.width,
-    required this.onTap,
-    this.radius,
-  }) : super(key: key);
+  const CustomButton(
+      {Key? key,
+      this.text,
+      this.height,
+      this.width,
+      required this.onTap,
+      this.radius,
+      this.styleTitle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +34,11 @@ class CustomButton extends StatelessWidget {
         child: Center(
           child: Text(
             text ?? '',
-            style: TextStyleManager.normalWhite.copyWith(
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
-            ),
+            style: styleTitle ??
+                TextStyleManager.normalWhite.copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
           ),
         ),
       ),

@@ -22,9 +22,10 @@ class ProductDetailState extends Equatable {
       String? errMes,
       CartsResponse? addToCartModel}) {
     return ProductDetailState(
-        status: status ?? this.status,
-        detailProductModel: detailProductModel ?? this.detailProductModel,
-        errMes: errMes ?? this.errMes,
-        addToCartModel: addToCartModel ?? this.addToCartModel);
+      status: status ?? this.status,
+      detailProductModel: detailProductModel ?? this.detailProductModel,
+      errMes: errMes ?? this.errMes,
+      addToCartModel: addToCartModel ?? this.addToCartModel,
+    );
   }
 }

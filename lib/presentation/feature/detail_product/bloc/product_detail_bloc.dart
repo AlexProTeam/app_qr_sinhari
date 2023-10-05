@@ -13,27 +13,21 @@ part 'product_detail_event.dart';
 part 'product_detail_state.dart';
 
 class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
+  DataDetail? detailProductModel;
   final AppUseCase _appUseCase = getIt<AppUseCase>();
 
   ProductDetailBloc() : super(const ProductDetailState()) {
     on<InitProductDetailEvent>((event, emit) async {
-      DataDetail? detailProductModel;
-
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
         if ((event.argument.url ?? '').isNotEmpty) {
           final data = await _appUseCase.getDetaiProductByQr(
-            SessionUtils.deviceId,
-            'hanoi',
-            'vn',
-            event.argument.url ?? '',
-          );
+              SessionUtils.deviceId, 'hanoi', 'vn', event.argument.url ?? '');
 
           detailProductModel = data.data;
         } else {
-          final data = await _appUseCase.getDetaiProduct(
-            event.argument.productId ?? 0,
-          );
+          final data =
+              await _appUseCase.getDetaiProduct(event.argument.productId ?? 0);
           detailProductModel = data;
         }
 
@@ -41,10 +35,9 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
           status: BlocStatusEnum.success,
           detailProductModel: detailProductModel,
         ));
-      } on ApiException catch (e) {
+      } catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
-          errMes: e.message,
         ));
       }
     });
@@ -82,13 +75,10 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
         final data = await _appUseCase.addToCart(productId: event.proId);
 
         emit(state.copyWith(
-          status: BlocStatusEnum.success,
-          addToCartModel: data,
-        ));
-      } on ApiException catch (e) {
+            status: BlocStatusEnum.success, addToCartModel: data));
+      } catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
-          errMes: e.message,
         ));
       }
     });

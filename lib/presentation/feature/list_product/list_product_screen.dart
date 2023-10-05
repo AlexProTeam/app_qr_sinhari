@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
+import 'package:qrcode/gen/assets.gen.dart';
 
 import '../../../app/route/screen_utils.dart';
 import '../../widgets/category_product_item.dart';
@@ -11,8 +12,9 @@ import 'bloc/list_product_bloc.dart';
 class ArgumentListProductScreen {
   final String? url;
   final String? label;
+  final bool isAgency;
 
-  ArgumentListProductScreen({this.url, this.label});
+  ArgumentListProductScreen({this.url, this.label, this.isAgency = false});
 }
 
 class ListProductScreen extends StatefulWidget {
@@ -34,6 +36,19 @@ class ListProductScreenState extends State<ListProductScreen> {
       appBar: BaseAppBar(
         title: '${widget.argument?.label}',
         isShowBack: true,
+        actions: [
+          if (widget.argument?.isAgency ?? false)
+            InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Assets.icons.icCar.image(
+                  width: 30,
+                  height: 30,
+                ),
+              ),
+            )
+        ],
       ),
       body: BlocProvider(
         create: (context) =>
@@ -67,6 +82,8 @@ class ListProductScreenState extends State<ListProductScreen> {
                 return CategoryItemProduct(
                   itemWidth: (GScreenUtil.screenWidthDp - 48) / 2,
                   productModel: products[index],
+                  isAgency: widget.argument?.isAgency ?? false,
+                  onTap: () {},
                 );
               },
             );
