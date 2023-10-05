@@ -5,7 +5,6 @@ import 'package:qrcode/app/app.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/home/widget/banner_home.dart';
 import 'package:qrcode/presentation/feature/home/widget/filter_item.dart';
-import 'package:qrcode/presentation/feature/home/widget/news_home_widget.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_angecy.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_features.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
@@ -101,7 +100,6 @@ class HomeScreenState extends State<HomeScreen>
                       const SilverCoatedShampooWidget(),
 
                       ///tin mới nhất
-                      const NewsHomeWidget(),
                     ],
                   ),
                 ),
