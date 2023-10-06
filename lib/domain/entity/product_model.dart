@@ -11,8 +11,9 @@ class DataProduct {
 class Product {
   ProductFeatures? productFeatures;
   ProductSellers? productSellers;
+  List<ProductResponse>? listAngecy;
 
-  Product({this.productFeatures, this.productSellers});
+  Product({this.productFeatures, this.productSellers, this.listAngecy});
 
   Product.fromJson(Map<String, dynamic> json) {
     productFeatures = json['productFeatures'] != null
@@ -21,6 +22,12 @@ class Product {
     productSellers = json['productSellers'] != null
         ? ProductSellers.fromJson(json['productSellers'])
         : null;
+    if (json['products'] != null) {
+      listAngecy = <ProductResponse>[];
+      json['products'].forEach((v) {
+        listAngecy!.add(ProductResponse.fromJson(v));
+      });
+    }
   }
 }
 
@@ -112,6 +119,16 @@ class ProductResponse {
   int? isSale;
   int? isNew;
 
+  //angecy
+  String? content;
+  int? price;
+  int? salePrice;
+  int? views;
+  String? image;
+  int? originalPrice;
+  int? frontSalePrice;
+  List<String>? productCollections;
+
   ProductResponse.fromJson(Map<String?, dynamic> json) {
     id = json['id'];
     productIdVtap = json['product_id_vtap'];
@@ -172,6 +189,23 @@ class ProductResponse {
     productBuyWith = json['product_buy_with'];
     isSale = json['is_sale'];
     isNew = json['is_new'];
+    //angcy
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    content = json['content'];
+    price = json['price'];
+    salePrice = json['sale_price'];
+    views = json['views'];
+    image = json['image'];
+    originalPrice = json['original_price'];
+    frontSalePrice = json['front_sale_price'];
+    if (json['product_collections'] != null) {
+      productCollections = <String>[];
+      json['product_collections'].forEach((v) {
+        //   productCollections!.add( String.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -184,6 +218,18 @@ class ProductResponse {
     data['subsubcategory_id'] = subsubcategoryId;
     data['thumbnail_img'] = thumbnailImg;
     data['unit_price'] = unitPrice;
+    //angcy
+
+    data['description'] = description;
+    data['content'] = content;
+    data['price'] = price;
+    data['sale_price'] = salePrice;
+    data['views'] = views;
+    data['image'] = image;
+    data['thumbnail_img'] = thumbnailImg;
+    data['photos'] = photos;
+    data['original_price'] = originalPrice;
+    data['front_sale_price'] = frontSalePrice;
     return data;
   }
 }

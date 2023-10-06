@@ -18,8 +18,8 @@ class ProductAngecyWidget extends StatefulWidget {
 }
 
 class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
-  bool _isLoading = false;
-  final List<ProductResponse> _productSellers = [];
+  bool _isLoading = true;
+  final List<ProductResponse> _productAngecy = [];
   final AppUseCase _appUseCase = getIt<AppUseCase>();
 
   @override
@@ -55,7 +55,7 @@ class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
       );
     }
 
-    if (_productSellers.isEmpty) {
+    if (_productAngecy.isEmpty) {
       return const SizedBox.shrink();
     }
 
@@ -76,7 +76,7 @@ class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
                 onTap: () => Navigator.pushNamed(
                     context, RouteDefine.listProductScreen,
                     arguments: ArgumentListProductScreen(
-                        url: 'product-seller',
+                        url: 'product_agency',
                         label: 'Sản phẩm đại lý',
                         isAgency: true)),
                 child: Text(
@@ -87,9 +87,10 @@ class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
             ],
           ),
           ...List.generate(
-              _productSellers.length,
+              _productAngecy.length,
               (index) => ProductItem(
-                    productModel: _productSellers[index],
+                    isAngecy: true,
+                    productModel: _productAngecy[index],
                   )),
         ],
       ),
@@ -102,9 +103,9 @@ class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
         _isLoading = true;
       });
 
-      final result = await _appUseCase.getListSeller();
+      final result = await _appUseCase.getListAngecy();
 
-      _productSellers.addAll(result.data?.productSellers?.list ?? []);
+      _productAngecy.addAll(result.data?.listAngecy ?? []);
     } on ApiException catch (e) {
       ToastManager.showToast(context, text: e.message);
     }

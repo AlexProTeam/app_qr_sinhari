@@ -95,4 +95,6 @@ class AppUseCase {
     int? productId,
   }) =>
       _repository.getListCart();
+
+  Future<DataProduct> getListAngecy() => _repository.getListAngecy();
 }

@@ -121,4 +121,7 @@ abstract class AppApi {
 
   @POST('get_to_cart')
   Future<ObjectResponse<ListCartsResponse>> getListCart();
+
+  @POST('product_agency')
+  Future<DataProduct> getListAngecy();
 }
