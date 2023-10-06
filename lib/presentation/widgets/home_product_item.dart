@@ -12,8 +12,11 @@ import '../../app/route/navigation/route_names.dart';
 import 'custom_image_network.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({Key? key, required this.productModel}) : super(key: key);
+  const ProductItem(
+      {Key? key, required this.productModel, this.isAngecy = false})
+      : super(key: key);
   final ProductResponse? productModel;
+  final bool? isAngecy;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +100,14 @@ class ProductItem extends StatelessWidget {
                         )
                       ],
                     ),
-                    itemPrice(),
+                    itemPrice(
+                      salePrice: isAngecy == true
+                          ? productModel?.salePrice ?? 0
+                          : productModel?.unitPrice ?? 0,
+                      price: isAngecy == true
+                          ? productModel?.price ?? 0
+                          : productModel?.purchasePrice ?? 0,
+                    ),
                     InkWell(
                       onTap: () => ToastManager.showToast(
                         context,
@@ -121,10 +131,8 @@ class ProductItem extends StatelessWidget {
     );
   }
 
-  Widget itemPrice() {
-    if (Helper.getPrice(
-            productModel?.unitPrice ?? 0, productModel?.purchasePrice ?? 0) ==
-        false) {
+  Widget itemPrice({required int salePrice, required int price}) {
+    if (Helper.getPrice(salePrice, price) == false) {
       return Column(
         children: [
           Row(
@@ -133,8 +141,7 @@ class ProductItem extends StatelessWidget {
               if (productModel?.unitPrice == null) ...[
                 const SizedBox(height: 5),
                 Text(
-                  FormatUtils.formatCurrencyDoubleToString(
-                      productModel?.purchasePrice),
+                  FormatUtils.formatCurrencyDoubleToString(price),
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -144,8 +151,7 @@ class ProductItem extends StatelessWidget {
               if (productModel?.unitPrice != null) ...[
                 const SizedBox(height: 5),
                 Text(
-                  FormatUtils.formatCurrencyDoubleToString(
-                      productModel?.unitPrice),
+                  FormatUtils.formatCurrencyDoubleToString(salePrice),
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -155,7 +161,7 @@ class ProductItem extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: FormatUtils.formatCurrencyDoubleToString(
-                      productModel?.purchasePrice,
+                      price,
                     ),
                     style: const TextStyle(
                       fontSize: 10,
@@ -177,8 +183,7 @@ class ProductItem extends StatelessWidget {
         children: [
           const SizedBox(height: 5),
           Text(
-            FormatUtils.formatCurrencyDoubleToString(
-                productModel?.purchasePrice),
+            FormatUtils.formatCurrencyDoubleToString(price),
             style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

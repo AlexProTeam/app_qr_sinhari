@@ -275,4 +275,15 @@ class AppRepositoryImpl implements AppRepository {
       throw (ApiException.error(e));
     }
   }
+
+  @override
+  Future<DataProduct> getListAngecy() async {
+    try {
+      final response = await api.getListAngecy();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
 }
