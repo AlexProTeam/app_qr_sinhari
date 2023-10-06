@@ -12,6 +12,8 @@ abstract class AppRepository {
 
   Future<DataProduct> getListSeller();
 
+  Future<DataProduct> getListAngecy();
+
   Future<DataDetail> getDetaiProduct(int productId);
 
   Future<DetailByQr> getDetaiProductByQr(

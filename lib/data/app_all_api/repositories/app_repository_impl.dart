@@ -278,6 +278,17 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
+  Future<DataProduct> getListAngecy() async {
+    try {
+      final response = await api.getListAngecy();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
   Future<ObjectResponse<PaymentDebt>> payment({int? amount}) async {
     try {
       final response = await api.postPayment(amount ?? 0);

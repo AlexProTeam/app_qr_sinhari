@@ -46,7 +46,7 @@ class CategoryItemProduct extends StatelessWidget {
                 url: '${productModel?.thumbnailImg}',
                 fit: BoxFit.cover,
                 width: MediaQuery.of(context).size.width / 2,
-                height: 164,
+                height: getSize(context),
                 border: 12,
               ),
               const SizedBox(height: 16.25),
@@ -90,7 +90,14 @@ class CategoryItemProduct extends StatelessWidget {
                         ]))
                   ],
                 ),
-              itemPrice(),
+              itemPrice(
+                salePrice: isAgency
+                    ? productModel?.salePrice ?? 0
+                    : productModel?.unitPrice ?? 0,
+                price: isAgency
+                    ? productModel?.price ?? 0
+                    : productModel?.purchasePrice ?? 0,
+              ),
               if (isAgency) ...[
                 const SizedBox(
                   height: 4,
@@ -132,10 +139,16 @@ class CategoryItemProduct extends StatelessWidget {
     );
   }
 
-  Widget itemPrice() {
-    if (Helper.getPrice(
-            productModel?.unitPrice ?? 0, productModel?.purchasePrice ?? 0) ==
-        false) {
+  double getSize(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    if (height < 800) {
+      return 164;
+    }
+    return 250;
+  }
+
+  Widget itemPrice({required int salePrice, required int price}) {
+    if (Helper.getPrice(salePrice, price) == false) {
       return Column(
         children: [
           const SizedBox(height: 5),
@@ -146,8 +159,7 @@ class CategoryItemProduct extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  FormatUtils.formatCurrencyDoubleToString(
-                      productModel?.unitPrice),
+                  FormatUtils.formatCurrencyDoubleToString(salePrice),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -158,7 +170,7 @@ class CategoryItemProduct extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: FormatUtils.formatCurrencyDoubleToString(
-                      productModel?.purchasePrice,
+                      price,
                     ),
                     style: const TextStyle(
                       fontSize: 10,
@@ -186,8 +198,7 @@ class CategoryItemProduct extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  FormatUtils.formatCurrencyDoubleToString(
-                      productModel?.purchasePrice),
+                  FormatUtils.formatCurrencyDoubleToString(price),
                   style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,

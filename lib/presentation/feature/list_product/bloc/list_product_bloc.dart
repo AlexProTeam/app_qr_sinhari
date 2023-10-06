@@ -7,15 +7,16 @@ import 'package:qrcode/domain/entity/product_model.dart';
 import '../../../../app/managers/status_bloc.dart';
 
 part 'list_product_event.dart';
+
 part 'list_product_state.dart';
 
 class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
-  late List<ProductResponse> _products;
   final AppUseCase appUseCase;
   final String url;
 
   ListProductBloc(this.appUseCase, this.url) : super(const ListProductState()) {
     on<InitListProductEvent>((event, emit) async {
+      List<ProductResponse>? products;
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
@@ -23,20 +24,25 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
         if (url == 'product-seller') {
           final result = await appUseCase.getListSeller();
           if ((result.data?.productSellers?.list ?? []).isNotEmpty) {
-            _products =
+            products =
                 result.data?.productSellers?.list as List<ProductResponse>;
+          }
+        } else if (url == 'product_agency') {
+          final result = await appUseCase.getListAngecy();
+          if ((result.data?.listAngecy ?? []).isNotEmpty) {
+            products = result.data?.listAngecy as List<ProductResponse>;
           }
         } else {
           final result = await appUseCase.getListFeature();
           if ((result.data?.productFeatures?.list ?? []).isNotEmpty) {
-            _products =
+            products =
                 result.data?.productFeatures?.list as List<ProductResponse>;
           }
         }
 
         emit(state.copyWith(
           status: BlocStatusEnum.success,
-          products: _products,
+          products: products,
         ));
       } on ApiException catch (e) {
         emit(state.copyWith(
