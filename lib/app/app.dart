@@ -31,6 +31,7 @@ import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
 import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
+import 'package:qrcode/domain/entity/payment_debt_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/domain/entity/welcome_model.dart';
@@ -60,6 +61,7 @@ import 'package:qrcode/presentation/feature/news/details_news/ui/detail_new_scre
 import 'package:qrcode/presentation/feature/news/history_model.dart';
 import 'package:qrcode/presentation/feature/news/news_screen/ui/news_screen.dart';
 import 'package:qrcode/presentation/feature/notification/ui/notification_screen.dart';
+import 'package:qrcode/presentation/feature/pay_debt/bloc/pay_debt_bloc.dart';
 import 'package:qrcode/presentation/feature/pay_debt/pay_debt_qr_screen.dart';
 import 'package:qrcode/presentation/feature/pay_debt/pay_debt_screen.dart';
 import 'package:qrcode/presentation/feature/personal/contact/contact_screen.dart';

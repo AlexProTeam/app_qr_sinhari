@@ -138,7 +138,13 @@ class Routes {
         );
       case RouteDefine.payDebtQrScreen:
         return SlideLeftRoute(
-          widget: const PayDebtQrScreen(),
+          widget: BlocProvider(
+            create: (context) => PayDebtBloc(),
+            child: PayDebtQrScreen(
+                payment: settings.arguments != null
+                    ? settings.arguments as ArgumentPayDebtQrScreen
+                    : null),
+          ),
         );
       case RouteDefine.cartScreen:
         return SlideLeftRoute(
@@ -195,7 +201,7 @@ class Routes {
           ),
         );
 
-      ///
+    ///
       case RouteDefine.detailNewScreen:
         return SlideLeftRoute(
           duration: 0,

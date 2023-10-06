@@ -8,6 +8,7 @@ import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
 import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
+import 'package:qrcode/domain/entity/payment_debt_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -117,6 +118,11 @@ abstract class AppApi {
   @POST('add_to_cart')
   Future<ObjectResponse<OrderCartsResponse>> addToCart(
     @Part(name: "product_id") int productId,
+  );
+
+  @POST('payment_debt')
+  Future<ObjectResponse<PaymentDebt>> postPayment(
+    @Query('amount') int amount,
   );
 
   @POST('get_to_cart')
