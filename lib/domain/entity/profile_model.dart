@@ -17,7 +17,7 @@ class ProfileModel {
   int? turnEarn;
   int? isApproval;
   int? isSpecial;
-  int? isAgency;
+  int? isVendor;
   int? nextQrSerialNo;
   int? isNotification;
   String? avatar;
@@ -39,7 +39,7 @@ class ProfileModel {
     this.turnEarn,
     this.isApproval,
     this.isSpecial,
-    this.isAgency,
+    this.isVendor,
     this.nextQrSerialNo,
     this.isNotification,
     this.avatar,
@@ -66,7 +66,7 @@ class ProfileModel {
     turnEarn = json['turn_earn'];
     isApproval = json['is_approval'];
     isSpecial = json['is_special'];
-    isAgency = json['is_agency'];
+    isVendor = json['is_vendor'];
     nextQrSerialNo = json['next_qr_serial_no'];
     isNotification = json['is_notification'];
   }

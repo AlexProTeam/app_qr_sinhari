@@ -89,17 +89,24 @@ class HomeScreenState extends State<HomeScreen>
                       ///filter
                       _buildFilter(),
 
-                      /// sản phẩm nổi bật
-                      const ProductFeaturesWidget(),
+                      if (_profileBloc.state.profileModel?.isVendor == 0 ||
+                          _profileBloc.state.profileModel?.isVendor ==
+                              null) ...[
+                        /// sản phẩm nổi bật
+                        const ProductFeaturesWidget(),
 
-                      /// sản phẩm bán chạy
-                      const ProductSellersWidget(),
+                        /// sản phẩm bán chạyshow
+                        const ProductSellersWidget(),
+                      ],
 
                       /// sản phẩm dai ly
-                      const ProductAngecyWidget(),
+                      if (_profileBloc.state.profileModel?.isVendor != 0)
+                        const ProductAngecyWidget(),
 
                       ///dầu gội phủ bạc
-                      const SilverCoatedShampooWidget(),
+                      if (_profileBloc.state.profileModel?.isVendor == 0 ||
+                          _profileBloc.state.profileModel?.isVendor == null)
+                        const SilverCoatedShampooWidget(),
 
                       ///tin mới nhất
                     ],
