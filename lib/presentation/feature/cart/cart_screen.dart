@@ -1,71 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
+import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
+import '../../../app/managers/status_bloc.dart';
+import 'bloc/carts_bloc.dart';
 import 'widget/item_bottom.dart';
 import 'widget/item_check_promotion.dart';
 import 'widget/item_total_amount.dart';
 import 'widget/list_products.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: BaseAppBar(
-        title: 'Giỏ hàng',
-        isShowBack: true,
-      ),
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: const [
-            ListProducts(),
-            ItemCheckPromotion(),
-            Divider(),
-            ItemTotalAmount()
-          ],
-        ),
-      ),
-      bottomNavigationBar: ItemBottom(
-        onTap: () {
-          DialogManager.showDialogCustom(
-            icon: Image.asset(Assets.icons.icQuesition.path),
-            onTapRight: () {
-              ///todo: handel call api here
-            },
-            onTapLeft: () {
-              Navigator.pushNamed(
-                Routes.instance.navigatorKey.currentContext!,
-                RouteDefine.successScreen,
-              );
-            },
-            leftTitle: 'Mua',
-            rightTitle: 'Huỷ',
-            context: context,
-            bgColorLeft: AppColors.realEstate,
-            bgColorRight: AppColors.red,
-            content: 'Bạn có chắc hoàn thành đơn hàng ?',
-            styleContent: kTextRegularStyle.copyWith(
-                fontWeight: FontWeight.w500, fontSize: 20),
+    return BlocProvider(
+      create: (context) => CartsBloc()..add(const InitDataCartEvent()),
+      child: BlocConsumer<CartsBloc, CartsState>(
+        listenWhen: (previous, current) => previous != current,
+        listener: (context, state) {
+          state.status == BlocStatusEnum.loading
+              ? DialogManager.showLoadingDialog(context)
+              : DialogManager.hideLoadingDialog;
+
+          if ((state.errMes ?? '').isNotEmpty) {
+            ToastManager.showToast(context, text: state.errMes!);
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
+            appBar: BaseAppBar(
+              title: 'Giỏ hàng',
+              isShowBack: true,
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  /// list item
+                  ListProducts(
+                    listItemsCarts: state.cartsResponse?.carts?.items ?? [],
+                  ),
+                  const ItemCheckPromotion(),
+                  const Divider(),
+                  const ItemTotalAmount()
+                ],
+              ),
+            ),
+            bottomNavigationBar: ItemBottomCarts(
+              onTap: () => _showDialog(context),
+              onChange: () {},
+            ),
           );
         },
-        onChange: () {},
       ),
     );
   }
+
+  void _showDialog(BuildContext context) => DialogManager.showDialogCustom(
+        icon: Image.asset(Assets.icons.icQuesition.path),
+        onTapRight: () {
+          ///todo: handel call api here
+        },
+        onTapLeft: () {
+          Navigator.pushNamed(
+            Routes.instance.navigatorKey.currentContext!,
+            RouteDefine.successScreen,
+          );
+        },
+        leftTitle: 'Mua',
+        rightTitle: 'Huỷ',
+        context: context,
+        bgColorLeft: AppColors.realEstate,
+        bgColorRight: AppColors.red,
+        content: 'Bạn có chắc hoàn thành đơn hàng ?',
+        styleContent: kTextRegularStyle.copyWith(
+            fontWeight: FontWeight.w500, fontSize: 20),
+      );
 }

@@ -34,4 +34,6 @@ class ProfileState extends Equatable {
       mes: mes ?? '',
     );
   }
+
+  bool get isHasProfileData => profileModel?.phone != null;
 }

@@ -6,6 +6,7 @@ import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 import '../../../app/managers/color_manager.dart';
 import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
+import '../../auth/login/bloc/login_bloc.dart';
 import '../../widgets/box_border_widget.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -23,10 +24,13 @@ class PersonalNested extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NestedRouteWrapper(
-      onGenerateRoute: Routes.generateBottomBarRoute,
-      navigationKey: Routes.personalKey,
-      initialRoute: BottomBarEnum.caNhan.getRouteNames,
+    return BlocProvider(
+      create: (context) => LoginBloc(),
+      child: NestedRouteWrapper(
+        onGenerateRoute: Routes.generateBottomBarRoute,
+        navigationKey: Routes.personalKey,
+        initialRoute: BottomBarEnum.caNhan.getRouteNames,
+      ),
     );
   }
 }
@@ -75,18 +79,20 @@ class PersonalScreenState extends State<PersonalScreen> {
                 ],
                 boxBorderApp(
                   child: Column(
-                    children: PersonalContactEnum.values
-                        .map(
-                          (e) => !_isProfileModelNotBull &&
-                                  e == PersonalContactEnum.account
-                              ? const SizedBox.shrink()
-                              : iconTextWidget(
-                                  onTap: () => e.getOnTap(context),
-                                  text: e.getDisplayValue,
-                                  iconWidget: e.getIcon(),
-                                ),
-                        )
-                        .toList(),
+                    children: PersonalContactEnum.values.map((e) {
+                      return !_isProfileModelNotBull &&
+                              [
+                                PersonalContactEnum.account,
+                                PersonalContactEnum.infoOrder,
+                                PersonalContactEnum.historyDebt
+                              ].contains(e)
+                          ? const SizedBox.shrink()
+                          : iconTextWidget(
+                              onTap: () => e.getOnTap(context),
+                              text: e.getDisplayValue,
+                              iconWidget: e.getIcon(),
+                            );
+                    }).toList(),
                   ),
                 ),
                 const SizedBox(height: 16),

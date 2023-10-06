@@ -23,6 +23,8 @@ import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:qrcode/presentation/feature/history_scan/history_model.dart';
 import 'package:qrcode/presentation/feature/news/history_model.dart';
 
+import '../../../domain/entity/list_carts_response.dart';
+
 class AppRepositoryImpl implements AppRepository {
   final AppApi api;
 
@@ -253,12 +255,22 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<CartsResponse> addToCart({
+  Future<OrderCartsResponse> addToCart({
     int? productId,
   }) async {
     try {
       final response = await api.addToCart(productId ?? 0);
-      return response.data ?? CartsResponse();
+      return response.data ?? OrderCartsResponse();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ListCartsResponse> getListCart() async {
+    try {
+      final response = await api.getListCart();
+      return response.data ?? ListCartsResponse();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

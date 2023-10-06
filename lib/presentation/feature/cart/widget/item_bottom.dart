@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/presentation/widgets/check_box_custom.dart';
 
-class ItemBottom extends StatefulWidget {
+import '../bloc/carts_bloc.dart';
+
+class ItemBottomCarts extends StatefulWidget {
   final Function onTap;
   final Function onChange;
 
-  const ItemBottom({Key? key, required this.onTap, required this.onChange})
+  const ItemBottomCarts({Key? key, required this.onTap, required this.onChange})
       : super(key: key);
 
   @override
-  State<ItemBottom> createState() => _ItemBottomState();
+  State<ItemBottomCarts> createState() => _ItemBottomCartsState();
 }
 
-class _ItemBottomState extends State<ItemBottom> {
+class _ItemBottomCartsState extends State<ItemBottomCarts> {
+  late CartsBloc _cartsBloc;
   bool isCheck = false;
+
+  @override
+  void initState() {
+    _cartsBloc = context.read<CartsBloc>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +71,7 @@ class _ItemBottomState extends State<ItemBottom> {
                     maxLines: 2,
                   ),
                   Text(
-                    '240.000 vnđ',
+                    '${_cartsBloc.state.cartsResponse?.carts?.getTotalSalePrice} vnđ',
                     style: TextStyleManager.mediumBlack14px.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,

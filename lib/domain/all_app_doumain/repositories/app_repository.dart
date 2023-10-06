@@ -51,7 +51,9 @@ abstract class AppRepository {
     int? type,
   });
 
-  Future<CartsResponse> addToCart({
+  Future<OrderCartsResponse> addToCart({
     int? productId,
   });
+
+  Future<ListCartsResponse> getListCart();
 }

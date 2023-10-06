@@ -81,6 +81,8 @@ import 'package:qrcode/presentation/widgets/widget_loading.dart';
 
 import '../../data/utils/interceptor/token_interceptor.dart';
 import '../domain/entity/add_to_cart_model.dart';
+import '../domain/entity/list_carts_response.dart';
+import '../presentation/feature/detail_product/bloc/product_detail_bloc.dart';
 
 part '../app/di/injection.dart';
 part '../app/managers/constant_manager.dart';

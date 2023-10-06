@@ -1,174 +1,197 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/widgets/check_box_custom.dart';
 
-class ListProducts extends StatefulWidget {
-  const ListProducts({Key? key}) : super(key: key);
+import '../../../../domain/entity/list_carts_response.dart';
 
-  @override
-  State<ListProducts> createState() => _ListProductsState();
-}
+class ListProducts extends StatelessWidget {
+  final List<ItemsCarts> listItemsCarts;
 
-class _ListProductsState extends State<ListProducts> {
+  const ListProducts({
+    Key? key,
+    required this.listItemsCarts,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
+      itemCount: listItemsCarts.length,
       shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return const ItemList();
-      },
-      itemCount: 2,
+      itemBuilder: (context, index) =>
+          ItemList(itemsCarts: listItemsCarts[index]),
     );
   }
 }
 
 class ItemList extends StatefulWidget {
-  const ItemList({Key? key}) : super(key: key);
+  final ItemsCarts itemsCarts;
+
+  const ItemList({
+    Key? key,
+    required this.itemsCarts,
+  }) : super(key: key);
 
   @override
-  State<ItemList> createState() => _ItemListState();
+  ItemListState createState() => ItemListState();
 }
 
-class _ItemListState extends State<ItemList> {
+class ItemListState extends State<ItemList> {
   bool isCheck = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: AppColors.colorF1F1F1))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-              width: 30,
-              height: 30,
-              child: CheckBoxCustom(
-                enable: false,
-                onChanged: (value) {
-                  setState(() {
-                    isCheck = value ?? true;
-                  });
-                },
-                value: isCheck,
-              )),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              Assets.images.welcome.path,
-              width: 111,
-              height: 95,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.only(left: 8, right: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'vệ sinh thảo dược Doctor Care',
-                    style: TextStyleManager.mediumBlack14px
-                        .copyWith(fontWeight: FontWeight.w500, fontSize: 14),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '120.000 vnđ',
-                          style: TextStyleManager.mediumBlack14px.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: AppColors.color7F2B81),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          'Sản phẩm số 1',
-                          style: TextStyleManager.mediumBlack14px.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              decoration: TextDecoration.lineThrough),
-                          textAlign: TextAlign.right,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Số lượng: ',
-                        style: TextStyleManager.mediumBlack14px.copyWith(
-                            fontWeight: FontWeight.w500, fontSize: 14),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            itemCircle(
-                                path: Assets.icons.iconDown.path,
-                                onTap: () {},
-                                color: AppColors.color777777),
-                            Text(
-                              '1',
-                              style: TextStyleManager.mediumBlack14px.copyWith(
-                                  fontWeight: FontWeight.w500, fontSize: 14),
-                            ),
-                            itemCircle(
-                                path: Assets.icons.icPlus.path,
-                                onTap: () {},
-                                color: AppColors.color7F2B81)
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          )
+          _buildCheckBox(),
+          _buildProductImage(),
+          _buildProductDetails(),
         ],
       ),
     );
   }
 
-  Widget itemCircle(
-      {required String path, required Function onTap, Color? color}) {
-    return GestureDetector(
-        onTap: () {
-          onTap();
+  Widget _buildCheckBox() {
+    return SizedBox(
+      width: 30.r,
+      height: 30.r,
+      child: CheckBoxCustom(
+        enable: false,
+        onChanged: (value) {
+          setState(() {
+            isCheck = value ?? true;
+          });
         },
-        child: Container(
-          width: 22,
-          height: 22,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle, color: color ?? AppColors.red),
-          child: Image.asset(path),
-        ));
+        value: isCheck,
+      ),
+    );
+  }
+
+  Widget _buildProductImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.r),
+      child: Image.network(
+        widget.itemsCarts.image ?? '',
+        width: 110.w,
+        height: 95.h,
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  Widget _buildProductDetails() {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.only(left: 8.r, right: 8.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildProductName(),
+            8.verticalSpace,
+            _buildPriceSection(),
+            8.verticalSpace,
+            _buildQuantitySection(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProductName() {
+    return Text(
+      widget.itemsCarts.name ?? '',
+      style: TextStyleManager.mediumBlack14px.copyWith(
+        fontWeight: FontWeight.w500,
+        fontSize: 14,
+      ),
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
+    );
+  }
+
+  Widget _buildPriceSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _buildPriceText(
+          widget.itemsCarts.getSalePrice.toString(),
+          textColor: AppColors.color7F2B81,
+        ),
+        _buildPriceText(
+          widget.itemsCarts.getOriginPrice.toString(),
+          decoration: TextDecoration.lineThrough,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPriceText(String price,
+      {TextDecoration? decoration, Color? textColor}) {
+    return Expanded(
+      child: Text(
+        '$price vnđ',
+        style: TextStyleManager.mediumBlack14px.copyWith(
+          fontWeight: FontWeight.w500,
+          decoration: decoration,
+          color: textColor ?? AppColors.black,
+        ),
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
+      ),
+    );
+  }
+
+  Widget _buildQuantitySection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'Số lượng: ',
+          style: TextStyleManager.mediumBlack14px.copyWith(
+            fontWeight: FontWeight.w500,
+            fontSize: 14.sp,
+          ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+        ),
+        _buildQuantityButton(Assets.icons.iconDown.path, () {}),
+        Text(
+          '1',
+          style: TextStyleManager.mediumBlack14px.copyWith(
+            fontWeight: FontWeight.w500,
+            fontSize: 14.sp,
+          ),
+        ),
+        _buildQuantityButton(
+          Assets.icons.icPlus.path,
+          () {},
+          color: AppColors.color7F2B81,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildQuantityButton(
+    String iconPath,
+    Function() onTap, {
+    Color? color,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 22,
+        height: 22,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle, color: color ?? AppColors.red),
+        child: Image.asset(iconPath),
+      ),
+    );
   }
 }

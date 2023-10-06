@@ -13,6 +13,7 @@ import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../domain/entity/banner_model.dart';
+import '../../../domain/entity/list_carts_response.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/feature/history_scan/history_model.dart';
 import '../../../presentation/feature/news/history_model.dart';
@@ -114,7 +115,10 @@ abstract class AppApi {
   );
 
   @POST('add_to_cart')
-  Future<ObjectResponse<CartsResponse>> addToCart(
+  Future<ObjectResponse<OrderCartsResponse>> addToCart(
     @Part(name: "product_id") int productId,
   );
+
+  @POST('get_to_cart')
+  Future<ObjectResponse<ListCartsResponse>> getListCart();
 }

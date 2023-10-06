@@ -61,31 +61,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           title: 'Chi tiết',
           isShowBack: true,
           actions: [
-            InkWell(
-              onTap: () => _productDetailBloc.add(
-                OnClickAddToCartEvent(
-                  proId: widget.argument?.productId ?? 0,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: Assets.icons.icCar.image(
-                  width: 30,
-                  height: 30,
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () => ToastManager.showToast(context,
-                  text: 'Chức năng sẽ sớm ra mắt,'),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Assets.icons.heart.image(
-                  width: 22,
-                  height: 20,
-                ),
-              ),
-            ),
+            if (context.read<ProfileBloc>().state.isHasProfileData)
+              _iconAddToCarts(),
+            _iconFavorite()
           ],
         ),
         body: BlocConsumer<ProductDetailBloc, ProductDetailState>(
@@ -586,4 +564,33 @@ class DetailProductScreenState extends State<DetailProductScreen> {
   void _navigateTo(String routeName, dynamic arguments) {
     Navigator.pushNamed(context, routeName, arguments: arguments);
   }
+
+  Widget _iconAddToCarts() => InkWell(
+        onTap: () => _productDetailBloc.add(
+          OnClickAddToCartEvent(
+            proId: widget.argument?.productId ?? 0,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: Assets.icons.icCar.image(
+            width: 30,
+            height: 30,
+          ),
+        ),
+      );
+
+  Widget _iconFavorite() => InkWell(
+        onTap: () => ToastManager.showToast(
+          context,
+          text: 'Chức năng sẽ sớm ra mắt',
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Assets.icons.heart.image(
+            width: 22,
+            height: 20,
+          ),
+        ),
+      );
 }

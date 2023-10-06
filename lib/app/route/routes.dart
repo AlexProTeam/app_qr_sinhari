@@ -98,12 +98,16 @@ class Routes {
         );
       case RouteDefine.muaHangScrene:
         return SlideLeftRoute(
-          widget: DetailProductContact(
-            argument: settings.arguments != null
-                ? settings.arguments as ArgumentContactScreen
-                : null,
+          widget: BlocProvider(
+            create: (context) => ProductDetailBloc(),
+            child: DetailProductContact(
+              argument: settings.arguments != null
+                  ? settings.arguments as ArgumentContactScreen
+                  : null,
+            ),
           ),
         );
+
       case RouteDefine.activeScrene:
         return SlideLeftRoute(
           widget: DetailProductActive(
@@ -181,10 +185,13 @@ class Routes {
         );
       case RouteDefine.detailProductScreen:
         return SlideLeftRoute(
-          widget: DetailProductScreen(
-            argument: settings.arguments != null
-                ? settings.arguments as ArgumentDetailProductScreen
-                : null,
+          widget: BlocProvider(
+            create: (context) => ProductDetailBloc(),
+            child: DetailProductScreen(
+              argument: settings.arguments != null
+                  ? settings.arguments as ArgumentDetailProductScreen
+                  : null,
+            ),
           ),
         );
 

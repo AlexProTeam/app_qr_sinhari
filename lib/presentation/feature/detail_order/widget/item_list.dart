@@ -46,9 +46,10 @@ class ItemList extends StatelessWidget {
                         child: Text(
                           '120.000 vnđ',
                           style: TextStyleManager.mediumBlack14px.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: AppColors.color7F2B81),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: AppColors.color7F2B81,
+                          ),
                         ),
                       ),
                       Expanded(

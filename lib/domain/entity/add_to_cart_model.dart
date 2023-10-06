@@ -1,9 +1,9 @@
-class CartsResponse {
+class OrderCartsResponse {
   Carts? carts;
 
-  CartsResponse({this.carts});
+  OrderCartsResponse({this.carts});
 
-  CartsResponse.fromJson(Map<String, dynamic> json) {
+  OrderCartsResponse.fromJson(Map<String, dynamic> json) {
     carts = json['carts'] != null ? Carts.fromJson(json['carts']) : null;
   }
 }

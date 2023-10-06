@@ -42,11 +42,13 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin<HomeScreen> {
   late BottomBarBloc _bottomBarBloc;
+  late ProfileBloc _profileBloc;
 
   bool _isLoading = false;
 
   @override
   void initState() {
+    _profileBloc = context.read<ProfileBloc>();
     _bottomBarBloc = context.read<BottomBarBloc>();
     super.initState();
   }
@@ -111,60 +113,58 @@ class HomeScreenState extends State<HomeScreen>
   Widget _headerWidget() => SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: 15.h),
-          child: _isHasProfileData
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    16.horizontalSpace,
-                    Assets.images.logoMain.image(
-                      width: 40,
-                      height: 40,
-                    ),
-                    const SizedBox(width: 12),
-                    Column(
+          child: Row(
+            children: [
+              _isHasProfileData
+                  ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Xin chào,',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black),
+                        16.horizontalSpace,
+                        Assets.images.logoMain.image(
+                          width: 40,
+                          height: 40,
                         ),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                        Text(
-                          context
-                                  .read<ProfileBloc>()
-                                  .state
-                                  .profileModel
-                                  ?.name ??
-                              "",
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black),
+                        const SizedBox(width: 12),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Xin chào,',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            Text(
+                              _profileBloc.state.profileModel?.name ?? "",
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            ),
+                          ],
                         ),
                       ],
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Assets.images.logoMain.image(
+                        width: 40,
+                        height: 40,
+                      ),
                     ),
-                    const Spacer(),
-                    _notiIcon(),
-                  ],
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Assets.images.logoMain.image(
-                    width: 40,
-                    height: 40,
-                  ),
-                ),
+              const Spacer(),
+              _notiIcon(),
+            ],
+          ),
         ),
       );
 
-  bool get _isHasProfileData =>
-      context.read<ProfileBloc>().state.profileModel?.phone != null;
+  bool get _isHasProfileData => _profileBloc.state.isHasProfileData;
 
   Widget _notiIcon() => GestureDetector(
         onTap: () => Navigator.pushNamed(

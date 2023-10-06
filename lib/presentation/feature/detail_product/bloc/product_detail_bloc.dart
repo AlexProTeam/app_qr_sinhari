@@ -35,9 +35,10 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
           status: BlocStatusEnum.success,
           detailProductModel: detailProductModel,
         ));
-      } catch (e) {
+      } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
+          errMes: e.message,
         ));
       }
     });
