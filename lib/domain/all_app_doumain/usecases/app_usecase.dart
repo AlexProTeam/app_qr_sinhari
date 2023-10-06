@@ -91,6 +91,12 @@ class AppUseCase {
   }) =>
       _repository.addToCart(productId: productId);
 
+
+  Future<ObjectResponse<PaymentDebt>> payMent({
+    int? amount,
+  }) =>
+      _repository.payment(amount: amount);
+
   Future<ListCartsResponse> getListCart({
     int? productId,
   }) =>

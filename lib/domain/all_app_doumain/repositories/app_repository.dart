@@ -55,5 +55,9 @@ abstract class AppRepository {
     int? productId,
   });
 
+  Future<ObjectResponse<PaymentDebt>> payment({
+    int? amount,
+  });
+
   Future<ListCartsResponse> getListCart();
 }

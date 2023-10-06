@@ -22,4 +22,5 @@ class AppConstant {
       'Bạn có cho phép GStore truy cập vào bộ sưu tập ảnh của bạn không?';
   static const String allow = 'Cho phép';
   static const String notAllow = 'Không cho phép';
+  static const int timerPaymentReload = 120;
 }
