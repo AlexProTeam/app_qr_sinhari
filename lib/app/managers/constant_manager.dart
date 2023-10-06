@@ -1,6 +1,7 @@
 // Project imports:
 part of app_layer;
 
+
 class AppConstant {
   static const Duration connectionTimeOutApp = Duration(seconds: 30);
 
