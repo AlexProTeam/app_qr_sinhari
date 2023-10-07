@@ -46,12 +46,13 @@ class CategoryItemProduct extends StatelessWidget {
               CustomImageNetwork(
                 url: '${productModel?.thumbnailImg}',
                 fit: BoxFit.cover,
-                width: (MediaQuery.of(context).size.width / 2).w,
-                height: getSize(context).h,
-                border: 12.r,
+                width: MediaQuery.of(context).size.width / 2,
+                height: getSize(context),
+                border: 12,
               ),
-              16.verticalSpace,
+              const SizedBox(height: 16.25),
               SizedBox(
+                // height: 36,
                 child: Text('${productModel?.name}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -61,7 +62,7 @@ class CategoryItemProduct extends StatelessWidget {
                         fontSize: 14,
                         color: Colors.black)),
               ),
-              5.verticalSpace,
+              const SizedBox(height: 5),
               if (!isAgency)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -160,8 +161,8 @@ class CategoryItemProduct extends StatelessWidget {
               children: [
                 Text(
                   FormatUtils.formatCurrencyDoubleToString(salePrice),
-                  style: TextStyle(
-                    fontSize: 14.sp,
+                  style: const TextStyle(
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: AppColors.colorFFC700,
                   ),
@@ -170,7 +171,7 @@ class CategoryItemProduct extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: FormatUtils.formatCurrencyDoubleToString(
-                      price,
+                      productModel?.purchasePrice,
                     ),
                     style: const TextStyle(
                       fontSize: 10,

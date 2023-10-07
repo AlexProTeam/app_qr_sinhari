@@ -9,6 +9,7 @@ import 'package:qrcode/domain/entity/home_response.dart';
 import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
 import 'package:qrcode/domain/entity/payment_debt_model.dart';
+import 'package:qrcode/domain/entity/order_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -130,4 +131,8 @@ abstract class AppApi {
 
   @POST('product_agency')
   Future<DataProduct> getListAngecy();
+
+  @POST('orders')
+  Future<OrderModel> getListOrder(
+      @Part(name: 'status_order') String? statusOrder);
 }

@@ -18,6 +18,7 @@ import 'package:qrcode/domain/entity/home_response.dart';
 import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
 import 'package:qrcode/domain/entity/payment_debt_model.dart';
+import 'package:qrcode/domain/entity/order_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/domain/entity/welcome_model.dart';
@@ -281,6 +282,17 @@ class AppRepositoryImpl implements AppRepository {
   Future<DataProduct> getListAngecy() async {
     try {
       final response = await api.getListAngecy();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<OrderModel> getListOrder({String? statusOrder}) async {
+    try {
+      final response = await api.getListOrder(statusOrder);
 
       return response;
     } on DioException catch (e) {

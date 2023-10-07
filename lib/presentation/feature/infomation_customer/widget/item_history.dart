@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
+import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
+import 'package:qrcode/domain/entity/order_model.dart';
 import 'package:qrcode/gen/assets.gen.dart';
+import 'package:qrcode/presentation/feature/infomation_customer/bloc/info_bloc.dart';
 import 'package:qrcode/presentation/feature/infomation_customer/widget/infor_enum.dart';
 
 class ItemHistory extends StatelessWidget {
@@ -11,43 +15,62 @@ class ItemHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          Text(
-            'Lịch sử đơn hàng ',
-            style: TextStyleManager.title,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
+    return BlocProvider(
+      create: (context) => InfoBloc(getIt<AppUseCase>(), ''),
+      child: BlocBuilder<InfoBloc, InfoState>(
+          builder: (BuildContext context, state) {
+        final products = state.products ?? [];
+        if (state.status == BlocStatusEnum.loading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (products.isEmpty) {
+          return const Center(
+            child: Text("Không có sản phẩm nào!"),
+          );
+        }
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              Text(
+                'Lịch sử đơn hàng ',
+                style: TextStyleManager.title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return rootView(
+                      context: context,
+                      onTap: () {
+                        Navigator.pushNamed(
+                            Routes.instance.navigatorKey.currentContext!,
+                            RouteDefine.detailOrder);
+                      },
+                      order: products[index].data?.orders?[index] ?? Orders());
+                },
+                itemCount: 5,
+              ),
+              const SizedBox(
+                height: 100,
+              )
+            ],
           ),
-          const SizedBox(
-            height: 16,
-          ),
-          ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return rootView(
-                  context: context,
-                  onTap: () {
-                    Navigator.pushNamed(
-                        Routes.instance.navigatorKey.currentContext!,
-                        RouteDefine.detailOrder);
-                  });
-            },
-            itemCount: 5,
-          ),
-          const SizedBox(
-            height: 100,
-          )
-        ],
-      ),
+        );
+      }),
     );
   }
 
-  Widget rootView({required BuildContext context, required Function onTap}) {
+  Widget rootView(
+      {required BuildContext context,
+      required Function onTap,
+      required Orders order}) {
     return GestureDetector(
       onTap: () {
         onTap();
