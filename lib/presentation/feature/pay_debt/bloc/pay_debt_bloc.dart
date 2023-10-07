@@ -1,3 +1,4 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:qrcode/app/app.dart';
@@ -7,7 +8,6 @@ import 'package:qrcode/data/utils/exceptions/api_exception.dart';
 import '../../../../domain/entity/payment_debt_model.dart';
 
 part 'pay_debt_event.dart';
-
 part 'pay_debt_state.dart';
 
 class PayDebtBloc extends Bloc<PayDebtEvent, PayDebtState> {
