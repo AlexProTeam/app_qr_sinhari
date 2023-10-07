@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
