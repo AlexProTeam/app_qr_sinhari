@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
@@ -45,13 +46,12 @@ class CategoryItemProduct extends StatelessWidget {
               CustomImageNetwork(
                 url: '${productModel?.thumbnailImg}',
                 fit: BoxFit.cover,
-                width: MediaQuery.of(context).size.width / 2,
-                height: getSize(context),
-                border: 12,
+                width: (MediaQuery.of(context).size.width / 2).w,
+                height: getSize(context).h,
+                border: 12.r,
               ),
-              const SizedBox(height: 16.25),
+              16.verticalSpace,
               SizedBox(
-                // height: 36,
                 child: Text('${productModel?.name}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -61,7 +61,7 @@ class CategoryItemProduct extends StatelessWidget {
                         fontSize: 14,
                         color: Colors.black)),
               ),
-              const SizedBox(height: 5),
+              5.verticalSpace,
               if (!isAgency)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -160,8 +160,8 @@ class CategoryItemProduct extends StatelessWidget {
               children: [
                 Text(
                   FormatUtils.formatCurrencyDoubleToString(salePrice),
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.colorFFC700,
                   ),

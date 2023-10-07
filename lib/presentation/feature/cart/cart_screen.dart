@@ -79,6 +79,8 @@ class CartScreen extends StatelessWidget {
         bgColorRight: AppColors.red,
         content: 'Bạn có chắc hoàn thành đơn hàng ?',
         styleContent: kTextRegularStyle.copyWith(
-            fontWeight: FontWeight.w500, fontSize: 20),
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+        ),
       );
 }

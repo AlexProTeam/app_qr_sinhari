@@ -37,7 +37,7 @@ class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text(
-              'Danh sách sản phẩm',
+              'sản phẩm dai ly',
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,

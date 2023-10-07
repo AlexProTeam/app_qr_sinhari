@@ -22,6 +22,8 @@ class ProfileModel {
   int? isNotification;
   String? avatar;
 
+  bool get isTheVendor => isVendor == 1;
+
   ProfileModel({
     this.id,
     this.userType,

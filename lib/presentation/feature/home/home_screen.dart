@@ -89,24 +89,8 @@ class HomeScreenState extends State<HomeScreen>
                       ///filter
                       _buildFilter(),
 
-                      if (_profileBloc.state.profileModel?.isVendor == 0 ||
-                          _profileBloc.state.profileModel?.isVendor ==
-                              null) ...[
-                        /// sản phẩm nổi bật
-                        const ProductFeaturesWidget(),
-
-                        /// sản phẩm bán chạyshow
-                        const ProductSellersWidget(),
-                      ],
-
-                      /// sản phẩm dai ly
-                      if (_profileBloc.state.profileModel?.isVendor != 0)
-                        const ProductAngecyWidget(),
-
-                      ///dầu gội phủ bạc
-                      const SilverCoatedShampooWidget(),
-
-                      ///tin mới nhất
+                      /// danh sách sản phẩm
+                      ..._getListProduct(),
                     ],
                   ),
                 ),
@@ -114,6 +98,22 @@ class HomeScreenState extends State<HomeScreen>
       ),
     );
   }
+
+  List<Widget> _getListProduct() =>
+      _profileBloc.state.profileModel?.isTheVendor == true
+          ? [
+              const ProductAngecyWidget(),
+            ]
+          : [
+              /// sản phẩm nổi bật
+              const ProductFeaturesWidget(),
+
+              /// sản phẩm bán chạyshow
+              const ProductSellersWidget(),
+
+              ///dầu gội phủ bạc
+              const SilverCoatedShampooWidget(),
+            ];
 
   Widget _headerWidget() => SafeArea(
         child: Padding(
