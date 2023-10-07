@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qrcode/app/core/num_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/gen/assets.gen.dart';
@@ -79,7 +80,7 @@ class ItemListState extends State<ItemList> {
       borderRadius: BorderRadius.circular(8.r),
       child: Image.network(
         widget.itemsCarts.image ?? '',
-        width: 110.w,
+        width: 105.w,
         height: 95.h,
         fit: BoxFit.fill,
       ),
@@ -121,11 +122,11 @@ class ItemListState extends State<ItemList> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildPriceText(
-          widget.itemsCarts.getSalePrice.toString(),
+          widget.itemsCarts.getSalePrice.toAppNumberFormat,
           textColor: AppColors.color7F2B81,
         ),
         _buildPriceText(
-          widget.itemsCarts.getOriginPrice.toString(),
+          widget.itemsCarts.getOriginPrice.toAppNumberFormat,
           decoration: TextDecoration.lineThrough,
         ),
       ],
@@ -138,8 +139,8 @@ class ItemListState extends State<ItemList> {
       child: Text(
         '$price vnđ',
         style: TextStyleManager.mediumBlack14px.copyWith(
-          fontWeight: FontWeight.w500,
           decoration: decoration,
+          fontSize: 12.sp,
           color: textColor ?? AppColors.black,
         ),
         overflow: TextOverflow.ellipsis,
@@ -154,24 +155,21 @@ class ItemListState extends State<ItemList> {
       children: [
         Text(
           'Số lượng: ',
-          style: TextStyleManager.mediumBlack14px.copyWith(
-            fontWeight: FontWeight.w500,
-            fontSize: 14.sp,
-          ),
+          style: TextStyleManager.mediumBlack14px,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
-        _buildQuantityButton(Assets.icons.iconDown.path, () {}),
+        _buildQuantityButton(
+          Assets.icons.iconDown.path,
+          onTap: () {},
+        ),
         Text(
-          '1',
-          style: TextStyleManager.mediumBlack14px.copyWith(
-            fontWeight: FontWeight.w500,
-            fontSize: 14.sp,
-          ),
+          widget.itemsCarts.getQtyNum.toString(),
+          style: TextStyleManager.mediumBlack14px,
         ),
         _buildQuantityButton(
           Assets.icons.icPlus.path,
-          () {},
+          onTap: () {},
           color: AppColors.color7F2B81,
         ),
       ],
@@ -179,8 +177,8 @@ class ItemListState extends State<ItemList> {
   }
 
   Widget _buildQuantityButton(
-    String iconPath,
-    Function() onTap, {
+    String iconPath, {
+    required Function() onTap,
     Color? color,
   }) {
     return GestureDetector(
@@ -189,7 +187,9 @@ class ItemListState extends State<ItemList> {
         width: 22,
         height: 22,
         decoration: BoxDecoration(
-            shape: BoxShape.circle, color: color ?? AppColors.red),
+          shape: BoxShape.circle,
+          color: color ?? AppColors.red,
+        ),
         child: Image.asset(iconPath),
       ),
     );

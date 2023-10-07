@@ -18,7 +18,9 @@ class _SuccessScreenState extends State<SuccessScreen> {
     return Scaffold(
       appBar: BaseAppBar(
         title: 'Giỏ hàng',
+        backGroundColor: AppColors.color7F2B81,
         isShowBack: true,
+        titleColor: AppColors.white,
       ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -58,8 +60,11 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 height: 44,
               ),
               GestureDetector(
-                onTap: () async {
-                  Navigator.pushNamed(context, RouteDefine.detailOrder);
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    RouteDefine.detailOrder,
+                  );
                 },
                 child: Text(
                   'Chi tiết đơn hàng xem tại đây.',

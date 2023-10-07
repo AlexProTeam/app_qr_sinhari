@@ -131,6 +131,7 @@ class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
   final bool? refreshData;
   final Widget? widgetTitle;
   final double? leadingWidth;
+  final Color? titleColor;
 
   BaseAppBar({
     Key? key,
@@ -144,13 +145,14 @@ class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
     this.widgetTitle,
     this.preferredSize = const Size.fromHeight(kToolbarHeight),
     this.leadingWidth,
+    this.titleColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leadingWidth: leadingWidth,
-      backgroundColor: Colors.transparent,
+      backgroundColor: backGroundColor ?? Colors.transparent,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       bottomOpacity: 0.0,
       elevation: 0,
@@ -164,6 +166,7 @@ class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
             style: TextStyleManager.mediumBlack.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.w500,
+              color: titleColor,
             ),
           ),
       centerTitle: true,

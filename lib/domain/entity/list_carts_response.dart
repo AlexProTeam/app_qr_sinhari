@@ -105,19 +105,23 @@ class CartDataList {
     }
   }
 
-  double get getTotalSalePrice =>
+  double get getTotalOriginPrice =>
       items
-          ?.map((e) => e.getSalePrice)
+          ?.map((e) => e.getTotalOriginPrice)
           .toList()
           .reduce((value, element) => value + element) ??
       0;
 
-  double get getTotalOriginPrice =>
+  double get getTotalPriceQty =>
       items
-          ?.map((e) => e.getOriginPrice)
+          ?.map((e) => e.getTotalPrice)
           .toList()
           .reduce((value, element) => value + element) ??
       0;
+
+  int get getItemsQtyNum => double.parse(itemsQty ?? '0').toInt();
+
+  double get getDisCountPrice => getTotalOriginPrice - getTotalPriceQty;
 }
 
 class ItemsCarts {
@@ -212,4 +216,10 @@ class ItemsCarts {
   double get getSalePrice => double.parse(salePrice ?? '0');
 
   double get getOriginPrice => double.parse(originPrice ?? '0');
+
+  double get getTotalPrice => getSalePrice * getQtyNum;
+
+  double get getTotalOriginPrice => getOriginPrice * getQtyNum;
+
+  int get getQtyNum => double.parse(qty ?? '0').toInt();
 }

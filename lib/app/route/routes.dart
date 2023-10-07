@@ -73,7 +73,10 @@ class Routes {
         );
       case RouteDefine.cartScreen:
         return SlideLeftRoute(
-          widget: const CartScreen(),
+          widget: BlocProvider(
+            create: (context) => CartsBloc()..add(const InitDataCartEvent()),
+            child: const CartScreen(),
+          ),
         );
       case RouteDefine.successScreen:
         return SlideLeftRoute(
@@ -201,7 +204,7 @@ class Routes {
           ),
         );
 
-    ///
+      ///
       case RouteDefine.detailNewScreen:
         return SlideLeftRoute(
           duration: 0,

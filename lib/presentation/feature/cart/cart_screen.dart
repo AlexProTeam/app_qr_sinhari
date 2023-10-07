@@ -8,6 +8,7 @@ import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../app/managers/status_bloc.dart';
+import '../../../domain/entity/list_carts_response.dart';
 import 'bloc/carts_bloc.dart';
 import 'widget/item_bottom.dart';
 import 'widget/item_check_promotion.dart';
@@ -19,45 +20,49 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CartsBloc()..add(const InitDataCartEvent()),
-      child: BlocConsumer<CartsBloc, CartsState>(
-        listenWhen: (previous, current) => previous != current,
-        listener: (context, state) {
-          state.status == BlocStatusEnum.loading
-              ? DialogManager.showLoadingDialog(context)
-              : DialogManager.hideLoadingDialog;
+    return BlocConsumer<CartsBloc, CartsState>(
+      listenWhen: (previous, current) => previous != current,
+      buildWhen: (previous, current) => previous != current,
+      listener: (context, state) {
+        state.status == BlocStatusEnum.loading
+            ? DialogManager.showLoadingDialog(context)
+            : DialogManager.hideLoadingDialog;
 
-          if ((state.errMes ?? '').isNotEmpty) {
-            ToastManager.showToast(context, text: state.errMes!);
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            appBar: BaseAppBar(
-              title: 'Giỏ hàng',
-              isShowBack: true,
+        if ((state.errMes ?? '').isNotEmpty) {
+          ToastManager.showToast(context, text: state.errMes!);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: BaseAppBar(
+            title: 'Giỏ hàng',
+            backGroundColor: AppColors.color7F2B81,
+            isShowBack: true,
+            titleColor: AppColors.white,
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                /// list item
+                ListProducts(
+                  listItemsCarts: state.cartsResponse?.carts?.items ?? [],
+                ),
+                const ItemCheckPromotion(),
+                const Divider(),
+
+                /// thống kê sản phẩm
+                ItemTotalAmount(
+                  listCartsResponse: state.cartsResponse ?? ListCartsResponse(),
+                )
+              ],
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  /// list item
-                  ListProducts(
-                    listItemsCarts: state.cartsResponse?.carts?.items ?? [],
-                  ),
-                  const ItemCheckPromotion(),
-                  const Divider(),
-                  const ItemTotalAmount()
-                ],
-              ),
-            ),
-            bottomNavigationBar: ItemBottomCarts(
-              onTap: () => _showDialog(context),
-              onChange: () {},
-            ),
-          );
-        },
-      ),
+          ),
+          bottomNavigationBar: ItemBottomCarts(
+            onTap: () => _showDialog(context),
+            onChange: () {},
+          ),
+        );
+      },
     );
   }
 

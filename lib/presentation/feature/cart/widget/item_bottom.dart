@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qrcode/app/core/num_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/presentation/widgets/check_box_custom.dart';
@@ -42,15 +44,15 @@ class _ItemBottomCartsState extends State<ItemBottomCarts> {
         ],
       ),
       padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-      height: 130,
+      height: 130.h,
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                  width: 100,
-                  height: 30,
+                  width: 100.w,
+                  height: 30.h,
                   child: CheckBoxCustom(
                     enable: true,
                     title: 'Chọn tất cả',
@@ -65,17 +67,20 @@ class _ItemBottomCartsState extends State<ItemBottomCarts> {
                 children: [
                   Text(
                     'Tổng thanh toán',
-                    style: TextStyleManager.mediumBlack14px
-                        .copyWith(fontWeight: FontWeight.w400, fontSize: 14),
+                    style: TextStyleManager.mediumBlack14px.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.sp,
+                    ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                   Text(
-                    '${_cartsBloc.state.cartsResponse?.carts?.getTotalSalePrice} vnđ',
+                    '${_cartsBloc.state.cartsResponse?.carts?.getTotalPriceQty.toAppNumberFormat} vnđ',
                     style: TextStyleManager.mediumBlack14px.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                        color: AppColors.red),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15.sp,
+                      color: AppColors.red,
+                    ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   )
@@ -83,11 +88,9 @@ class _ItemBottomCartsState extends State<ItemBottomCarts> {
               )
             ],
           ),
-          const SizedBox(
-            height: 8,
-          ),
+          8.verticalSpace,
           SizedBox(
-            width: MediaQuery.of(context).size.width - 32,
+            width: (MediaQuery.of(context).size.width - 32).w,
             child: GestureDetector(
               onTap: () {
                 widget.onTap();
@@ -97,13 +100,12 @@ class _ItemBottomCartsState extends State<ItemBottomCarts> {
                   borderRadius: BorderRadius.circular(8),
                   color: AppColors.red,
                 ),
-                padding: const EdgeInsets.only(
-                    left: 24, right: 24, bottom: 16, top: 16),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
                 child: Text(
                   'Mua hàng',
                   style: TextStyleManager.mediumBlack14px.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       color: AppColors.white),
                   textAlign: TextAlign.center,
                 ),

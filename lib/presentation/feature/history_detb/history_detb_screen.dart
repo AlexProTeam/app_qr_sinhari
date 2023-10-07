@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
+import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
 class HistoryDetbScreen extends StatefulWidget {
   const HistoryDetbScreen({Key? key}) : super(key: key);
@@ -13,18 +14,11 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.color0A55BA,
-        title: Center(
-          child: Text(
-            'Lịch sử công nợ',
-            style: TextStyleManager.medium,
-          ),
-        ),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10))),
+      appBar: BaseAppBar(
+        title: 'Lịch sử công nợ',
+        backGroundColor: AppColors.color7F2B81,
+        isShowBack: true,
+        titleColor: AppColors.white,
       ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
