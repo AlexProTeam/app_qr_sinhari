@@ -31,6 +31,7 @@ import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
 import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
+import 'package:qrcode/domain/entity/order_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/domain/entity/welcome_model.dart';

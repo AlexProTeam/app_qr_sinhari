@@ -97,4 +97,7 @@ class AppUseCase {
       _repository.getListCart();
 
   Future<DataProduct> getListAngecy() => _repository.getListAngecy();
+
+  Future<OrderModel> getListOrder({String? statusOrder}) =>
+      _repository.getListOrder();
 }
