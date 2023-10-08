@@ -96,6 +96,15 @@ class AppUseCase {
   }) =>
       _repository.payment(amount: amount);
 
+  Future<ObjectResponse<ListCartsResponse>> postQuality({
+    int? productId,
+    int? qty,
+  }) =>
+      _repository.changeQuality(productId: productId, qty: qty);
+
+  Future<ObjectResponse> postConfirmCart() =>
+      _repository.confirmCart();
+
   Future<ListCartsResponse> getListCart({
     int? productId,
   }) =>

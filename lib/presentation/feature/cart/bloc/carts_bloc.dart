@@ -32,5 +32,38 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         ));
       }
     });
+
+    on<ChangeQualityCartEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(status: BlocStatusEnum.loading));
+        final result = await _appUseCase.postQuality(
+            productId: event.productId, qty: event.quality);
+
+        emit(state.copyWith(
+          status: BlocStatusEnum.success,
+          cartsResponse: result.data,
+        ));
+      } on ApiException catch (e) {
+        emit(state.copyWith(
+          status: BlocStatusEnum.failed,
+          errMes: e.message,
+        ));
+      }
+    });
+
+    on<ConfirmCartEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(status: BlocStatusEnum.loading));
+        await _appUseCase.postConfirmCart();
+        emit(state.copyWith(
+          status: BlocStatusEnum.success,
+        ));
+      } on ApiException catch (e) {
+        emit(state.copyWith(
+          status: BlocStatusEnum.failed,
+          errMes: e.message,
+        ));
+      }
+    });
   }
 }

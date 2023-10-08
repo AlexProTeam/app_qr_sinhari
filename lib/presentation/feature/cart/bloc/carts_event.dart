@@ -10,3 +10,20 @@ class InitDataCartEvent extends CartsEvent {
   @override
   List<Object?> get props => [];
 }
+
+class ChangeQualityCartEvent extends CartsEvent {
+  final int productId;
+  final int quality;
+
+  const ChangeQualityCartEvent(this.productId, this.quality);
+
+  @override
+  List<Object?> get props => [productId, quality];
+}
+
+class ConfirmCartEvent extends CartsEvent {
+  const ConfirmCartEvent();
+
+  @override
+  List<Object?> get props => [];
+}

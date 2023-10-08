@@ -61,6 +61,13 @@ abstract class AppRepository {
     int? amount,
   });
 
+  Future<ObjectResponse<ListCartsResponse>> changeQuality({
+    int? productId,
+    int? qty,
+  });
+
+  Future<ObjectResponse> confirmCart();
+
   Future<ListCartsResponse> getListCart();
 
   Future<OrderModel> getListOrder({String? statusOrder});

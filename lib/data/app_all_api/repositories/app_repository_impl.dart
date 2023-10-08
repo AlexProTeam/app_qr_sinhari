@@ -309,4 +309,24 @@ class AppRepositoryImpl implements AppRepository {
       throw (ApiException.error(e));
     }
   }
+
+  @override
+  Future<ObjectResponse<ListCartsResponse>> changeQuality(
+      {int? productId, int? qty}) async {
+    try {
+      final response = await api.postQuality(productId ?? 0, qty ?? 0);
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse> confirmCart() async {
+    try {
+      return await api.postConfirmCart();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
 }

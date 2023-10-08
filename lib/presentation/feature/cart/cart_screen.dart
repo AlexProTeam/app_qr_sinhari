@@ -69,7 +69,7 @@ class CartScreen extends StatelessWidget {
   void _showDialog(BuildContext context) => DialogManager.showDialogCustom(
         icon: Image.asset(Assets.icons.icQuesition.path),
         onTapRight: () {
-          ///todo: handel call api here
+          context.read<CartsBloc>().add(const ConfirmCartEvent());
         },
         onTapLeft: () {
           Navigator.pushNamed(
