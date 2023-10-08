@@ -12,8 +12,11 @@ class ItemBottomCarts extends StatefulWidget {
   final Function onTap;
   final Function onChange;
 
-  const ItemBottomCarts({Key? key, required this.onTap, required this.onChange})
-      : super(key: key);
+  const ItemBottomCarts({
+    Key? key,
+    required this.onTap,
+    required this.onChange,
+  }) : super(key: key);
 
   @override
   State<ItemBottomCarts> createState() => _ItemBottomCartsState();
