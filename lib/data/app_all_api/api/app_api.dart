@@ -135,4 +135,13 @@ abstract class AppApi {
   @POST('orders')
   Future<OrderModel> getListOrder(
       @Part(name: 'status_order') String? statusOrder);
+
+  @POST('add_quantity')
+  Future<ObjectResponse<ListCartsResponse>> postQuality(
+    @Query('product_id') int productId,
+    @Query('qty') int qty,
+  );
+
+  @POST('order_cart')
+  Future<ObjectResponse> postConfirmCart();
 }

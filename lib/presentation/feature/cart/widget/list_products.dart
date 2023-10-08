@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/core/num_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
@@ -7,6 +8,7 @@ import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/widgets/check_box_custom.dart';
 
 import '../../../../domain/entity/list_carts_response.dart';
+import '../bloc/carts_bloc.dart';
 
 class ListProducts extends StatelessWidget {
   final List<ItemsCarts> listItemsCarts;
@@ -159,17 +161,22 @@ class ItemListState extends State<ItemList> {
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
-        _buildQuantityButton(
-          Assets.icons.iconDown.path,
-          onTap: () {},
-        ),
+        _buildQuantityButton(Assets.icons.iconDown.path, onTap: () {
+          context.read<CartsBloc>().add(ChangeQualityCartEvent(
+              widget.itemsCarts.productId ?? 0,
+              widget.itemsCarts.getQtyNum - 1));
+        }),
         Text(
           widget.itemsCarts.getQtyNum.toString(),
           style: TextStyleManager.mediumBlack14px,
         ),
         _buildQuantityButton(
           Assets.icons.icPlus.path,
-          onTap: () {},
+          onTap: () {
+            context.read<CartsBloc>().add(ChangeQualityCartEvent(
+                widget.itemsCarts.productId ?? 0,
+                widget.itemsCarts.getQtyNum + 1));
+          },
           color: AppColors.color7F2B81,
         ),
       ],
