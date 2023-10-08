@@ -21,6 +21,7 @@ class ProfileModel {
   int? nextQrSerialNo;
   int? isNotification;
   String? avatar;
+  num? currentDebt;
 
   bool get isTheVendor => isVendor == 1;
 
@@ -45,6 +46,7 @@ class ProfileModel {
     this.nextQrSerialNo,
     this.isNotification,
     this.avatar,
+    this.currentDebt,
   });
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -71,5 +73,6 @@ class ProfileModel {
     isVendor = json['is_vendor'];
     nextQrSerialNo = json['next_qr_serial_no'];
     isNotification = json['is_notification'];
+    currentDebt = json['currentDebt'];
   }
 }

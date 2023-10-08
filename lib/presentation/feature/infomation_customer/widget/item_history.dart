@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
@@ -15,62 +16,62 @@ class ItemHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => InfoBloc(getIt<AppUseCase>(), ''),
-      child: BlocBuilder<InfoBloc, InfoState>(
-          builder: (BuildContext context, state) {
+    return BlocBuilder<InfoBloc, InfoState>(
+      builder: (BuildContext context, state) {
         final products = state.products ?? [];
-        if (state.status == BlocStatusEnum.loading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (products.isEmpty) {
-          return const Center(
-            child: Text("Không có sản phẩm nào!"),
-          );
-        }
+
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.h),
           child: Column(
             children: [
               Text(
                 'Lịch sử đơn hàng ',
-                style: TextStyleManager.title,
+                style: TextStyleManager.title.copyWith(
+                  fontSize: 20.sp,
+                ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return rootView(
-                      context: context,
-                      onTap: () {
-                        Navigator.pushNamed(
-                            Routes.instance.navigatorKey.currentContext!,
-                            RouteDefine.detailOrder);
-                      },
-                      order: products[index].data?.orders?[index] ?? Orders());
-                },
-                itemCount: 5,
-              ),
-              const SizedBox(
-                height: 100,
-              )
+              16.verticalSpace,
+              if (state.status == BlocStatusEnum.loading)
+                const Center(child: CircularProgressIndicator()),
+              if (products.isEmpty && state.status != BlocStatusEnum.loading)
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 30.h),
+                    child: const Text("Không có sản phẩm nào!"),
+                  ),
+                ),
+              if (products.isNotEmpty && state.status != BlocStatusEnum.loading)
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return rootView(
+                        context: context,
+                        onTap: () {
+                          Navigator.pushNamed(
+                              Routes.instance.navigatorKey.currentContext!,
+                              RouteDefine.detailOrder);
+                        },
+                        order: products[index].orders?[index] ?? Orders());
+                  },
+                  itemCount: products.length,
+                ),
+              120.verticalSpace,
             ],
           ),
         );
-      }),
+      },
     );
   }
 
-  Widget rootView(
-      {required BuildContext context,
-      required Function onTap,
-      required Orders order}) {
+  Widget rootView({
+    required BuildContext context,
+    required Function onTap,
+    required Orders order,
+  }) {
     return GestureDetector(
       onTap: () {
         onTap();

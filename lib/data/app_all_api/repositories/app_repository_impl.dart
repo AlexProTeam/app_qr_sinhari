@@ -290,11 +290,11 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<OrderModel> getListOrder({String? statusOrder}) async {
+  Future<DataListOrder> getListOrder({String? statusOrder}) async {
     try {
       final response = await api.getListOrder(statusOrder);
 
-      return response;
+      return response.data ?? DataListOrder();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

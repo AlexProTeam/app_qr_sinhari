@@ -70,5 +70,5 @@ abstract class AppRepository {
 
   Future<ListCartsResponse> getListCart();
 
-  Future<OrderModel> getListOrder({String? statusOrder});
+  Future<DataListOrder> getListOrder({String? statusOrder});
 }

@@ -1,96 +1,109 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qrcode/app/core/num_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
+import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/gen/assets.gen.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 import 'package:qrcode/presentation/widgets/circle_avatar.dart';
 
-class ItemHeader extends StatelessWidget {
-  const ItemHeader({Key? key}) : super(key: key);
+class ItemHeaderProfileBill extends StatelessWidget {
+  const ItemHeaderProfileBill({Key? key}) : super(key: key);
+
+  void _navigateToHistoryDebt(BuildContext context) {
+    Navigator.pushNamed(context, RouteDefine.historyDetb);
+  }
+
+  void _navigateToPayDebt(BuildContext context) {
+    Navigator.pushNamed(context, RouteDefine.payDebt);
+  }
+
+  Widget _buildDebtInfo(BuildContext context, ProfileModel profileData) {
+    return GestureDetector(
+      onTap: () => _navigateToHistoryDebt(context),
+      child: Container(
+        padding: EdgeInsets.all(10.r),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(
+            color: AppColors.color0A55BA,
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Image.asset(Assets.icons.iconBank.path),
+            8.horizontalSpace,
+            Text(
+              (profileData.currentDebt ?? 0).toDouble().toAppNumberFormat,
+              style: const TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w700,
+                color: AppColors.color2604F5,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQrCodeButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _navigateToPayDebt(context),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: AppColors.color0A55BA, width: 1),
+        ),
+        child: Image.asset(Assets.icons.iconQr.path),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final profileData =
+        context.read<ProfileBloc>().state.profileModel ?? ProfileModel();
+
     return Column(
       children: [
         CircleAvatarWidget(
           size: 80,
           path: Assets.images.welcome.path,
         ),
-        const Text(
-          '0968506638',
+        5.verticalSpace,
+        Text(
+          profileData.phone ?? '',
           style: TextStyle(
-            fontSize: 20.0,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w400,
             color: AppColors.black,
           ),
         ),
+        5.verticalSpace,
         Text(
-          'Chí Bảo',
+          profileData.name ?? '',
           style: TextStyle(
-            fontSize: 14.0,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w400,
             color: AppColors.black.withOpacity(0.7),
           ),
         ),
-        const SizedBox(
-          height: 6,
+        5.verticalSpace,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildDebtInfo(context, profileData),
+            10.horizontalSpace,
+            _buildQrCodeButton(context),
+          ],
         ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 44,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    RouteDefine.historyDetb,
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border:
-                          Border.all(color: AppColors.color0A55BA, width: 1)),
-                  child: Row(
-                    children: [
-                      Image.asset(Assets.icons.iconBank.path),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      const Text(
-                        '10.000.000 VND',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.color2604F5,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    RouteDefine.payDebt,
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border:
-                          Border.all(color: AppColors.color0A55BA, width: 1)),
-                  child: Image.asset(Assets.icons.iconQr.path),
-                ),
-              )
-            ],
-          ),
-        )
       ],
     );
   }

@@ -87,6 +87,7 @@ import '../domain/entity/order_model.dart';
 import '../domain/entity/payment_debt_model.dart';
 import '../presentation/feature/cart/bloc/carts_bloc.dart';
 import '../presentation/feature/detail_product/bloc/product_detail_bloc.dart';
+import '../presentation/feature/infomation_customer/bloc/info_bloc.dart';
 
 part '../app/di/injection.dart';
 part '../app/managers/constant_manager.dart';

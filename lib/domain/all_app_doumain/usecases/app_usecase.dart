@@ -102,8 +102,7 @@ class AppUseCase {
   }) =>
       _repository.changeQuality(productId: productId, qty: qty);
 
-  Future<ObjectResponse> postConfirmCart() =>
-      _repository.confirmCart();
+  Future<ObjectResponse> postConfirmCart() => _repository.confirmCart();
 
   Future<ListCartsResponse> getListCart({
     int? productId,
@@ -112,6 +111,6 @@ class AppUseCase {
 
   Future<DataProduct> getListAngecy() => _repository.getListAngecy();
 
-  Future<OrderModel> getListOrder({String? statusOrder}) =>
+  Future<DataListOrder> getListOrder({String? statusOrder}) =>
       _repository.getListOrder();
 }

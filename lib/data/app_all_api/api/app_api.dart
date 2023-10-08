@@ -133,7 +133,7 @@ abstract class AppApi {
   Future<DataProduct> getListAngecy();
 
   @POST('orders')
-  Future<OrderModel> getListOrder(
+  Future<ObjectResponse<DataListOrder>> getListOrder(
       @Part(name: 'status_order') String? statusOrder);
 
   @POST('add_quantity')

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 
@@ -15,9 +16,9 @@ class _ItemListStatusOrderState extends State<ItemListStatusOrder> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(top: 8, bottom: 8),
-          child: Text(
+        Padding(
+          padding: EdgeInsets.only(top: 8.h, bottom: 8.h, left: 20.w),
+          child: const Text(
             'Đơn hàng của tôi',
             style: TextStyle(
               fontSize: 16.0,
@@ -26,26 +27,30 @@ class _ItemListStatusOrderState extends State<ItemListStatusOrder> {
             ),
           ),
         ),
-        SizedBox(
-            width: MediaQuery.of(context).size.width - 32,
-            height: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  StatusEnum.values.length,
-                  (index) => item(
-                      image: StatusEnum.values[index].getIcon(),
-                      name: StatusEnum.values[index].getName(),
-                      onTap: StatusEnum.values[index].getOnTap())),
-            )),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          height: 100.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              StatusEnum.values.length,
+              (index) => item(
+                image: StatusEnum.values[index].getIcon(),
+                name: StatusEnum.values[index].getName(),
+                onTap: StatusEnum.values[index].getOnTap(),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
 
-  Widget item(
-      {required String? image,
-      required String? name,
-      required Function onTap}) {
+  Widget item({
+    required String? image,
+    required String? name,
+    required Function onTap,
+  }) {
     return GestureDetector(
       onTap: () {
         onTap();

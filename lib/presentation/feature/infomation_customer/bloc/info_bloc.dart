@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/data/utils/exceptions/api_exception.dart';
 import 'package:qrcode/domain/entity/order_model.dart';
+
 import '../../../../app/managers/status_bloc.dart';
 
 part 'info_event.dart';
-
 part 'info_state.dart';
 
 class InfoBloc extends Bloc<InfoEvent, InfoState> {
@@ -15,14 +15,14 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
 
   InfoBloc(this.appUseCase, this.url) : super(const InfoState()) {
     on<InitListProductEvent>((event, emit) async {
-      List<OrderModel>? listData;
+      List<DataListOrder>? listData;
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
         /// todo: check with enum or bool
         final result = await appUseCase.getListOrder();
-        if ((result.data?.orders ?? []).isNotEmpty) {
-          listData = result.data?.orders as List<OrderModel>;
+        if ((result.orders ?? []).isNotEmpty) {
+          listData = result.orders as List<DataListOrder>;
         }
 
         emit(state.copyWith(

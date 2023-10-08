@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
+import 'bloc/info_bloc.dart';
 import 'widget/item_header.dart';
 import 'widget/item_history.dart';
 import 'widget/item_list_status_order.dart';
@@ -14,21 +15,29 @@ class InfomationCustomer extends StatefulWidget {
 }
 
 class _InfomationCustomerState extends State<InfomationCustomer> {
+  late final InfoBloc _infoBloc;
+
+  @override
+  void initState() {
+    _infoBloc = context.read<InfoBloc>();
+    _infoBloc.add(const InitListProductEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
         title: '',
         isShowBack: true,
-        actions: const [],
       ),
       body: SingleChildScrollView(
-       // physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Container(
           color: Colors.transparent,
           child: Column(
             children: const [
-              ItemHeader(),
+              ItemHeaderProfileBill(),
               ItemListStatusOrder(),
               ItemHistory()
             ],

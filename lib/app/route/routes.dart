@@ -125,7 +125,10 @@ class Routes {
         );
       case RouteDefine.informationCustomer:
         return SlideLeftRoute(
-          widget: const InfomationCustomer(),
+          widget: BlocProvider(
+            create: (context) => InfoBloc(getIt<AppUseCase>(), ''),
+            child: const InfomationCustomer(),
+          ),
         );
       case RouteDefine.historyDetb:
         return SlideLeftRoute(

@@ -1,19 +1,3 @@
-class OrderModel {
-  bool? error;
-  DataListOrder? data;
-  String? message;
-  bool? success;
-
-  OrderModel({this.error, this.data, this.message, this.success});
-
-  OrderModel.fromJson(Map<String, dynamic> json) {
-    error = json['error'];
-    data = json['data'] != null ? DataListOrder.fromJson(json['data']) : null;
-    message = json['message'];
-    success = json['success'];
-  }
-}
-
 class DataListOrder {
   List<Orders>? orders;
 
