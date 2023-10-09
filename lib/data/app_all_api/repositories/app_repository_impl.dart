@@ -311,11 +311,10 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<ObjectResponse<ListCartsResponse>> changeQuality(
-      {int? productId, int? qty}) async {
+  Future<OrderCartsResponse> changeQuality({int? productId, int? qty}) async {
     try {
       final response = await api.postQuality(productId ?? 0, qty ?? 0);
-      return response;
+      return response.data ?? OrderCartsResponse();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }
@@ -325,6 +324,15 @@ class AppRepositoryImpl implements AppRepository {
   Future<ObjectResponse> confirmCart() async {
     try {
       return await api.postConfirmCart();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse> deleteItemCart(int id) async {
+    try {
+      return await api.deleteItemCart(id);
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

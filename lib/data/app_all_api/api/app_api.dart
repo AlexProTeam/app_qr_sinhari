@@ -134,14 +134,20 @@ abstract class AppApi {
 
   @POST('orders')
   Future<ObjectResponse<DataListOrder>> getListOrder(
-      @Part(name: 'status_order') String? statusOrder);
+    @Part(name: 'status_order') String? statusOrder,
+  );
 
   @POST('add_quantity')
-  Future<ObjectResponse<ListCartsResponse>> postQuality(
+  Future<ObjectResponse<OrderCartsResponse>> postQuality(
     @Query('product_id') int productId,
     @Query('qty') int qty,
   );
 
   @POST('order_cart')
   Future<ObjectResponse> postConfirmCart();
+
+  @POST('delete_item_cart')
+  Future<ObjectResponse> deleteItemCart(
+    @Query('item_id') int id,
+  );
 }

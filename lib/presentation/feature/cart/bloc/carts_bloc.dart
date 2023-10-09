@@ -36,13 +36,25 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
     on<ChangeQualityCartEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
-        final result = await _appUseCase.postQuality(
+        await _appUseCase.postQuality(
             productId: event.productId, qty: event.quality);
 
-        emit(state.copyWith(
-          status: BlocStatusEnum.success,
-          cartsResponse: result.data,
-        ));
+        List<ItemsCarts> listData = state.cartsResponse?.carts?.items ?? [];
+
+        listData[event.index] = listData[event.index].copyWith(
+          qty: event.quality.toString(),
+        );
+
+        emit(
+          state.copyWith(
+            status: BlocStatusEnum.success,
+            cartsResponse: state.cartsResponse?.copyWith(
+              carts: state.cartsResponse?.carts?.copyWith(
+                items: listData,
+              ),
+            ),
+          ),
+        );
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
@@ -57,6 +69,32 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         await _appUseCase.postConfirmCart();
         emit(state.copyWith(
           status: BlocStatusEnum.success,
+        ));
+      } on ApiException catch (e) {
+        emit(state.copyWith(
+          status: BlocStatusEnum.failed,
+          errMes: e.message,
+        ));
+      }
+    });
+
+    on<DeleteCartEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(status: BlocStatusEnum.loading));
+        final result = await _appUseCase.deleteItemCart(id: event.itemId);
+
+        final listData = state.cartsResponse?.carts?.items ?? [];
+
+        listData.removeAt(event.index);
+
+        emit(state.copyWith(
+          status: BlocStatusEnum.success,
+          errMes: result.message,
+          cartsResponse: state.cartsResponse?.copyWith(
+            carts: state.cartsResponse?.carts?.copyWith(
+              items: listData,
+            ),
+          ),
         ));
       } on ApiException catch (e) {
         emit(state.copyWith(

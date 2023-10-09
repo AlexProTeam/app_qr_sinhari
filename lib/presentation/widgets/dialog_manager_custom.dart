@@ -99,4 +99,36 @@ class DialogManager {
       );
     }
   }
+
+  static Future<bool> showDialogConfirm(
+    BuildContext context, {
+    required Function() onTapLeft,
+    required String content,
+    required String leftTitle,
+  }) async {
+    bool data = false;
+
+    await showDialogCustom(
+      icon: Image.asset(Assets.icons.icQuesition.path),
+      onTapRight: () {
+        data = false;
+      },
+      onTapLeft: () {
+        data = true;
+        onTapLeft();
+      },
+      leftTitle: leftTitle,
+      rightTitle: 'Huỷ',
+      context: context,
+      bgColorLeft: AppColors.realEstate,
+      bgColorRight: AppColors.red,
+      content: content,
+      styleContent: kTextRegularStyle.copyWith(
+        fontWeight: FontWeight.w500,
+        fontSize: 20,
+      ),
+    );
+
+    return data;
+  }
 }

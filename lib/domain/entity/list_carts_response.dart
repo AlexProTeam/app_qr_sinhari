@@ -6,6 +6,14 @@ class ListCartsResponse {
   ListCartsResponse.fromJson(Map<String, dynamic> json) {
     carts = json['carts'] != null ? CartDataList.fromJson(json['carts']) : null;
   }
+
+  ListCartsResponse copyWith({
+    CartDataList? carts,
+  }) {
+    return ListCartsResponse(
+      carts: carts ?? this.carts,
+    );
+  }
 }
 
 class CartDataList {
@@ -105,23 +113,102 @@ class CartDataList {
     }
   }
 
-  double get getTotalOriginPrice =>
-      items
-          ?.map((e) => e.getTotalOriginPrice)
+  double get getTotalOriginPrice {
+    if (items != null && items!.isNotEmpty) {
+      return items!
+          .map((e) => e.getTotalOriginPrice)
           .toList()
-          .reduce((value, element) => value + element) ??
-      0;
+          .reduce((value, element) => value + element);
+    }
+    return 0;
+  }
 
-  double get getTotalPriceQty =>
-      items
-          ?.map((e) => e.getTotalPrice)
+  double get getTotalPriceQty {
+    if (items != null && items!.isNotEmpty) {
+      return items!
+          .map((e) => e.getTotalPrice)
           .toList()
-          .reduce((value, element) => value + element) ??
-      0;
+          .reduce((value, element) => value + element);
+    }
+    return 0;
+  }
 
-  int get getItemsQtyNum => double.parse(itemsQty ?? '0').toInt();
+  int? get calQtyProduct {
+    if (items != null && items!.isNotEmpty) {
+      return items!
+          .map((e) => e.getQtyNum)
+          .toList()
+          .reduce((value, element) => value + element);
+    }
+    return 0;
+  }
+
+  int get getItemsQtyNum =>
+      calQtyProduct ?? double.parse(itemsQty ?? '0').toInt();
 
   double get getDisCountPrice => getTotalOriginPrice - getTotalPriceQty;
+
+  CartDataList copyWith({
+    int? id,
+    String? itemsCount,
+    String? itemsQty,
+    String? currencyCode,
+    dynamic checkoutMethod,
+    int? customerId,
+    int? customerGroupId,
+    dynamic customerFirstname,
+    dynamic customerLastname,
+    dynamic customerEmail,
+    dynamic customerNote,
+    dynamic customerNoteNotify,
+    int? customerIsGuest,
+    dynamic remoteIp,
+    dynamic ruleIds,
+    dynamic reservedOrderId,
+    dynamic couponCode,
+    String? discountAmount,
+    String? subtotalWithDiscount,
+    String? subtotal,
+    String? grandTotal,
+    String? weight,
+    String? createdAt,
+    String? updatedAt,
+    String? walletValue,
+    dynamic tokenId,
+    int? orderStatus,
+    List<ItemsCarts>? items,
+  }) {
+    return CartDataList(
+      id: id ?? this.id,
+      itemsCount: itemsCount ?? this.itemsCount,
+      itemsQty: itemsQty ?? this.itemsQty,
+      currencyCode: currencyCode ?? this.currencyCode,
+      checkoutMethod: checkoutMethod ?? this.checkoutMethod,
+      customerId: customerId ?? this.customerId,
+      customerGroupId: customerGroupId ?? this.customerGroupId,
+      customerFirstname: customerFirstname ?? this.customerFirstname,
+      customerLastname: customerLastname ?? this.customerLastname,
+      customerEmail: customerEmail ?? this.customerEmail,
+      customerNote: customerNote ?? this.customerNote,
+      customerNoteNotify: customerNoteNotify ?? this.customerNoteNotify,
+      customerIsGuest: customerIsGuest ?? this.customerIsGuest,
+      remoteIp: remoteIp ?? this.remoteIp,
+      ruleIds: ruleIds ?? this.ruleIds,
+      reservedOrderId: reservedOrderId ?? this.reservedOrderId,
+      couponCode: couponCode ?? this.couponCode,
+      discountAmount: discountAmount ?? this.discountAmount,
+      subtotalWithDiscount: subtotalWithDiscount ?? this.subtotalWithDiscount,
+      subtotal: subtotal ?? this.subtotal,
+      grandTotal: grandTotal ?? this.grandTotal,
+      weight: weight ?? this.weight,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      walletValue: walletValue ?? this.walletValue,
+      tokenId: tokenId ?? this.tokenId,
+      orderStatus: orderStatus ?? this.orderStatus,
+      items: items ?? this.items,
+    );
+  }
 }
 
 class ItemsCarts {
@@ -222,4 +309,64 @@ class ItemsCarts {
   double get getTotalOriginPrice => getOriginPrice * getQtyNum;
 
   int get getQtyNum => double.parse(qty ?? '0').toInt();
+
+  ItemsCarts copyWith({
+    int? id,
+    int? quoteId,
+    dynamic ruleIds,
+    int? freeShipping,
+    int? productId,
+    dynamic additionalData,
+    dynamic sku,
+    dynamic productType,
+    String? name,
+    String? image,
+    dynamic description,
+    String? weight,
+    String? qty,
+    String? originPrice,
+    String? salePrice,
+    String? customPrice,
+    String? discountPercent,
+    String? discountAmount,
+    String? taxPercent,
+    String? taxAmount,
+    String? rowTotalWithDiscount,
+    String? rowTotal,
+    String? rowWeight,
+    String? rowTotalWithTax,
+    int? status,
+    String? createdAt,
+    String? updatedAt,
+  }) {
+    return ItemsCarts(
+      id: id ?? this.id,
+      quoteId: quoteId ?? this.quoteId,
+      ruleIds: ruleIds ?? this.ruleIds,
+      freeShipping: freeShipping ?? this.freeShipping,
+      productId: productId ?? this.productId,
+      additionalData: additionalData ?? this.additionalData,
+      sku: sku ?? this.sku,
+      productType: productType ?? this.productType,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      description: description ?? this.description,
+      weight: weight ?? this.weight,
+      qty: qty ?? this.qty,
+      originPrice: originPrice ?? this.originPrice,
+      salePrice: salePrice ?? this.salePrice,
+      customPrice: customPrice ?? this.customPrice,
+      discountPercent: discountPercent ?? this.discountPercent,
+      discountAmount: discountAmount ?? this.discountAmount,
+      taxPercent: taxPercent ?? this.taxPercent,
+      taxAmount: taxAmount ?? this.taxAmount,
+      rowTotalWithDiscount: rowTotalWithDiscount ?? this.rowTotalWithDiscount,
+      rowTotal: rowTotal ?? this.rowTotal,
+      rowWeight: rowWeight ?? this.rowWeight,
+      rowTotalWithTax: rowTotalWithTax ?? this.rowTotalWithTax,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

@@ -32,7 +32,6 @@ class _InfomationCustomerState extends State<InfomationCustomer> {
         isShowBack: true,
       ),
       body: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
         child: Container(
           color: Colors.transparent,
           child: Column(

@@ -2,7 +2,7 @@ part of 'info_bloc.dart';
 
 class InfoState extends Equatable {
   final BlocStatusEnum status;
-  final List<DataListOrder>? products;
+  final List<OrdersHistoryResponse>? products;
   final String mesErr;
 
   const InfoState({
@@ -20,7 +20,7 @@ class InfoState extends Equatable {
 
   InfoState copyWith({
     BlocStatusEnum? status,
-    List<DataListOrder>? products,
+    List<OrdersHistoryResponse>? products,
     String? mesErr,
   }) {
     return InfoState(

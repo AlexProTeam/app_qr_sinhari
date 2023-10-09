@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
-import 'package:qrcode/app/route/navigation/route_names.dart';
-import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
@@ -23,7 +21,7 @@ class CartScreen extends StatelessWidget {
     return BlocConsumer<CartsBloc, CartsState>(
       listenWhen: (previous, current) => previous != current,
       buildWhen: (previous, current) => previous != current,
-      listener: (context, state) {
+      listener: (context, state) async {
         state.status == BlocStatusEnum.loading
             ? DialogManager.showLoadingDialog(context)
             : DialogManager.hideLoadingDialog;
@@ -47,6 +45,8 @@ class CartScreen extends StatelessWidget {
                 ListProducts(
                   listItemsCarts: state.cartsResponse?.carts?.items ?? [],
                 ),
+
+                /// nhập khuyến mãi
                 const ItemCheckPromotion(),
                 const Divider(),
 
@@ -57,35 +57,23 @@ class CartScreen extends StatelessWidget {
               ],
             ),
           ),
+
+          /// bottom mua hàng
           bottomNavigationBar: ItemBottomCarts(
-            onTap: () => _showDialog(context),
+            onTap: () => DialogManager.showDialogConfirm(
+              context,
+              content: 'Bạn có chắc hoàn thành đơn hàng ?',
+              leftTitle: 'Mua',
+              onTapLeft: () {
+                if ((state.cartsResponse?.carts?.items ?? []).isNotEmpty) {
+                  context.read<CartsBloc>().add(const ConfirmCartEvent());
+                }
+              },
+            ),
             onChange: () {},
           ),
         );
       },
     );
   }
-
-  void _showDialog(BuildContext context) => DialogManager.showDialogCustom(
-        icon: Image.asset(Assets.icons.icQuesition.path),
-        onTapRight: () {
-          context.read<CartsBloc>().add(const ConfirmCartEvent());
-        },
-        onTapLeft: () {
-          Navigator.pushNamed(
-            Routes.instance.navigatorKey.currentContext!,
-            RouteDefine.successScreen,
-          );
-        },
-        leftTitle: 'Mua',
-        rightTitle: 'Huỷ',
-        context: context,
-        bgColorLeft: AppColors.realEstate,
-        bgColorRight: AppColors.red,
-        content: 'Bạn có chắc hoàn thành đơn hàng ?',
-        styleContent: kTextRegularStyle.copyWith(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-        ),
-      );
 }

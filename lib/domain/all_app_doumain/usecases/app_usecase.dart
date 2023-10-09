@@ -96,11 +96,14 @@ class AppUseCase {
   }) =>
       _repository.payment(amount: amount);
 
-  Future<ObjectResponse<ListCartsResponse>> postQuality({
+  Future<OrderCartsResponse> postQuality({
     int? productId,
     int? qty,
   }) =>
-      _repository.changeQuality(productId: productId, qty: qty);
+      _repository.changeQuality(
+        productId: productId,
+        qty: qty,
+      );
 
   Future<ObjectResponse> postConfirmCart() => _repository.confirmCart();
 
@@ -113,4 +116,9 @@ class AppUseCase {
 
   Future<DataListOrder> getListOrder({String? statusOrder}) =>
       _repository.getListOrder();
+
+  Future<ObjectResponse> deleteItemCart({
+    required int id,
+  }) =>
+      _repository.deleteItemCart(id);
 }

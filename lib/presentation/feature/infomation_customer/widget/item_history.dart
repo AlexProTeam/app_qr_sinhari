@@ -52,10 +52,11 @@ class ItemHistory extends StatelessWidget {
                         context: context,
                         onTap: () {
                           Navigator.pushNamed(
-                              Routes.instance.navigatorKey.currentContext!,
-                              RouteDefine.detailOrder);
+                            Routes.instance.navigatorKey.currentContext!,
+                            RouteDefine.detailOrder,
+                          );
                         },
-                        order: products[index].orders?[index] ?? Orders());
+                        order: products[index]);
                   },
                   itemCount: products.length,
                 ),
@@ -70,104 +71,96 @@ class ItemHistory extends StatelessWidget {
   Widget rootView({
     required BuildContext context,
     required Function onTap,
-    required Orders order,
+    required OrdersHistoryResponse order,
   }) {
     return GestureDetector(
       onTap: () {
         onTap();
       },
       child: Container(
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: EdgeInsets.only(bottom: 16.h),
         child: Column(
           children: [
             Row(
               children: [
                 Image.asset(
                   Assets.images.logo.path,
-                  width: 88,
-                  height: 75,
+                  width: 88.w,
+                  height: 75.h,
                 ),
-                Container(
-                  color: Colors.transparent,
-                  width: MediaQuery.of(context).size.width - 120,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Đầm xù tím dễ thương',
-                              style: TextStyleManager.mediumBlack14px,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Expanded(
-                            child: Text(
-                              'Chờ thanh toán ',
-                              style: TextStyleManager.style10pxPrimary,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              textAlign: TextAlign.right,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: RichText(
-                              text: TextSpan(
-                                text: 'Giá :',
+                5.horizontalSpace,
+                Expanded(
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Đầm xù tím dễ thương',
                                 style: TextStyleManager.mediumBlack14px,
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: ' 450đ',
-                                      style: TextStyleManager.mediumBlack
-                                          .copyWith(
-                                              decoration:
-                                                  TextDecoration.lineThrough)),
-                                ],
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'X1',
-                              style: TextStyleManager.normalBlack,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              textAlign: TextAlign.right,
+                            Expanded(
+                              child: Text(
+                                'Chờ thanh toán ',
+                                style: TextStyleManager.style10pxPrimary,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                textAlign: TextAlign.right,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        'Ngày đặt : 2023-05-31',
-                        style: TextStyleManager.normalBlack,
-                      ),
-                    ],
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Giá :',
+                                  style: TextStyleManager.mediumBlack14px,
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: ' 450đ',
+                                        style: TextStyleManager.mediumBlack
+                                            .copyWith(
+                                                decoration: TextDecoration
+                                                    .lineThrough)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                'X1',
+                                style: TextStyleManager.normalBlack,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          'Ngày đặt : 2023-05-31',
+                          style: TextStyleManager.normalBlack,
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 4, bottom: 4),
-              color: AppColors.colorE7E7E7,
-              height: 1,
-            ),
+            const Divider(color: AppColors.colorE7E7E7),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

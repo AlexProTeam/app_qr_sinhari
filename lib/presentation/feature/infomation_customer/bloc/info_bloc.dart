@@ -15,20 +15,17 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
 
   InfoBloc(this.appUseCase, this.url) : super(const InfoState()) {
     on<InitListProductEvent>((event, emit) async {
-      List<DataListOrder>? listData;
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        /// todo: check with enum or bool
         final result = await appUseCase.getListOrder();
-        if ((result.orders ?? []).isNotEmpty) {
-          listData = result.orders as List<DataListOrder>;
-        }
 
-        emit(state.copyWith(
-          status: BlocStatusEnum.success,
-          products: listData,
-        ));
+        emit(
+          state.copyWith(
+            status: BlocStatusEnum.success,
+            products: result.orders ?? [],
+          ),
+        );
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,

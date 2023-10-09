@@ -7,6 +7,7 @@ import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/widgets/check_box_custom.dart';
 
+import '../../../../app/app.dart';
 import '../../../../domain/entity/list_carts_response.dart';
 import '../bloc/carts_bloc.dart';
 
@@ -23,18 +24,47 @@ class ListProducts extends StatelessWidget {
     return ListView.builder(
       itemCount: listItemsCarts.length,
       shrinkWrap: true,
-      itemBuilder: (context, index) =>
-          ItemList(itemsCarts: listItemsCarts[index]),
+      itemBuilder: (context, index) => Dismissible(
+        background: Container(
+          color: AppColors.red.withOpacity(0.2),
+          child: const Icon(
+            Icons.delete_forever,
+            color: AppColors.red,
+          ),
+        ),
+        confirmDismiss: (direction) async {
+          final result = await DialogManager.showDialogConfirm(
+            context,
+            content: 'Bạn có chắc xóa?',
+            leftTitle: 'OK',
+            onTapLeft: () => context.read<CartsBloc>().add(DeleteCartEvent(
+                  listItemsCarts[index].id ?? 0,
+                  index,
+                )),
+          );
+
+          return result;
+        },
+        onDismissed: (direction) async {},
+        direction: DismissDirection.endToStart,
+        key: Key(index.toString()),
+        child: ItemList(
+          itemsCarts: listItemsCarts[index],
+          index: index,
+        ),
+      ),
     );
   }
 }
 
 class ItemList extends StatefulWidget {
+  final int index;
   final ItemsCarts itemsCarts;
 
   const ItemList({
     Key? key,
     required this.itemsCarts,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -162,9 +192,7 @@ class ItemListState extends State<ItemList> {
           maxLines: 2,
         ),
         _buildQuantityButton(Assets.icons.iconDown.path, onTap: () {
-          context.read<CartsBloc>().add(ChangeQualityCartEvent(
-              widget.itemsCarts.productId ?? 0,
-              widget.itemsCarts.getQtyNum - 1));
+          changeQtyItem(widget.itemsCarts.getQtyNum - 1);
         }),
         Text(
           widget.itemsCarts.getQtyNum.toString(),
@@ -173,9 +201,7 @@ class ItemListState extends State<ItemList> {
         _buildQuantityButton(
           Assets.icons.icPlus.path,
           onTap: () {
-            context.read<CartsBloc>().add(ChangeQualityCartEvent(
-                widget.itemsCarts.productId ?? 0,
-                widget.itemsCarts.getQtyNum + 1));
+            changeQtyItem(widget.itemsCarts.getQtyNum + 1);
           },
           color: AppColors.color7F2B81,
         ),
@@ -201,4 +227,11 @@ class ItemListState extends State<ItemList> {
       ),
     );
   }
+
+  void changeQtyItem(int qty) =>
+      context.read<CartsBloc>().add(ChangeQualityCartEvent(
+            widget.itemsCarts.productId ?? 0,
+            qty,
+            widget.index,
+          ));
 }

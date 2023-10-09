@@ -61,7 +61,7 @@ abstract class AppRepository {
     int? amount,
   });
 
-  Future<ObjectResponse<ListCartsResponse>> changeQuality({
+  Future<OrderCartsResponse> changeQuality({
     int? productId,
     int? qty,
   });
@@ -71,4 +71,8 @@ abstract class AppRepository {
   Future<ListCartsResponse> getListCart();
 
   Future<DataListOrder> getListOrder({String? statusOrder});
+
+  Future<ObjectResponse> deleteItemCart(
+    int id,
+  );
 }
