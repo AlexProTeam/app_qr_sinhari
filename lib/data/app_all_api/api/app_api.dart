@@ -15,6 +15,7 @@ import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../domain/entity/banner_model.dart';
+import '../../../domain/entity/confirm_cart_response.dart';
 import '../../../domain/entity/list_carts_response.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/feature/history_scan/history_model.dart';
@@ -144,7 +145,7 @@ abstract class AppApi {
   );
 
   @POST('order_cart')
-  Future<ObjectResponse> postConfirmCart();
+  Future<ObjectResponse<ConfirmCartResponse>> postConfirmCart();
 
   @POST('delete_item_cart')
   Future<ObjectResponse> deleteItemCart(

@@ -25,6 +25,7 @@ import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:qrcode/presentation/feature/history_scan/history_model.dart';
 import 'package:qrcode/presentation/feature/news/history_model.dart';
 
+import '../../../domain/entity/confirm_cart_response.dart';
 import '../../../domain/entity/list_carts_response.dart';
 
 class AppRepositoryImpl implements AppRepository {
@@ -321,9 +322,10 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<ObjectResponse> confirmCart() async {
+  Future<ConfirmCartResponse> confirmCart() async {
     try {
-      return await api.postConfirmCart();
+      final response = await api.postConfirmCart();
+      return response.data ?? ConfirmCartResponse();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

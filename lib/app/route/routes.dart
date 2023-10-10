@@ -27,17 +27,6 @@ class Routes {
 
   static Routes get instance => _instance;
 
-  Future<dynamic> navigateTo(String routeName, {dynamic arguments}) async {
-    return navigatorKey.currentState!
-        .pushNamed(routeName, arguments: arguments);
-  }
-
-  Future<dynamic> popAndNavigateTo(
-      {dynamic result, String? routeName, dynamic arguments}) {
-    return navigatorKey.currentState!
-        .popAndPushNamed(routeName ?? '', arguments: arguments);
-  }
-
   Future<dynamic> navigateAndRemove(String routeName,
       {dynamic arguments}) async {
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
@@ -45,16 +34,6 @@ class Routes {
       (Route<dynamic> route) => false,
       arguments: arguments,
     );
-  }
-
-  dynamic popUntil() {
-    return navigatorKey.currentState?.popUntil((route) => route.isFirst);
-  }
-
-  Future<dynamic> navigateAndReplace(String routeName,
-      {dynamic arguments}) async {
-    return navigatorKey.currentState
-        ?.pushReplacementNamed(routeName, arguments: arguments);
   }
 
   static Route<dynamic> generateDefaultRoute(RouteSettings settings) {
@@ -80,7 +59,11 @@ class Routes {
         );
       case RouteDefine.successScreen:
         return SlideLeftRoute(
-          widget: const SuccessScreen(),
+          widget: SuccessScreen(
+            confirmCartResponse: settings.arguments != null
+                ? settings.arguments as ConfirmOrderDetail
+                : ConfirmOrderDetail(),
+          ),
         );
       case RouteDefine.detailOrder:
         return SlideLeftRoute(
@@ -158,7 +141,8 @@ class Routes {
         );
       case RouteDefine.successScreen:
         return SlideLeftRoute(
-          widget: const SuccessScreen(),
+          ///todo: check
+          widget: SuccessScreen(confirmCartResponse: ConfirmOrderDetail()),
         );
       case RouteDefine.verifyOtpScreen:
         return SlideLeftRoute(

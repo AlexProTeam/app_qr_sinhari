@@ -105,7 +105,7 @@ class AppUseCase {
         qty: qty,
       );
 
-  Future<ObjectResponse> postConfirmCart() => _repository.confirmCart();
+  Future<ConfirmCartResponse> postConfirmCart() => _repository.confirmCart();
 
   Future<ListCartsResponse> getListCart({
     int? productId,

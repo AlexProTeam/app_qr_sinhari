@@ -21,36 +21,37 @@ class ListProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: listItemsCarts.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) => Dismissible(
-        background: Container(
-          color: AppColors.red.withOpacity(0.2),
-          child: const Icon(
-            Icons.delete_forever,
-            color: AppColors.red,
+    return Column(
+      children: List.generate(
+        listItemsCarts.length,
+        (index) => Dismissible(
+          background: Container(
+            color: AppColors.red.withOpacity(0.2),
+            child: const Icon(
+              Icons.delete_forever,
+              color: AppColors.red,
+            ),
           ),
-        ),
-        confirmDismiss: (direction) async {
-          final result = await DialogManager.showDialogConfirm(
-            context,
-            content: 'Bạn có chắc xóa?',
-            leftTitle: 'OK',
-            onTapLeft: () => context.read<CartsBloc>().add(DeleteCartEvent(
-                  listItemsCarts[index].id ?? 0,
-                  index,
-                )),
-          );
+          confirmDismiss: (direction) async {
+            final result = await DialogManager.showDialogConfirm(
+              context,
+              content: 'Bạn có chắc xóa?',
+              leftTitle: 'OK',
+              onTapLeft: () => context.read<CartsBloc>().add(DeleteCartEvent(
+                    listItemsCarts[index].id ?? 0,
+                    index,
+                  )),
+            );
 
-          return result;
-        },
-        onDismissed: (direction) async {},
-        direction: DismissDirection.endToStart,
-        key: Key(index.toString()),
-        child: ItemList(
-          itemsCarts: listItemsCarts[index],
-          index: index,
+            return result;
+          },
+          onDismissed: (direction) async {},
+          direction: DismissDirection.endToStart,
+          key: Key(index.toString()),
+          child: ItemList(
+            itemsCarts: listItemsCarts[index],
+            index: index,
+          ),
         ),
       ),
     );
