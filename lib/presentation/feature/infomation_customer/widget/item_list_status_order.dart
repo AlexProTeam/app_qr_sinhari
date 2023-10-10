@@ -1,7 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/gen/assets.gen.dart';
+import 'package:qrcode/presentation/feature/infomation_customer/bloc/info_bloc.dart';
 
 class ItemListStatusOrder extends StatefulWidget {
   const ItemListStatusOrder({Key? key}) : super(key: key);
@@ -37,7 +40,7 @@ class _ItemListStatusOrderState extends State<ItemListStatusOrder> {
               (index) => item(
                 image: StatusEnum.values[index].getIcon(),
                 name: StatusEnum.values[index].getName(),
-                onTap: StatusEnum.values[index].getOnTap(),
+                onTap: StatusEnum.values[index].getOnTap(context),
               ),
             ),
           ),
@@ -83,16 +86,32 @@ class _ItemListStatusOrderState extends State<ItemListStatusOrder> {
 enum StatusEnum { wait, shiping, complete, cancel }
 
 extension ItemEx on StatusEnum {
-  Function() getOnTap() {
+  Function() getOnTap(BuildContext context) {
     switch (this) {
       case StatusEnum.wait:
-        return () {};
+        return () {
+          context
+              .read<InfoBloc>()
+              .add(const InitListProductEvent(status: 'pending'));
+        };
       case StatusEnum.shiping:
-        return () {};
+        return () {
+          context
+              .read<InfoBloc>()
+              .add(const InitListProductEvent(status: 'processing'));
+        };
       case StatusEnum.complete:
-        return () {};
+        return () {
+          context
+              .read<InfoBloc>()
+              .add(const InitListProductEvent(status: 'completed'));
+        };
       case StatusEnum.cancel:
-        return () {};
+        return () {
+          context
+              .read<InfoBloc>()
+              .add(const InitListProductEvent(status: 'canceled'));
+        };
     }
   }
 

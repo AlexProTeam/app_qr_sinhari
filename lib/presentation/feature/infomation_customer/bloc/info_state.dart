@@ -3,12 +3,14 @@ part of 'info_bloc.dart';
 class InfoState extends Equatable {
   final BlocStatusEnum status;
   final List<OrdersHistoryResponse>? products;
+  final String? statusFill;
   final String mesErr;
 
   const InfoState({
     this.products,
     this.status = BlocStatusEnum.loading,
     this.mesErr = '',
+    this.statusFill,
   });
 
   @override
@@ -16,6 +18,7 @@ class InfoState extends Equatable {
         products,
         status,
         mesErr,
+        statusFill,
       ];
 
   InfoState copyWith({
