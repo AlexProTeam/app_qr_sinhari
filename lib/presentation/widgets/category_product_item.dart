@@ -140,8 +140,7 @@ class CategoryItemProduct extends StatelessWidget {
   }
 
   double getSize(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    if (height < 800) {
+    if (!isAgency) {
       return 164;
     }
     return 250;
