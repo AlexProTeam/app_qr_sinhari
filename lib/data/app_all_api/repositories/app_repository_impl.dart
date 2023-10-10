@@ -322,9 +322,9 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<ConfirmCartResponse> confirmCart() async {
+  Future<ConfirmCartResponse> confirmCart(List<int> productIds) async {
     try {
-      final response = await api.postConfirmCart();
+      final response = await api.postConfirmCart(productIds);
       return response.data ?? ConfirmCartResponse();
     } on DioException catch (e) {
       throw (ApiException.error(e));

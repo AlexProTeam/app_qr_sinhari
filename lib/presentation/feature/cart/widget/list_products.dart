@@ -73,7 +73,13 @@ class ItemList extends StatefulWidget {
 }
 
 class ItemListState extends State<ItemList> {
-  bool isCheck = false;
+  late final CartsBloc _cartsBloc;
+
+  @override
+  void initState() {
+    _cartsBloc = context.read<CartsBloc>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,11 +105,16 @@ class ItemListState extends State<ItemList> {
       child: CheckBoxCustom(
         enable: false,
         onChanged: (value) {
-          setState(() {
-            isCheck = value ?? true;
-          });
+          _cartsBloc.add(
+            SelectedItemEvent(
+              itemsCarts: widget.itemsCarts.copyWith(
+                isSelected: !(widget.itemsCarts.isSelected ?? false),
+              ),
+              index: widget.index,
+            ),
+          );
         },
-        value: isCheck,
+        value: widget.itemsCarts.isSelected,
       ),
     );
   }
@@ -229,10 +240,9 @@ class ItemListState extends State<ItemList> {
     );
   }
 
-  void changeQtyItem(int qty) =>
-      context.read<CartsBloc>().add(ChangeQualityCartEvent(
-            widget.itemsCarts.productId ?? 0,
-            qty,
-            widget.index,
-          ));
+  void changeQtyItem(int qty) => _cartsBloc.add(ChangeQualityCartEvent(
+        widget.itemsCarts.productId ?? 0,
+        qty,
+        widget.index,
+      ));
 }

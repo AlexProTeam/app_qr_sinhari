@@ -145,7 +145,9 @@ abstract class AppApi {
   );
 
   @POST('order_cart')
-  Future<ObjectResponse<ConfirmCartResponse>> postConfirmCart();
+  Future<ObjectResponse<ConfirmCartResponse>> postConfirmCart(
+    @Query('product_ids') List<int> productIds,
+  );
 
   @POST('delete_item_cart')
   Future<ObjectResponse> deleteItemCart(

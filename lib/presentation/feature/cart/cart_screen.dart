@@ -80,7 +80,6 @@ class CartScreen extends StatelessWidget {
                 }
               },
             ),
-            onChange: () {},
           ),
         );
       },
