@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,11 +35,12 @@ class _ItemListStatusOrderState extends State<ItemListStatusOrder> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(
-              StatusEnum.values.length,
+              StatusOrderHistoryEnum.values.length,
               (index) => item(
-                image: StatusEnum.values[index].getIcon(),
-                name: StatusEnum.values[index].getName(),
-                onTap: StatusEnum.values[index].getOnTap(context),
+                image: StatusOrderHistoryEnum.values[index].getIcon(),
+                name: StatusOrderHistoryEnum.values[index].getName(),
+                onTap: () => context.read<InfoBloc>().add(InitListProductEvent(
+                    status: StatusOrderHistoryEnum.values[index].getEnumKey)),
               ),
             ),
           ),
@@ -83,60 +83,47 @@ class _ItemListStatusOrderState extends State<ItemListStatusOrder> {
   }
 }
 
-enum StatusEnum { wait, shiping, complete, cancel }
+enum StatusOrderHistoryEnum { wait, shiping, complete, cancel }
 
-extension ItemEx on StatusEnum {
-  Function() getOnTap(BuildContext context) {
+extension ItemEx on StatusOrderHistoryEnum {
+  String get getEnumKey {
     switch (this) {
-      case StatusEnum.wait:
-        return () {
-          context
-              .read<InfoBloc>()
-              .add(const InitListProductEvent(status: 'pending'));
-        };
-      case StatusEnum.shiping:
-        return () {
-          context
-              .read<InfoBloc>()
-              .add(const InitListProductEvent(status: 'processing'));
-        };
-      case StatusEnum.complete:
-        return () {
-          context
-              .read<InfoBloc>()
-              .add(const InitListProductEvent(status: 'completed'));
-        };
-      case StatusEnum.cancel:
-        return () {
-          context
-              .read<InfoBloc>()
-              .add(const InitListProductEvent(status: 'canceled'));
-        };
+      case StatusOrderHistoryEnum.wait:
+        return 'pending';
+
+      case StatusOrderHistoryEnum.shiping:
+        return 'processing';
+
+      case StatusOrderHistoryEnum.complete:
+        return 'completed';
+
+      case StatusOrderHistoryEnum.cancel:
+        return 'canceled';
     }
   }
 
   String getName() {
     switch (this) {
-      case StatusEnum.wait:
+      case StatusOrderHistoryEnum.wait:
         return 'Đang chờ';
-      case StatusEnum.shiping:
+      case StatusOrderHistoryEnum.shiping:
         return 'Đang giao';
-      case StatusEnum.complete:
+      case StatusOrderHistoryEnum.complete:
         return 'Hoàn thành';
-      case StatusEnum.cancel:
+      case StatusOrderHistoryEnum.cancel:
         return 'Đã huỷ';
     }
   }
 
   String getIcon() {
     switch (this) {
-      case StatusEnum.wait:
+      case StatusOrderHistoryEnum.wait:
         return Assets.icons.iconWait.path;
-      case StatusEnum.shiping:
+      case StatusOrderHistoryEnum.shiping:
         return Assets.icons.iconTruck.path;
-      case StatusEnum.complete:
+      case StatusOrderHistoryEnum.complete:
         return Assets.icons.iconComplete.path;
-      case StatusEnum.cancel:
+      case StatusOrderHistoryEnum.cancel:
         return Assets.icons.iconTimeLine.path;
     }
   }
