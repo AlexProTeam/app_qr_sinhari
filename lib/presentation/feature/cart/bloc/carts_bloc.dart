@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import '../../../../app/app.dart';
 import '../../../../app/managers/status_bloc.dart';
 import '../../../../data/utils/exceptions/api_exception.dart';
+import '../../../../domain/entity/confirm_cart_response.dart';
 import '../../../../domain/entity/list_carts_response.dart';
 
 part 'carts_event.dart';
@@ -63,21 +64,6 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
       }
     });
 
-    on<ConfirmCartEvent>((event, emit) async {
-      try {
-        emit(state.copyWith(status: BlocStatusEnum.loading));
-        await _appUseCase.postConfirmCart();
-        emit(state.copyWith(
-          status: BlocStatusEnum.success,
-        ));
-      } on ApiException catch (e) {
-        emit(state.copyWith(
-          status: BlocStatusEnum.failed,
-          errMes: e.message,
-        ));
-      }
-    });
-
     on<DeleteCartEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
@@ -96,6 +82,63 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
             ),
           ),
         ));
+      } on ApiException catch (e) {
+        emit(state.copyWith(
+          status: BlocStatusEnum.failed,
+          errMes: e.message,
+        ));
+      }
+    });
+
+    on<SelectedItemEvent>((event, emit) {
+      final listData = state.cartsResponse?.carts?.items ?? [];
+
+      listData[event.index] = event.itemsCarts;
+
+      emit(
+        CartsState(
+          cartsResponse: state.cartsResponse?.copyWith(
+            carts: state.cartsResponse?.carts?.copyWith(
+              items: listData,
+            ),
+          ),
+        ),
+      );
+    });
+
+    on<SelectedAllItemEvent>((event, emit) {
+      final List<ItemsCarts> listData = state.cartsResponse?.carts?.items ?? [];
+
+      final updatedListData = listData.map((item) {
+        return item.copyWith(isSelected: !state.isSelectedAll);
+      }).toList();
+
+      emit(
+        CartsState(
+          cartsResponse: state.cartsResponse?.copyWith(
+            carts: state.cartsResponse?.carts?.copyWith(
+              items: updatedListData,
+            ),
+          ),
+        ),
+      );
+    });
+
+    on<ConfirmCartEvent>((event, emit) async {
+      try {
+        final listData = (state.cartsResponse?.carts?.items ?? [])
+            .where((element) => element.isSelected == true)
+            .map((e) => e.productId ?? 0)
+            .toList();
+
+        emit(state.copyWith(status: BlocStatusEnum.loading));
+        final result = await _appUseCase.postConfirmCart(listData);
+        emit(
+          state.copyWith(
+            status: BlocStatusEnum.success,
+            confirmCartResponse: result,
+          ),
+        );
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,

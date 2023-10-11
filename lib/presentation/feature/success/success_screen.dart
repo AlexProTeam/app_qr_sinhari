@@ -5,8 +5,15 @@ import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
+import '../../../domain/entity/confirm_cart_response.dart';
+
 class SuccessScreen extends StatefulWidget {
-  const SuccessScreen({Key? key}) : super(key: key);
+  final ConfirmOrderDetail confirmCartResponse;
+
+  const SuccessScreen({
+    Key? key,
+    required this.confirmCartResponse,
+  }) : super(key: key);
 
   @override
   State<SuccessScreen> createState() => _SuccessScreenState();
@@ -49,7 +56,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 height: 44,
               ),
               Text(
-                'Đơn hàng số #XXXXXX đã được đặt thành công. Bộ phận giao hàng sẽ liên hệ với bạn để có thể  nhanh nhất trả về',
+                'Đơn hàng số ${widget.confirmCartResponse.code ?? ''} đã được đặt thành công. Bộ phận giao hàng sẽ liên hệ với bạn để có thể  nhanh nhất trả về',
                 textAlign: TextAlign.center,
                 style: TextStyleManager.mediumBlack.copyWith(
                   fontSize: 16,
@@ -61,18 +68,20 @@ class _SuccessScreenState extends State<SuccessScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(
+                  Navigator.pushReplacementNamed(
                     context,
                     RouteDefine.detailOrder,
+                    arguments: widget.confirmCartResponse.id,
                   );
                 },
                 child: Text(
                   'Chi tiết đơn hàng xem tại đây.',
                   textAlign: TextAlign.center,
                   style: TextStyleManager.mediumBlack.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.color0A6CFF),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.color0A6CFF,
+                  ),
                 ),
               ),
             ],

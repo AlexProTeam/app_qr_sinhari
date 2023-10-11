@@ -6,6 +6,7 @@ import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../app/managers/status_bloc.dart';
+import '../../../app/route/navigation/route_names.dart';
 import '../../../domain/entity/list_carts_response.dart';
 import 'bloc/carts_bloc.dart';
 import 'widget/item_bottom.dart';
@@ -20,7 +21,8 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<CartsBloc, CartsState>(
       listenWhen: (previous, current) => previous != current,
-      buildWhen: (previous, current) => previous != current,
+      buildWhen: (previous, current) =>
+          previous.cartsResponse != current.cartsResponse,
       listener: (context, state) async {
         state.status == BlocStatusEnum.loading
             ? DialogManager.showLoadingDialog(context)
@@ -28,6 +30,14 @@ class CartScreen extends StatelessWidget {
 
         if ((state.errMes ?? '').isNotEmpty) {
           ToastManager.showToast(context, text: state.errMes!);
+        }
+
+        if ((state.confirmCartResponse?.orderDetail?.code ?? '').isNotEmpty) {
+          Navigator.pushReplacementNamed(
+            context,
+            RouteDefine.successScreen,
+            arguments: state.confirmCartResponse?.orderDetail,
+          );
         }
       },
       builder: (context, state) {
@@ -70,7 +80,6 @@ class CartScreen extends StatelessWidget {
                 }
               },
             ),
-            onChange: () {},
           ),
         );
       },

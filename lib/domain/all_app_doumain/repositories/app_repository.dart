@@ -66,7 +66,7 @@ abstract class AppRepository {
     int? qty,
   });
 
-  Future<ObjectResponse> confirmCart();
+  Future<ConfirmCartResponse> confirmCart(List<int> productIds);
 
   Future<ListCartsResponse> getListCart();
 

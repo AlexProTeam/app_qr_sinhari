@@ -240,6 +240,9 @@ class ItemsCarts {
   String? createdAt;
   String? updatedAt;
 
+  /// to check for ui
+  bool? isSelected;
+
   ItemsCarts({
     this.id,
     this.quoteId,
@@ -268,6 +271,7 @@ class ItemsCarts {
     this.status,
     this.createdAt,
     this.updatedAt,
+    this.isSelected,
   });
 
   ItemsCarts.fromJson(Map<String, dynamic> json) {
@@ -338,6 +342,7 @@ class ItemsCarts {
     int? status,
     String? createdAt,
     String? updatedAt,
+    bool? isSelected,
   }) {
     return ItemsCarts(
       id: id ?? this.id,
@@ -367,6 +372,7 @@ class ItemsCarts {
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      isSelected: isSelected ?? this.isSelected,
     );
   }
 }

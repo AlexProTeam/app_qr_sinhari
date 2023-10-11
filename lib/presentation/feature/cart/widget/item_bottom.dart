@@ -10,12 +10,10 @@ import '../bloc/carts_bloc.dart';
 
 class ItemBottomCarts extends StatefulWidget {
   final Function onTap;
-  final Function onChange;
 
   const ItemBottomCarts({
     Key? key,
     required this.onTap,
-    required this.onChange,
   }) : super(key: key);
 
   @override
@@ -24,7 +22,6 @@ class ItemBottomCarts extends StatefulWidget {
 
 class _ItemBottomCartsState extends State<ItemBottomCarts> {
   late CartsBloc _cartsBloc;
-  bool isCheck = false;
 
   @override
   void initState() {
@@ -59,12 +56,9 @@ class _ItemBottomCartsState extends State<ItemBottomCarts> {
                   child: CheckBoxCustom(
                     enable: true,
                     title: 'Chọn tất cả',
-                    onChanged: (value) {
-                      setState(() {
-                        isCheck = value ?? true;
-                      });
-                    },
-                    value: isCheck,
+                    onChanged: (value) =>
+                        _cartsBloc.add(const SelectedAllItemEvent()),
+                    value: _cartsBloc.state.isSelectedAll,
                   )),
               Column(
                 children: [

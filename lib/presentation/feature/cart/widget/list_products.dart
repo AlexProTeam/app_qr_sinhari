@@ -21,36 +21,37 @@ class ListProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: listItemsCarts.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) => Dismissible(
-        background: Container(
-          color: AppColors.red.withOpacity(0.2),
-          child: const Icon(
-            Icons.delete_forever,
-            color: AppColors.red,
+    return Column(
+      children: List.generate(
+        listItemsCarts.length,
+        (index) => Dismissible(
+          background: Container(
+            color: AppColors.red.withOpacity(0.2),
+            child: const Icon(
+              Icons.delete_forever,
+              color: AppColors.red,
+            ),
           ),
-        ),
-        confirmDismiss: (direction) async {
-          final result = await DialogManager.showDialogConfirm(
-            context,
-            content: 'Bạn có chắc xóa?',
-            leftTitle: 'OK',
-            onTapLeft: () => context.read<CartsBloc>().add(DeleteCartEvent(
-                  listItemsCarts[index].id ?? 0,
-                  index,
-                )),
-          );
+          confirmDismiss: (direction) async {
+            final result = await DialogManager.showDialogConfirm(
+              context,
+              content: 'Bạn có chắc xóa?',
+              leftTitle: 'OK',
+              onTapLeft: () => context.read<CartsBloc>().add(DeleteCartEvent(
+                    listItemsCarts[index].id ?? 0,
+                    index,
+                  )),
+            );
 
-          return result;
-        },
-        onDismissed: (direction) async {},
-        direction: DismissDirection.endToStart,
-        key: Key(index.toString()),
-        child: ItemList(
-          itemsCarts: listItemsCarts[index],
-          index: index,
+            return result;
+          },
+          onDismissed: (direction) async {},
+          direction: DismissDirection.endToStart,
+          key: Key(index.toString()),
+          child: ItemList(
+            itemsCarts: listItemsCarts[index],
+            index: index,
+          ),
         ),
       ),
     );
@@ -72,7 +73,13 @@ class ItemList extends StatefulWidget {
 }
 
 class ItemListState extends State<ItemList> {
-  bool isCheck = false;
+  late final CartsBloc _cartsBloc;
+
+  @override
+  void initState() {
+    _cartsBloc = context.read<CartsBloc>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,11 +105,16 @@ class ItemListState extends State<ItemList> {
       child: CheckBoxCustom(
         enable: false,
         onChanged: (value) {
-          setState(() {
-            isCheck = value ?? true;
-          });
+          _cartsBloc.add(
+            SelectedItemEvent(
+              itemsCarts: widget.itemsCarts.copyWith(
+                isSelected: !(widget.itemsCarts.isSelected ?? false),
+              ),
+              index: widget.index,
+            ),
+          );
         },
-        value: isCheck,
+        value: widget.itemsCarts.isSelected,
       ),
     );
   }
@@ -228,10 +240,9 @@ class ItemListState extends State<ItemList> {
     );
   }
 
-  void changeQtyItem(int qty) =>
-      context.read<CartsBloc>().add(ChangeQualityCartEvent(
-            widget.itemsCarts.productId ?? 0,
-            qty,
-            widget.index,
-          ));
+  void changeQtyItem(int qty) => _cartsBloc.add(ChangeQualityCartEvent(
+        widget.itemsCarts.productId ?? 0,
+        qty,
+        widget.index,
+      ));
 }

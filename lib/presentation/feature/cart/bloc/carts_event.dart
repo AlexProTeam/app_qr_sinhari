@@ -41,3 +41,26 @@ class DeleteCartEvent extends CartsEvent {
         index,
       ];
 }
+
+class SelectedItemEvent extends CartsEvent {
+  final ItemsCarts itemsCarts;
+  final int index;
+
+  const SelectedItemEvent({
+    required this.itemsCarts,
+    required this.index,
+  });
+
+  @override
+  List<Object?> get props => [
+        itemsCarts,
+        index,
+      ];
+}
+
+class SelectedAllItemEvent extends CartsEvent {
+  const SelectedAllItemEvent();
+
+  @override
+  List<Object?> get props => [];
+}
