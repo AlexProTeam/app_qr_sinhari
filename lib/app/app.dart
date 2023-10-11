@@ -1,5 +1,6 @@
 library app_layer;
 
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -26,6 +27,7 @@ import 'package:qrcode/data/responses/object_response.dart';
 import 'package:qrcode/domain/all_app_doumain/entities/user_entitiy.dart';
 import 'package:qrcode/domain/entity/banner_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
+import 'package:qrcode/domain/entity/detail_order.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';

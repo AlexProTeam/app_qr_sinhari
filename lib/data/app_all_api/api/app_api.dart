@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:qrcode/domain/entity/add_to_cart_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
+import 'package:qrcode/domain/entity/detail_order.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
@@ -152,5 +153,10 @@ abstract class AppApi {
   @POST('delete_item_cart')
   Future<ObjectResponse> deleteItemCart(
     @Query('item_id') int id,
+  );
+
+  @POST('order_detail')
+  Future<ObjectResponse<DataOrderDetail>> getDetailOrder(
+    @Query('order_id') int? proId,
   );
 }

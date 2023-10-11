@@ -51,9 +51,9 @@ class ItemHistory extends StatelessWidget {
                         context: context,
                         onTap: () {
                           Navigator.pushNamed(
-                            Routes.instance.navigatorKey.currentContext!,
-                            RouteDefine.detailOrder,
-                          );
+                              Routes.instance.navigatorKey.currentContext!,
+                              RouteDefine.detailOrder,
+                              arguments: products[index].id);
                         },
                         order: products[index]);
                   },

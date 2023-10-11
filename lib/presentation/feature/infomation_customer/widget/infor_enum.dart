@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:intl/intl.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 
 enum ButtonEnum { dangxuly, congno, pending }
@@ -18,5 +19,13 @@ class HelperInfor {
       default:
         return AppColors.grey7;
     }
+  }
+
+  static String getDate(String dateTimeScan) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
+    DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
+    DateTime datetime = dateFormat.parse(dateTimeScan);
+    final date = dateFormatLast.format(datetime);
+    return date;
   }
 }

@@ -67,7 +67,10 @@ class Routes {
         );
       case RouteDefine.detailOrder:
         return SlideLeftRoute(
-          widget: const DetailOderScreen(),
+          widget: DetailOderScreen(
+            proId:
+                settings.arguments != null ? settings.arguments as int : null,
+          ),
         );
       default:
         return _emptyRoute(settings);
@@ -87,8 +90,8 @@ class Routes {
           widget: BlocProvider(
             create: (context) => ProductDetailBloc(),
             child: DetailProductContact(
-              argument: settings.arguments != null
-                  ? settings.arguments as ArgumentContactScreen
+              productId: settings.arguments != null
+                  ? settings.arguments as int
                   : null,
             ),
           ),
@@ -119,7 +122,10 @@ class Routes {
         );
       case RouteDefine.detailOrder:
         return SlideLeftRoute(
-          widget: const DetailOderScreen(),
+          widget: DetailOderScreen(
+            proId:
+                settings.arguments != null ? settings.arguments as int : null,
+          ),
         );
       case RouteDefine.payDebt:
         return SlideLeftRoute(
