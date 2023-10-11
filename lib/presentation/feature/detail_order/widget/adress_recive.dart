@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
+import 'package:qrcode/domain/entity/detail_order.dart';
+import 'package:qrcode/presentation/feature/infomation_customer/widget/infor_enum.dart';
 
 import 'item_row.dart';
 
 class AdressRecive extends StatefulWidget {
-  const AdressRecive({Key? key}) : super(key: key);
+  final OrderDetail orderDetail;
+
+  const AdressRecive({Key? key, required this.orderDetail}) : super(key: key);
 
   @override
   State<AdressRecive> createState() => _AdressReciveState();
@@ -54,7 +58,7 @@ class _AdressReciveState extends State<AdressRecive> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ItemRow(
-                    title: 'Hoang Huy',
+                    title: widget.orderDetail.description ?? '',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
                         fontWeight: FontWeight.w500,
@@ -64,7 +68,7 @@ class _AdressReciveState extends State<AdressRecive> {
                   height: 6,
                 ),
                 ItemRow(
-                    title: '0966 123 456',
+                    title: widget.orderDetail.description ?? '',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
                         fontWeight: FontWeight.w400,
@@ -74,7 +78,7 @@ class _AdressReciveState extends State<AdressRecive> {
                   height: 6,
                 ),
                 ItemRow(
-                    title: 'Hà Nội - Thanh Xuân',
+                    title: widget.orderDetail.description ?? '',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
                         fontWeight: FontWeight.w400,
@@ -84,7 +88,7 @@ class _AdressReciveState extends State<AdressRecive> {
                   height: 6,
                 ),
                 ItemRow(
-                    title: 'Số 123 Nguyễn Trãi',
+                    title: widget.orderDetail.description ?? '',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
                         fontWeight: FontWeight.w400,
@@ -111,23 +115,28 @@ class _AdressReciveState extends State<AdressRecive> {
                   fontSize: 16,
                   color: AppColors.black)),
           const SizedBox(height: 8),
-          const ItemRow(title: 'Mã đơn hàng', value: '12345678'),
+          ItemRow(title: 'Mã đơn hàng', value: widget.orderDetail.code ?? ''),
           const SizedBox(height: 8),
           ItemRow(
               title: 'Trạng thái',
-              value: 'Hoàn thành',
+              value: widget.orderDetail.status?.label ?? '',
               textStyleValue: TextStyleManager.mediumBlack14px.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
-                  color: AppColors.green)),
+                  color: HelperInfor.getColor(
+                      widget.orderDetail.status?.value ?? ''))),
           const SizedBox(height: 8),
-          const ItemRow(title: 'Thời gian đặt', value: '08:00 - 01/12/2021'),
+          ItemRow(
+              title: 'Thời gian đặt',
+              value: HelperInfor.getDate(widget.orderDetail.createdAt ?? '')),
           const SizedBox(height: 8),
-          const ItemRow(
-              title: 'Hình thức giao hàng', value: 'Giao hàng tiêu chuẩn'),
+          ItemRow(
+              title: 'Hình thức giao hàng',
+              value: widget.orderDetail.description ?? ''),
           const SizedBox(height: 8),
-          const ItemRow(
-              title: 'Hình thức thanh toán', value: 'Thanh toán khi nhận hàng'),
+          ItemRow(
+              title: 'Hình thức thanh toán',
+              value: widget.orderDetail.description ?? ''),
           const SizedBox(
             height: 16,
           ),
@@ -142,15 +151,21 @@ class _AdressReciveState extends State<AdressRecive> {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Column(
         children: [
-          const ItemRow(title: 'Tổng tiền', value: '200.000 vnđ'),
+          ItemRow(
+              title: 'Tổng tiền',
+              value: '${widget.orderDetail.amount ?? ''} vnđ'),
           const SizedBox(
             height: 8,
           ),
-          const ItemRow(title: 'Phí vận chuyển', value: '200.000 vnđ'),
+          ItemRow(
+              title: 'Phí vận chuyển',
+              value: widget.orderDetail.description ?? ''),
           const SizedBox(
             height: 8,
           ),
-          const ItemRow(title: 'Mã khuyến mại', value: '200.000 vnđ'),
+          ItemRow(
+              title: 'Mã khuyến mại',
+              value: '${widget.orderDetail.discountAmount ?? '0'} vnđ'),
           const SizedBox(
             height: 8,
           ),
@@ -160,7 +175,7 @@ class _AdressReciveState extends State<AdressRecive> {
                   fontWeight: FontWeight.w700,
                   fontSize: 18,
                   color: AppColors.black),
-              value: '200.000 vnđ',
+              value: '${widget.orderDetail.subTotal ?? ''} vnđ',
               textStyleValue: TextStyleManager.mediumBlack14px.copyWith(
                   fontWeight: FontWeight.w700,
                   fontSize: 18,

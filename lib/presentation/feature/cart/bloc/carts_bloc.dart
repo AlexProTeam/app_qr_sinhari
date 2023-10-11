@@ -9,6 +9,7 @@ import '../../../../domain/entity/confirm_cart_response.dart';
 import '../../../../domain/entity/list_carts_response.dart';
 
 part 'carts_event.dart';
+
 part 'carts_state.dart';
 
 class CartsBloc extends Bloc<CartsEvent, CartsState> {
@@ -45,17 +46,19 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         listData[event.index] = listData[event.index].copyWith(
           qty: event.quality.toString(),
         );
-
-        emit(
-          state.copyWith(
-            status: BlocStatusEnum.success,
-            cartsResponse: state.cartsResponse?.copyWith(
-              carts: state.cartsResponse?.carts?.copyWith(
-                items: listData,
+        if (state.cartsResponse?.carts?.items?[event.index].isSelected ==
+            true) {
+          emit(
+            state.copyWith(
+              status: BlocStatusEnum.success,
+              cartsResponse: state.cartsResponse?.copyWith(
+                carts: state.cartsResponse?.carts?.copyWith(
+                  items: listData,
+                ),
               ),
             ),
-          ),
-        );
+          );
+        }
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,

@@ -12,6 +12,7 @@ import 'package:qrcode/data/utils/exceptions/api_exception.dart';
 import 'package:qrcode/domain/entity/add_to_cart_model.dart';
 import 'package:qrcode/domain/entity/banner_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
+import 'package:qrcode/domain/entity/detail_order.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
@@ -335,6 +336,15 @@ class AppRepositoryImpl implements AppRepository {
   Future<ObjectResponse> deleteItemCart(int id) async {
     try {
       return await api.deleteItemCart(id);
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse<DataOrderDetail>> getDetailOrder(int? proId) async {
+    try {
+      return await api.getDetailOrder(proId);
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

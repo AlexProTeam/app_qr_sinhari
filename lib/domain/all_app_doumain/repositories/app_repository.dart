@@ -75,4 +75,8 @@ abstract class AppRepository {
   Future<ObjectResponse> deleteItemCart(
     int id,
   );
+
+  Future<ObjectResponse<DataOrderDetail>> getDetailOrder(
+    int? proId,
+  );
 }

@@ -204,7 +204,7 @@ class ItemListState extends State<ItemList> {
           maxLines: 2,
         ),
         _buildQuantityButton(Assets.icons.iconDown.path, onTap: () {
-          changeQtyItem(widget.itemsCarts.getQtyNum - 1);
+          changeQtyItem(widget.itemsCarts.getQtyNum - 1, isDown: true);
         }),
         Text(
           widget.itemsCarts.getQtyNum.toString(),
@@ -240,9 +240,23 @@ class ItemListState extends State<ItemList> {
     );
   }
 
-  void changeQtyItem(int qty) => _cartsBloc.add(ChangeQualityCartEvent(
+  void changeQtyItem(int qty, {bool isDown = false}) {
+    if (isDown == true && qty < 1) {
+      DialogManager.showDialogConfirm(
+        context,
+        content: 'Bạn có chắc xoá đơn hàng ?',
+        leftTitle: 'Xoá',
+        onTapLeft: () {
+          _cartsBloc.add(
+              DeleteCartEvent(widget.itemsCarts.productId ?? 0, widget.index));
+        },
+      );
+    } else {
+      _cartsBloc.add(ChangeQualityCartEvent(
         widget.itemsCarts.productId ?? 0,
         qty,
         widget.index,
       ));
+    }
+  }
 }

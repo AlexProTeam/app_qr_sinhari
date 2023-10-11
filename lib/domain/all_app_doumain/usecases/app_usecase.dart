@@ -122,4 +122,9 @@ class AppUseCase {
     required int id,
   }) =>
       _repository.deleteItemCart(id);
+
+  Future<ObjectResponse<DataOrderDetail>> getDetailOrder({
+    int? proId,
+  }) =>
+      _repository.getDetailOrder(proId);
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
-import 'package:qrcode/gen/assets.gen.dart';
+import 'package:qrcode/domain/entity/detail_order.dart';
 
 class ItemList extends StatelessWidget {
-  const ItemList({Key? key}) : super(key: key);
+  final Products products;
+
+  const ItemList({Key? key, required this.products}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,11 @@ class ItemList extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              Assets.images.welcome.path,
+            child: Image.network(
+              products.productImage ?? '',
               width: 111,
               height: 95,
-              fit: BoxFit.cover,
+              // fit: BoxFit.cover,
             ),
           ),
           Expanded(
@@ -30,7 +32,7 @@ class ItemList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sản phẩm số 1',
+                    products.productName ?? '',
                     style: TextStyleManager.mediumBlack14px
                         .copyWith(fontWeight: FontWeight.w500, fontSize: 14),
                     overflow: TextOverflow.ellipsis,
@@ -44,7 +46,7 @@ class ItemList extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '120.000 vnđ',
+                          '${products.price} vnđ',
                           style: TextStyleManager.mediumBlack14px.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
@@ -54,7 +56,7 @@ class ItemList extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          'Sản phẩm số 1',
+                          '${products.product?.salePrice} vnđ',
                           style: TextStyleManager.mediumBlack14px.copyWith(
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
@@ -68,7 +70,7 @@ class ItemList extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    'Số lượng: 1',
+                    'Số lượng: ${products.qty}',
                     style: TextStyleManager.mediumBlack14px
                         .copyWith(fontWeight: FontWeight.w500, fontSize: 14),
                     overflow: TextOverflow.ellipsis,
