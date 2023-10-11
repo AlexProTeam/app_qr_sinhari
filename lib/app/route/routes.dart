@@ -90,9 +90,8 @@ class Routes {
           widget: BlocProvider(
             create: (context) => ProductDetailBloc(),
             child: DetailProductContact(
-              productId: settings.arguments != null
-                  ? settings.arguments as int
-                  : null,
+              productId:
+                  settings.arguments != null ? settings.arguments as int : null,
             ),
           ),
         );
@@ -143,7 +142,10 @@ class Routes {
         );
       case RouteDefine.cartScreen:
         return SlideLeftRoute(
-          widget: const CartScreen(),
+          widget: BlocProvider(
+            create: (context) => CartsBloc()..add(const InitDataCartEvent()),
+            child: const CartScreen(),
+          ),
         );
       case RouteDefine.successScreen:
         return SlideLeftRoute(

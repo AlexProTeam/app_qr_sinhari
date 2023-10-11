@@ -108,7 +108,7 @@ class HomeScreenState extends State<HomeScreen>
               /// sản phẩm nổi bật
               const ProductFeaturesWidget(),
 
-              /// sản phẩm bán chạyshow
+              /// sản phẩm bán chạy
               const ProductSellersWidget(),
 
               ///dầu gội phủ bạc
@@ -231,7 +231,7 @@ class HomeScreenState extends State<HomeScreen>
       _isLoading = true;
     });
     await Future.delayed(
-        const Duration(seconds: 1),
+        const Duration(seconds: 2),
         () => setState(() {
               _isLoading = false;
             }));

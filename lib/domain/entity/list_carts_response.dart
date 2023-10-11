@@ -113,35 +113,34 @@ class CartDataList {
     }
   }
 
-  double get getTotalOriginPrice {
-    if (items != null && items!.isNotEmpty) {
-      return items!
+  List<ItemsCarts> get _itemsToCal {
+    if (items == null && items!.isEmpty) {
+      return [];
+    }
+
+    return items!.where((element) => element.isSelected == true).toList();
+  }
+
+  double get getTotalOriginPrice => _itemsToCal.isNotEmpty
+      ? _itemsToCal
           .map((e) => e.getTotalOriginPrice)
           .toList()
-          .reduce((value, element) => value + element);
-    }
-    return 0;
-  }
+          .reduce((value, element) => value + element)
+      : 0;
 
-  double get getTotalPriceQty {
-    if (items != null && items!.isNotEmpty) {
-      return items!
+  double get getTotalPriceQty => _itemsToCal.isNotEmpty
+      ? _itemsToCal
           .map((e) => e.getTotalPrice)
           .toList()
-          .reduce((value, element) => value + element);
-    }
-    return 0;
-  }
+          .reduce((value, element) => value + element)
+      : 0;
 
-  int? get calQtyProduct {
-    if (items != null && items!.isNotEmpty) {
-      return items!
+  int? get calQtyProduct => _itemsToCal.isNotEmpty
+      ? _itemsToCal
           .map((e) => e.getQtyNum)
           .toList()
-          .reduce((value, element) => value + element);
-    }
-    return 0;
-  }
+          .reduce((value, element) => value + element)
+      : 0;
 
   int get getItemsQtyNum =>
       calQtyProduct ?? double.parse(itemsQty ?? '0').toInt();

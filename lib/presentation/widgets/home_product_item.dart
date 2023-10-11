@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
@@ -32,101 +33,108 @@ class ProductItem extends StatelessWidget {
           ),
         ),
       ),
-      child: InkWell(
-        onTap: () =>
-            Navigator.pushNamed(context, RouteDefine.detailProductScreen,
-                arguments: ArgumentDetailProductScreen(
-                  productId: productModel?.id,
-                )),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 4,
-              child: CustomImageNetwork(
-                url: '${productModel?.thumbnailImg}',
-                fit: BoxFit.cover,
-                width: 110,
-                height: 110,
-                border: 8,
-              ),
-            ),
-            Expanded(
-              flex: 6,
-              child: Container(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      productModel?.name ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: Colors.black,
-                        height: 1.3,
-                      ),
-                    ),
-                    Row(
+      child: Stack(
+        children: [
+          InkWell(
+            onTap: () =>
+                Navigator.pushNamed(context, RouteDefine.detailProductScreen,
+                    arguments: ArgumentDetailProductScreen(
+                      productId: productModel?.id,
+                    )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: CustomImageNetwork(
+                    url: '${productModel?.thumbnailImg}',
+                    fit: BoxFit.cover,
+                    width: 110.w,
+                    height: 110.h,
+                    border: 6.r,
+                  ),
+                ),
+                Expanded(
+                  flex: 6,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Assets.icons.star.image(
-                          width: 16,
-                          height: 16,
-                        ),
-                        const SizedBox(width: 6),
-                        RichText(
-                          text: TextSpan(
-                            text: (productModel?.rating ?? 0).toString(),
-                            style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300,
-                                color: Colors.black),
-                            children: [
-                              TextSpan(
-                                text:
-                                    ' (${(productModel?.quantity ?? 0).toString()} Sản phẩm)',
-                                style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w300,
-                                    color: AppColors.colorACACAC),
-                              )
-                            ],
+                        Text(
+                          productModel?.name ?? '',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                            height: 1.3,
                           ),
-                        )
+                        ),
+                        8.verticalSpace,
+                        Row(
+                          children: [
+                            Assets.icons.star.image(
+                              width: 16.r,
+                              height: 16.r,
+                            ),
+                            6.horizontalSpace,
+                            RichText(
+                              text: TextSpan(
+                                text: (productModel?.rating ?? 0).toString(),
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black),
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        ' (${(productModel?.quantity ?? 0).toString()} Sản phẩm)',
+                                    style: TextStyle(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w300,
+                                        color: AppColors.colorACACAC),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        5.verticalSpace,
+                        itemPrice(
+                          salePrice: isAngecy == true
+                              ? productModel?.salePrice ?? 0
+                              : productModel?.unitPrice ?? 0,
+                          price: isAngecy == true
+                              ? productModel?.price ?? 0
+                              : productModel?.purchasePrice ?? 0,
+                        ),
                       ],
                     ),
-                    itemPrice(
-                      salePrice: isAngecy == true
-                          ? productModel?.salePrice ?? 0
-                          : productModel?.unitPrice ?? 0,
-                      price: isAngecy == true
-                          ? productModel?.price ?? 0
-                          : productModel?.purchasePrice ?? 0,
-                    ),
-                    InkWell(
-                      onTap: () => ToastManager.showToast(
-                        context,
-                        text: 'Chức năng này sẽ sớm ra mắt',
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Assets.icons.heart.image(
-                          width: 22,
-                          height: 20,
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 5,
+            right: 5,
+            child: GestureDetector(
+              onTap: () => ToastManager.showToast(
+                context,
+                text: 'Chức năng đang phát triển',
+              ),
+              child: Assets.icons.heart.image(
+                width: 22.r,
+                height: 20.r,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

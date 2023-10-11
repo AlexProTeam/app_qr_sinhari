@@ -251,12 +251,12 @@ class ItemListState extends State<ItemList> {
               DeleteCartEvent(widget.itemsCarts.productId ?? 0, widget.index));
         },
       );
-    } else {
-      _cartsBloc.add(ChangeQualityCartEvent(
-        widget.itemsCarts.productId ?? 0,
-        qty,
-        widget.index,
-      ));
+      return;
     }
+    _cartsBloc.add(ChangeQualityCartEvent(
+      widget.itemsCarts.productId ?? 0,
+      qty,
+      widget.index,
+    ));
   }
 }

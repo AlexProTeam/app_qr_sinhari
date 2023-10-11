@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
@@ -44,46 +45,45 @@ class CategoryItemProduct extends StatelessWidget {
             children: [
               CustomImageNetwork(
                 url: '${productModel?.thumbnailImg}',
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 width: MediaQuery.of(context).size.width / 2,
                 height: getSize(context),
-                border: 12,
+                border: 8.r,
               ),
-              const SizedBox(height: 16.25),
+              10.verticalSpace,
               SizedBox(
-                // height: 36,
                 child: Text('${productModel?.name}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     textAlign: TextAlign.start,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         color: Colors.black)),
               ),
-              const SizedBox(height: 5),
+              5.verticalSpace,
               if (!isAgency)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Assets.icons.star.image(
-                      width: 24,
-                      height: 24,
+                      width: 20.r,
+                      height: 20.r,
                     ),
-                    const SizedBox(width: 6),
+                    6.verticalSpace,
                     RichText(
                         text: TextSpan(
                             text: (productModel?.rating ?? 0).toString(),
-                            style: const TextStyle(
-                                fontSize: 12,
+                            style: TextStyle(
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.black),
                             children: [
                           TextSpan(
                             text:
                                 ' (${(productModel?.quantity ?? 0).toString()} sản phẩm)',
-                            style: const TextStyle(
-                                fontSize: 12,
+                            style: TextStyle(
+                                fontSize: 12.sp,
                                 fontWeight: FontWeight.w300,
                                 color: AppColors.colorACACAC),
                           )
@@ -99,12 +99,10 @@ class CategoryItemProduct extends StatelessWidget {
                     : productModel?.purchasePrice ?? 0,
               ),
               if (isAgency) ...[
-                const SizedBox(
-                  height: 4,
-                ),
+                4.verticalSpace,
                 CustomButton(
-                  height: 28,
-                  radius: 5,
+                  height: 28.h,
+                  radius: 5.r,
                   onTap: () {
                     if (onTap != null) {
                       onTap!();
@@ -113,7 +111,7 @@ class CategoryItemProduct extends StatelessWidget {
                   text: 'Mua ngay',
                   styleTitle: TextStyleManager.normalWhite.copyWith(
                     fontWeight: FontWeight.w700,
-                    fontSize: 14,
+                    fontSize: 14.sp,
                   ),
                 )
               ],
@@ -129,8 +127,8 @@ class CategoryItemProduct extends StatelessWidget {
                   text: 'Chức năng đang phát triển',
                 ),
                 child: Assets.icons.heart.image(
-                  width: 22,
-                  height: 20,
+                  width: 22.r,
+                  height: 20.r,
                 ),
               ),
             ),
@@ -141,16 +139,16 @@ class CategoryItemProduct extends StatelessWidget {
 
   double getSize(BuildContext context) {
     if (!isAgency) {
-      return 164;
+      return 165.h;
     }
-    return 250;
+    return 200.h;
   }
 
   Widget itemPrice({required int salePrice, required int price}) {
     if (Helper.getPrice(salePrice, price) == false) {
       return Column(
         children: [
-          const SizedBox(height: 5),
+          5.verticalSpace,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2),
             child: Row(
@@ -159,20 +157,20 @@ class CategoryItemProduct extends StatelessWidget {
               children: [
                 Text(
                   FormatUtils.formatCurrencyDoubleToString(salePrice),
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColors.colorFFC700,
                   ),
                 ),
-                const SizedBox(width: 5),
+                5.horizontalSpace,
                 RichText(
                   text: TextSpan(
                     text: FormatUtils.formatCurrencyDoubleToString(
                       productModel?.purchasePrice,
                     ),
-                    style: const TextStyle(
-                      fontSize: 10,
+                    style: TextStyle(
+                      fontSize: 10.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.colorACACAC,
                       decoration: TextDecoration.lineThrough,
@@ -189,7 +187,7 @@ class CategoryItemProduct extends StatelessWidget {
     } else {
       return Column(
         children: [
-          const SizedBox(height: 5),
+          5.verticalSpace,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 2),
             child: Row(

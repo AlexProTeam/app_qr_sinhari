@@ -4,6 +4,7 @@ import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 
+import '../../../app/route/navigation/route_names.dart';
 import '../../../app/route/screen_utils.dart';
 import '../../widgets/category_product_item.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -39,7 +40,9 @@ class ListProductScreenState extends State<ListProductScreen> {
         actions: [
           if (widget.argument?.isAgency ?? false)
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.pushNamed(
+                  Routes.instance.navigatorKey.currentContext!,
+                  RouteDefine.cartScreen),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Assets.icons.icCar.image(
