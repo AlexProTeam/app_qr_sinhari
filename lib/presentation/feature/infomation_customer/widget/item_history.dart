@@ -7,7 +7,6 @@ import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/domain/entity/order_model.dart';
-import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/infomation_customer/bloc/info_bloc.dart';
 import 'package:qrcode/presentation/feature/infomation_customer/widget/infor_enum.dart';
 
@@ -83,8 +82,8 @@ class ItemHistory extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset(
-                  Assets.images.logo.path,
+                Image.network(
+                  order.products?[0].productImage ?? '',
                   width: 88.w,
                   height: 75.h,
                 ),
@@ -100,7 +99,7 @@ class ItemHistory extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                'Đầm xù tím dễ thương',
+                                order.code ?? 'Đầm xù tím dễ thương',
                                 style: TextStyleManager.mediumBlack14px,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
@@ -138,7 +137,7 @@ class ItemHistory extends StatelessWidget {
                             ),
                             Expanded(
                               child: Text(
-                                'X1',
+                                'X${order.totalQty}',
                                 style: TextStyleManager.normalBlack,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -198,10 +197,11 @@ class ItemHistory extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 4, horizontal: 16),
                       decoration: BoxDecoration(
-                          color: HelperInfor.getColor('Đang xử lý'),
+                          color: HelperInfor.getColor(
+                              order.status?.value ?? 'processing'),
                           borderRadius: BorderRadius.circular(8)),
                       child: Text(
-                        'Đang xử lý',
+                        order.status?.label ?? 'Đang xử lý',
                         style: TextStyleManager.smallGrey,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,

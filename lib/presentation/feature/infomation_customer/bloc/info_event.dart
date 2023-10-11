@@ -5,10 +5,12 @@ abstract class InfoEvent extends Equatable {
 }
 
 class InitListProductEvent extends InfoEvent {
-  const InitListProductEvent();
+  final String? status;
+
+  const InitListProductEvent({this.status});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [status];
 }
 
 class ClearListProductEvent extends InfoEvent {

@@ -116,7 +116,7 @@ class AppUseCase {
   Future<DataProduct> getListAngecy() => _repository.getListAngecy();
 
   Future<DataListOrder> getListOrder({String? statusOrder}) =>
-      _repository.getListOrder();
+      _repository.getListOrder(statusOrder: statusOrder);
 
   Future<ObjectResponse> deleteItemCart({
     required int id,

@@ -45,6 +45,7 @@ class OrdersHistoryResponse {
   String? updatedAt;
   dynamic storeId;
   List<Products>? products;
+  int? totalQty;
 
   OrdersHistoryResponse(
       {this.id,
@@ -69,7 +70,8 @@ class OrdersHistoryResponse {
       this.createdAt,
       this.updatedAt,
       this.storeId,
-      this.products});
+      this.products,
+      this.totalQty});
 
   OrdersHistoryResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -103,6 +105,7 @@ class OrdersHistoryResponse {
         products!.add(Products.fromJson(v));
       });
     }
+    totalQty = json['total_qty'];
   }
 
   Map<String, dynamic> toJson() {
@@ -136,6 +139,7 @@ class OrdersHistoryResponse {
     if (products != null) {
       data['products'] = products!.map((v) => v.toJson()).toList();
     }
+    data['total_qty'] = totalQty;
     return data;
   }
 }

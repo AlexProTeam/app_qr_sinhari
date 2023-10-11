@@ -7,6 +7,7 @@ import 'package:qrcode/domain/entity/order_model.dart';
 import '../../../../app/managers/status_bloc.dart';
 
 part 'info_event.dart';
+
 part 'info_state.dart';
 
 class InfoBloc extends Bloc<InfoEvent, InfoState> {
@@ -17,9 +18,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
     on<InitListProductEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
-
-        final result = await appUseCase.getListOrder();
-
+        final result = await appUseCase.getListOrder(statusOrder: event.status);
         emit(
           state.copyWith(
             status: BlocStatusEnum.success,
