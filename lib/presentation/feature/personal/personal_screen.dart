@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
@@ -70,31 +71,26 @@ class PersonalScreenState extends State<PersonalScreen> {
                       );
                     },
                     text: 'Đăng nhập',
-                    width: 128,
-                    height: 45,
+                    width: 128.w,
+                    height: 45.h,
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
+                  18.verticalSpace
                 ],
                 boxBorderApp(
                   child: Column(
                     children: PersonalContactEnum.values.map((e) {
-                      return (!_isProfileModelNotBull &&
-                                  [
-                                    PersonalContactEnum.account,
-                                  ].contains(e) ||
-                              (_isProfileModelNotBull &&
-                                  context
+                      return !_isProfileModelNotBull &&
+                                  PersonalContactEnum.account == e ||
+                              !(context
                                           .read<ProfileBloc>()
                                           .state
                                           .profileModel
                                           ?.isAgency ==
-                                      true &&
+                                      true) &&
                                   [
                                     PersonalContactEnum.infoOrder,
-                                    PersonalContactEnum.historyDebt
-                                  ].contains(e)))
+                                    PersonalContactEnum.historyDebt,
+                                  ].contains(e)
                           ? const SizedBox.shrink()
                           : iconTextWidget(
                               onTap: () => e.getOnTap(context),
@@ -104,7 +100,7 @@ class PersonalScreenState extends State<PersonalScreen> {
                     }).toList(),
                   ),
                 ),
-                const SizedBox(height: 16),
+                16.verticalSpace,
                 boxBorderApp(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

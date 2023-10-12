@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
+import 'package:qrcode/app/core/num_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
@@ -130,15 +131,16 @@ class ItemHistory extends StatelessWidget {
                                         text: '${order.amount}đ',
                                         style: TextStyleManager.mediumBlack
                                             .copyWith(
-                                                decoration: TextDecoration
-                                                    .lineThrough, fontSize: 14)),
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                fontSize: 14)),
                                   ],
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Text(
-                                'X${order.totalQty}',
+                                'X${(order.totalQty ?? 0).toDouble().toAppNumberFormat}',
                                 style: TextStyleManager.normalBlack,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
