@@ -80,12 +80,21 @@ class PersonalScreenState extends State<PersonalScreen> {
                 boxBorderApp(
                   child: Column(
                     children: PersonalContactEnum.values.map((e) {
-                      return !_isProfileModelNotBull &&
-                              [
-                                PersonalContactEnum.account,
-                                PersonalContactEnum.infoOrder,
-                                PersonalContactEnum.historyDebt
-                              ].contains(e)
+                      return (!_isProfileModelNotBull &&
+                                  [
+                                    PersonalContactEnum.account,
+                                  ].contains(e) ||
+                              (_isProfileModelNotBull &&
+                                  context
+                                          .read<ProfileBloc>()
+                                          .state
+                                          .profileModel
+                                          ?.isAgency ==
+                                      true &&
+                                  [
+                                    PersonalContactEnum.infoOrder,
+                                    PersonalContactEnum.historyDebt
+                                  ].contains(e)))
                           ? const SizedBox.shrink()
                           : iconTextWidget(
                               onTap: () => e.getOnTap(context),

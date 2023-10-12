@@ -21,9 +21,9 @@ class HelperInfor {
     }
   }
 
-  static String getDate(String dateTimeScan) {
+  static String getDate(String dateTimeScan, {String? format}) {
     DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-    DateFormat dateFormatLast = DateFormat("HH:mm - dd/MM/yyyy");
+    DateFormat dateFormatLast = DateFormat(format ?? "HH:mm - dd/MM/yyyy");
     DateTime datetime = dateFormat.parse(dateTimeScan);
     final date = dateFormatLast.format(datetime);
     return date;
