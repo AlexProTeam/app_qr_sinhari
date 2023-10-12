@@ -9,6 +9,7 @@ import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/domain/entity/order_model.dart';
 import 'package:qrcode/presentation/feature/infomation_customer/bloc/info_bloc.dart';
 import 'package:qrcode/presentation/feature/infomation_customer/widget/infor_enum.dart';
+import 'package:qrcode/presentation/widgets/custom_image_network.dart';
 
 class ItemHistory extends StatelessWidget {
   const ItemHistory({Key? key}) : super(key: key);
@@ -82,8 +83,8 @@ class ItemHistory extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.network(
-                  order.products?[0].productImage ?? '',
+                CustomImageNetwork(
+                  url: order.products?[0].productImage ?? '',
                   width: 88.w,
                   height: 75.h,
                 ),
@@ -150,7 +151,7 @@ class ItemHistory extends StatelessWidget {
                           height: 6,
                         ),
                         Text(
-                          'Ngày đặt : 2023-05-31',
+                          'Ngày đặt : ${order.createdAt ?? ''}',
                           style: TextStyleManager.normalBlack,
                         ),
                       ],
@@ -165,7 +166,7 @@ class ItemHistory extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '1 Sản phẩm ',
+                  '${order.products?.length ?? 0} Sản phẩm ',
                   style: TextStyleManager.normalBlack,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -198,11 +199,13 @@ class ItemHistory extends StatelessWidget {
                           vertical: 4, horizontal: 16),
                       decoration: BoxDecoration(
                           color: HelperInfor.getColor(
-                              order.status?.value ?? 'processing'),
+                            order.status?.value ?? 'processing',
+                          ),
                           borderRadius: BorderRadius.circular(8)),
                       child: Text(
                         order.status?.label ?? 'Đang xử lý',
-                        style: TextStyleManager.smallGrey,
+                        style: TextStyleManager.smallGrey.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.w500),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),

@@ -4,7 +4,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
@@ -15,9 +14,9 @@ import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/style_manager.dart';
-import '../../../../../app/route/format_utils.dart';
 import '../../../../../app/route/navigation/route_names.dart';
 import '../../../../domain/entity/add_to_cart_model.dart';
+import '../../../widgets/category_product_item.dart';
 import 'detail_product_slide.dart';
 
 class ArgumentDetailProductScreen {
@@ -61,7 +60,8 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           title: 'Chi tiết',
           isShowBack: true,
           actions: [
-            if (context.read<ProfileBloc>().state.isHasProfileData)
+            if (_profileBloc.state.isHasProfileData &&
+                _profileBloc.state.profileModel?.isAgency == true)
               _iconAddToCarts(),
             _iconFavorite()
           ],
@@ -74,16 +74,15 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                 ? DialogManager.showLoadingDialog(context)
                 : DialogManager.hideLoadingDialog;
 
-            if (state.status == BlocStatusEnum.success) {
-              if (state.addToCartModel?.carts != null) {
-                Navigator.pushNamed(
-                  Routes.instance.navigatorKey.currentContext!,
-                  RouteDefine.cartScreen,
-                  arguments: ArgumentCartScreen(
-                    carts: state.addToCartModel?.carts,
-                  ),
-                );
-              }
+            if (state.isNavigateToCartScreen &&
+                _profileBloc.state.profileModel?.isAgency == true) {
+              Navigator.pushNamed(
+                Routes.instance.navigatorKey.currentContext!,
+                RouteDefine.cartScreen,
+                arguments: ArgumentCartScreen(
+                  carts: state.addToCartModel?.carts,
+                ),
+              );
             }
 
             if (state.errMes.isNotEmpty) {
@@ -101,6 +100,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    /// image
                     DetailProductSlide(
                       images: state.detailProductModel?.data?.photos ?? [],
                     ),
@@ -110,6 +110,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          /// name
                           Text(
                             state.detailProductModel?.data?.name ?? '',
                             style: const TextStyle(
@@ -118,30 +119,32 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                                 color: AppColors.black),
                           ),
                           8.verticalSpace,
+
+                          /// luọt thích và số lượng
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Assets.icons.star.image(
-                                width: 13.5,
-                                height: 16,
+                                width: 13.5.w,
+                                height: 16.h,
                               ),
-                              6.verticalSpace,
+                              6.horizontalSpace,
                               RichText(
                                 text: TextSpan(
                                   text:
                                       (state.detailProductModel?.data?.rating ??
                                               0)
                                           .toString(),
-                                  style: const TextStyle(
-                                      fontSize: 12,
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w300,
                                       color: AppColors.black),
                                   children: [
                                     TextSpan(
                                       text:
                                           ' (${(state.detailProductModel?.data?.quantity ?? 0).toString()} sản phẩm)',
-                                      style: const TextStyle(
-                                          fontSize: 12,
+                                      style: TextStyle(
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w300,
                                           color: AppColors.colorACACAC),
                                     )
@@ -150,9 +153,20 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                               )
                             ],
                           ),
-                          itemPrice(
-                            state.detailProductModel?.data?.unitPrice ?? 0,
-                            state.detailProductModel?.data?.price ?? 0,
+                          5.verticalSpace,
+                          itemPriceProduct(
+                            salePrice: _profileBloc
+                                        .state.profileModel?.isAgency ==
+                                    true
+                                ? state.detailProductModel?.data?.salePrice ?? 0
+                                : state.detailProductModel?.data?.unitPrice ??
+                                    0,
+                            price: _profileBloc.state.profileModel?.isAgency ==
+                                    true
+                                ? state.detailProductModel?.data?.price ?? 0
+                                : state.detailProductModel?.data
+                                        ?.purchasePrice ??
+                                    0,
                           ),
                           10.verticalSpace,
                         ],
@@ -302,52 +316,6 @@ class DetailProductScreenState extends State<DetailProductScreen> {
             );
           },
         ));
-  }
-
-  Widget itemPrice(int unitPrice, int purchasePrice) {
-    if (Helper.getPrice(unitPrice, purchasePrice) == false) {
-      return Column(
-        children: [
-          const SizedBox(height: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                FormatUtils.formatCurrencyDoubleToString(unitPrice),
-                style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: AppColors.colorFFC700),
-              ),
-              const SizedBox(width: 15),
-              RichText(
-                text: TextSpan(
-                  text: FormatUtils.formatCurrencyDoubleToString(purchasePrice),
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.colorACACAC,
-                    decoration: TextDecoration.lineThrough,
-                    decorationColor: AppColors.colorACACAC,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      );
-    }
-    return Column(
-      children: [
-        Text(
-          FormatUtils.formatCurrencyDoubleToString(purchasePrice),
-          style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              color: AppColors.colorFFC700),
-        ),
-      ],
-    );
   }
 
   String getDate(String dateTimeScan) {
@@ -533,7 +501,7 @@ class DetailProductScreenState extends State<DetailProductScreen> {
   Style get _getWidthTitleHTML => Style(
         width: Width(MediaQuery.of(context).size.width * 0.9),
         fontSize: FontSize(
-          20,
+          20.sp,
         ),
       );
 
@@ -546,12 +514,23 @@ class DetailProductScreenState extends State<DetailProductScreen> {
     );
   }
 
-  void _handleButtonTap() =>
-      _navigateBasedOnProfileAndUrl(widget.argument?.url != null
-          ? RouteDefine.activeScrene
-          : RouteDefine.muaHangScrene);
+  void _handleButtonTap() => _navigateBasedOnProfileAndUrl(
+        widget.argument?.url != null
+            ? RouteDefine.activeScrene
+            : RouteDefine.muaHangScrene,
+      );
 
   void _navigateBasedOnProfileAndUrl(String routeName) {
+    /// thêm vào giỏ cho và sang man gio hàng cho agency
+    if (_profileBloc.state.profileModel?.isAgency == true) {
+      return _productDetailBloc.add(
+        OnAddToCartEvent(
+          proId: widget.argument?.productId ?? 0,
+          isAddToCartOnly: false,
+        ),
+      );
+    }
+
     final hasProfile = _profileBloc.state.profileModel != null;
     final productId =
         _productDetailBloc.state.detailProductModel?.data?.id ?? 0;
@@ -567,15 +546,15 @@ class DetailProductScreenState extends State<DetailProductScreen> {
 
   Widget _iconAddToCarts() => InkWell(
         onTap: () => _productDetailBloc.add(
-          OnClickAddToCartEvent(
+          OnAddToCartEvent(
             proId: widget.argument?.productId ?? 0,
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Assets.icons.icCar.image(
-            width: 30,
-            height: 30,
+            width: 23.r,
+            height: 23.r,
           ),
         ),
       );
@@ -588,8 +567,8 @@ class DetailProductScreenState extends State<DetailProductScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Assets.icons.heart.image(
-            width: 22,
-            height: 20,
+            width: 20.r,
+            height: 20.r,
           ),
         ),
       );

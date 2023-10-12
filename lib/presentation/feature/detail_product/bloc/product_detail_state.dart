@@ -5,12 +5,14 @@ class ProductDetailState extends Equatable {
   final DataDetail? detailProductModel;
   final String errMes;
   final OrderCartsResponse? addToCartModel;
+  final bool isAddToCartOnly;
 
   const ProductDetailState({
     this.detailProductModel,
     this.status = BlocStatusEnum.init,
     this.errMes = '',
     this.addToCartModel,
+    this.isAddToCartOnly = true,
   });
 
   @override
@@ -19,18 +21,27 @@ class ProductDetailState extends Equatable {
         status,
         errMes,
         addToCartModel,
+        isAddToCartOnly,
       ];
 
-  ProductDetailState copyWith(
-      {BlocStatusEnum? status,
-      DataDetail? detailProductModel,
-      String? errMes,
-      OrderCartsResponse? addToCartModel}) {
+  bool get isNavigateToCartScreen =>
+      addToCartModel?.carts != null &&
+      status == BlocStatusEnum.success &&
+      !isAddToCartOnly;
+
+  ProductDetailState copyWith({
+    BlocStatusEnum? status,
+    DataDetail? detailProductModel,
+    String? errMes,
+    OrderCartsResponse? addToCartModel,
+    bool? isAddToCartOnly,
+  }) {
     return ProductDetailState(
       status: status ?? this.status,
       detailProductModel: detailProductModel ?? this.detailProductModel,
-      errMes: errMes ?? this.errMes,
+      errMes: errMes ?? '',
       addToCartModel: addToCartModel ?? this.addToCartModel,
+      isAddToCartOnly: isAddToCartOnly ?? this.isAddToCartOnly,
     );
   }
 }

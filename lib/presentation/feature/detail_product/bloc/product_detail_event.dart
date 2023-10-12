@@ -36,15 +36,18 @@ class OnClickBuyEvent extends ProductDetailEvent {
       ];
 }
 
-class OnClickAddToCartEvent extends ProductDetailEvent {
+class OnAddToCartEvent extends ProductDetailEvent {
   final int proId;
+  final bool isAddToCartOnly;
 
-  const OnClickAddToCartEvent({
+  const OnAddToCartEvent({
     required this.proId,
+    this.isAddToCartOnly = true,
   });
 
   @override
   List<Object?> get props => [
         proId,
+        isAddToCartOnly,
       ];
 }

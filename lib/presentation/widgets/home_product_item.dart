@@ -1,48 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../app/managers/color_manager.dart';
-import '../../app/route/format_utils.dart';
 import '../../app/route/navigation/route_names.dart';
+import 'category_product_item.dart';
 import 'custom_image_network.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem(
-      {Key? key, required this.productModel, this.isAngecy = false})
+      {Key? key, required this.productModel, this.isAgency = false})
       : super(key: key);
   final ProductResponse? productModel;
-  final bool? isAngecy;
+  final bool isAgency;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 12),
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      margin: EdgeInsets.only(top: 12.h),
+      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+      height: 120.h,
       decoration: BoxDecoration(
         boxShadow: AppConstant.defaultShadow,
         color: AppColors.bgrScafold,
-        borderRadius: const BorderRadius.all(
+        borderRadius: BorderRadius.all(
           Radius.circular(
-            8,
+            6.r,
           ),
         ),
       ),
       child: Stack(
         children: [
           InkWell(
-            onTap: () =>
-                Navigator.pushNamed(context, RouteDefine.detailProductScreen,
-                    arguments: ArgumentDetailProductScreen(
-                      productId: productModel?.id,
-                    )),
+            onTap: () => Navigator.pushNamed(
+              context,
+              RouteDefine.detailProductScreen,
+              arguments: ArgumentDetailProductScreen(
+                productId: productModel?.id,
+              ),
+            ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
@@ -75,7 +76,7 @@ class ProductItem extends StatelessWidget {
                             height: 1.3,
                           ),
                         ),
-                        8.verticalSpace,
+                        const Spacer(),
                         Row(
                           children: [
                             Assets.icons.star.image(
@@ -104,12 +105,12 @@ class ProductItem extends StatelessWidget {
                             )
                           ],
                         ),
-                        5.verticalSpace,
-                        itemPrice(
-                          salePrice: isAngecy == true
+                        const Spacer(),
+                        itemPriceProduct(
+                          salePrice: isAgency
                               ? productModel?.salePrice ?? 0
                               : productModel?.unitPrice ?? 0,
-                          price: isAngecy == true
+                          price: isAgency
                               ? productModel?.price ?? 0
                               : productModel?.purchasePrice ?? 0,
                         ),
@@ -121,15 +122,15 @@ class ProductItem extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 5,
-            right: 5,
+            bottom: 5.h,
+            right: 5.w,
             child: GestureDetector(
               onTap: () => ToastManager.showToast(
                 context,
                 text: 'Chức năng đang phát triển',
               ),
               child: Assets.icons.heart.image(
-                width: 22.r,
+                width: 20.r,
                 height: 20.r,
               ),
             ),
@@ -137,68 +138,5 @@ class ProductItem extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget itemPrice({required int salePrice, required int price}) {
-    if (Helper.getPrice(salePrice, price) == false) {
-      return Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (productModel?.unitPrice == null) ...[
-                const SizedBox(height: 5),
-                Text(
-                  FormatUtils.formatCurrencyDoubleToString(price),
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.colorFFC700),
-                ),
-              ],
-              if (productModel?.unitPrice != null) ...[
-                const SizedBox(height: 5),
-                Text(
-                  FormatUtils.formatCurrencyDoubleToString(salePrice),
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.colorFFC700),
-                ),
-                const SizedBox(width: 15),
-                RichText(
-                  text: TextSpan(
-                    text: FormatUtils.formatCurrencyDoubleToString(
-                      price,
-                    ),
-                    style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.colorACACAC,
-                      decoration: TextDecoration.lineThrough,
-                      decorationColor: AppColors.colorACACAC,
-                      height: 2,
-                    ),
-                  ),
-                ),
-              ]
-            ],
-          ),
-        ],
-      );
-    } else {
-      return Column(
-        children: [
-          const SizedBox(height: 5),
-          Text(
-            FormatUtils.formatCurrencyDoubleToString(price),
-            style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: AppColors.colorFFC700),
-          ),
-        ],
-      );
-    }
   }
 }

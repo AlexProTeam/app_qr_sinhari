@@ -69,14 +69,18 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       }
     });
 
-    on<OnClickAddToCartEvent>((event, emit) async {
+    on<OnAddToCartEvent>((event, emit) async {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
         final data = await _appUseCase.addToCart(productId: event.proId);
 
         emit(state.copyWith(
-            status: BlocStatusEnum.success, addToCartModel: data));
+          errMes: event.isAddToCartOnly ? 'Thêm vào giỏ thành công' : '',
+          status: BlocStatusEnum.success,
+          addToCartModel: data,
+          isAddToCartOnly: event.isAddToCartOnly,
+        ));
       } catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,

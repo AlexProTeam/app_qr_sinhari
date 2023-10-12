@@ -51,7 +51,8 @@ class _PayDebtState extends State<PayDebt> {
                 DialogManager.hideLoadingDialog;
                 if ((state.payment != null)) {
                   Navigator.pushNamed(context, RouteDefine.payDebtQrScreen,
-                      arguments: ArgumentPayDebtQrScreen(state.payment, amountController.text));
+                      arguments: ArgumentPayDebtQrScreen(
+                          state.payment, amountController.text));
                 }
                 break;
               case BlocStatusEnum.failed:
@@ -67,6 +68,7 @@ class _PayDebtState extends State<PayDebt> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: MBPTextField(
+                    keyboardType: TextInputType.phone,
                     controller: amountController,
                     title: 'Nhập số tiền thanh toán',
                     isRequired: true,
@@ -74,11 +76,12 @@ class _PayDebtState extends State<PayDebt> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () async {
+                  onTap: () {
+                    if (amountController.text.isEmpty) return;
+
                     context
                         .read<PayDebtBloc>()
                         .add(InitDataPayEvent(amountController.text));
-                    // await Future.delayed(const Duration(seconds: 2));
                   },
                   child: Container(
                     decoration: BoxDecoration(

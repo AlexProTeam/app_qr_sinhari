@@ -7,12 +7,6 @@ import 'package:qrcode/presentation/feature/detail_order/widget/adress_recive.da
 import 'package:qrcode/presentation/feature/detail_order/widget/item_list.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
-// class ArgumentDetailOrderScreen {
-//  final int? proId;
-//
-// ArgumentDetailOrderScreen({this.proId});
-// }
-
 class DetailOderScreen extends StatefulWidget {
   final int? proId;
 
@@ -29,7 +23,6 @@ class _DetailOderScreenState extends State<DetailOderScreen> {
       appBar: BaseAppBar(
         title: 'Chi tiết đơn hàng',
         isShowBack: true,
-        actions: const [],
       ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),

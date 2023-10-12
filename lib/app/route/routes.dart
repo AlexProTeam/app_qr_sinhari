@@ -210,11 +210,25 @@ class Routes {
           ),
         );
       case RouteDefine.listProductScreen:
+        final agu = settings.arguments != null
+            ? settings.arguments as ArgumentListProductScreen
+            : ArgumentListProductScreen();
+
         return SlideLeftRoute(
-          widget: ListProductScreen(
-            argument: settings.arguments != null
-                ? settings.arguments as ArgumentListProductScreen
-                : ArgumentListProductScreen(),
+          widget: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    ListProductBloc(getIt<AppUseCase>(), agu.url ?? '')
+                      ..add(const InitDataListProductEvent()),
+              ),
+              BlocProvider(
+                create: (context) => ProductDetailBloc(),
+              )
+            ],
+            child: ListProductScreen(
+              argument: agu,
+            ),
           ),
         );
       case RouteDefine.homeScreen:

@@ -23,7 +23,7 @@ class ProfileModel {
   String? avatar;
   num? currentDebt;
 
-  bool get isTheVendor => isVendor == 1;
+  bool get isAgency => isVendor == 1;
 
   ProfileModel({
     this.id,

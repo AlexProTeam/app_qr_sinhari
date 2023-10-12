@@ -10,17 +10,18 @@ import '../../../widgets/home_product_item.dart';
 import '../../../widgets/toast_manager.dart';
 import '../../list_product/list_product_screen.dart';
 
-class ProductAngecyWidget extends StatefulWidget {
-  const ProductAngecyWidget({Key? key}) : super(key: key);
+class ProductAngecyHomeWidget extends StatefulWidget {
+  const ProductAngecyHomeWidget({Key? key}) : super(key: key);
 
   @override
-  State<ProductAngecyWidget> createState() => _ProductAngecyWidgetState();
+  State<ProductAngecyHomeWidget> createState() =>
+      _ProductAngecyHomeWidgetState();
 }
 
-class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
-  bool _isLoading = true;
+class _ProductAngecyHomeWidgetState extends State<ProductAngecyHomeWidget> {
   final List<ProductResponse> _productAngecy = [];
   final AppUseCase _appUseCase = getIt<AppUseCase>();
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             Text(
-              'sản phẩm dai ly',
+              'Sản phẩm đại lý',
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
@@ -89,7 +90,7 @@ class _ProductAngecyWidgetState extends State<ProductAngecyWidget> {
           ...List.generate(
               _productAngecy.length,
               (index) => ProductItem(
-                    isAngecy: true,
+                    isAgency: true,
                     productModel: _productAngecy[index],
                   )),
         ],

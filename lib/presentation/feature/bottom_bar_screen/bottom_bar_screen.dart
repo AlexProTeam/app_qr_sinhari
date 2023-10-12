@@ -55,10 +55,6 @@ class BottomBarScreenState extends State<BottomBarScreen> {
                   _controller.jumpToPage(state.bottomBarEnum.index),
               buildWhen: (previous, current) => previous != current,
               builder: (context, state) {
-                if (!state.isShowBottomBarEvent) {
-                  return const SizedBox.shrink();
-                }
-
                 return BottomNavigation(
                   onChange: (bottomBarEnum) {
                     _controller.jumpToPage(bottomBarEnum.index);

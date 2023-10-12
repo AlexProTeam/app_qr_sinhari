@@ -7,7 +7,6 @@ import 'package:qrcode/domain/entity/product_model.dart';
 import '../../../../app/managers/status_bloc.dart';
 
 part 'list_product_event.dart';
-
 part 'list_product_state.dart';
 
 class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
@@ -15,7 +14,7 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
   final String url;
 
   ListProductBloc(this.appUseCase, this.url) : super(const ListProductState()) {
-    on<InitListProductEvent>((event, emit) async {
+    on<InitDataListProductEvent>((event, emit) async {
       List<ProductResponse>? products;
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));

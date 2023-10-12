@@ -100,9 +100,10 @@ class HomeScreenState extends State<HomeScreen>
   }
 
   List<Widget> _getListProduct() =>
-      _profileBloc.state.profileModel?.isTheVendor == true
+      _profileBloc.state.profileModel?.isAgency == true
           ? [
-              const ProductAngecyWidget(),
+              /// sản phẩm đại lý
+              const ProductAngecyHomeWidget(),
             ]
           : [
               /// sản phẩm nổi bật
@@ -208,9 +209,10 @@ class HomeScreenState extends State<HomeScreen>
                     ///todo: update later
                     break;
                   case IconHomeEnum.news:
-                    _bottomBarBloc.add(const ChangeTabBottomBarEvent(
-                        bottomBarEnum: BottomBarEnum.tinTuc));
-                    break;
+                    return _bottomBarBloc.add(
+                      const ChangeTabBottomBarEvent(
+                          bottomBarEnum: BottomBarEnum.tinTuc),
+                    );
                   case IconHomeEnum.favourite:
 
                     ///todo: update later
@@ -231,7 +233,7 @@ class HomeScreenState extends State<HomeScreen>
       _isLoading = true;
     });
     await Future.delayed(
-        const Duration(seconds: 2),
+        const Duration(seconds: 3),
         () => setState(() {
               _isLoading = false;
             }));
