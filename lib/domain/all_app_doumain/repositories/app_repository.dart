@@ -42,7 +42,7 @@ abstract class AppRepository {
     required String? email,
     required String? phone,
     required String? address,
-    required File? avatar,
+    required File avatar,
   });
 
   Future<List<NotiModel>> getNotifications();
@@ -66,7 +66,9 @@ abstract class AppRepository {
     int? qty,
   });
 
-  Future<ConfirmCartResponse> confirmCart(List<int> productIds);
+  Future<ConfirmCartResponse> confirmCart(
+    ConfirmCartRequest confirmCartRequest,
+  );
 
   Future<ListCartsResponse> getListCart();
 

@@ -28,6 +28,7 @@ import 'package:qrcode/presentation/feature/news/history_model.dart';
 
 import '../../../domain/entity/confirm_cart_response.dart';
 import '../../../domain/entity/list_carts_response.dart';
+import '../models/request/confirm_job_request.dart';
 
 class AppRepositoryImpl implements AppRepository {
   final AppApi api;
@@ -223,7 +224,7 @@ class AppRepositoryImpl implements AppRepository {
     required String? email,
     required String? phone,
     required String? address,
-    required File? avatar,
+    required File avatar,
   }) async {
     try {
       final response =
@@ -323,9 +324,10 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<ConfirmCartResponse> confirmCart(List<int> productIds) async {
+  Future<ConfirmCartResponse> confirmCart(
+      ConfirmCartRequest confirmCartRequest) async {
     try {
-      final response = await api.postConfirmCart(productIds);
+      final response = await api.postConfirmCart(confirmCartRequest);
       return response.data ?? ConfirmCartResponse();
     } on DioException catch (e) {
       throw (ApiException.error(e));

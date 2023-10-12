@@ -114,7 +114,7 @@ class CartDataList {
   }
 
   List<ItemsCarts> get _itemsToCal {
-    if (items == null && items!.isEmpty) {
+    if (items == null && (items ?? []).isEmpty) {
       return [];
     }
 

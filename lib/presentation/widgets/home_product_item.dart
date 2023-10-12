@@ -11,8 +11,8 @@ import '../../app/route/navigation/route_names.dart';
 import 'category_product_item.dart';
 import 'custom_image_network.dart';
 
-class ProductItem extends StatelessWidget {
-  const ProductItem(
+class ProductItemHome extends StatelessWidget {
+  const ProductItemHome(
       {Key? key, required this.productModel, this.isAgency = false})
       : super(key: key);
   final ProductResponse? productModel;

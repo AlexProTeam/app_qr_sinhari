@@ -42,7 +42,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           email: event.mail,
           phone: event.phone,
           address: event.andres,
-          avatar: event.image.isNotEmpty ? File(event.image) : null,
+          avatar: event.image.isNotEmpty ? File(event.image) : File(''),
         );
 
         emit(

@@ -142,9 +142,7 @@ class HomeScreenState extends State<HomeScreen>
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black),
                             ),
-                            const SizedBox(
-                              height: 3,
-                            ),
+                            3.verticalSpace,
                             Text(
                               _profileBloc.state.profileModel?.name ?? "",
                               style: const TextStyle(

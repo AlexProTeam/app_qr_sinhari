@@ -22,6 +22,7 @@ import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/feature/history_scan/history_model.dart';
 import '../../../presentation/feature/news/history_model.dart';
 import '../../responses/object_response.dart';
+import '../models/request/confirm_job_request.dart';
 import '../models/request/login_request.dart';
 import '../models/response/login_response.dart';
 
@@ -105,7 +106,7 @@ abstract class AppApi {
     @Query('email') String? email,
     @Query('phone') String? phone,
     @Query('address') String? address,
-    @Path() File? avatar,
+    @Part(name: 'avatar') File avatar,
   );
 
   @POST('notifications')
@@ -147,7 +148,7 @@ abstract class AppApi {
 
   @POST('order_cart')
   Future<ObjectResponse<ConfirmCartResponse>> postConfirmCart(
-    @Query('product_ids') List<int> productIds,
+    @Body() ConfirmCartRequest confirmCartRequest,
   );
 
   @POST('delete_item_cart')

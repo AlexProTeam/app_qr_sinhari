@@ -1,11 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 
 import '../../app/managers/color_manager.dart';
 import '../../app/managers/style_manager.dart';
 import '../../app/route/screen_utils.dart';
+import '../feature/profile/bloc/profile_bloc.dart';
 import 'category_product_item.dart';
 
 class GridViewDisplayProduct extends StatelessWidget {
@@ -55,11 +58,14 @@ class GridViewDisplayProduct extends StatelessWidget {
           itemCount:
               notExpand ? min(products?.length ?? 0, 4) : products?.length,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 12.0,
-            mainAxisSpacing: 12.0,
-            childAspectRatio: 0.5,
+            crossAxisSpacing: 12.h,
+            mainAxisSpacing: 12.w,
+            childAspectRatio:
+                context.read<ProfileBloc>().state.profileModel?.isAgency == true
+                    ? 0.5
+                    : 0.60,
           ),
           itemBuilder: (context, index) {
             return CategoryItemProduct(

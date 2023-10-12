@@ -82,6 +82,7 @@ import 'package:qrcode/presentation/widgets/toast_manager.dart';
 import 'package:qrcode/presentation/widgets/widget_loading.dart';
 
 import '../../data/utils/interceptor/token_interceptor.dart';
+import '../data/app_all_api/models/request/confirm_job_request.dart';
 import '../domain/entity/add_to_cart_model.dart';
 import '../domain/entity/confirm_cart_response.dart';
 import '../domain/entity/list_carts_response.dart';

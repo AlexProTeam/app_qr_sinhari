@@ -545,10 +545,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
   }
 
   Widget _iconAddToCarts() => InkWell(
-        onTap: () => _productDetailBloc.add(
-          OnAddToCartEvent(
-            proId: widget.argument?.productId ?? 0,
-          ),
+        onTap: () => Navigator.pushNamed(
+          Routes.instance.navigatorKey.currentContext!,
+          RouteDefine.cartScreen,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),

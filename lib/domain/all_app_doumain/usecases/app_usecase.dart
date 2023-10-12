@@ -63,7 +63,7 @@ class AppUseCase {
     required String? email,
     required String? phone,
     required String? address,
-    required File? avatar,
+    required File avatar,
   }) =>
       _repository.saveProfile(
         name: name,
@@ -106,7 +106,7 @@ class AppUseCase {
       );
 
   Future<ConfirmCartResponse> postConfirmCart(List<int> productIds) =>
-      _repository.confirmCart(productIds);
+      _repository.confirmCart(ConfirmCartRequest(confirmJobs: productIds));
 
   Future<ListCartsResponse> getListCart({
     int? productId,

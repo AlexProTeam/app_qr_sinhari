@@ -89,7 +89,7 @@ class _ProductAngecyHomeWidgetState extends State<ProductAngecyHomeWidget> {
           ),
           ...List.generate(
               _productAngecy.length,
-              (index) => ProductItem(
+              (index) => ProductItemHome(
                     isAgency: true,
                     productModel: _productAngecy[index],
                   )),
