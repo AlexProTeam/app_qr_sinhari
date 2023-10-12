@@ -7,7 +7,8 @@ import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
-import 'package:qrcode/presentation/widgets/circle_avatar.dart';
+
+import '../../../widgets/custom_image_network.dart';
 
 class ItemHeaderProfileBill extends StatelessWidget {
   const ItemHeaderProfileBill({Key? key}) : super(key: key);
@@ -71,12 +72,18 @@ class ItemHeaderProfileBill extends StatelessWidget {
     final profileData =
         context.read<ProfileBloc>().state.profileModel ?? ProfileModel();
 
+    print('------------------------');
+    print(profileData.getAvatar);
+
     return Column(
       children: [
-        CircleAvatarWidget(
-          size: 80,
-          path: Assets.images.welcome.path,
-        ),
+        ClipOval(
+            child: CustomImageNetwork(
+          url: profileData.getAvatar,
+          width: 80.r,
+          height: 80.r,
+          fit: BoxFit.cover,
+        )),
         5.verticalSpace,
         Text(
           profileData.phone ?? '',

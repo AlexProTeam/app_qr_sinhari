@@ -25,6 +25,10 @@ class ProfileModel {
 
   bool get isAgency => isVendor == 1;
 
+  String get getAvatar =>
+      '${ConfigManager.getInstance().apiBaseUrl.substring(0, ConfigManager.getInstance().apiBaseUrl.length - 1)}$avatar'
+          .replaceAll('api/', '');
+
   ProfileModel({
     this.id,
     this.userType,
@@ -57,7 +61,7 @@ class ProfileModel {
     address = json['address'];
     country = json['country'];
     if (json['avatar'] != null) {
-      avatar = '${ConfigManager.getInstance}/${json['avatar']}';
+      avatar = json['avatar'];
     }
 
     city = json['city'];

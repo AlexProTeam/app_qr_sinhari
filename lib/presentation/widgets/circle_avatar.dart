@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/presentation/widgets/custom_image_network.dart';
 
 class CircleAvatarWidget extends StatelessWidget {
   final double size;
@@ -12,33 +13,13 @@ class CircleAvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (path == null || path == '')
-        ? ClipOval(
-            child: Image.asset(
-              '',
-              width: size,
-              height: size,
-              fit: BoxFit.cover,
-            ),
-          )
-        : ClipOval(
-            child: Image.asset(
-              path ?? '',
-              width: size,
-              height: size,
-              fit: BoxFit.cover,
-            ),
-          );
-    // CircleAvatar(
-    //         radius: size / 2,
-    //         foregroundImage: FileImage(
-    //           File(path!),
-    //         ),
-    //         backgroundColor: Colors.transparent,
-    //         backgroundImage: const AssetImage(
-    //           'assets/images/ic_avatar_default.png',
-    //           package: 'mbpcomponents',
-    //         ),
-    //       );
+    return ClipOval(
+      child: CustomImageNetwork(
+        url: imageUrl ?? '',
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+      ),
+    );
   }
 }
