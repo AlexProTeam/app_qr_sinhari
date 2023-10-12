@@ -17,10 +17,17 @@ class ProfileModel {
   int? turnEarn;
   int? isApproval;
   int? isSpecial;
-  int? isAgency;
+  int? isVendor;
   int? nextQrSerialNo;
   int? isNotification;
   String? avatar;
+  num? currentDebt;
+
+  bool get isAgency => isVendor == 1;
+
+  String get getAvatar =>
+      '${ConfigManager.getInstance().apiBaseUrl.substring(0, ConfigManager.getInstance().apiBaseUrl.length - 1)}$avatar'
+          .replaceAll('api/', '');
 
   ProfileModel({
     this.id,
@@ -39,10 +46,11 @@ class ProfileModel {
     this.turnEarn,
     this.isApproval,
     this.isSpecial,
-    this.isAgency,
+    this.isVendor,
     this.nextQrSerialNo,
     this.isNotification,
     this.avatar,
+    this.currentDebt,
   });
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -53,7 +61,7 @@ class ProfileModel {
     address = json['address'];
     country = json['country'];
     if (json['avatar'] != null) {
-      avatar = '${ConfigManager.getInstance}/${json['avatar']}';
+      avatar = json['avatar'];
     }
 
     city = json['city'];
@@ -66,8 +74,9 @@ class ProfileModel {
     turnEarn = json['turn_earn'];
     isApproval = json['is_approval'];
     isSpecial = json['is_special'];
-    isAgency = json['is_agency'];
+    isVendor = json['is_vendor'];
     nextQrSerialNo = json['next_qr_serial_no'];
     isNotification = json['is_notification'];
+    currentDebt = json['currentDebt'];
   }
 }

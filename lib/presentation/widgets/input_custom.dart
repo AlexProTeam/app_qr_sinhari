@@ -25,6 +25,7 @@ class MBPTextField extends StatelessWidget {
       this.onTap,
       this.text,
       this.textStyle,
+      this.textTitleStyle,
       this.maxLine = 1,
       this.errorMaxLines = 1,
       this.borderColor,
@@ -42,7 +43,9 @@ class MBPTextField extends StatelessWidget {
       this.validator,
       this.autovalidateMode,
       this.isMarginLeft = true,
-      this.enable})
+      this.enable,
+      this.boderRadius,
+      this.contentPadding})
       : super(key: key);
 
   final String? title;
@@ -61,6 +64,7 @@ class MBPTextField extends StatelessWidget {
   final Function? onTap;
   final String? text;
   final TextStyle? textStyle;
+  final TextStyle? textTitleStyle;
   final int? maxLine;
   final int? errorMaxLines;
   final Color? borderColor;
@@ -79,6 +83,8 @@ class MBPTextField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final bool? isMarginLeft;
   final bool? enable;
+  final BorderRadius? boderRadius;
+  final EdgeInsetsGeometry? contentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +103,8 @@ class MBPTextField extends StatelessWidget {
                   children: [
                     Text(
                       title ?? '',
-                      style: kTextMediumtStyle.copyWith(fontSize: 14),
+                      style: textTitleStyle ??
+                          kTextMediumtStyle.copyWith(fontSize: 14),
                     ),
                     if (suffixTitle != null) suffixTitle!,
                     if (isRequired)
@@ -152,6 +159,7 @@ class MBPTextField extends StatelessWidget {
           key: Key(text ?? ''),
           maxLines: maxLine,
           decoration: InputDecoration(
+              contentPadding: contentPadding,
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               hintText: hint ?? '',
@@ -160,11 +168,13 @@ class MBPTextField extends StatelessWidget {
               hintStyle: kTextMediumtStyle.copyWith(
                   fontSize: 14, color: hintColor ?? kTextSubduedColor),
               enabledBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                borderRadius:
+                    boderRadius ?? const BorderRadius.all(Radius.circular(12)),
                 borderSide: BorderSide(color: borderColor ?? kTextSubduedColor),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                borderRadius:
+                    boderRadius ?? const BorderRadius.all(Radius.circular(12)),
                 borderSide: BorderSide(color: borderColor ?? kTextSubduedColor),
               ),
               filled: true,

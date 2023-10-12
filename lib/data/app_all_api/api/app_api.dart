@@ -1,21 +1,28 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:qrcode/domain/entity/Introduce_model.dart';
+import 'package:qrcode/domain/entity/add_to_cart_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
+import 'package:qrcode/domain/entity/detail_order.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
+import 'package:qrcode/domain/entity/order_model.dart';
+import 'package:qrcode/domain/entity/payment_debt_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../domain/entity/banner_model.dart';
+import '../../../domain/entity/confirm_cart_response.dart';
+import '../../../domain/entity/list_carts_response.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/feature/history_scan/history_model.dart';
 import '../../../presentation/feature/news/history_model.dart';
 import '../../responses/object_response.dart';
+import '../models/request/confirm_job_request.dart';
 import '../models/request/login_request.dart';
 import '../models/response/login_response.dart';
 
@@ -93,13 +100,13 @@ abstract class AppApi {
     @Query('type') String? typePolicy,
   );
 
-  @POST('policy')
-  Future<ObjectResponse> saveProfile(
+  @POST('auth/saveProfile')
+  Future<ObjectResponse<ProfileModel>> saveProfile(
     @Query('name') String? name,
     @Query('email') String? email,
     @Query('phone') String? phone,
     @Query('address') String? address,
-    @Path() File? avatar,
+    @Part(name: 'avatar') File avatar,
   );
 
   @POST('notifications')
@@ -110,5 +117,47 @@ abstract class AppApi {
     @Query('product_id') String? productId,
     @Query('content') String? content,
     @Query('type') int? type,
+  );
+
+  @POST('add_to_cart')
+  Future<ObjectResponse<OrderCartsResponse>> addToCart(
+    @Part(name: "product_id") int productId,
+  );
+
+  @POST('payment_debt')
+  Future<ObjectResponse<PaymentDebt>> postPayment(
+    @Query('amount') int amount,
+  );
+
+  @POST('get_to_cart')
+  Future<ObjectResponse<ListCartsResponse>> getListCart();
+
+  @POST('product_agency')
+  Future<DataProduct> getListAngecy();
+
+  @POST('orders')
+  Future<ObjectResponse<DataListOrder>> getListOrder(
+    @Part(name: 'status_order') String? statusOrder,
+  );
+
+  @POST('add_quantity')
+  Future<ObjectResponse<OrderCartsResponse>> postQuality(
+    @Query('product_id') int productId,
+    @Query('qty') int qty,
+  );
+
+  @POST('order_cart')
+  Future<ObjectResponse<ConfirmCartResponse>> postConfirmCart(
+    @Body() ConfirmCartRequest confirmCartRequest,
+  );
+
+  @POST('delete_item_cart')
+  Future<ObjectResponse> deleteItemCart(
+    @Query('item_id') int id,
+  );
+
+  @POST('order_detail')
+  Future<ObjectResponse<DataOrderDetail>> getDetailOrder(
+    @Query('order_id') int? proId,
   );
 }

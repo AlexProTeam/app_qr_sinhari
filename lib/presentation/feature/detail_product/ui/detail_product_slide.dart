@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/presentation/widgets/custom_image_network.dart';
 
 import '../../../../../app/managers/color_manager.dart';
@@ -30,7 +31,7 @@ class DetailProductSlideState extends State<DetailProductSlide> {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 375,
+          height: 300.h,
           child: CarouselSlider(
             options: CarouselOptions(
               initialPage: 0,
@@ -54,7 +55,7 @@ class DetailProductSlideState extends State<DetailProductSlide> {
                         child: CustomImageNetwork(
                           url: e,
                           width: double.infinity,
-                          height: 375,
+                          height: 300.h,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -73,8 +74,8 @@ class DetailProductSlideState extends State<DetailProductSlide> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: map<Widget>(widget.images ?? [], (index, obj) {
                   return Container(
-                    width: 8.0,
-                    height: 8.0,
+                    width: 8.r,
+                    height: 8.r,
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,

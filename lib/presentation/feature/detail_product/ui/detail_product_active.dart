@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
-import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/custom_textfield.dart';
@@ -141,11 +140,12 @@ class DetailProductActiveState extends State<DetailProductActive> {
                               return;
                             }
 
-                            context.read<ProductDetailBloc>().add(
-                                OnClickBuyEvent(
-                                    id: widget.argument?.productId ?? 0,
-                                    content: _contentController,
-                                    appUseCase: getIt<AppUseCase>()));
+                            context
+                                .read<ProductDetailBloc>()
+                                .add(OnClickBuyEvent(
+                                  id: widget.argument?.productId ?? 0,
+                                  content: _contentController,
+                                ));
                           },
                           child: Container(
                             width: 200,

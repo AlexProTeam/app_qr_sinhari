@@ -9,18 +9,26 @@ import 'package:qrcode/data/app_all_api/models/request/login_request.dart';
 import 'package:qrcode/data/app_all_api/models/response/login_response.dart';
 import 'package:qrcode/data/responses/object_response.dart';
 import 'package:qrcode/data/utils/exceptions/api_exception.dart';
-import 'package:qrcode/domain/entity/Introduce_model.dart';
+import 'package:qrcode/domain/entity/add_to_cart_model.dart';
 import 'package:qrcode/domain/entity/banner_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
+import 'package:qrcode/domain/entity/detail_order.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
+import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
+import 'package:qrcode/domain/entity/order_model.dart';
+import 'package:qrcode/domain/entity/payment_debt_model.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:qrcode/presentation/feature/history_scan/history_model.dart';
 import 'package:qrcode/presentation/feature/news/history_model.dart';
+
+import '../../../domain/entity/confirm_cart_response.dart';
+import '../../../domain/entity/list_carts_response.dart';
+import '../models/request/confirm_job_request.dart';
 
 class AppRepositoryImpl implements AppRepository {
   final AppApi api;
@@ -211,12 +219,12 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<ObjectResponse> saveProfile({
+  Future<ObjectResponse<ProfileModel>> saveProfile({
     required String? name,
     required String? email,
     required String? phone,
     required String? address,
-    required File? avatar,
+    required File avatar,
   }) async {
     try {
       final response =
@@ -246,6 +254,99 @@ class AppRepositoryImpl implements AppRepository {
     try {
       final response = await api.saveContact(productId, content, type);
       return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<OrderCartsResponse> addToCart({
+    int? productId,
+  }) async {
+    try {
+      final response = await api.addToCart(productId ?? 0);
+      return response.data ?? OrderCartsResponse();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ListCartsResponse> getListCart() async {
+    try {
+      final response = await api.getListCart();
+      return response.data ?? ListCartsResponse();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<DataProduct> getListAngecy() async {
+    try {
+      final response = await api.getListAngecy();
+
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<DataListOrder> getListOrder({String? statusOrder}) async {
+    try {
+      final response = await api.getListOrder(statusOrder);
+
+      return response.data ?? DataListOrder();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse<PaymentDebt>> payment({int? amount}) async {
+    try {
+      final response = await api.postPayment(amount ?? 0);
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<OrderCartsResponse> changeQuality({int? productId, int? qty}) async {
+    try {
+      final response = await api.postQuality(productId ?? 0, qty ?? 0);
+      return response.data ?? OrderCartsResponse();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ConfirmCartResponse> confirmCart(
+      ConfirmCartRequest confirmCartRequest) async {
+    try {
+      final response = await api.postConfirmCart(confirmCartRequest);
+      return response.data ?? ConfirmCartResponse();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse> deleteItemCart(int id) async {
+    try {
+      return await api.deleteItemCart(id);
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse<DataOrderDetail>> getDetailOrder(int? proId) async {
+    try {
+      return await api.getDetailOrder(proId);
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

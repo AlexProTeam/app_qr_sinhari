@@ -4,13 +4,13 @@ class ProfileState extends Equatable {
   final BlocStatusEnum status;
   final ProfileModel? profileModel;
   final String image;
-  final String errMes;
+  final String mes;
 
   const ProfileState({
     this.status = BlocStatusEnum.loading,
     this.profileModel,
     this.image = '',
-    this.errMes = '',
+    this.mes = '',
   });
 
   @override
@@ -18,20 +18,22 @@ class ProfileState extends Equatable {
         status,
         profileModel,
         image,
-        errMes,
+        mes,
       ];
 
   ProfileState copyWith({
     BlocStatusEnum? status,
     ProfileModel? profileModel,
     String? image,
-    String? errMes,
+    String? mes,
   }) {
     return ProfileState(
       status: status ?? this.status,
       profileModel: profileModel,
       image: image ?? this.image,
-      errMes: errMes ?? this.errMes,
+      mes: mes ?? '',
     );
   }
+
+  bool get isHasProfileData => profileModel?.phone != null;
 }

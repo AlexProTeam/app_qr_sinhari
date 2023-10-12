@@ -58,12 +58,12 @@ class AppUseCase {
   Future<IntroduceResponse> getSupportPolicy(String policyType) =>
       _repository.getSupportPolicy(policyType);
 
-  Future<ObjectResponse> saveProfile({
+  Future<ObjectResponse<ProfileModel>> saveProfile({
     required String? name,
     required String? email,
     required String? phone,
     required String? address,
-    required File? avatar,
+    required File avatar,
   }) =>
       _repository.saveProfile(
         name: name,
@@ -85,4 +85,46 @@ class AppUseCase {
         productId: productId,
         type: type,
       );
+
+  Future<OrderCartsResponse> addToCart({
+    int? productId,
+  }) =>
+      _repository.addToCart(productId: productId);
+
+  Future<ObjectResponse<PaymentDebt>> payMent({
+    int? amount,
+  }) =>
+      _repository.payment(amount: amount);
+
+  Future<OrderCartsResponse> postQuality({
+    int? productId,
+    int? qty,
+  }) =>
+      _repository.changeQuality(
+        productId: productId,
+        qty: qty,
+      );
+
+  Future<ConfirmCartResponse> postConfirmCart(List<int> productIds) =>
+      _repository.confirmCart(ConfirmCartRequest(confirmJobs: productIds));
+
+  Future<ListCartsResponse> getListCart({
+    int? productId,
+  }) =>
+      _repository.getListCart();
+
+  Future<DataProduct> getListAngecy() => _repository.getListAngecy();
+
+  Future<DataListOrder> getListOrder({String? statusOrder}) =>
+      _repository.getListOrder(statusOrder: statusOrder);
+
+  Future<ObjectResponse> deleteItemCart({
+    required int id,
+  }) =>
+      _repository.deleteItemCart(id);
+
+  Future<ObjectResponse<DataOrderDetail>> getDetailOrder({
+    int? proId,
+  }) =>
+      _repository.getDetailOrder(proId);
 }

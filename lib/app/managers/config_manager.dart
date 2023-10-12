@@ -16,7 +16,7 @@ class ConfigManager {
   static ConfigManager? _instance;
 
   static ConfigManager devConfig = ConfigManager._(
-    apiBaseUrl: 'https://beta.sinhairvietnam.vn/api/',
+    apiBaseUrl: 'http://222.252.24.168:7456/api/',
     appFlavor: FlavorManager.dev,
   );
 

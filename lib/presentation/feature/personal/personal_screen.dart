@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import '../../../app/managers/color_manager.dart';
 import '../../../app/route/common_util.dart';
 import '../../../app/route/navigation/route_names.dart';
+import '../../auth/login/bloc/login_bloc.dart';
 import '../../widgets/box_border_widget.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';
@@ -23,10 +25,13 @@ class PersonalNested extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NestedRouteWrapper(
-      onGenerateRoute: Routes.generateBottomBarRoute,
-      navigationKey: Routes.personalKey,
-      initialRoute: BottomBarEnum.caNhan.getRouteNames,
+    return BlocProvider(
+      create: (context) => LoginBloc(),
+      child: NestedRouteWrapper(
+        onGenerateRoute: Routes.generateBottomBarRoute,
+        navigationKey: Routes.personalKey,
+        initialRoute: BottomBarEnum.caNhan.getRouteNames,
+      ),
     );
   }
 }
@@ -49,7 +54,9 @@ class PersonalScreenState extends State<PersonalScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100),
         child: BlocBuilder<ProfileBloc, ProfileState>(
-          buildWhen: (previous, current) => previous != current,
+          buildWhen: (previous, current) =>
+              previous != current ||
+              previous.profileModel != current.profileModel,
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,30 +71,36 @@ class PersonalScreenState extends State<PersonalScreen> {
                       );
                     },
                     text: 'Đăng nhập',
-                    width: 128,
-                    height: 45,
+                    width: 128.w,
+                    height: 45.h,
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
+                  18.verticalSpace
                 ],
                 boxBorderApp(
                   child: Column(
-                    children: PersonalContactEnum.values
-                        .map(
-                          (e) => !_isProfileModelNotBull &&
-                                  e == PersonalContactEnum.account
-                              ? const SizedBox.shrink()
-                              : iconTextWidget(
-                                  onTap: () => e.getOnTap(context),
-                                  text: e.getDisplayValue,
-                                  iconWidget: e.getIcon(),
-                                ),
-                        )
-                        .toList(),
+                    children: PersonalContactEnum.values.map((e) {
+                      return !_isProfileModelNotBull &&
+                                  PersonalContactEnum.account == e ||
+                              !(context
+                                          .read<ProfileBloc>()
+                                          .state
+                                          .profileModel
+                                          ?.isAgency ==
+                                      true) &&
+                                  [
+                                    PersonalContactEnum.infoOrder,
+                                    PersonalContactEnum.historyDebt,
+                                  ].contains(e)
+                          ? const SizedBox.shrink()
+                          : iconTextWidget(
+                              onTap: () => e.getOnTap(context),
+                              text: e.getDisplayValue,
+                              iconWidget: e.getIcon(),
+                            );
+                    }).toList(),
                   ),
                 ),
-                const SizedBox(height: 16),
+                16.verticalSpace,
                 boxBorderApp(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,13 +145,11 @@ class PersonalScreenState extends State<PersonalScreen> {
   void _onTapLogout() async {
     context.read<ProfileBloc>().add(const ClearProfileEvent());
     SessionUtils.clearLogout;
-    if (mounted) {
-      context.read<BottomBarBloc>().add(
-            const ChangeTabBottomBarEvent(
-              bottomBarEnum: BottomBarEnum.home,
-              isRefresh: true,
-            ),
-          );
-    }
+    context.read<BottomBarBloc>().add(
+          const ChangeTabBottomBarEvent(
+            bottomBarEnum: BottomBarEnum.home,
+            isRefresh: true,
+          ),
+        );
   }
 }

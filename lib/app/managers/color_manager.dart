@@ -34,6 +34,13 @@ class AppColors {
   static const Color colorEF4948 = Color(0xFFEF4948);
   static const Color colorF4F5FB = Color(0xFFF4F5FB);
   static const Color bgrScafold = Color(0xFFF2F2F2);
+  static const Color color2604F5 = Color(0xFF2604F5);
+  static const Color color0A55BA = Color(0xFF0A55BA);
+  static const Color colorC4C4C4 = Color(0xFFC4C4C4);
+  static const Color color95B9EE = Color(0xFF95B9EE);
+  static const Color color064CFC = Color(0xFF064CFC);
+  static const Color color7F2B81 = Color(0xFF7F2B81);
+  static const Color color777777 = Color(0xFF777777);
 
   // splash
   static const Color splashNotFocusDot = Color(0xffE8E8E8);
@@ -67,6 +74,12 @@ class AppColors {
   static const Color other = Color(0xff01579B);
   static const Color colorACACAC = Color(0xffACACAC);
   static const Color colorFFC700 = Color(0xFFFFC700);
+  static const Color colorE7E7E7 = Color(0xFFE7E7E7);
+  static const Color colorCA1010 = Color(0xFFCA1010);
+  static const Color colorF1F1F1 = Color(0xFFF1F1F1);
+  static const Color color000AFF = Color(0xFF000AFF);
+  static const Color color0A6CFF = Color(0xFF0A6CFF);
+  static const Color color003DB4 = Color(0xFF003DB4);
 
   // color logo
   static const Color logoPink = Color(0xffe94776);

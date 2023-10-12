@@ -104,7 +104,7 @@ class _SilverCoatedShampooWidgetState extends State<SilverCoatedShampooWidget> {
                 ),
                 ...List.generate(
                   dataProduct.length,
-                  (index) => ProductItem(
+                  (index) => ProductItemHome(
                     productModel: dataProduct[index],
                   ),
                 ),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/managers/helper.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/detail_product/bloc/product_detail_bloc.dart';
-import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_active.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
@@ -15,9 +14,9 @@ import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/style_manager.dart';
-import '../../../../../app/route/format_utils.dart';
 import '../../../../../app/route/navigation/route_names.dart';
-import 'detail_product_contact.dart';
+import '../../../../domain/entity/add_to_cart_model.dart';
+import '../../../widgets/category_product_item.dart';
 import 'detail_product_slide.dart';
 
 class ArgumentDetailProductScreen {
@@ -25,6 +24,12 @@ class ArgumentDetailProductScreen {
   final String? url;
 
   ArgumentDetailProductScreen({this.productId, this.url});
+}
+
+class ArgumentCartScreen {
+  final Carts? carts;
+
+  ArgumentCartScreen({this.carts});
 }
 
 class DetailProductScreen extends StatefulWidget {
@@ -37,8 +42,14 @@ class DetailProductScreen extends StatefulWidget {
 }
 
 class DetailProductScreenState extends State<DetailProductScreen> {
+  late ProductDetailBloc _productDetailBloc;
+  late ProfileBloc _profileBloc;
+
   @override
   void initState() {
+    _productDetailBloc = context.read<ProductDetailBloc>();
+    _profileBloc = context.read<ProfileBloc>();
+    _initData();
     super.initState();
   }
 
@@ -49,322 +60,262 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           title: 'Chi tiết',
           isShowBack: true,
           actions: [
-            InkWell(
-              onTap: () => ToastManager.showToast(context,
-                  text: 'Chức năng sẽ sớm ra mắt,'),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Assets.icons.heart.image(
-                  width: 22,
-                  height: 20,
-                ),
-              ),
-            ),
+            if (_profileBloc.state.isHasProfileData &&
+                _profileBloc.state.profileModel?.isAgency == true)
+              _iconAddToCarts(),
+            _iconFavorite()
           ],
         ),
-        body: BlocProvider(
-          create: (context) => ProductDetailBloc()
-            ..add(InitProductDetailEvent(
-                ArgumentDetailProductScreen(
-                    productId: widget.argument?.productId,
-                    url: widget.argument?.url),
-                getIt<AppUseCase>())),
-          child: BlocBuilder<ProductDetailBloc, ProductDetailState>(
-            builder: (BuildContext context, state) {
-              if (state.detailProductModel == null ||
-                  state.status == BlocStatusEnum.loading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return RefreshIndicator(
-                onRefresh: () async {
-                  context.read<ProductDetailBloc>().add(InitProductDetailEvent(
-                      ArgumentDetailProductScreen(
-                          productId: widget.argument?.productId,
-                          url: widget.argument?.url),
-                      getIt<AppUseCase>()));
-                },
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (state.detailProductModel != null)
-                        DetailProductSlide(
-                          images: state.detailProductModel?.data?.photos ?? [],
-                        ),
-                      const SizedBox(height: 18.5),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              state.detailProductModel?.data?.name ?? '',
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.black),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Assets.icons.star.image(
-                                  width: 13.5,
-                                  height: 16,
-                                ),
-                                const SizedBox(width: 6),
-                                RichText(
-                                    text: TextSpan(
-                                        text: (state.detailProductModel?.data
-                                                    ?.rating ??
-                                                0)
-                                            .toString(),
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color: AppColors.black),
-                                        children: [
-                                      TextSpan(
-                                        text:
-                                            ' (${(state.detailProductModel?.data?.quantity ?? 0).toString()} sản phẩm)',
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color: AppColors.colorACACAC),
-                                      )
-                                    ]))
-                              ],
-                            ),
-                            itemPrice(
-                                state.detailProductModel?.data?.unitPrice ?? 0,
-                                state.detailProductModel?.data?.price ?? 0),
-                            const SizedBox(height: 10)
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      if (widget.argument?.url != null)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: state.detailProductModel?.tracking
-                                          ?.exceeded ==
-                                      true
-                                  ? _itemLimit(
-                                      getDate(state.detailProductModel?.tracking
-                                              ?.datetimeScan ??
-                                          ''),
-                                      state.detailProductModel?.tracking
-                                              ?.exceedingScan ??
-                                          '')
-                                  : _itemApccept(),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Serial: ${state.detailProductModel?.codeActive ?? ''}',
-                                    style: TextStyleManager.normalBlue,
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              height: 8,
-                              width: double.infinity,
-                              color: AppColors.grey4,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: _itemRow(
-                                    Icons.qr_code_scanner,
-                                    state.detailProductModel?.tracking
-                                            ?.totalScan ??
-                                        0,
-                                    'Số lần quét',
-                                  )),
-                                  Container(
-                                    width: 1,
-                                    height: 50,
-                                    color: AppColors.grey6,
-                                  ),
-                                  Expanded(
-                                      child: _itemRow(
-                                    Icons.person,
-                                    state.detailProductModel?.tracking
-                                            ?.totalUserScan ??
-                                        0,
-                                    'Số người quét',
-                                  )),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              height: 8,
-                              width: double.infinity,
-                              color: AppColors.grey4,
-                            ),
-                            _itemCompany(
-                              name: 'CÔNG TY TNHH SIN HAIR JAPAN',
-                              label: 'Nhà phân phối',
-                              phone: '0886986222',
-                              address:
-                                  'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
-                              mst: '0109429157',
-                            ),
-                            Container(
-                              height: 8,
-                              width: double.infinity,
-                              color: AppColors.grey4,
-                            ),
-                          ],
-                        ),
-                      if (state.detailProductModel != null) ...[
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            'Mô tả sản phẩm:',
-                            style: TextStyle(
+        body: BlocConsumer<ProductDetailBloc, ProductDetailState>(
+          listenWhen: (previous, current) => previous != current,
+          buildWhen: (previous, current) => previous != current,
+          listener: (context, state) {
+            state.status == BlocStatusEnum.loading
+                ? DialogManager.showLoadingDialog(context)
+                : DialogManager.hideLoadingDialog;
+
+            if (state.isNavigateToCartScreen &&
+                _profileBloc.state.profileModel?.isAgency == true) {
+              Navigator.pushNamed(
+                Routes.instance.navigatorKey.currentContext!,
+                RouteDefine.cartScreen,
+                arguments: ArgumentCartScreen(
+                  carts: state.addToCartModel?.carts,
+                ),
+              );
+            }
+
+            if (state.errMes.isNotEmpty) {
+              ToastManager.showToast(
+                context,
+                text: state.errMes,
+              );
+            }
+          },
+          builder: (context, state) {
+            return RefreshIndicator(
+              onRefresh: () async => _initData(),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    /// image
+                    DetailProductSlide(
+                      images: state.detailProductModel?.data?.photos ?? [],
+                    ),
+                    18.5.verticalSpace,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// name
+                          Text(
+                            state.detailProductModel?.data?.name ?? '',
+                            style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.black),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Html(
-                            data: state.detailProductModel?.data?.description ??
-                                "",
-                            style: {
-                              "html": Style(
-                                backgroundColor: Colors.transparent,
-                                color: AppColors.grey9,
-                                fontWeight: FontWeight.w500,
-                                fontSize: FontSize(14),
-                                padding: HtmlPaddings.zero,
-                                fontStyle: FontStyle.normal,
-                                wordSpacing: 1.5,
+                          8.verticalSpace,
+
+                          /// luọt thích và số lượng
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Assets.icons.star.image(
+                                width: 13.5.w,
+                                height: 16.h,
                               ),
-                              'img': Style(
-                                width: Width(MediaQuery.of(context).size.width),
-                                height: Height(
-                                  MediaQuery.of(context).size.width * 1.5,
+                              6.horizontalSpace,
+                              RichText(
+                                text: TextSpan(
+                                  text:
+                                      (state.detailProductModel?.data?.rating ??
+                                              0)
+                                          .toString(),
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: AppColors.black),
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          ' (${(state.detailProductModel?.data?.quantity ?? 0).toString()} sản phẩm)',
+                                      style: TextStyle(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w300,
+                                          color: AppColors.colorACACAC),
+                                    )
+                                  ],
                                 ),
-                              ),
-                              'h1': _getWidthTitleHTML,
-                              'h2': _getWidthTitleHTML,
-                              'h3': _getWidthTitleHTML,
-                              'h4': _getWidthTitleHTML,
-                            },
+                              )
+                            ],
                           ),
-                        ),
-                      ],
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: CustomButton(
-                            width: 343,
-                            height: 45,
-                            radius: 5,
-                            onTap: () {
-                              if (widget.argument?.url != null) {
-                                context
-                                            .read<ProfileBloc>()
-                                            .state
-                                            .profileModel !=
-                                        null
-                                    ? Navigator.pushNamed(
-                                        context, RouteDefine.activeScrene,
-                                        arguments: ArgumentActiveScreen(
-                                            productId: state
-                                                .detailProductModel?.data?.id))
-                                    : Navigator.pushNamed(
-                                        context, RouteDefine.loginScreen,
-                                        arguments: true);
-                              } else {
-                                context
-                                            .read<ProfileBloc>()
-                                            .state
-                                            .profileModel !=
-                                        null
-                                    ? Navigator.pushNamed(
-                                        context, RouteDefine.muaHangScrene,
-                                        arguments: ArgumentContactScreen(
-                                            productId: state
-                                                .detailProductModel?.data?.id))
-                                    : Navigator.pushNamed(
-                                        context, RouteDefine.loginScreen,
-                                        arguments: true);
-                              }
-                            },
-                            text: widget.argument?.url != null
-                                ? 'Kích hoạt'
-                                : 'Mua ngay',
+                          5.verticalSpace,
+                          itemPriceProduct(
+                            salePrice: _profileBloc
+                                        .state.profileModel?.isAgency ==
+                                    true
+                                ? state.detailProductModel?.data?.salePrice ?? 0
+                                : state.detailProductModel?.data?.unitPrice ??
+                                    0,
+                            price: _profileBloc.state.profileModel?.isAgency ==
+                                    true
+                                ? state.detailProductModel?.data?.price ?? 0
+                                : state.detailProductModel?.data
+                                        ?.purchasePrice ??
+                                    0,
                           ),
+                          10.verticalSpace,
+                        ],
+                      ),
+                    ),
+                    12.verticalSpace,
+                    if (widget.argument?.url != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child:
+                                state.detailProductModel?.tracking?.exceeded ==
+                                        true
+                                    ? _itemLimit(
+                                        getDate(state.detailProductModel
+                                                ?.tracking?.datetimeScan ??
+                                            ''),
+                                        state.detailProductModel?.tracking
+                                                ?.exceedingScan ??
+                                            '')
+                                    : _itemApccept(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Serial: ${state.detailProductModel?.codeActive ?? ''}',
+                                  style: TextStyleManager.normalBlue,
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 8,
+                            width: double.infinity,
+                            color: AppColors.grey4,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: _itemRow(
+                                  Icons.qr_code_scanner,
+                                  state.detailProductModel?.tracking
+                                          ?.totalScan ??
+                                      0,
+                                  'Số lần quét',
+                                )),
+                                Container(
+                                  width: 1,
+                                  height: 50,
+                                  color: AppColors.grey6,
+                                ),
+                                Expanded(
+                                    child: _itemRow(
+                                  Icons.person,
+                                  state.detailProductModel?.tracking
+                                          ?.totalUserScan ??
+                                      0,
+                                  'Số người quét',
+                                )),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 8,
+                            width: double.infinity,
+                            color: AppColors.grey4,
+                          ),
+                          _itemCompany(
+                            name: 'CÔNG TY TNHH SIN HAIR JAPAN',
+                            label: 'Nhà phân phối',
+                            phone: '0886986222',
+                            address:
+                                'T1 331B đường Bát Khối, Phường Long Biên, Quận Long Biên, Thành phố Hà Nội, Việt Nam, Quận Long Biên, Hà Nội',
+                            mst: '0109429157',
+                          ),
+                          Container(
+                            height: 8,
+                            width: double.infinity,
+                            color: AppColors.grey4,
+                          ),
+                        ],
+                      ),
+                    if (state.detailProductModel != null) ...[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'Mô tả sản phẩm:',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.black),
                         ),
                       ),
-                      const SizedBox(height: 100),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Html(
+                          data:
+                              state.detailProductModel?.data?.description ?? "",
+                          style: {
+                            "html": Style(
+                              backgroundColor: Colors.transparent,
+                              color: AppColors.grey9,
+                              fontWeight: FontWeight.w500,
+                              fontSize: FontSize(14),
+                              padding: HtmlPaddings.zero,
+                              fontStyle: FontStyle.normal,
+                              wordSpacing: 1.5,
+                            ),
+                            'img': Style(
+                              width: Width(MediaQuery.of(context).size.width),
+                              height: Height(
+                                MediaQuery.of(context).size.width * 1.5,
+                              ),
+                            ),
+                            'h1': _getWidthTitleHTML,
+                            'h2': _getWidthTitleHTML,
+                            'h3': _getWidthTitleHTML,
+                            'h4': _getWidthTitleHTML,
+                          },
+                        ),
+                      ),
                     ],
-                  ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: CustomButton(
+                          width: 343,
+                          height: 45,
+                          radius: 5,
+                          onTap: _handleButtonTap,
+                          text: widget.argument?.url != null
+                              ? 'Kích hoạt'
+                              : 'Mua ngay',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 100),
+                  ],
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ));
-  }
-
-  Widget itemPrice(int unitPrice, int purchasePrice) {
-    if (Helper.getPrice(unitPrice, purchasePrice) == false) {
-      return Column(
-        children: [
-          const SizedBox(height: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                FormatUtils.formatCurrencyDoubleToString(unitPrice),
-                style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: AppColors.colorFFC700),
-              ),
-              const SizedBox(width: 15),
-              RichText(
-                text: TextSpan(
-                  text: FormatUtils.formatCurrencyDoubleToString(purchasePrice),
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.colorACACAC,
-                    decoration: TextDecoration.lineThrough,
-                    decorationColor: AppColors.colorACACAC,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      );
-    } else {
-      return Column(
-        children: [
-          Text(
-            FormatUtils.formatCurrencyDoubleToString(purchasePrice),
-            style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-                color: AppColors.colorFFC700),
-          ),
-        ],
-      );
-    }
   }
 
   String getDate(String dateTimeScan) {
@@ -532,24 +483,92 @@ class DetailProductScreenState extends State<DetailProductScreen> {
     );
   }
 
-  Widget _itemApccept() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-      color: AppColors.green,
-      child: const Center(
-        child: Text(
-          'Sản phẩm chính hãng của CÔNG TY TNHH SIN HAIR JAPAN',
-          style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold),
+  Widget _itemApccept() => Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        color: AppColors.green,
+        child: const Center(
+          child: Text(
+            'Sản phẩm chính hãng của CÔNG TY TNHH SIN HAIR JAPAN',
+            style: TextStyle(
+              color: AppColors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   Style get _getWidthTitleHTML => Style(
         width: Width(MediaQuery.of(context).size.width * 0.9),
         fontSize: FontSize(
-          20,
+          20.sp,
+        ),
+      );
+
+  void _initData() {
+    _productDetailBloc.add(
+      InitProductDetailEvent(
+        ArgumentDetailProductScreen(
+            productId: widget.argument?.productId, url: widget.argument?.url),
+      ),
+    );
+  }
+
+  void _handleButtonTap() => _navigateBasedOnProfileAndUrl(
+        widget.argument?.url != null
+            ? RouteDefine.activeScrene
+            : RouteDefine.muaHangScrene,
+      );
+
+  void _navigateBasedOnProfileAndUrl(String routeName) {
+    /// thêm vào giỏ cho và sang man gio hàng cho agency
+    if (_profileBloc.state.profileModel?.isAgency == true) {
+      return _productDetailBloc.add(
+        OnAddToCartEvent(
+          proId: widget.argument?.productId ?? 0,
+          isAddToCartOnly: false,
+        ),
+      );
+    }
+
+    final hasProfile = _profileBloc.state.profileModel != null;
+    final productId =
+        _productDetailBloc.state.detailProductModel?.data?.id ?? 0;
+
+    hasProfile
+        ? _navigateTo(routeName, productId)
+        : _navigateTo(RouteDefine.loginScreen, true);
+  }
+
+  void _navigateTo(String routeName, dynamic arguments) {
+    Navigator.pushNamed(context, routeName, arguments: arguments);
+  }
+
+  Widget _iconAddToCarts() => InkWell(
+        onTap: () => Navigator.pushNamed(
+          Routes.instance.navigatorKey.currentContext!,
+          RouteDefine.cartScreen,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: Assets.icons.icCar.image(
+            width: 23.r,
+            height: 23.r,
+          ),
+        ),
+      );
+
+  Widget _iconFavorite() => InkWell(
+        onTap: () => ToastManager.showToast(
+          context,
+          text: 'Chức năng sẽ sớm ra mắt',
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Assets.icons.heart.image(
+            width: 20.r,
+            height: 20.r,
+          ),
         ),
       );
 }

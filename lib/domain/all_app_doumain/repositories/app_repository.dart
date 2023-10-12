@@ -12,6 +12,8 @@ abstract class AppRepository {
 
   Future<DataProduct> getListSeller();
 
+  Future<DataProduct> getListAngecy();
+
   Future<DataDetail> getDetaiProduct(int productId);
 
   Future<DetailByQr> getDetaiProductByQr(
@@ -35,12 +37,12 @@ abstract class AppRepository {
 
   Future<IntroduceResponse> getSupportPolicy(String policyType);
 
-  Future<ObjectResponse> saveProfile({
+  Future<ObjectResponse<ProfileModel>> saveProfile({
     required String? name,
     required String? email,
     required String? phone,
     required String? address,
-    required File? avatar,
+    required File avatar,
   });
 
   Future<List<NotiModel>> getNotifications();
@@ -50,4 +52,33 @@ abstract class AppRepository {
     String? content,
     int? type,
   });
+
+  Future<OrderCartsResponse> addToCart({
+    int? productId,
+  });
+
+  Future<ObjectResponse<PaymentDebt>> payment({
+    int? amount,
+  });
+
+  Future<OrderCartsResponse> changeQuality({
+    int? productId,
+    int? qty,
+  });
+
+  Future<ConfirmCartResponse> confirmCart(
+    ConfirmCartRequest confirmCartRequest,
+  );
+
+  Future<ListCartsResponse> getListCart();
+
+  Future<DataListOrder> getListOrder({String? statusOrder});
+
+  Future<ObjectResponse> deleteItemCart(
+    int id,
+  );
+
+  Future<ObjectResponse<DataOrderDetail>> getDetailOrder(
+    int? proId,
+  );
 }

@@ -12,16 +12,10 @@ import 'package:qrcode/presentation/widgets/toast_manager.dart';
 import '../../../../../app/route/validate_utils.dart';
 import '../../../../../domain/entity/profile_model.dart';
 
-class ArgumentContactScreen {
+class DetailProductContact extends StatefulWidget {
   final int? productId;
 
-  ArgumentContactScreen({this.productId});
-}
-
-class DetailProductContact extends StatefulWidget {
-  final ArgumentContactScreen? argument;
-
-  const DetailProductContact({Key? key, this.argument}) : super(key: key);
+  const DetailProductContact({Key? key, this.productId}) : super(key: key);
 
   @override
   DetailProductContactState createState() => DetailProductContactState();
@@ -61,7 +55,7 @@ class DetailProductContactState extends State<DetailProductContact> {
           if (state.status == BlocStatusEnum.loading) {
             DialogManager.showLoadingDialog(context);
           }
-          if (state.status == BlocStatusEnum.success) {
+          if (state.status == BlocStatusEnum.failed) {
             DialogManager.hideLoadingDialog;
             ToastManager.showToast(
               context,
@@ -70,7 +64,7 @@ class DetailProductContactState extends State<DetailProductContact> {
             );
           }
 
-          if (state.status == BlocStatusEnum.failed) {
+          if (state.status == BlocStatusEnum.success) {
             DialogManager.hideLoadingDialog;
             ToastManager.showToast(
               context,
@@ -138,10 +132,11 @@ class DetailProductContactState extends State<DetailProductContact> {
 
   void _onDone() async {
     if (!_formKey.currentState!.validate()) return;
-    context.read<ProductDetailBloc>().add(OnClickBuyEvent(
-          id: widget.argument?.productId ?? 0,
-          content: _contentController,
-          appUseCase: getIt<AppUseCase>(),
-        ));
+    context.read<ProductDetailBloc>().add(
+          OnClickBuyEvent(
+            id: widget.productId ?? 0,
+            content: _contentController,
+          ),
+        );
   }
 }

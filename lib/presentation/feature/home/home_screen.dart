@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/home/widget/banner_home.dart';
 import 'package:qrcode/presentation/feature/home/widget/filter_item.dart';
-import 'package:qrcode/presentation/feature/home/widget/news_home_widget.dart';
+import 'package:qrcode/presentation/feature/home/widget/product_angecy.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_features.dart';
 import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/presentation/feature/home/widget/silver_coated_shampoo_widget.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import '../../../app/route/navigation/route_names.dart';
-import '../../widgets/custom_scaffold.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
@@ -42,11 +42,13 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin<HomeScreen> {
   late BottomBarBloc _bottomBarBloc;
+  late ProfileBloc _profileBloc;
 
   bool _isLoading = false;
 
   @override
   void initState() {
+    _profileBloc = context.read<ProfileBloc>();
     _bottomBarBloc = context.read<BottomBarBloc>();
     super.initState();
   }
@@ -61,13 +63,6 @@ class HomeScreenState extends State<HomeScreen>
         }
       },
       child: Scaffold(
-        appBar: BaseAppBar(
-          leadingWidth: _isHasProfileData ? 153 : null,
-          leadingIcon: _headerWidget(),
-          actions: [
-            _notiIcon(),
-          ],
-        ),
         body: _isLoading
             ? const Center(
                 child: CircularProgressIndicator(),
@@ -85,23 +80,17 @@ class HomeScreenState extends State<HomeScreen>
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      ///header
+                      _headerWidget(),
+
                       ///banner Slider
                       const BannerHomeWidget(),
 
                       ///filter
                       _buildFilter(),
 
-                      /// sản phẩm nổi bật
-                      const ProductFeaturesWidget(),
-
-                      /// sản phẩm bán chạy
-                      const ProductSellersWidget(),
-
-                      ///dầu gội phủ bạc
-                      const SilverCoatedShampooWidget(),
-
-                      ///tin mới nhất
-                      const NewsHomeWidget(),
+                      /// danh sách sản phẩm
+                      ..._getListProduct(),
                     ],
                   ),
                 ),
@@ -110,50 +99,76 @@ class HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget _headerWidget() => _isHasProfileData
-      ? Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Assets.images.logoMain.image(
-              width: 40,
-              height: 40,
-            ),
-            const SizedBox(width: 12),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Xin chào,',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-                Text(
-                  context.read<ProfileBloc>().state.profileModel?.name ?? "",
-                  style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
-                ),
-              ],
-            )
-          ],
-        )
-      : Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: Assets.images.logoMain.image(
-            width: 40,
-            height: 40,
-          ),
-        );
+  List<Widget> _getListProduct() =>
+      _profileBloc.state.profileModel?.isAgency == true
+          ? [
+              /// sản phẩm đại lý
+              const ProductAngecyHomeWidget(),
+            ]
+          : [
+              /// sản phẩm nổi bật
+              const ProductFeaturesWidget(),
 
-  bool get _isHasProfileData =>
-      context.read<ProfileBloc>().state.profileModel?.phone != null;
+              /// sản phẩm bán chạy
+              const ProductSellersWidget(),
+
+              ///dầu gội phủ bạc
+              const SilverCoatedShampooWidget(),
+            ];
+
+  Widget _headerWidget() => SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(top: 15.h),
+          child: Row(
+            children: [
+              _isHasProfileData
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        16.horizontalSpace,
+                        Assets.images.logoMain.image(
+                          width: 40,
+                          height: 40,
+                        ),
+                        const SizedBox(width: 12),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Xin chào,',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            ),
+                            3.verticalSpace,
+                            Text(
+                              _profileBloc.state.profileModel?.name ?? "",
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Assets.images.logoMain.image(
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
+              const Spacer(),
+              _notiIcon(),
+            ],
+          ),
+        ),
+      );
+
+  bool get _isHasProfileData => _profileBloc.state.isHasProfileData;
 
   Widget _notiIcon() => GestureDetector(
         onTap: () => Navigator.pushNamed(
@@ -192,9 +207,10 @@ class HomeScreenState extends State<HomeScreen>
                     ///todo: update later
                     break;
                   case IconHomeEnum.news:
-                    _bottomBarBloc.add(const ChangeTabBottomBarEvent(
-                        bottomBarEnum: BottomBarEnum.tinTuc));
-                    break;
+                    return _bottomBarBloc.add(
+                      const ChangeTabBottomBarEvent(
+                          bottomBarEnum: BottomBarEnum.tinTuc),
+                    );
                   case IconHomeEnum.favourite:
 
                     ///todo: update later
@@ -215,7 +231,7 @@ class HomeScreenState extends State<HomeScreen>
       _isLoading = true;
     });
     await Future.delayed(
-        const Duration(seconds: 1),
+        const Duration(seconds: 3),
         () => setState(() {
               _isLoading = false;
             }));

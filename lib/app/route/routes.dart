@@ -27,17 +27,6 @@ class Routes {
 
   static Routes get instance => _instance;
 
-  Future<dynamic> navigateTo(String routeName, {dynamic arguments}) async {
-    return navigatorKey.currentState!
-        .pushNamed(routeName, arguments: arguments);
-  }
-
-  Future<dynamic> popAndNavigateTo(
-      {dynamic result, String? routeName, dynamic arguments}) {
-    return navigatorKey.currentState!
-        .popAndPushNamed(routeName ?? '', arguments: arguments);
-  }
-
   Future<dynamic> navigateAndRemove(String routeName,
       {dynamic arguments}) async {
     return navigatorKey.currentState!.pushNamedAndRemoveUntil(
@@ -45,16 +34,6 @@ class Routes {
       (Route<dynamic> route) => false,
       arguments: arguments,
     );
-  }
-
-  dynamic popUntil() {
-    return navigatorKey.currentState?.popUntil((route) => route.isFirst);
-  }
-
-  Future<dynamic> navigateAndReplace(String routeName,
-      {dynamic arguments}) async {
-    return navigatorKey.currentState
-        ?.pushReplacementNamed(routeName, arguments: arguments);
   }
 
   static Route<dynamic> generateDefaultRoute(RouteSettings settings) {
@@ -71,6 +50,28 @@ class Routes {
         return SlideLeftRoute(
           widget: const BottomBarScreen(),
         );
+      case RouteDefine.cartScreen:
+        return SlideLeftRoute(
+          widget: BlocProvider(
+            create: (context) => CartsBloc()..add(const InitDataCartEvent()),
+            child: const CartScreen(),
+          ),
+        );
+      case RouteDefine.successScreen:
+        return SlideLeftRoute(
+          widget: SuccessScreen(
+            confirmCartResponse: settings.arguments != null
+                ? settings.arguments as ConfirmOrderDetail
+                : ConfirmOrderDetail(),
+          ),
+        );
+      case RouteDefine.detailOrder:
+        return SlideLeftRoute(
+          widget: DetailOderScreen(
+            proId:
+                settings.arguments != null ? settings.arguments as int : null,
+          ),
+        );
       default:
         return _emptyRoute(settings);
     }
@@ -86,12 +87,15 @@ class Routes {
         );
       case RouteDefine.muaHangScrene:
         return SlideLeftRoute(
-          widget: DetailProductContact(
-            argument: settings.arguments != null
-                ? settings.arguments as ArgumentContactScreen
-                : null,
+          widget: BlocProvider(
+            create: (context) => ProductDetailBloc(),
+            child: DetailProductContact(
+              productId:
+                  settings.arguments != null ? settings.arguments as int : null,
+            ),
           ),
         );
+
       case RouteDefine.activeScrene:
         return SlideLeftRoute(
           widget: DetailProductActive(
@@ -104,7 +108,50 @@ class Routes {
         return SlideLeftRoute(
           widget: const NotiScreen(),
         );
-
+      case RouteDefine.informationCustomer:
+        return SlideLeftRoute(
+          widget: BlocProvider(
+            create: (context) => InfoBloc(getIt<AppUseCase>(), ''),
+            child: const InfomationCustomer(),
+          ),
+        );
+      case RouteDefine.historyDetb:
+        return SlideLeftRoute(
+          widget: const HistoryDetbScreen(),
+        );
+      case RouteDefine.detailOrder:
+        return SlideLeftRoute(
+          widget: DetailOderScreen(
+            proId:
+                settings.arguments != null ? settings.arguments as int : null,
+          ),
+        );
+      case RouteDefine.payDebt:
+        return SlideLeftRoute(
+          widget: const PayDebt(),
+        );
+      case RouteDefine.payDebtQrScreen:
+        return SlideLeftRoute(
+          widget: BlocProvider(
+            create: (context) => PayDebtBloc(),
+            child: PayDebtQrScreen(
+                payment: settings.arguments != null
+                    ? settings.arguments as ArgumentPayDebtQrScreen
+                    : null),
+          ),
+        );
+      case RouteDefine.cartScreen:
+        return SlideLeftRoute(
+          widget: BlocProvider(
+            create: (context) => CartsBloc()..add(const InitDataCartEvent()),
+            child: const CartScreen(),
+          ),
+        );
+      case RouteDefine.successScreen:
+        return SlideLeftRoute(
+          ///todo: check
+          widget: SuccessScreen(confirmCartResponse: ConfirmOrderDetail()),
+        );
       case RouteDefine.verifyOtpScreen:
         return SlideLeftRoute(
           widget: VerifyOtpScreen(
@@ -142,10 +189,13 @@ class Routes {
         );
       case RouteDefine.detailProductScreen:
         return SlideLeftRoute(
-          widget: DetailProductScreen(
-            argument: settings.arguments != null
-                ? settings.arguments as ArgumentDetailProductScreen
-                : null,
+          widget: BlocProvider(
+            create: (context) => ProductDetailBloc(),
+            child: DetailProductScreen(
+              argument: settings.arguments != null
+                  ? settings.arguments as ArgumentDetailProductScreen
+                  : null,
+            ),
           ),
         );
 
@@ -160,11 +210,25 @@ class Routes {
           ),
         );
       case RouteDefine.listProductScreen:
+        final agu = settings.arguments != null
+            ? settings.arguments as ArgumentListProductScreen
+            : ArgumentListProductScreen();
+
         return SlideLeftRoute(
-          widget: ListProductScreen(
-            argument: settings.arguments != null
-                ? settings.arguments as ArgumentListProductScreen
-                : ArgumentListProductScreen(),
+          widget: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    ListProductBloc(getIt<AppUseCase>(), agu.url ?? '')
+                      ..add(const InitDataListProductEvent()),
+              ),
+              BlocProvider(
+                create: (context) => ProductDetailBloc(),
+              )
+            ],
+            child: ListProductScreen(
+              argument: agu,
+            ),
           ),
         );
       case RouteDefine.homeScreen:

@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
-import 'package:qrcode/domain/entity/Introduce_model.dart';
+import 'package:qrcode/domain/entity/introduce_model.dart';
 
 import '../../../../../data/utils/exceptions/api_exception.dart';
 import '../../enum/personal_menu_enum.dart';
