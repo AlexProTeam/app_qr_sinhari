@@ -108,7 +108,7 @@ class ItemHistory extends StatelessWidget {
                             ),
                             Expanded(
                               child: Text(
-                                'Chờ thanh toán ',
+                                '',
                                 style: TextStyleManager.style10pxPrimary,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
@@ -127,11 +127,11 @@ class ItemHistory extends StatelessWidget {
                                   style: TextStyleManager.mediumBlack14px,
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: ' 450đ',
+                                        text: '${order.amount}đ',
                                         style: TextStyleManager.mediumBlack
                                             .copyWith(
                                                 decoration: TextDecoration
-                                                    .lineThrough)),
+                                                    .lineThrough, fontSize: 14)),
                                   ],
                                 ),
                               ),
@@ -151,7 +151,7 @@ class ItemHistory extends StatelessWidget {
                           height: 6,
                         ),
                         Text(
-                          'Ngày đặt : ${order.createdAt ?? ''}',
+                          'Ngày đặt : ${HelperInfor.getDate(order.createdAt ?? '', format: 'dd/MM/yyyy')}',
                           style: TextStyleManager.normalBlack,
                         ),
                       ],
@@ -183,7 +183,7 @@ class ItemHistory extends StatelessWidget {
                           maxLines: 1,
                         ),
                         Text(
-                          '450,000đ ',
+                          '${order.subTotal}đ ',
                           style: TextStyleManager.normalBlack
                               .copyWith(color: AppColors.colorCA1010),
                           overflow: TextOverflow.ellipsis,
