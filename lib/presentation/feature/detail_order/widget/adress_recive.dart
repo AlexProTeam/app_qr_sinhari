@@ -58,7 +58,7 @@ class _AdressReciveState extends State<AdressRecive> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ItemRow(
-                    title: widget.orderDetail.description ?? '',
+                    title: widget.orderDetail.customer_address ?? '',
                     value: '',
                     textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
                         fontWeight: FontWeight.w500,
@@ -67,33 +67,7 @@ class _AdressReciveState extends State<AdressRecive> {
                 const SizedBox(
                   height: 6,
                 ),
-                ItemRow(
-                    title: widget.orderDetail.description ?? '',
-                    value: '',
-                    textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: AppColors.color777777)),
-                const SizedBox(
-                  height: 6,
-                ),
-                ItemRow(
-                    title: widget.orderDetail.description ?? '',
-                    value: '',
-                    textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: AppColors.color777777)),
-                const SizedBox(
-                  height: 6,
-                ),
-                ItemRow(
-                    title: widget.orderDetail.description ?? '',
-                    value: '',
-                    textStyleTitle: TextStyleManager.mediumBlack14px.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: AppColors.color777777)),
+                   
               ],
             ),
           ),
@@ -130,13 +104,13 @@ class _AdressReciveState extends State<AdressRecive> {
               title: 'Thời gian đặt',
               value: HelperInfor.getDate(widget.orderDetail.createdAt ?? '')),
           const SizedBox(height: 8),
-          ItemRow(
-              title: 'Hình thức giao hàng',
-              value: widget.orderDetail.description ?? ''),
+          // ItemRow(
+          //     title: 'Hình thức giao hàng',
+          //     value: widget.orderDetail.customer_address ?? ''),
           const SizedBox(height: 8),
-          ItemRow(
-              title: 'Hình thức thanh toán',
-              value: widget.orderDetail.description ?? ''),
+          // ItemRow(
+          //     title: 'Hình thức thanh toán',
+          //     value: widget.orderDetail.description ?? ''),
           const SizedBox(
             height: 16,
           ),
@@ -159,7 +133,7 @@ class _AdressReciveState extends State<AdressRecive> {
           ),
           ItemRow(
               title: 'Phí vận chuyển',
-              value: widget.orderDetail.description ?? ''),
+              value: widget.orderDetail.shippingAmount ?? ''),
           const SizedBox(
             height: 8,
           ),
