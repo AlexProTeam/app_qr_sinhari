@@ -72,9 +72,6 @@ class ItemHeaderProfileBill extends StatelessWidget {
     final profileData =
         context.read<ProfileBloc>().state.profileModel ?? ProfileModel();
 
-    print('------------------------');
-    print(profileData.getAvatar);
-
     return Column(
       children: [
         ClipOval(
