@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
@@ -20,21 +21,13 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
         isShowBack: true,
         titleColor: AppColors.white,
       ),
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            ListView.builder(
-              padding: const EdgeInsets.only(top: 16, bottom: 16),
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return itemView();
-              },
-              itemCount: 3,
-            ),
-          ],
-        ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(16.r).copyWith(bottom: 80.h),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return itemView();
+        },
+        itemCount: 4,
       ),
     );
   }

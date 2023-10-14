@@ -50,7 +50,7 @@ class _PayDebtState extends State<PayDebt> {
                 break;
               case BlocStatusEnum.success:
                 DialogManager.hideLoadingDialog;
-                if ((state.payment != null)) {
+                if (state.payment != null) {
                   Navigator.pushNamed(context, RouteDefine.payDebtQrScreen,
                       arguments: ArgumentPayDebtQrScreen(
                           state.payment, amountController.text));
