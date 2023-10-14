@@ -38,6 +38,7 @@ import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/auth/change_pass/change_pass_screen.dart';
 import 'package:qrcode/presentation/auth/forgot_pass/forgot_pass_screen.dart';
+import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
 import 'package:qrcode/presentation/auth/login/login_screen.dart';
 import 'package:qrcode/presentation/auth/register/register_screen.dart';
 import 'package:qrcode/presentation/auth/verify/bloc/verify_bloc.dart';

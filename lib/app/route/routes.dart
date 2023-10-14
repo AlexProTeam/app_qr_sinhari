@@ -250,9 +250,13 @@ class Routes {
         );
       case RouteDefine.loginScreen:
         return SlideLeftRoute(
-          widget: LoginScreen(
-            haveBack:
-                settings.arguments != null ? settings.arguments as bool : false,
+          widget: BlocProvider(
+            create: (context) => LoginBloc(),
+            child: LoginScreen(
+              haveBack: settings.arguments != null
+                  ? settings.arguments as bool
+                  : false,
+            ),
           ),
         );
       case RouteDefine.checkBillScreen:
