@@ -21,6 +21,7 @@ class OrderDetail {
   dynamic taxAmount;
   dynamic shippingAmount;
   String? description;
+  String? customer_address;
   dynamic couponCode;
   dynamic discountAmount;
   String? subTotal;

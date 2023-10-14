@@ -54,16 +54,16 @@ class ItemList extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Text(
-                          '${products.product?.salePrice} vnđ',
-                          style: TextStyleManager.mediumBlack14px.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              decoration: TextDecoration.lineThrough),
-                          textAlign: TextAlign.right,
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: Text(
+                      //     '${products.product?.salePrice} vnđ',
+                      //     style: TextStyleManager.mediumBlack14px.copyWith(
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: 14,
+                      //         decoration: TextDecoration.lineThrough),
+                      //     textAlign: TextAlign.right,
+                      //   ),
+                      // ),
                     ],
                   ),
                   const SizedBox(
