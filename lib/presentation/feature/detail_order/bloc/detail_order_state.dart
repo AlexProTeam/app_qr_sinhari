@@ -26,7 +26,7 @@ class DetailOrderState extends Equatable {
     return DetailOrderState(
       status: status ?? this.status,
       dataOrderDetail: dataOrderDetail ?? this.dataOrderDetail,
-      errMes: errMes ?? this.errMes,
+      errMes: errMes ?? '',
     );
   }
 }

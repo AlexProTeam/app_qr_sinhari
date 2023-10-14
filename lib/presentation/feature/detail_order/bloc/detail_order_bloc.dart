@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/domain/entity/detail_order.dart';
 
 import '../../../../app/managers/status_bloc.dart';
 import '../../../../data/utils/exceptions/api_exception.dart';
 import '../../../../domain/entity/add_to_cart_model.dart';
+import '../../../../domain/entity/detail_order_response.dart';
 
 part 'detail_order_event.dart';
 part 'detail_order_state.dart';

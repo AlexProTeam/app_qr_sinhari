@@ -12,7 +12,6 @@ import 'package:qrcode/data/utils/exceptions/api_exception.dart';
 import 'package:qrcode/domain/entity/add_to_cart_model.dart';
 import 'package:qrcode/domain/entity/banner_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
-import 'package:qrcode/domain/entity/detail_order.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
@@ -27,6 +26,7 @@ import 'package:qrcode/presentation/feature/history_scan/history_model.dart';
 import 'package:qrcode/presentation/feature/news/history_model.dart';
 
 import '../../../domain/entity/confirm_cart_response.dart';
+import '../../../domain/entity/detail_order_response.dart';
 import '../../../domain/entity/list_carts_response.dart';
 import '../models/request/confirm_job_request.dart';
 

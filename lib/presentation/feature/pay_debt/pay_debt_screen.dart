@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/managers/color_manager.dart';
+import 'package:qrcode/app/core/string_ex.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
-import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/presentation/feature/pay_debt/bloc/pay_debt_bloc.dart';
 import 'package:qrcode/presentation/feature/pay_debt/pay_debt_qr_screen.dart';
+import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/input_custom.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
@@ -65,6 +66,7 @@ class _PayDebtState extends State<PayDebt> {
           builder: (context, state) {
             return Column(
               children: [
+                30.verticalSpace,
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: MBPTextField(
@@ -75,29 +77,32 @@ class _PayDebtState extends State<PayDebt> {
                     onChanged: (_) {},
                   ),
                 ),
-                GestureDetector(
+                CustomButton(
+                  radius: 6.r,
+                  width: 170.w,
+                  text: 'Gửi thanh toán',
                   onTap: () {
-                    if (amountController.text.isEmpty) return;
+                    if (amountController.text.isEmpty) {
+                      ToastManager.showToast(context,
+                          text: 'Chưa nhập số tiền cần thanh toán');
+                      return;
+                    }
+                    RegExp regex = RegExp(r'[a-zA-Z]');
 
-                    context
-                        .read<PayDebtBloc>()
-                        .add(InitDataPayEvent(amountController.text));
+                    if (regex.hasMatch(amountController.text)) {
+                      ToastManager.showToast(context,
+                          text: 'Số tiền không hợp lệ');
+                      return;
+                    }
+
+                    DialogManager.showDialogConfirm(context,
+                        onTapLeft: () => context
+                            .read<PayDebtBloc>()
+                            .add(InitDataPayEvent(amountController.text)),
+                        content:
+                            'Xác nhận thanh toán số tiền ${amountController.text.toAppNumberFormatWithNull}đ?',
+                        leftTitle: 'Thanh toán');
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: AppColors.red,
-                    ),
-                    padding: const EdgeInsets.only(
-                        left: 24, right: 24, bottom: 16, top: 16),
-                    child: Text(
-                      'Gửi thanh toán',
-                      style: TextStyleManager.mediumBlack14px.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: AppColors.white),
-                    ),
-                  ),
                 )
               ],
             );

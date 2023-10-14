@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
-import 'package:qrcode/app/core/num_ex.dart';
+import 'package:qrcode/app/core/string_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
@@ -89,11 +89,12 @@ class ItemHistory extends StatelessWidget {
                   width: 88.w,
                   height: 75.h,
                 ),
-                5.horizontalSpace,
                 Expanded(
                   child: Container(
+                    height: 75.h,
                     color: Colors.transparent,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
@@ -101,12 +102,14 @@ class ItemHistory extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                order.code ?? 'Đầm xù tím dễ thương',
+                                order.code ?? '',
                                 style: TextStyleManager.mediumBlack14px,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                               ),
                             ),
+
+                            /// todo: trạng thái thanh toán tạm ẩn
                             Expanded(
                               child: Text(
                                 '',
@@ -118,6 +121,7 @@ class ItemHistory extends StatelessWidget {
                             ),
                           ],
                         ),
+                        const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -128,19 +132,17 @@ class ItemHistory extends StatelessWidget {
                                   style: TextStyleManager.mediumBlack14px,
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: '${order.amount}đ',
+                                        text:
+                                            '${order.amount.toAppNumberFormatWithNull}đ',
                                         style: TextStyleManager.mediumBlack
-                                            .copyWith(
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                                fontSize: 14)),
+                                            .copyWith(fontSize: 14.sp)),
                                   ],
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Text(
-                                'X${(order.totalQty ?? 0).toDouble().toAppNumberFormat}',
+                                'X${(order.totalQty ?? 0)}',
                                 style: TextStyleManager.normalBlack,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -149,9 +151,7 @@ class ItemHistory extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 6,
-                        ),
+                        const Spacer(),
                         Text(
                           'Ngày đặt : ${HelperInfor.getDate(order.createdAt ?? '', format: 'dd/MM/yyyy')}',
                           style: TextStyleManager.normalBlack,
@@ -185,7 +185,7 @@ class ItemHistory extends StatelessWidget {
                           maxLines: 1,
                         ),
                         Text(
-                          '${order.subTotal}đ ',
+                          '${order.subTotal.toAppNumberFormatWithNull}đ ',
                           style: TextStyleManager.normalBlack
                               .copyWith(color: AppColors.colorCA1010),
                           overflow: TextOverflow.ellipsis,
@@ -193,9 +193,7 @@ class ItemHistory extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    10.verticalSpace,
                     Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 4, horizontal: 16),

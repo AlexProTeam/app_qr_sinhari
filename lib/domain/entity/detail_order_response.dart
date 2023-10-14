@@ -1,3 +1,5 @@
+import '../../presentation/feature/infomation_customer/widget/infor_enum.dart';
+
 class DataOrderDetail {
   OrderDetail? orderDetail;
 
@@ -21,7 +23,7 @@ class OrderDetail {
   dynamic taxAmount;
   dynamic shippingAmount;
   String? description;
-  String? customer_address;
+  String? customerAddress;
   dynamic couponCode;
   dynamic discountAmount;
   String? subTotal;
@@ -36,30 +38,35 @@ class OrderDetail {
   dynamic storeId;
   List<Products>? products;
 
-  OrderDetail(
-      {this.id,
-      this.code,
-      this.userId,
-      this.shippingOption,
-      this.shippingMethod,
-      this.status,
-      this.amount,
-      this.taxAmount,
-      this.shippingAmount,
-      this.description,
-      this.couponCode,
-      this.discountAmount,
-      this.subTotal,
-      this.isConfirmed,
-      this.discountDescription,
-      this.isFinished,
-      this.completedAt,
-      this.token,
-      this.paymentId,
-      this.createdAt,
-      this.updatedAt,
-      this.storeId,
-      this.products});
+  String get getCreateAt =>
+      (createdAt ?? '').isNotEmpty ? HelperInfor.getDate(createdAt ?? '') : '';
+
+  OrderDetail({
+    this.id,
+    this.code,
+    this.userId,
+    this.shippingOption,
+    this.shippingMethod,
+    this.status,
+    this.amount,
+    this.taxAmount,
+    this.shippingAmount,
+    this.description,
+    this.couponCode,
+    this.discountAmount,
+    this.subTotal,
+    this.isConfirmed,
+    this.discountDescription,
+    this.isFinished,
+    this.completedAt,
+    this.token,
+    this.paymentId,
+    this.createdAt,
+    this.updatedAt,
+    this.storeId,
+    this.products,
+    this.customerAddress,
+  });
 
   OrderDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -86,6 +93,7 @@ class OrderDetail {
     paymentId = json['payment_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    customerAddress = json['customer_address'];
     storeId = json['store_id'];
     if (json['products'] != null) {
       products = <Products>[];

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/app/core/string_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
-import 'package:qrcode/domain/entity/detail_order.dart';
 
-class ItemList extends StatelessWidget {
+import '../../../../domain/entity/detail_order_response.dart';
+
+class ItemListViewDetailOrdersWidget extends StatelessWidget {
   final Products products;
 
-  const ItemList({Key? key, required this.products}) : super(key: key);
+  const ItemListViewDetailOrdersWidget({Key? key, required this.products})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,7 @@ class ItemList extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '${products.price} vnđ',
+                          '${products.price.toAppNumberFormatWithNull} vnđ',
                           style: TextStyleManager.mediumBlack14px.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
@@ -54,6 +57,8 @@ class ItemList extends StatelessWidget {
                           ),
                         ),
                       ),
+
+                      ///todo: check in next time
                       // Expanded(
                       //   child: Text(
                       //     '${products.product?.salePrice} vnđ',
