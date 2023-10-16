@@ -234,7 +234,10 @@ class Routes {
       case RouteDefine.homeScreen:
         return SlideLeftRoute(
           duration: 0,
-          widget: const HomeScreen(),
+          widget: BlocProvider(
+            create: (context) => ProductDetailBloc(),
+            child: HomeScreen(),
+          ),
         );
       case RouteDefine.changePassScreen:
         return SlideLeftRoute(

@@ -12,11 +12,15 @@ import 'category_product_item.dart';
 import 'custom_image_network.dart';
 
 class ProductItemHome extends StatelessWidget {
-  const ProductItemHome(
-      {Key? key, required this.productModel, this.isAgency = false})
-      : super(key: key);
+  const ProductItemHome({
+    Key? key,
+    required this.productModel,
+    this.isAgency = false,
+    this.onTapAddToCart,
+  }) : super(key: key);
   final ProductResponse? productModel;
   final bool isAgency;
+  final Function()? onTapAddToCart;
 
   @override
   Widget build(BuildContext context) {
@@ -125,11 +129,22 @@ class ProductItemHome extends StatelessWidget {
             bottom: 5.h,
             right: 5.w,
             child: GestureDetector(
-              onTap: () => ToastManager.showToast(
-                context,
-                text: 'Chức năng đang phát triển',
-              ),
-              child: Assets.icons.heart.image(
+              onTap: () {
+                if (onTapAddToCart != null) {
+                  onTapAddToCart!();
+                  return;
+                }
+                //todo: chức năng đang phát triển
+
+                ToastManager.showToast(
+                  context,
+                  text: 'Chức năng đang phát triển',
+                );
+              },
+              child: Image.asset(
+                onTapAddToCart != null
+                    ? Assets.icons.icCar.path
+                    : Assets.icons.heart.path,
                 width: 20.r,
                 height: 20.r,
               ),
