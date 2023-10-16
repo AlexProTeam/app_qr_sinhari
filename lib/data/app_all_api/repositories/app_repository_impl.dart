@@ -224,11 +224,26 @@ class AppRepositoryImpl implements AppRepository {
     required String? email,
     required String? phone,
     required String? address,
+  }) async {
+    try {
+      final response = await api.saveProfile(name, email, phone, address);
+      return response;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse<ProfileModel>> saveProfileAvatar({
+    required String? name,
+    required String? email,
+    required String? phone,
+    required String? address,
     required File avatar,
   }) async {
     try {
       final response =
-          await api.saveProfile(name, email, phone, address, avatar);
+          await api.saveProfileAvatar(name, email, phone, address, avatar);
       return response;
     } on DioException catch (e) {
       throw (ApiException.error(e));

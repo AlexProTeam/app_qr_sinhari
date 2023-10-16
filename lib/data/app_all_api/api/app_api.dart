@@ -106,6 +106,14 @@ abstract class AppApi {
     @Query('email') String? email,
     @Query('phone') String? phone,
     @Query('address') String? address,
+  );
+
+  @POST('auth/saveProfile')
+  Future<ObjectResponse<ProfileModel>> saveProfileAvatar(
+    @Query('name') String? name,
+    @Query('email') String? email,
+    @Query('phone') String? phone,
+    @Query('address') String? address,
     @Part(name: 'avatar') File avatar,
   );
 

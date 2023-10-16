@@ -37,13 +37,20 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        final result = await _appUseCase.saveProfile(
-          name: event.name,
-          email: event.mail,
-          phone: event.phone,
-          address: event.andres,
-          avatar: event.image.isNotEmpty ? File(event.image) : File(''),
-        );
+        final result = event.isHasChangeAvatar
+            ? await _appUseCase.saveProfileAvatar(
+                name: event.name,
+                email: event.mail,
+                phone: event.phone,
+                address: event.andres,
+                avatar: File(state.image),
+              )
+            : await _appUseCase.saveProfile(
+                name: event.name,
+                email: event.mail,
+                phone: event.phone,
+                address: event.andres,
+              );
 
         emit(
           state.copyWith(

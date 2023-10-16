@@ -1,5 +1,3 @@
-import '../../app/managers/config_manager.dart';
-
 class ProfileModel {
   int? id;
   String? userType;
@@ -25,9 +23,7 @@ class ProfileModel {
 
   bool get isAgency => isVendor == 1;
 
-  String get getAvatar =>
-      '${ConfigManager.getInstance().apiBaseUrl.substring(0, ConfigManager.getInstance().apiBaseUrl.length - 1)}$avatar'
-          .replaceAll('api/', '');
+  String get getAvatar => avatar ?? '';
 
   ProfileModel({
     this.id,

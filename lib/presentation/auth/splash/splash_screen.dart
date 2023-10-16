@@ -34,8 +34,11 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _initData() async {
-    final deviceId = await CommonUtil.getDeviceId();
-    SessionUtils.saveDeviceId(deviceId);
+    if (SessionUtils.deviceId.isNotEmpty) {
+      final deviceId = await CommonUtil.getDeviceId();
+      SessionUtils.saveDeviceId(deviceId);
+    }
+
     await Future.delayed(const Duration(seconds: 3));
 
     if (SessionUtils.accessToken.isEmpty) {

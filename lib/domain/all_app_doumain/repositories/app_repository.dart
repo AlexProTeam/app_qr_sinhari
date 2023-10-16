@@ -42,6 +42,13 @@ abstract class AppRepository {
     required String? email,
     required String? phone,
     required String? address,
+  });
+
+  Future<ObjectResponse<ProfileModel>> saveProfileAvatar({
+    required String? name,
+    required String? email,
+    required String? phone,
+    required String? address,
     required File avatar,
   });
 

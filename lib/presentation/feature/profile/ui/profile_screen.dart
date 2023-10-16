@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
@@ -36,6 +37,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _addressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late ProfileBloc _bloc;
+  bool _isHasChangeAvatar = false;
 
   @override
   void initState() {
@@ -108,58 +110,59 @@ class ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 12),
+                12.verticalSpace,
                 GestureDetector(
                   onTap: () => _onSelectImage(),
                   child: Container(
-                    width: 164,
-                    height: 164,
+                    width: 112.r,
+                    height: 112.r,
                     decoration: BoxDecoration(
                       border: Border.all(
                         width: 1,
                         color: AppColors.grey5,
                       ),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(12),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12.r),
                       ),
                     ),
-                    child: _buildProfileImage(state),
+                    child: Center(
+                      child: _buildProfileImage(state),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 27),
+                27.verticalSpace,
                 CustomTextField(
-                  height: 45,
+                  height: 45.h,
                   hintText: 'Họ và tên',
                   controller: _nameController,
                   validator: ValidateUtil.validEmpty,
                 ),
-                const SizedBox(height: 8),
+                8.verticalSpace,
                 CustomTextField(
-                  height: 45,
+                  height: 45.h,
                   hintText: 'Email',
                   validator: ValidateUtil.validEmail,
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                 ),
-                const SizedBox(height: 8),
+                8.verticalSpace,
                 CustomTextField(
-                  height: 45,
+                  height: 45.h,
                   hintText: 'Số điện thoại',
                   validator: ValidateUtil.validPhone,
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
                 ),
-                const SizedBox(height: 8),
+                8.verticalSpace,
                 CustomTextField(
-                  height: 45,
                   hintText: 'Địa chỉ',
                   controller: _addressController,
                   validator: ValidateUtil.validEmpty,
                 ),
-                const SizedBox(height: 16),
+                16.verticalSpace,
                 CustomButton(
-                  width: 100.44,
-                  height: 45,
+                  width: 100.w,
+                  height: 45.h,
                   onTap: _onSaveButtonPressed,
                   text: 'Lưu lại',
                 ),
@@ -173,42 +176,49 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildProfileImage(ProfileState state) {
     if (state.image.isNotEmpty) {
-      return Image.file(
-        File(state.image),
-        width: 112,
-        height: 112,
-        fit: BoxFit.contain,
+      return ClipRRect(
+        borderRadius: BorderRadius.all(
+          Radius.circular(11.r),
+        ),
+        child: Image.file(
+          File(state.image),
+          width: 110.r,
+          height: 110.r,
+          fit: BoxFit.cover,
+        ),
       );
     }
 
     if ((state.profileModel?.avatar ?? '').isNotEmpty) {
       return CustomImageNetwork(
         url: state.profileModel?.getAvatar ?? '',
-        width: 112,
-        height: 112,
+        width: 110.r,
+        height: 110.r,
         fit: BoxFit.cover,
+        border: 11.r,
       );
     }
     return Stack(
       children: [
         Center(
-          child: Assets.images.logoMain.image(
-            width: 145,
-            height: 145,
-            fit: BoxFit.cover,
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(
+              Radius.circular(11.r),
+            ),
+            child: Assets.images.logoMain.image(
+              width: 110.r,
+              height: 110.r,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Assets.icons.camera.image(
-                width: 24,
-                height: 24,
-                fit: BoxFit.cover,
-              ),
-            ],
+        Positioned(
+          top: 5.r,
+          right: 5.r,
+          child: Assets.icons.camera.image(
+            width: 24.r,
+            height: 24.r,
+            fit: BoxFit.cover,
           ),
         ),
       ],
@@ -219,10 +229,14 @@ class ProfileScreenState extends State<ProfileScreen> {
     final imagePicker = ImagePicker();
     await imagePicker
         .pickImage(
-          source: ImageSource.gallery,
-        )
-        .then((value) =>
-            context.read<ProfileBloc>().add(OnSelectImageEvent(value?.path)));
+      source: ImageSource.gallery,
+    )
+        .then((value) {
+      if (value != null) {
+        _isHasChangeAvatar = true;
+        context.read<ProfileBloc>().add(OnSelectImageEvent(value.path));
+      }
+    });
   }
 
   void _initializeController() {
@@ -241,7 +255,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         _emailController.text,
         _phoneController.text,
         _addressController.text,
-        _bloc.state.image,
+        _isHasChangeAvatar,
       ),
     );
   }

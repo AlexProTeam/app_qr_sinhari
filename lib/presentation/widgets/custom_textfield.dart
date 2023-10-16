@@ -30,13 +30,14 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: height ?? 40,
+      height: height,
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         border: Border.all(color: AppColors.grey5, width: 1),
         borderRadius: BorderRadius.circular(border ?? 4),
       ),
       child: TextFormField(
+        maxLines: 5,
         enabled: texts,
         style: TextStyle(
           fontSize: fontsize ?? 14,

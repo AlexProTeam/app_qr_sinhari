@@ -63,9 +63,22 @@ class AppUseCase {
     required String? email,
     required String? phone,
     required String? address,
-    required File avatar,
   }) =>
       _repository.saveProfile(
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+      );
+
+  Future<ObjectResponse<ProfileModel>> saveProfileAvatar({
+    required String? name,
+    required String? email,
+    required String? phone,
+    required String? address,
+    required File avatar,
+  }) =>
+      _repository.saveProfileAvatar(
         name: name,
         email: email,
         phone: phone,

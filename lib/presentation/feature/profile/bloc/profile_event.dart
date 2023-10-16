@@ -14,14 +14,14 @@ class OnClickEvent extends ProfileEvent {
   final String mail;
   final String phone;
   final String andres;
-  final String image;
+  final bool isHasChangeAvatar;
 
   const OnClickEvent(
     this.name,
     this.mail,
     this.phone,
     this.andres,
-    this.image,
+    this.isHasChangeAvatar,
   );
 
   @override
@@ -30,7 +30,7 @@ class OnClickEvent extends ProfileEvent {
         mail,
         phone,
         andres,
-        image,
+        isHasChangeAvatar,
       ];
 }
 
