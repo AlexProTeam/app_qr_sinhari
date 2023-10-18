@@ -5,6 +5,7 @@ import 'package:qrcode/domain/entity/add_to_cart_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
+import 'package:qrcode/domain/entity/history_debt_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
 import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
@@ -168,4 +169,7 @@ abstract class AppApi {
   Future<ObjectResponse<DataOrderDetail>> getDetailOrder(
     @Query('order_id') int? proId,
   );
+
+  @GET('debts')
+  Future<HistoryDebtModel> getListDebt();
 }

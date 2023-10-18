@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
 
-Widget itemDetbsWidget() {
+Widget itemDetbsWidget(
+    {String? date, String? price, String? code, bool? check}) {
   return Container(
     margin: const EdgeInsets.only(bottom: 16),
     padding: const EdgeInsets.all(16),
@@ -15,7 +16,7 @@ Widget itemDetbsWidget() {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '29/08/2023 21:00',
+          date ?? '29/08/2023 21:00',
           style: TextStyleManager.mediumBlack,
         ),
         const SizedBox(
@@ -48,7 +49,7 @@ Widget itemDetbsWidget() {
                 height: 4,
               ),
               Text(
-                '- 5.000.000 VNĐ',
+                price ?? '- 5.000.000 VNĐ',
                 style: TextStyleManager.normalBlack,
               ),
               const SizedBox(
@@ -56,7 +57,9 @@ Widget itemDetbsWidget() {
               ),
               RichText(
                 text: TextSpan(
-                  text: 'Đã mua đơn hàng số #xxx',
+                  text: check == true
+                      ? 'Đã mua đơn hàng số $code' ?? ''
+                      : 'Trạng thái: $code' ?? '',
                   style: TextStyleManager.normalBlack,
                   children: <TextSpan>[
                     TextSpan(
