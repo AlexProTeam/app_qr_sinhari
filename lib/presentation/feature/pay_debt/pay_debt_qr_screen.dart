@@ -10,6 +10,7 @@ import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/pay_debt/bloc/pay_debt_bloc.dart';
+import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/input_custom.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
@@ -102,28 +103,27 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
           }
         },
         builder: (context, state) => SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(16.0),
+          child: Padding(
+            padding: EdgeInsets.all(16.r),
             child: Column(
               children: [
                 if (image.isNotEmpty)
                   Image.network(
                     image,
                     fit: BoxFit.cover,
-                    width: 164,
-                    height: 175,
+                    width: 250.r,
+                    height: 250.r,
                   ),
-                const SizedBox(
-                  height: 10,
-                ),
+                10.verticalSpace,
                 Text(
                   description,
                   style: TextStyleManager.mediumBlack14px.copyWith(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 14,
-                      color: AppColors.color000AFF),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12.sp,
+                    color: AppColors.color000AFF,
+                  ),
                 ),
-                30.verticalSpace,
+                15.verticalSpace,
                 rootView(
                     textEditingController: nameBank,
                     title: 'Ngân hàng',
@@ -148,26 +148,13 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
                       await onTap(
                           content.text, context, 'Copy nội dung thành công');
                     }),
-                GestureDetector(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: AppColors.red,
-                    ),
-                    padding: const EdgeInsets.only(
-                        left: 24, right: 24, bottom: 16, top: 16),
-                    child: Text(
-                      'Đã thanh toán',
-                      style: TextStyleManager.mediumBlack14px.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: AppColors.white),
-                    ),
-                  ),
+                CustomButton(
+                  width: 150.w,
+                  text: 'Đã thanh toán',
+                  radius: 6.r,
+                  onTap: () {},
                 ),
-                const SizedBox(
-                  height: 100,
-                ),
+                120.verticalSpace,
               ],
             ),
           ),
@@ -176,50 +163,51 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
     );
   }
 
-  Widget rootView(
-      {required TextEditingController textEditingController,
-      String? title,
-      String? hint,
-      required Function onTap}) {
-    return Row(
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 75,
-          child: MBPTextField(
-            controller: textEditingController,
-            hint: hint,
-            title: title,
-            textTitleStyle: TextStyleManager.mediumBlack14px.copyWith(
-                fontWeight: FontWeight.w800,
-                fontSize: 14,
-                color: AppColors.red),
-            textStyle: TextStyleManager.mediumBlack14px.copyWith(
-                fontWeight: FontWeight.w800,
-                fontSize: 14,
-                color: AppColors.red),
-            readOnly: true,
-            onChanged: (_) {},
+  Widget rootView({
+    required TextEditingController textEditingController,
+    String? title,
+    String? hint,
+    required Function onTap,
+  }) {
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: Row(
+        children: [
+          Expanded(
+            child: MBPTextField(
+              controller: textEditingController,
+              hint: hint,
+              title: title,
+              textTitleStyle: TextStyleManager.mediumBlack14px.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12.sp,
+                  color: AppColors.red),
+              textStyle: TextStyleManager.mediumBlack14px.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12.sp,
+                  color: AppColors.red),
+              readOnly: true,
+              onChanged: (_) {},
+            ),
           ),
-        ),
-        GestureDetector(
-          onTap: () {
-            onTap();
-          },
-          child: Image.asset(
+          8.horizontalSpace,
+          Image.asset(
             Assets.icons.icCopy.path,
-            width: 43,
-            height: 36,
-          ),
-        )
-      ],
+            width: 30.w,
+            height: 36.h,
+          )
+        ],
+      ),
     );
   }
-}
 
-onTap(String text, BuildContext context, String title) {
-  Clipboard.setData(ClipboardData(text: text));
-  ToastManager.showToast(
-    context,
-    text: title,
-  );
+  onTap(String text, BuildContext context, String title) {
+    Clipboard.setData(ClipboardData(text: text));
+    ToastManager.showToast(
+      context,
+      text: title,
+    );
+  }
 }
