@@ -17,7 +17,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
         await _appUseCase.requestOtp(event.phone);
-        //todo: check lại với khách có cần gửi fcm token ở đây không
+        // todo: check lại với khách có cần gửi fcm token ở đây không
         final token = await FirebaseConfig.getTokenFcm();
         await _appUseCase.addDevice(token ?? '');
         emit(state.copyWith(
