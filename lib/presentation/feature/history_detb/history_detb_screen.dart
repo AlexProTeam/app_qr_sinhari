@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
-import 'package:qrcode/app/managers/style_manager.dart';
+import 'package:qrcode/presentation/feature/history_detb/widget/detb_tab_widget.dart';
+import 'package:qrcode/presentation/feature/history_detb/widget/withdrawals_tab_widget.dart';
+import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 
 class HistoryDetbScreen extends StatefulWidget {
@@ -12,6 +14,15 @@ class HistoryDetbScreen extends StatefulWidget {
 }
 
 class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
+  final PageController _pageController = PageController();
+  final ValueNotifier<int> _valueNotifier = ValueNotifier(0);
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,83 +32,42 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
         isShowBack: true,
         titleColor: AppColors.white,
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(16.r).copyWith(bottom: 80.h),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return itemView();
-        },
-        itemCount: 4,
-      ),
-    );
-  }
-
-  Widget itemView() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          color: AppColors.grey3,
-          border: Border.all(width: 1, color: AppColors.color95B9EE),
-          borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
         children: [
-          Text(
-            '29/08/2023 21:00',
-            style: TextStyleManager.mediumBlack,
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          8.verticalSpace,
+          ValueListenableBuilder<int>(
+            valueListenable: _valueNotifier,
+            builder: (context, value, child) => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RichText(
-                  text: TextSpan(
-                    text: 'Sinhair',
-                    style: TextStyleManager.mediumBlack,
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: ' xin thông báo tới quý khách:',
-                          style: TextStyleManager.normalBlack),
-                    ],
-                  ),
+                CustomButton(
+                  backGroupColor: value == 0 ? null : Colors.grey,
+                  width: 100.w,
+                  text: 'Công nợ',
+                  radius: 6.r,
+                  onTap: () => _pageController.jumpToPage(0),
                 ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  'Tài khoản: Ngô Long',
-                  style: TextStyleManager.normalBlack,
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  '- 5.000.000 VNĐ',
-                  style: TextStyleManager.normalBlack,
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: 'Đã mua đơn hàng số #xxx',
-                    style: TextStyleManager.normalBlack,
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: ' xin thông báo tới quý khách:',
-                          style: TextStyleManager.normalBlack
-                              .copyWith(color: AppColors.color064CFC)),
-                    ],
-                  ),
+                10.horizontalSpace,
+                CustomButton(
+                  backGroupColor: value == 1 ? null : Colors.grey,
+                  width: 100.w,
+                  text: 'Thanh toán',
+                  radius: 6.r,
+                  onTap: () => _pageController.jumpToPage(1),
                 ),
               ],
             ),
-          )
+          ),
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              children: const [
+                DetbsTabWidget(),
+                WithdrawalsTabWidget(),
+              ],
+              onPageChanged: (index) => _valueNotifier.value = index,
+            ),
+          ),
         ],
       ),
     );
