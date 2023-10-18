@@ -2,7 +2,7 @@ part of 'notification_bloc.dart';
 
 class NotificationState extends Equatable {
   final BlocStatusEnum status;
-  final List<NotiModel> histories;
+  final List<NotiResponse> histories;
   final String errMes;
 
   const NotificationState({
@@ -20,7 +20,7 @@ class NotificationState extends Equatable {
 
   NotificationState copyWith({
     BlocStatusEnum? status,
-    List<NotiModel>? histories,
+    List<NotiResponse>? histories,
     String? errMes,
   }) {
     return NotificationState(

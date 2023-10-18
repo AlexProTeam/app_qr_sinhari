@@ -52,7 +52,7 @@ abstract class AppRepository {
     required File avatar,
   });
 
-  Future<List<NotiModel>> getNotifications();
+  Future<List<NotiResponse>> getNotifications();
 
   Future<ObjectResponse> saveContact({
     String? productId,

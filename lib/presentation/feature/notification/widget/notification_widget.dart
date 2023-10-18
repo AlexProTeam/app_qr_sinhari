@@ -5,7 +5,7 @@ import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
 import '../../../widgets/custom_image_network.dart';
 
-Widget itemNotification(NotiModel model) => Container(
+Widget itemNotification(NotiResponse model) => Container(
       decoration: const BoxDecoration(
         color: AppColors.colorF4F5FB,
         border: Border(

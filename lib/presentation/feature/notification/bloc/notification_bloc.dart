@@ -19,6 +19,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
           status: BlocStatusEnum.loading,
         ));
         final data = await _appUseCase.getNotifications();
+
         emit(state.copyWith(
           status: BlocStatusEnum.success,
           histories: data,

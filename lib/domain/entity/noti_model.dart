@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class NotiModel {
+class NotiResponse {
   int? id;
   String? title;
   String? des;
@@ -10,7 +10,7 @@ class NotiModel {
   String? imageThumbs;
   String? createdAt;
 
-  NotiModel(
+  NotiResponse(
     this.id,
     this.title,
     this.des,
@@ -20,7 +20,7 @@ class NotiModel {
     this.createdAt,
   );
 
-  NotiModel.fromJson(Map<String, dynamic> json) {
+  NotiResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     des = json['description'];

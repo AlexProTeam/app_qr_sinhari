@@ -86,7 +86,8 @@ class AppUseCase {
         avatar: avatar,
       );
 
-  Future<List<NotiModel>> getNotifications() => _repository.getNotifications();
+  Future<List<NotiResponse>> getNotifications() =>
+      _repository.getNotifications();
 
   Future<ObjectResponse> saveContact({
     String? productId,

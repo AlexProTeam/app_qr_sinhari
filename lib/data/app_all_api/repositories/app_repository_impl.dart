@@ -252,10 +252,10 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<List<NotiModel>> getNotifications() async {
+  Future<List<NotiResponse>> getNotifications() async {
     try {
       final response = await api.getNotifications();
-      return response.data ?? [];
+      return response.notifications ?? [];
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

@@ -119,7 +119,7 @@ abstract class AppApi {
   );
 
   @POST('notifications')
-  Future<ObjectResponse<List<NotiModel>>> getNotifications();
+  Future<ObjectResponse<List<NotiResponse>>> getNotifications();
 
   @POST('save-contact')
   Future<ObjectResponse> saveContact(

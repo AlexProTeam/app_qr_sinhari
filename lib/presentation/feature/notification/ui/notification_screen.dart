@@ -26,6 +26,7 @@ class NotiScreenState extends State<NotiScreen> {
       body: BlocProvider(
         create: (context) => NotificationBloc()..add(InitNotification()),
         child: BlocBuilder<NotificationBloc, NotificationState>(
+          buildWhen: (previous, current) => previous != current,
           builder: (context, state) {
             if (state.status == BlocStatusEnum.loading) {
               return const Center(child: CircularProgressIndicator());
