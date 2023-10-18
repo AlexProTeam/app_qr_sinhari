@@ -10,8 +10,7 @@ class DetbsTabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data =
-        context.read<HistoryDebtBloc>().state.debtModel?.data?.debts ?? [];
+    final data = context.read<HistoryDebtBloc>().state.debtModel?.debts ?? [];
 
     return ListView.builder(
       padding: EdgeInsets.all(16.r).copyWith(bottom: 80.h),

@@ -236,7 +236,7 @@ class Routes {
           duration: 0,
           widget: BlocProvider(
             create: (context) => ProductDetailBloc(),
-            child: HomeScreen(),
+            child: const HomeScreen(),
           ),
         );
       case RouteDefine.changePassScreen:

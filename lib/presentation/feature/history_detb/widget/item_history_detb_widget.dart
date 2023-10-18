@@ -58,8 +58,8 @@ Widget itemDetbsWidget(
               RichText(
                 text: TextSpan(
                   text: check == true
-                      ? 'Đã mua đơn hàng số $code' ?? ''
-                      : 'Trạng thái: $code' ?? '',
+                      ? 'Đã mua đơn hàng số ${code ?? ''}'
+                      : 'Trạng thái: ${code ?? ''}',
                   style: TextStyleManager.normalBlack,
                   children: <TextSpan>[
                     TextSpan(

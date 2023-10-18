@@ -171,5 +171,5 @@ abstract class AppApi {
   );
 
   @GET('debts')
-  Future<HistoryDebtModel> getListDebt();
+  Future<ObjectResponse<HistoryDebtModel>> getListDebt();
 }

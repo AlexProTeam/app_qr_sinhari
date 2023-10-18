@@ -1,5 +1,7 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
@@ -28,6 +30,7 @@ class HistoryDebtBloc extends Bloc<HistoryDebtEvent, HistoryDebtState> {
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
+          message: e.message,
         ));
       }
     });

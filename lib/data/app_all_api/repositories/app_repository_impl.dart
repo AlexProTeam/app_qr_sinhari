@@ -371,7 +371,8 @@ class AppRepositoryImpl implements AppRepository {
   @override
   Future<HistoryDebtModel> getListDebt() async {
     try {
-      return await api.getListDebt();
+      final result = await api.getListDebt();
+      return result.data ?? HistoryDebtModel();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

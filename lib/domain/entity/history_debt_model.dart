@@ -1,39 +1,13 @@
 class HistoryDebtModel {
-  bool? error;
-  Data? data;
-  String? message;
-  bool? success;
-
-  HistoryDebtModel({this.error, this.data, this.message, this.success});
-
-  HistoryDebtModel.fromJson(Map<String, dynamic> json) {
-    error = json['error'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    message = json['message'];
-    success = json['success'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['error'] = error;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    data['message'] = message;
-    data['success'] = success;
-    return data;
-  }
-}
-
-class Data {
   List<Withdrawals>? withdrawals;
   List<Debts>? debts;
   String? debtAble;
   int? customerId;
 
-  Data({this.withdrawals, this.debts, this.debtAble, this.customerId});
+  HistoryDebtModel(
+      {this.withdrawals, this.debts, this.debtAble, this.customerId});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  HistoryDebtModel.fromJson(Map<String, dynamic> json) {
     if (json['withdrawals'] != null) {
       withdrawals = <Withdrawals>[];
       json['withdrawals'].forEach((v) {
@@ -85,22 +59,22 @@ class Withdrawals {
 
   Withdrawals(
       {this.id,
-        this.customerId,
-        this.fee,
-        this.amount,
-        this.currentBalance,
-        this.currency,
-        this.description,
-        this.bankInfo,
-        this.paymentChannel,
-        this.userId,
-        this.status,
-        this.images,
-        this.createdAt,
-        this.updatedAt,
-        this.paymentCode,
-        this.bankId,
-        this.transactionId});
+      this.customerId,
+      this.fee,
+      this.amount,
+      this.currentBalance,
+      this.currency,
+      this.description,
+      this.bankInfo,
+      this.paymentChannel,
+      this.userId,
+      this.status,
+      this.images,
+      this.createdAt,
+      this.updatedAt,
+      this.paymentCode,
+      this.bankId,
+      this.transactionId});
 
   Withdrawals.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -113,8 +87,7 @@ class Withdrawals {
     bankInfo = json['bank_info'];
     paymentChannel = json['payment_channel'];
     userId = json['user_id'];
-    status =
-    json['status'] != null ? Status.fromJson(json['status']) : null;
+    status = json['status'] != null ? Status.fromJson(json['status']) : null;
     images = json['images'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -185,19 +158,19 @@ class Debts {
 
   Debts(
       {this.id,
-        this.customerId,
-        this.orderId,
-        this.subAmount,
-        this.fee,
-        this.amount,
-        this.currentBalance,
-        this.currency,
-        this.userId,
-        this.type,
-        this.description,
-        this.createdAt,
-        this.updatedAt,
-        this.order});
+      this.customerId,
+      this.orderId,
+      this.subAmount,
+      this.fee,
+      this.amount,
+      this.currentBalance,
+      this.currency,
+      this.userId,
+      this.type,
+      this.description,
+      this.createdAt,
+      this.updatedAt,
+      this.order});
 
   Debts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -267,28 +240,28 @@ class Order {
 
   Order(
       {this.id,
-        this.code,
-        this.userId,
-        this.shippingOption,
-        this.shippingMethod,
-        this.status,
-        this.amount,
-        this.taxAmount,
-        this.shippingAmount,
-        this.description,
-        this.couponCode,
-        this.discountAmount,
-        this.subTotal,
-        this.isConfirmed,
-        this.discountDescription,
-        this.isFinished,
-        this.completedAt,
-        this.token,
-        this.paymentId,
-        this.createdAt,
-        this.updatedAt,
-        this.storeId,
-        this.products});
+      this.code,
+      this.userId,
+      this.shippingOption,
+      this.shippingMethod,
+      this.status,
+      this.amount,
+      this.taxAmount,
+      this.shippingAmount,
+      this.description,
+      this.couponCode,
+      this.discountAmount,
+      this.subTotal,
+      this.isConfirmed,
+      this.discountDescription,
+      this.isFinished,
+      this.completedAt,
+      this.token,
+      this.paymentId,
+      this.createdAt,
+      this.updatedAt,
+      this.storeId,
+      this.products});
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -298,8 +271,7 @@ class Order {
     shippingMethod = json['shipping_method'] != null
         ? Status.fromJson(json['shipping_method'])
         : null;
-    status =
-    json['status'] != null ? Status.fromJson(json['status']) : null;
+    status = json['status'] != null ? Status.fromJson(json['status']) : null;
     amount = json['amount'];
     taxAmount = json['tax_amount'];
     shippingAmount = json['shipping_amount'];
@@ -382,24 +354,24 @@ class Products {
 
   Products(
       {this.id,
-        this.orderId,
-        this.qty,
-        this.price,
-        this.taxAmount,
-        this.options,
-        this.productOptions,
-        this.productId,
-        this.productName,
-        this.productImage,
-        this.weight,
-        this.restockQuantity,
-        this.createdAt,
-        this.updatedAt,
-        this.productType,
-        this.timesDownloaded,
-        this.licenseCode,
-        this.originPrice,
-        this.product});
+      this.orderId,
+      this.qty,
+      this.price,
+      this.taxAmount,
+      this.options,
+      this.productOptions,
+      this.productId,
+      this.productName,
+      this.productImage,
+      this.weight,
+      this.restockQuantity,
+      this.createdAt,
+      this.updatedAt,
+      this.productType,
+      this.timesDownloaded,
+      this.licenseCode,
+      this.originPrice,
+      this.product});
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -408,13 +380,7 @@ class Products {
     price = json['price'];
     taxAmount = json['tax_amount'];
     options =
-    json['options'] != null ? Options.fromJson(json['options']) : null;
-    // if (json['product_options'] != null) {
-    //   productOptions = <Null>[];
-    //   json['product_options'].forEach((v) {
-    //     productOptions!.add(Null.fromJson(v));
-    //   });
-    // }
+        json['options'] != null ? Options.fromJson(json['options']) : null;
     productId = json['product_id'];
     productName = json['product_name'];
     productImage = json['product_image'];
@@ -427,7 +393,7 @@ class Products {
     licenseCode = json['license_code'];
     originPrice = json['origin_price'];
     product =
-    json['product'] != null ? Product.fromJson(json['product']) : null;
+        json['product'] != null ? Product.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -441,8 +407,7 @@ class Products {
       data['options'] = options!.toJson();
     }
     if (productOptions != null) {
-      data['product_options'] =
-          productOptions!.map((v) => v.toJson()).toList();
+      data['product_options'] = productOptions!.map((v) => v.toJson()).toList();
     }
     data['product_id'] = productId;
     data['product_name'] = productName;
@@ -479,36 +444,25 @@ class Options {
 
   Options(
       {this.name,
-        this.image,
-        this.attributes,
-        this.taxRate,
-        this.options,
-        this.extras,
-        this.sku,
-        this.weight,
-        this.originalPrice,
-        this.productLink,
-        this.productType,
-        this.commit,
-        this.typeCommit});
+      this.image,
+      this.attributes,
+      this.taxRate,
+      this.options,
+      this.extras,
+      this.sku,
+      this.weight,
+      this.originalPrice,
+      this.productLink,
+      this.productType,
+      this.commit,
+      this.typeCommit});
 
   Options.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     image = json['image'];
     attributes = json['attributes'];
     taxRate = json['taxRate'];
-    // if (json['options'] != null) {
-    //   options = <Null>[];
-    //   json['options'].forEach((v) {
-    //     options!.add(Null.fromJson(v));
-    //   });
-    // }
-    // if (json['extras'] != null) {
-    //   extras = <Null>[];
-    //   json['extras'].forEach((v) {
-    //     extras!.add(Null.fromJson(v));
-    //   });
-    // }
+
     sku = json['sku'];
     weight = json['weight'];
     originalPrice = json['original_price'];
@@ -589,49 +543,49 @@ class Product {
 
   Product(
       {this.id,
-        this.name,
-        this.aliasName,
-        this.description,
-        this.content,
-        this.status,
-        this.images,
-        this.sku,
-        this.order,
-        this.quantity,
-        this.allowCheckoutWhenOutOfStock,
-        this.withStorehouseManagement,
-        this.isFeatured,
-        this.isShowMobile,
-        this.isForVendor,
-        this.brandId,
-        this.isVariation,
-        this.saleType,
-        this.price,
-        this.salePrice,
-        this.startDate,
-        this.endDate,
-        this.length,
-        this.wide,
-        this.height,
-        this.weight,
-        this.taxId,
-        this.views,
-        this.createdAt,
-        this.updatedAt,
-        this.stockStatus,
-        this.createdById,
-        this.createdByType,
-        this.image,
-        this.productType,
-        this.barcode,
-        this.costPerItem,
-        this.storeId,
-        this.approvedBy,
-        this.generateLicenseCode,
-        this.originalPrice,
-        this.frontSalePrice,
-        this.variationInfo,
-        this.productCollections});
+      this.name,
+      this.aliasName,
+      this.description,
+      this.content,
+      this.status,
+      this.images,
+      this.sku,
+      this.order,
+      this.quantity,
+      this.allowCheckoutWhenOutOfStock,
+      this.withStorehouseManagement,
+      this.isFeatured,
+      this.isShowMobile,
+      this.isForVendor,
+      this.brandId,
+      this.isVariation,
+      this.saleType,
+      this.price,
+      this.salePrice,
+      this.startDate,
+      this.endDate,
+      this.length,
+      this.wide,
+      this.height,
+      this.weight,
+      this.taxId,
+      this.views,
+      this.createdAt,
+      this.updatedAt,
+      this.stockStatus,
+      this.createdById,
+      this.createdByType,
+      this.image,
+      this.productType,
+      this.barcode,
+      this.costPerItem,
+      this.storeId,
+      this.approvedBy,
+      this.generateLicenseCode,
+      this.originalPrice,
+      this.frontSalePrice,
+      this.variationInfo,
+      this.productCollections});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -639,8 +593,7 @@ class Product {
     aliasName = json['alias_name'];
     description = json['description'];
     content = json['content'];
-    status =
-    json['status'] != null ? Status.fromJson(json['status']) : null;
+    status = json['status'] != null ? Status.fromJson(json['status']) : null;
     images = json['images'].cast<String>();
     sku = json['sku'];
     order = json['order'];
@@ -684,12 +637,6 @@ class Product {
     variationInfo = json['variation_info'] != null
         ? VariationInfo.fromJson(json['variation_info'])
         : null;
-    // if (json['product_collections'] != null) {
-    //   productCollections = <Null>[];
-    //   json['product_collections'].forEach((v) {
-    //     productCollections!.add(Null.fromJson(v));
-    //   });
-    // }
   }
 
   Map<String, dynamic> toJson() {

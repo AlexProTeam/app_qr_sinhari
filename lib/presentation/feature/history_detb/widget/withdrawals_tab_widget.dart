@@ -11,8 +11,7 @@ class WithdrawalsTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data =
-        context.read<HistoryDebtBloc>().state.debtModel?.data?.withdrawals ??
-            [];
+        context.read<HistoryDebtBloc>().state.debtModel?.withdrawals ?? [];
     return ListView.builder(
       padding: EdgeInsets.all(16.r).copyWith(bottom: 80.h),
       shrinkWrap: true,
