@@ -141,5 +141,5 @@ class AppUseCase {
   }) =>
       _repository.getDetailOrder(proId);
 
-  Future<ObjectResponse> getListDebt() => _repository.getListDebt();
+  Future<HistoryDebtModel> getListDebt() => _repository.getListDebt();
 }

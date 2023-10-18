@@ -3,11 +3,11 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
+import 'package:qrcode/domain/entity/history_debt_model.dart';
 
 import '../../../../data/utils/exceptions/api_exception.dart';
 
 part 'history_debt_event.dart';
-
 part 'history_debt_state.dart';
 
 class HistoryDebtBloc extends Bloc<HistoryDebtEvent, HistoryDebtState> {
@@ -19,9 +19,10 @@ class HistoryDebtBloc extends Bloc<HistoryDebtEvent, HistoryDebtState> {
       try {
         emit(state.copyWith(status: BlocStatusEnum.loading));
 
-        final data = await _appUseCase.getShowProfile();
+        final data = await _appUseCase.getListDebt();
 
         emit(state.copyWith(
+          debtModel: data,
           status: BlocStatusEnum.success,
         ));
       } on ApiException catch (e) {

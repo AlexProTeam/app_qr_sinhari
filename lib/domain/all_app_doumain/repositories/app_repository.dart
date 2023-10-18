@@ -88,5 +88,5 @@ abstract class AppRepository {
   Future<ObjectResponse<DataOrderDetail>> getDetailOrder(
     int? proId,
   );
-  Future<ObjectResponse> getListDebt();
+  Future<HistoryDebtModel> getListDebt();
 }
