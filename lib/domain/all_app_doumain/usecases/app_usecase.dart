@@ -140,4 +140,6 @@ class AppUseCase {
     int? proId,
   }) =>
       _repository.getDetailOrder(proId);
+
+  Future<ObjectResponse> getListDebt() => _repository.getListDebt();
 }

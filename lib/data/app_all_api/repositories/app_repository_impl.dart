@@ -366,4 +366,13 @@ class AppRepositoryImpl implements AppRepository {
       throw (ApiException.error(e));
     }
   }
+
+  @override
+  Future<ObjectResponse> getListDebt() async {
+    try {
+      return await api.getListDebt();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
 }

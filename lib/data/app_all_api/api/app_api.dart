@@ -168,4 +168,7 @@ abstract class AppApi {
   Future<ObjectResponse<DataOrderDetail>> getDetailOrder(
     @Query('order_id') int? proId,
   );
+
+  @GET('debts')
+  Future<ObjectResponse<DataOrderDetail>> getListDebt();
 }
