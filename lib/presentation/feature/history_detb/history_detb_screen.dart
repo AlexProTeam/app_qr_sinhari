@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/presentation/feature/history_detb/bloc/history_debt_bloc.dart';
 import 'package:qrcode/presentation/feature/history_detb/widget/detb_tab_widget.dart';
 import 'package:qrcode/presentation/feature/history_detb/widget/withdrawals_tab_widget.dart';
 import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
+import 'package:qrcode/presentation/widgets/toast_manager.dart';
+
+import '../../../app/managers/status_bloc.dart';
 
 class HistoryDetbScreen extends StatefulWidget {
   const HistoryDetbScreen({Key? key}) : super(key: key);
@@ -28,8 +32,20 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HistoryDebtBloc(),
-      child: BlocBuilder<HistoryDebtBloc, HistoryDebtState>(
+      create: (context) => HistoryDebtBloc()..add(InitDebtEvent()),
+      child: BlocConsumer<HistoryDebtBloc, HistoryDebtState>(
+        listener: (context, state) {
+          state.status == BlocStatusEnum.loading
+              ? DialogManager.showLoadingDialog(context)
+              : DialogManager.hideLoadingDialog;
+
+          if (state.message.isNotEmpty) {
+            ToastManager.showToast(
+              context,
+              text: state.message,
+            );
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: BaseAppBar(
@@ -51,7 +67,9 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
                         width: 100.w,
                         text: 'Công nợ',
                         radius: 6.r,
-                        onTap: () => _pageController.jumpToPage(0),
+                        onTap: () => _pageController.animateToPage(0,
+                            duration: const Duration(milliseconds: 250),
+                            curve: Curves.linear),
                       ),
                       10.horizontalSpace,
                       CustomButton(
@@ -59,7 +77,9 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
                         width: 100.w,
                         text: 'Thanh toán',
                         radius: 6.r,
-                        onTap: () => _pageController.jumpToPage(1),
+                        onTap: () => _pageController.animateToPage(1,
+                            duration: const Duration(milliseconds: 250),
+                            curve: Curves.linear),
                       ),
                     ],
                   ),
@@ -67,9 +87,10 @@ class _HistoryDetbScreenState extends State<HistoryDetbScreen> {
                 Expanded(
                   child: PageView(
                     controller: _pageController,
-                    children: const [
-                      DetbsTabWidget(),
-                      WithdrawalsTabWidget(),
+                    children: [
+                      DetbsTabWidget(debts: state.debtModel?.debts ?? []),
+                      WithdrawalsTabWidget(
+                          withdrawals: state.debtModel?.withdrawals ?? []),
                     ],
                     onPageChanged: (index) => _valueNotifier.value = index,
                   ),

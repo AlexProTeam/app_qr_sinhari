@@ -89,5 +89,5 @@ abstract class AppRepository {
     int? proId,
   );
 
-  Future<HistoryDebtModel> getListDebt();
+  Future<HistoryDebtResponse> getListDebt();
 }

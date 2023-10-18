@@ -89,6 +89,7 @@ class ItemHistory extends StatelessWidget {
                   width: 88.w,
                   height: 75.h,
                 ),
+                8.horizontalSpace,
                 Expanded(
                   child: Container(
                     height: 75.h,

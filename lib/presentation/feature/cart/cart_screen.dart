@@ -70,16 +70,17 @@ class CartScreen extends StatelessWidget {
 
           /// bottom mua hàng
           bottomNavigationBar: ItemBottomCarts(
-            onTap: () => DialogManager.showDialogConfirm(
-              context,
-              content: 'Bạn có chắc hoàn thành đơn hàng ?',
-              leftTitle: 'Mua',
-              onTapLeft: () {
-                if ((state.cartsResponse?.carts?.items ?? []).isNotEmpty) {
-                  context.read<CartsBloc>().add(const ConfirmCartEvent());
-                }
-              },
-            ),
+            onTap: () {
+              if (state.isSelectedAny) {
+                DialogManager.showDialogConfirm(
+                  context,
+                  content: 'Bạn có chắc hoàn thành đơn hàng ?',
+                  leftTitle: 'Mua',
+                  onTapLeft: () =>
+                      context.read<CartsBloc>().add(const ConfirmCartEvent()),
+                );
+              }
+            },
           ),
         );
       },

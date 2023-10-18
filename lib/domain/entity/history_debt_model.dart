@@ -1,13 +1,13 @@
-class HistoryDebtModel {
+class HistoryDebtResponse {
   List<Withdrawals>? withdrawals;
   List<Debts>? debts;
   String? debtAble;
   int? customerId;
 
-  HistoryDebtModel(
+  HistoryDebtResponse(
       {this.withdrawals, this.debts, this.debtAble, this.customerId});
 
-  HistoryDebtModel.fromJson(Map<String, dynamic> json) {
+  HistoryDebtResponse.fromJson(Map<String, dynamic> json) {
     if (json['withdrawals'] != null) {
       withdrawals = <Withdrawals>[];
       json['withdrawals'].forEach((v) {
@@ -337,8 +337,6 @@ class Products {
   int? qty;
   String? price;
   String? taxAmount;
-  Options? options;
-  List<dynamic>? productOptions;
   int? productId;
   String? productName;
   String? productImage;
@@ -350,28 +348,25 @@ class Products {
   int? timesDownloaded;
   dynamic licenseCode;
   int? originPrice;
-  Product? product;
 
-  Products(
-      {this.id,
-      this.orderId,
-      this.qty,
-      this.price,
-      this.taxAmount,
-      this.options,
-      this.productOptions,
-      this.productId,
-      this.productName,
-      this.productImage,
-      this.weight,
-      this.restockQuantity,
-      this.createdAt,
-      this.updatedAt,
-      this.productType,
-      this.timesDownloaded,
-      this.licenseCode,
-      this.originPrice,
-      this.product});
+  Products({
+    this.id,
+    this.orderId,
+    this.qty,
+    this.price,
+    this.taxAmount,
+    this.productId,
+    this.productName,
+    this.productImage,
+    this.weight,
+    this.restockQuantity,
+    this.createdAt,
+    this.updatedAt,
+    this.productType,
+    this.timesDownloaded,
+    this.licenseCode,
+    this.originPrice,
+  });
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -379,8 +374,7 @@ class Products {
     qty = json['qty'];
     price = json['price'];
     taxAmount = json['tax_amount'];
-    options =
-        json['options'] != null ? Options.fromJson(json['options']) : null;
+
     productId = json['product_id'];
     productName = json['product_name'];
     productImage = json['product_image'];
@@ -392,8 +386,6 @@ class Products {
     timesDownloaded = json['times_downloaded'];
     licenseCode = json['license_code'];
     originPrice = json['origin_price'];
-    product =
-        json['product'] != null ? Product.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -403,12 +395,6 @@ class Products {
     data['qty'] = qty;
     data['price'] = price;
     data['tax_amount'] = taxAmount;
-    if (options != null) {
-      data['options'] = options!.toJson();
-    }
-    if (productOptions != null) {
-      data['product_options'] = productOptions!.map((v) => v.toJson()).toList();
-    }
     data['product_id'] = productId;
     data['product_name'] = productName;
     data['product_image'] = productImage;
@@ -420,77 +406,7 @@ class Products {
     data['times_downloaded'] = timesDownloaded;
     data['license_code'] = licenseCode;
     data['origin_price'] = originPrice;
-    if (product != null) {
-      data['product'] = product!.toJson();
-    }
-    return data;
-  }
-}
 
-class Options {
-  String? name;
-  String? image;
-  String? attributes;
-  int? taxRate;
-  List<dynamic>? options;
-  List<dynamic>? extras;
-  dynamic sku;
-  int? weight;
-  int? originalPrice;
-  String? productLink;
-  String? productType;
-  int? commit;
-  String? typeCommit;
-
-  Options(
-      {this.name,
-      this.image,
-      this.attributes,
-      this.taxRate,
-      this.options,
-      this.extras,
-      this.sku,
-      this.weight,
-      this.originalPrice,
-      this.productLink,
-      this.productType,
-      this.commit,
-      this.typeCommit});
-
-  Options.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    image = json['image'];
-    attributes = json['attributes'];
-    taxRate = json['taxRate'];
-
-    sku = json['sku'];
-    weight = json['weight'];
-    originalPrice = json['original_price'];
-    productLink = json['product_link'];
-    productType = json['product_type'];
-    commit = json['commit'];
-    typeCommit = json['type_commit'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['image'] = image;
-    data['attributes'] = attributes;
-    data['taxRate'] = taxRate;
-    if (options != null) {
-      data['options'] = options!.map((v) => v.toJson()).toList();
-    }
-    if (extras != null) {
-      data['extras'] = extras!.map((v) => v.toJson()).toList();
-    }
-    data['sku'] = sku;
-    data['weight'] = weight;
-    data['original_price'] = originalPrice;
-    data['product_link'] = productLink;
-    data['product_type'] = productType;
-    data['commit'] = commit;
-    data['type_commit'] = typeCommit;
     return data;
   }
 }
@@ -539,53 +455,52 @@ class Product {
   int? originalPrice;
   int? frontSalePrice;
   VariationInfo? variationInfo;
-  List<dynamic>? productCollections;
 
-  Product(
-      {this.id,
-      this.name,
-      this.aliasName,
-      this.description,
-      this.content,
-      this.status,
-      this.images,
-      this.sku,
-      this.order,
-      this.quantity,
-      this.allowCheckoutWhenOutOfStock,
-      this.withStorehouseManagement,
-      this.isFeatured,
-      this.isShowMobile,
-      this.isForVendor,
-      this.brandId,
-      this.isVariation,
-      this.saleType,
-      this.price,
-      this.salePrice,
-      this.startDate,
-      this.endDate,
-      this.length,
-      this.wide,
-      this.height,
-      this.weight,
-      this.taxId,
-      this.views,
-      this.createdAt,
-      this.updatedAt,
-      this.stockStatus,
-      this.createdById,
-      this.createdByType,
-      this.image,
-      this.productType,
-      this.barcode,
-      this.costPerItem,
-      this.storeId,
-      this.approvedBy,
-      this.generateLicenseCode,
-      this.originalPrice,
-      this.frontSalePrice,
-      this.variationInfo,
-      this.productCollections});
+  Product({
+    this.id,
+    this.name,
+    this.aliasName,
+    this.description,
+    this.content,
+    this.status,
+    this.images,
+    this.sku,
+    this.order,
+    this.quantity,
+    this.allowCheckoutWhenOutOfStock,
+    this.withStorehouseManagement,
+    this.isFeatured,
+    this.isShowMobile,
+    this.isForVendor,
+    this.brandId,
+    this.isVariation,
+    this.saleType,
+    this.price,
+    this.salePrice,
+    this.startDate,
+    this.endDate,
+    this.length,
+    this.wide,
+    this.height,
+    this.weight,
+    this.taxId,
+    this.views,
+    this.createdAt,
+    this.updatedAt,
+    this.stockStatus,
+    this.createdById,
+    this.createdByType,
+    this.image,
+    this.productType,
+    this.barcode,
+    this.costPerItem,
+    this.storeId,
+    this.approvedBy,
+    this.generateLicenseCode,
+    this.originalPrice,
+    this.frontSalePrice,
+    this.variationInfo,
+  });
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -638,66 +553,6 @@ class Product {
         ? VariationInfo.fromJson(json['variation_info'])
         : null;
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['alias_name'] = aliasName;
-    data['description'] = description;
-    data['content'] = content;
-    if (status != null) {
-      data['status'] = status!.toJson();
-    }
-    data['images'] = images;
-    data['sku'] = sku;
-    data['order'] = order;
-    data['quantity'] = quantity;
-    data['allow_checkout_when_out_of_stock'] = allowCheckoutWhenOutOfStock;
-    data['with_storehouse_management'] = withStorehouseManagement;
-    data['is_featured'] = isFeatured;
-    data['is_show_mobile'] = isShowMobile;
-    data['is_for_vendor'] = isForVendor;
-    data['brand_id'] = brandId;
-    data['is_variation'] = isVariation;
-    data['sale_type'] = saleType;
-    data['price'] = price;
-    data['sale_price'] = salePrice;
-    data['start_date'] = startDate;
-    data['end_date'] = endDate;
-    data['length'] = length;
-    data['wide'] = wide;
-    data['height'] = height;
-    data['weight'] = weight;
-    data['tax_id'] = taxId;
-    data['views'] = views;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    if (stockStatus != null) {
-      data['stock_status'] = stockStatus!.toJson();
-    }
-    data['created_by_id'] = createdById;
-    data['created_by_type'] = createdByType;
-    data['image'] = image;
-    if (productType != null) {
-      data['product_type'] = productType!.toJson();
-    }
-    data['barcode'] = barcode;
-    data['cost_per_item'] = costPerItem;
-    data['store_id'] = storeId;
-    data['approved_by'] = approvedBy;
-    data['generate_license_code'] = generateLicenseCode;
-    data['original_price'] = originalPrice;
-    data['front_sale_price'] = frontSalePrice;
-    if (variationInfo != null) {
-      data['variation_info'] = variationInfo!.toJson();
-    }
-    if (productCollections != null) {
-      data['product_collections'] =
-          productCollections!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class VariationInfo {
@@ -707,11 +562,5 @@ class VariationInfo {
 
   VariationInfo.fromJson(Map<String, dynamic> json) {
     productId = json['product_id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['product_id'] = productId;
-    return data;
   }
 }

@@ -23,7 +23,7 @@ class HelperInfor {
 
   static String getDate(String dateTimeScan, {String? format}) {
     DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
-    DateFormat dateFormatLast = DateFormat(format ?? "HH:mm - dd/MM/yyyy");
+    DateFormat dateFormatLast = DateFormat(format ?? "dd/MM/yyyy - HH:mm");
     DateTime datetime = dateFormat.parse(dateTimeScan);
     final date = dateFormatLast.format(datetime);
     return date;

@@ -28,6 +28,11 @@ class CartsState extends Equatable {
           .length ==
       cartsResponse?.carts?.items?.length;
 
+  bool get isSelectedAny =>
+      cartsResponse?.carts?.items
+          ?.any((element) => element.isSelected == true) ==
+      true;
+
   CartsState copyWith({
     BlocStatusEnum? status,
     String? errMes,

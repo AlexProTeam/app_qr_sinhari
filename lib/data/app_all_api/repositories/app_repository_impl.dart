@@ -14,7 +14,6 @@ import 'package:qrcode/domain/entity/banner_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
-import 'package:qrcode/domain/entity/history_debt_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
 import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
@@ -28,6 +27,7 @@ import 'package:qrcode/presentation/feature/news/history_model.dart';
 
 import '../../../domain/entity/confirm_cart_response.dart';
 import '../../../domain/entity/detail_order_response.dart';
+import '../../../domain/entity/history_debt_model.dart';
 import '../../../domain/entity/list_carts_response.dart';
 import '../models/request/confirm_job_request.dart';
 
@@ -369,10 +369,10 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<HistoryDebtModel> getListDebt() async {
+  Future<HistoryDebtResponse> getListDebt() async {
     try {
       final result = await api.getListDebt();
-      return result.data ?? HistoryDebtModel();
+      return result.data ?? HistoryDebtResponse();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

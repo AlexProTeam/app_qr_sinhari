@@ -32,6 +32,7 @@ dependencies:
   firebase_messaging: ^14.5.0
   flutter_local_notifications: ^14.0.0+1
   firebase_core: ^2.11.0
+  rxdart: ^0.27.3
   cached_network_image: ^3.2.0
   equatable: ^2.0.3
   url_launcher: ^6.0.1

@@ -5,7 +5,6 @@ import 'package:qrcode/domain/entity/add_to_cart_model.dart';
 import 'package:qrcode/domain/entity/confirm_model.dart';
 import 'package:qrcode/domain/entity/detail_product_model.dart';
 import 'package:qrcode/domain/entity/details_news_model.dart';
-import 'package:qrcode/domain/entity/history_debt_model.dart';
 import 'package:qrcode/domain/entity/home_response.dart';
 import 'package:qrcode/domain/entity/introduce_model.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
@@ -18,6 +17,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../../domain/entity/banner_model.dart';
 import '../../../domain/entity/confirm_cart_response.dart';
 import '../../../domain/entity/detail_order_response.dart';
+import '../../../domain/entity/history_debt_model.dart';
 import '../../../domain/entity/list_carts_response.dart';
 import '../../../domain/entity/profile_model.dart';
 import '../../../presentation/feature/history_scan/history_model.dart';
@@ -171,5 +171,5 @@ abstract class AppApi {
   );
 
   @GET('debts')
-  Future<ObjectResponse<HistoryDebtModel>> getListDebt();
+  Future<ObjectResponse<HistoryDebtResponse>> getListDebt();
 }

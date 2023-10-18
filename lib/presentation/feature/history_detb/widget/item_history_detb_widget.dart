@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qrcode/app/core/string_ex.dart';
+import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
+import '../../infomation_customer/widget/infor_enum.dart';
 
 Widget itemDetbsWidget(
-    {String? date, String? price, String? code, bool? check}) {
+  BuildContext context, {
+  String? date,
+  String? price,
+  String? code,
+  required bool isDebt,
+}) {
   return Container(
-    margin: const EdgeInsets.only(bottom: 16),
-    padding: const EdgeInsets.all(16),
+    margin: EdgeInsets.only(bottom: 16.h),
+    padding: EdgeInsets.all(16.r),
     decoration: BoxDecoration(
         color: AppColors.grey3,
         border: Border.all(width: 1, color: AppColors.color95B9EE),
-        borderRadius: BorderRadius.circular(10)),
+        borderRadius: BorderRadius.circular(8.r)),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          date ?? '29/08/2023 21:00',
-          style: TextStyleManager.mediumBlack,
+          HelperInfor.getDate(date ?? ''),
+          style: TextStyleManager.mediumBlack.copyWith(
+            fontWeight: FontWeight.w700,
+            fontSize: 13.sp,
+          ),
         ),
-        const SizedBox(
-          height: 4,
-        ),
+        4.verticalSpace,
         Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: EdgeInsets.only(left: 10.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,34 +49,34 @@ Widget itemDetbsWidget(
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              4.verticalSpace,
               Text(
-                'Tài khoản: Ngô Long',
+                'Tài khoản: ${context.read<ProfileBloc>().state.profileModel?.name}',
                 style: TextStyleManager.normalBlack,
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              4.verticalSpace,
               Text(
-                price ?? '- 5.000.000 VNĐ',
-                style: TextStyleManager.normalBlack,
+                '${isDebt ? '-' : '+'}${price.toAppNumberFormatWithNull}',
+                style: TextStyleManager.normalBlack.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: isDebt ? Colors.red : Colors.green,
+                ),
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              4.verticalSpace,
               RichText(
                 text: TextSpan(
-                  text: check == true
+                  text: isDebt
                       ? 'Đã mua đơn hàng số ${code ?? ''}'
                       : 'Trạng thái: ${code ?? ''}',
                   style: TextStyleManager.normalBlack,
                   children: <TextSpan>[
                     TextSpan(
-                        text: ' xin thông báo tới quý khách:',
-                        style: TextStyleManager.normalBlack
-                            .copyWith(color: AppColors.color064CFC)),
+                      text: isDebt ? ' Chi tiết đơn hàng' : '',
+                      style: TextStyleManager.normalBlack.copyWith(
+                        color: AppColors.color064CFC,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ],
                 ),
               ),

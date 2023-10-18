@@ -3,7 +3,7 @@ part of 'history_debt_bloc.dart';
 @immutable
 class HistoryDebtState extends Equatable {
   final BlocStatusEnum? status;
-  final HistoryDebtModel? debtModel;
+  final HistoryDebtResponse? debtModel;
   final String message;
 
   const HistoryDebtState({
@@ -17,7 +17,7 @@ class HistoryDebtState extends Equatable {
 
   HistoryDebtState copyWith({
     BlocStatusEnum? status,
-    HistoryDebtModel? debtModel,
+    HistoryDebtResponse? debtModel,
     String? message,
   }) {
     return HistoryDebtState(
