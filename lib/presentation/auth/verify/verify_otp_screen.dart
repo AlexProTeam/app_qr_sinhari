@@ -121,7 +121,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           width: 128,
                           height: 45,
                           onTap: () {
-                            /// todo: refactor logic to bloc
+                            ///todo: refactor logic to bloc
 
                             if (_controller.text.isEmpty) {
                               return ToastManager.showToast(

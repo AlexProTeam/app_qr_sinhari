@@ -89,6 +89,7 @@ abstract class AppApi {
   Future<ConfirmModel> comfirmOtp(
     @Part(name: "phone") String phone,
     @Part(name: "otp") String otp,
+    @Part(name: "device_id") String deviceId,
   );
 
   @POST('add_device')

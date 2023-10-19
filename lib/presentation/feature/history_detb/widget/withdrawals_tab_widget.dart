@@ -23,7 +23,7 @@ class WithdrawalsTabWidget extends StatelessWidget {
     }
 
     return ListView.builder(
-      padding: EdgeInsets.all(16.r).copyWith(bottom: 80.h),
+      padding: EdgeInsets.all(16.r).copyWith(bottom: 100.h),
       shrinkWrap: true,
       itemBuilder: (context, index) {
         final dataItem = withdrawals[index];

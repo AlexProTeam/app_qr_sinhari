@@ -90,23 +90,26 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
         isShowBack: true,
       ),
       body: BlocConsumer<PayDebtBloc, PayDebtState>(
+        listenWhen: (previous, current) => current != previous,
+        buildWhen: (previous, current) => current != previous,
         listener: (context, state) {
           nameBank.text = state.payment?.bankName ?? '';
           numberBank.text = state.payment?.accountNumber ?? '';
           content.text = state.payment?.contentTranfer ?? '';
           image = state.payment?.imageQr ?? '';
           description = state.payment?.description ?? '';
-          if (state.status == BlocStatusEnum.loading) {
-            DialogManager.showLoadingDialog(context);
-          } else if (state.status == BlocStatusEnum.success &&
+          state.status == BlocStatusEnum.loading
+              ? DialogManager.showLoadingDialog(context)
+              : DialogManager.hideLoadingDialog;
+
+          if (state.status == BlocStatusEnum.success &&
               state.data?.success == true) {
-            DialogManager.hideLoadingDialog;
-            DialogManager.showDialogConfirm(context,
-                onTapLeft: () => {},
-                content: 'Cảm ơn bạn đã xác nhận thanh toán',
-                leftTitle: 'Ok');
-          } else {
-            DialogManager.hideLoadingDialog;
+            DialogManager.showDialogConfirm(
+              context,
+              onTapLeft: () => {},
+              content: 'Cảm ơn bạn đã xác nhận thanh toán',
+              leftTitle: 'Ok',
+            );
           }
         },
         builder: (context, state) => SingleChildScrollView(
@@ -160,9 +163,11 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
                   text: 'Đã thanh toán',
                   radius: 6.r,
                   onTap: () {
-                    context
-                        .read<PayDebtBloc>()
-                        .add(OnClickPayEvent(payment: widget.payment?.payment));
+                    context.read<PayDebtBloc>().add(
+                          OnClickPayEvent(
+                            payment: widget.payment?.payment,
+                          ),
+                        );
                   },
                 ),
                 120.verticalSpace,

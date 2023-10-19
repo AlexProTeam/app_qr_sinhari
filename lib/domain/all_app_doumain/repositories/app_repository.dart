@@ -31,7 +31,11 @@ abstract class AppRepository {
 
   Future<ObjectResponse> requestOtp({required String phone});
 
-  Future<ConfirmModel> comfirmOtp({required String phone, required String otp});
+  Future<ConfirmModel> comfirmOtp({
+    required String phone,
+    required String otp,
+    required String deviceId,
+  });
 
   Future<ObjectResponse> addDevice({required String deviceId});
 

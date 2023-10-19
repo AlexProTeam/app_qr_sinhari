@@ -11,7 +11,7 @@ Future setupFirebase() async {
   ///todo: refactor later
   // LocalNotification.instance.setUp();
   await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform, name: 'Alo');
+      options: DefaultFirebaseOptions.currentPlatform, name: 'Sinhair');
   listenFirebaseMessage();
 
   // FlutterAppBadger.isAppBadgeSupported();

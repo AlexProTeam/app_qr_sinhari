@@ -38,10 +38,7 @@ class App extends StatefulWidget {
 class AppState extends State<App> {
   @override
   void initState() {
-    ///todo:
-    // FirebaseNotification.instance.initFirebaseNotification();
-    // LocalNotification.instance
-    //     .configureDidReceiveLocalNotificationSubject(context);
+    GScreenUtil.init(context);
     super.initState();
   }
 
@@ -65,7 +62,6 @@ class AppState extends State<App> {
           scaffoldBackgroundColor: AppColors.white,
         ),
         builder: (context, widget) {
-          GScreenUtil.init(context);
           return ScreenUtilInit(builder: (context, child) {
             return Scaffold(
                 resizeToAvoidBottomInset: false,

@@ -36,10 +36,13 @@ class NotiScreenState extends State<NotiScreen> {
                 child: Text("Không có thông báo nào!"),
               );
             }
+
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 100),
-              itemBuilder: (_, index) =>
-                  itemNotification(state.histories[index]),
+              itemBuilder: (_, index) => itemNotification(
+                context,
+                state.histories[index],
+              ),
               itemCount: state.histories.length,
             );
           },

@@ -49,8 +49,16 @@ class AppUseCase {
   Future<ObjectResponse> requestOtp(String phone) =>
       _repository.requestOtp(phone: phone);
 
-  Future<ConfirmModel> comfirmOtp(String phone, String otp) =>
-      _repository.comfirmOtp(phone: phone, otp: otp);
+  Future<ConfirmModel> comfirmOtp(
+    String phone,
+    String otp,
+    String deviceId,
+  ) =>
+      _repository.comfirmOtp(
+        phone: phone,
+        otp: otp,
+        deviceId: deviceId,
+      );
 
   Future<ObjectResponse> addDevice(String deviceId) =>
       _repository.addDevice(deviceId: deviceId);

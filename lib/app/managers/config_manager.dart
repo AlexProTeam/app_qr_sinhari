@@ -16,17 +16,17 @@ class ConfigManager {
   static ConfigManager? _instance;
 
   static ConfigManager devConfig = ConfigManager._(
-    apiBaseUrl: 'http://222.252.24.168:7456/api/',
+    apiBaseUrl: 'http://222.252.24.168:7456',
     appFlavor: FlavorManager.dev,
   );
 
   static ConfigManager stagingConfig = ConfigManager._(
-    apiBaseUrl: 'https://beta.sinhairvietnam.vn/api/',
+    apiBaseUrl: 'https://beta.sinhairvietnam.vn',
     appFlavor: FlavorManager.staging,
   );
 
   static ConfigManager productionConfig = ConfigManager._(
-    apiBaseUrl: 'https://beta.sinhairvietnam.vn/api/',
+    apiBaseUrl: 'https://beta.sinhairvietnam.vn',
     appFlavor: FlavorManager.production,
   );
 

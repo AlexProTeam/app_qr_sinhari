@@ -13,6 +13,7 @@ class SplashScreenState extends State<SplashScreen>
   late Animation<double> animation;
   late AnimationController controller;
   late ProfileBloc _profileBloc;
+  final AppUseCase _appUseCase = getIt<AppUseCase>();
 
   @override
   void initState() {
@@ -35,8 +36,9 @@ class SplashScreenState extends State<SplashScreen>
 
   Future<void> _initData() async {
     if (SessionUtils.deviceId.isEmpty) {
-      final deviceId = await CommonUtil.getDeviceId();
-      SessionUtils.saveDeviceId(deviceId);
+      final fcmToken = await FirebaseConfig.getTokenFcm();
+      SessionUtils.saveDeviceId(fcmToken ?? '');
+      await _appUseCase.addDevice(fcmToken ?? '');
     }
 
     await Future.delayed(const Duration(seconds: 3));
@@ -60,6 +62,10 @@ class SplashScreenState extends State<SplashScreen>
         switch (state.status) {
           case BlocStatusEnum.failed:
             SessionUtils.deleteAccessToken;
+            Navigator.pushReplacementNamed(
+              Routes.instance.navigatorKey.currentContext!,
+              RouteDefine.welcomeScreen,
+            );
             break;
           case BlocStatusEnum.success:
             Navigator.pushReplacementNamed(

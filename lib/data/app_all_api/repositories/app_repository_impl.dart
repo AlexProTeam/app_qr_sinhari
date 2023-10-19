@@ -185,10 +185,13 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<ConfirmModel> comfirmOtp(
-      {required String phone, required String otp}) async {
+  Future<ConfirmModel> comfirmOtp({
+    required String phone,
+    required String otp,
+    required String deviceId,
+  }) async {
     try {
-      final response = await api.comfirmOtp(phone, otp);
+      final response = await api.comfirmOtp(phone, otp, deviceId);
 
       return response;
     } on DioException catch (e) {
