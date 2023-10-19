@@ -98,6 +98,13 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
           description = state.payment?.description ?? '';
           if (state.status == BlocStatusEnum.loading) {
             DialogManager.showLoadingDialog(context);
+          } else if (state.status == BlocStatusEnum.success &&
+              state.data?.success == true) {
+            DialogManager.hideLoadingDialog;
+            DialogManager.showDialogConfirm(context,
+                onTapLeft: () => {},
+                content: 'Cảm ơn bạn đã xác nhận thanh toán',
+                leftTitle: 'Ok');
           } else {
             DialogManager.hideLoadingDialog;
           }
@@ -152,7 +159,11 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
                   width: 150.w,
                   text: 'Đã thanh toán',
                   radius: 6.r,
-                  onTap: () {},
+                  onTap: () {
+                    context
+                        .read<PayDebtBloc>()
+                        .add(OnClickPayEvent(payment: widget.payment?.payment));
+                  },
                 ),
                 120.verticalSpace,
               ],

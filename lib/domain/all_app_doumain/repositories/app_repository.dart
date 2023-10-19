@@ -90,4 +90,6 @@ abstract class AppRepository {
   );
 
   Future<HistoryDebtResponse> getListDebt();
+
+  Future<ObjectResponse> paymentConfirm();
 }

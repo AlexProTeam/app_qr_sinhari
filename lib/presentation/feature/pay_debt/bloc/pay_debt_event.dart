@@ -12,3 +12,12 @@ class InitDataPayEvent extends PayDebtEvent {
   @override
   List<Object?> get props => [mount];
 }
+
+class OnClickPayEvent extends PayDebtEvent {
+  final PaymentDebt? payment;
+
+  const OnClickPayEvent({this.payment});
+
+  @override
+  List<Object?> get props => [payment];
+}

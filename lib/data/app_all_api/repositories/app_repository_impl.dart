@@ -377,4 +377,14 @@ class AppRepositoryImpl implements AppRepository {
       throw (ApiException.error(e));
     }
   }
+
+  @override
+  Future<ObjectResponse> paymentConfirm() async {
+    try {
+      final result = await api.paymentConfirm();
+      return result;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
 }
