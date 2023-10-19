@@ -172,4 +172,7 @@ abstract class AppApi {
 
   @GET('debts')
   Future<ObjectResponse<HistoryDebtResponse>> getListDebt();
+
+  @POST('payment_confirm')
+  Future<ObjectResponse> paymentConfirm();
 }

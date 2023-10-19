@@ -143,4 +143,6 @@ class AppUseCase {
       _repository.getDetailOrder(proId);
 
   Future<HistoryDebtResponse> getListDebt() => _repository.getListDebt();
+
+  Future<ObjectResponse> paymentConfirm() => _repository.paymentConfirm();
 }
