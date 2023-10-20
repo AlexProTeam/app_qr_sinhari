@@ -102,7 +102,7 @@ class SplashScreenState extends State<SplashScreen>
 
 class _AnimatedLogo extends AnimatedWidget {
   static final _opacityTween = Tween<double>(begin: 1, end: 1);
-  static final _sizeTween = Tween<double>(begin: 150, end: 300);
+  static final _sizeTween = Tween<double>(begin: 200.r, end: 300.r);
 
   const _AnimatedLogo({Key? key, required Animation<double> animation})
       : super(key: key, listenable: animation);
