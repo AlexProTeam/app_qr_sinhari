@@ -38,7 +38,6 @@ class App extends StatefulWidget {
 class AppState extends State<App> {
   @override
   void initState() {
-    GScreenUtil.init(context);
     super.initState();
   }
 
@@ -63,6 +62,7 @@ class AppState extends State<App> {
         ),
         builder: (context, widget) {
           return ScreenUtilInit(builder: (context, child) {
+            GScreenUtil.init(context);
             return Scaffold(
                 resizeToAvoidBottomInset: false,
                 body: widget ?? const SizedBox());

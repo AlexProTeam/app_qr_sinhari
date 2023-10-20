@@ -38,7 +38,14 @@ class SplashScreenState extends State<SplashScreen>
     if (SessionUtils.deviceId.isEmpty) {
       final fcmToken = await FirebaseConfig.getTokenFcm();
       SessionUtils.saveDeviceId(fcmToken ?? '');
-      await _appUseCase.addDevice(fcmToken ?? '');
+      try {
+        await _appUseCase.addDevice(fcmToken ?? '');
+      } on ApiException catch (e) {
+        ToastManager.showToast(
+          Routes.instance.navigatorKey.currentContext!,
+          text: e.message,
+        );
+      }
     }
 
     await Future.delayed(const Duration(seconds: 3));
