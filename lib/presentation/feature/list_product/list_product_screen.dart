@@ -13,6 +13,7 @@ import '../../widgets/qty_carts_widget.dart';
 import '../../widgets/toast_manager.dart';
 import '../detail_product/bloc/product_detail_bloc.dart';
 import '../detail_product/ui/detail_product_screen.dart';
+import '../profile/bloc/profile_bloc.dart';
 import 'bloc/list_product_bloc.dart';
 
 class ArgumentListProductScreen {
@@ -114,7 +115,11 @@ class ListProductScreenState extends State<ListProductScreen> {
               crossAxisCount: 2,
               crossAxisSpacing: 12.h,
               mainAxisSpacing: 12.w,
-              childAspectRatio: 0.6,
+              childAspectRatio:
+                  context.read<ProfileBloc>().state.profileModel?.isAgency ==
+                          true
+                      ? 0.5
+                      : 0.6,
             ),
             itemBuilder: (context, index) {
               final data = products[index];

@@ -18,7 +18,7 @@ class NewsNested extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NestedRouteWrapper(
-      onGenerateRoute: Routes.generateBottomBarRoute,
+      onGenerateRoute: Routes.generateDefaultRoute,
       navigationKey: Routes.newsKey,
       initialRoute: BottomBarEnum.tinTuc.getRouteNames,
     );

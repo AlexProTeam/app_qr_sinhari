@@ -23,10 +23,11 @@ class CartsState extends Equatable {
 
   bool get isSelectedAll =>
       cartsResponse?.carts?.items
-          ?.where((e) => e.isSelected == true)
-          .toList()
-          .length ==
-      cartsResponse?.carts?.items?.length;
+              ?.where((e) => e.isSelected == true)
+              .toList()
+              .length ==
+          cartsResponse?.carts?.items?.length &&
+      (cartsResponse?.carts?.items ?? []).isNotEmpty;
 
   bool get isSelectedAny =>
       cartsResponse?.carts?.items

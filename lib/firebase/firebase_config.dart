@@ -1,20 +1,23 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 
+import '../app/app.dart';
+import '../app/route/navigation/route_names.dart';
 import 'firebase_options.dart';
 import 'notification/notification_service.dart';
 
 Future setupFirebase() async {
-  ///todo: refactor later
   // LocalNotification.instance.setUp();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform, name: 'Sinhair');
   listenFirebaseMessage();
 
-  // FlutterAppBadger.isAppBadgeSupported();
   await FirebaseConfig.requestPermission();
   await FirebaseConfig.showNotificationForeground();
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
@@ -48,10 +51,13 @@ class FirebaseConfig {
   }
 
   static void receiveFromBackgroundState() {
-    ///onMessageOpenedApp: A Stream which posts a RemoteMessage when
-    ///the application is opened from a background state.
-    FirebaseMessaging.onMessageOpenedApp.listen((value) {
-      ///TODO
+    /// onMessageOpenedApp: A Stream which posts a RemoteMessage when
+    /// the application is opened from a background state.
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      Navigator.pushNamed(
+        Routes.instance.navigatorKey.currentContext!,
+        RouteDefine.notiScreen,
+      );
     });
   }
 
@@ -68,6 +74,15 @@ class FirebaseConfig {
           ),
         );
       }
+
+      ReceivePort port = ReceivePort();
+      IsolateNameServer.registerPortWithName(
+        port.sendPort,
+        AppConstant.portBackgroundMessage,
+      );
+      port.listen((dynamic data) {
+        ///todo: handle here
+      });
     });
   }
 
@@ -93,4 +108,7 @@ class FirebaseConfig {
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+  final SendPort? send =
+      IsolateNameServer.lookupPortByName(AppConstant.portBackgroundMessage);
+  send?.send(message.data);
 }

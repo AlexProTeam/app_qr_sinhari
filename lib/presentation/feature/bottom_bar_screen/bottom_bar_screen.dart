@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/feature/bottom_bar_screen/widget/bottom_navigation.dart';
 
-import '../../../firebase/firebase_config.dart';
 import 'bloc/bottom_bar_bloc.dart';
 import 'enum/bottom_bar_enum.dart';
 
@@ -29,8 +28,7 @@ class BottomBarScreenState extends State<BottomBarScreen> {
   }
 
   Future<void> _addToken() async {
-    final token = await FirebaseConfig.getTokenFcm();
-    _appUseCase.addDevice(token ?? '');
+    _appUseCase.addDevice(SessionUtils.deviceId);
   }
 
   @override

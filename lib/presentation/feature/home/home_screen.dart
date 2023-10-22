@@ -11,11 +11,16 @@ import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/presentation/feature/home/widget/silver_coated_shampoo_widget.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
+import '../../../app/managers/status_bloc.dart';
 import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/nested_route_wrapper.dart';
+import '../../widgets/qty_carts_widget.dart';
+import '../../widgets/toast_manager.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 import '../cart/bloc/carts_bloc.dart';
+import '../detail_product/bloc/product_detail_bloc.dart';
+import '../detail_product/ui/detail_product_screen.dart';
 import 'bottom/home_enum.dart';
 
 class HomeNested extends StatelessWidget {
@@ -26,7 +31,7 @@ class HomeNested extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NestedRouteWrapper(
-      onGenerateRoute: Routes.generateBottomBarRoute,
+      onGenerateRoute: Routes.generateDefaultRoute,
       navigationKey: Routes.homeKey,
       initialRoute: BottomBarEnum.home.getRouteNames,
     );
@@ -133,8 +138,8 @@ class HomeScreenState extends State<HomeScreen>
                       children: [
                         16.horizontalSpace,
                         Assets.images.logoMain.image(
-                          width: 40,
-                          height: 40,
+                          width: 30.r,
+                          height: 30.r,
                         ),
                         const SizedBox(width: 12),
                         Column(
@@ -163,11 +168,56 @@ class HomeScreenState extends State<HomeScreen>
                   : Padding(
                       padding: const EdgeInsets.only(left: 16),
                       child: Assets.images.logoMain.image(
-                        width: 40,
-                        height: 40,
+                        width: 30.r,
+                        height: 30.r,
                       ),
                     ),
               const Spacer(),
+              if (_profileBloc.state.profileModel?.isAgency ?? false)
+                InkWell(
+                  onTap: () => Navigator.pushNamed(
+                    Routes.instance.navigatorKey.currentContext!,
+                    RouteDefine.cartScreen,
+                  ),
+                  child: BlocConsumer<ProductDetailBloc, ProductDetailState>(
+                    listener: (context, state) {
+                      state.status == BlocStatusEnum.loading
+                          ? DialogManager.showLoadingDialog(context)
+                          : DialogManager.hideLoadingDialog;
+
+                      if (state.isNavigateToCartScreen &&
+                          _profileBloc.state.profileModel?.isAgency == true) {
+                        Navigator.pushNamed(
+                          Routes.instance.navigatorKey.currentContext!,
+                          RouteDefine.cartScreen,
+                          arguments: ArgumentCartScreen(
+                            carts: state.addToCartModel?.carts,
+                          ),
+                        );
+                      }
+
+                      if (state.errMes.isNotEmpty) {
+                        ToastManager.showToast(
+                          context,
+                          text: state.errMes,
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return Center(
+                        child: Stack(
+                          children: [
+                            Assets.icons.icCar.image(
+                              width: 25.r,
+                              height: 25.r,
+                            ),
+                            qtyCartsWidget(),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
               _notiIcon(),
             ],
           ),

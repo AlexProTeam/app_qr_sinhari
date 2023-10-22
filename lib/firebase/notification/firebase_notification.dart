@@ -25,15 +25,14 @@ class FirebaseNotification {
     Map<String, dynamic>? message,
   ) async {
     if (Platform.isAndroid) {
-      // String typeNoti = _getTypeNotification(message) ?? '';
-      // LOG.d('typeNotiNe: $typeNoti');
-      // await LocalNotification.instance.showNotification(
-      //   title: message?['title'],
-      //   body: message?['body'],
-      //   type: typeNoti,
-      // );
+      String typeNoti = _getTypeNotification(message) ?? '';
+      await LocalNotification.instance.showNotification(
+        title: message?['title'],
+        body: message?['body'],
+        type: typeNoti,
+      );
     } else {
-      // mapTypeMessageToNavigateTo(message);
+      mapTypeMessageToNavigateTo(message);
     }
     currentMessage = message;
   }

@@ -5,8 +5,6 @@ import 'package:qrcode/app/managers/style_manager.dart';
 import '../../app/app.dart';
 
 Widget qtyCartsWidget({double? size, double? textSize, int? qtyCustom}) {
-  print(SessionUtils.qtyCartsList.toSet().toList());
-
   String count;
 
   if (qtyCustom != null && qtyCustom < 10) {

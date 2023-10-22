@@ -50,35 +50,8 @@ class Routes {
         return SlideLeftRoute(
           widget: const BottomBarScreen(),
         );
-      case RouteDefine.cartScreen:
-        return SlideLeftRoute(
-          widget: BlocProvider(
-            create: (context) => CartsBloc()..add(const InitDataCartEvent()),
-            child: const CartScreen(),
-          ),
-        );
-      case RouteDefine.successScreen:
-        return SlideLeftRoute(
-          widget: SuccessScreen(
-            confirmCartResponse: settings.arguments != null
-                ? settings.arguments as ConfirmOrderDetail
-                : ConfirmOrderDetail(),
-          ),
-        );
-      case RouteDefine.detailOrder:
-        return SlideLeftRoute(
-          widget: DetailOderScreen(
-            proId:
-                settings.arguments != null ? settings.arguments as int : null,
-          ),
-        );
-      default:
-        return _emptyRoute(settings);
-    }
-  }
 
-  static Route<dynamic> generateBottomBarRoute(RouteSettings settings) {
-    switch (settings.name) {
+      ///
       case RouteDefine.policyScreen:
         return SlideLeftRoute(
           widget: PolicyScreen(
@@ -149,8 +122,11 @@ class Routes {
         );
       case RouteDefine.successScreen:
         return SlideLeftRoute(
-          ///todo: check
-          widget: SuccessScreen(confirmCartResponse: ConfirmOrderDetail()),
+          widget: SuccessScreen(
+            confirmCartResponse: settings.arguments != null
+                ? settings.arguments as ConfirmOrderDetail
+                : ConfirmOrderDetail(),
+          ),
         );
       case RouteDefine.verifyOtpScreen:
         return SlideLeftRoute(

@@ -28,7 +28,7 @@ class PersonalNested extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(),
       child: NestedRouteWrapper(
-        onGenerateRoute: Routes.generateBottomBarRoute,
+        onGenerateRoute: Routes.generateDefaultRoute,
         navigationKey: Routes.personalKey,
         initialRoute: BottomBarEnum.caNhan.getRouteNames,
       ),

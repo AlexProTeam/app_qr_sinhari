@@ -17,7 +17,7 @@ class ScanHistoryNested extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NestedRouteWrapper(
-      onGenerateRoute: Routes.generateBottomBarRoute,
+      onGenerateRoute: Routes.generateDefaultRoute,
       navigationKey: Routes.historyScanKey,
       initialRoute: BottomBarEnum.lichSuQuet.getRouteNames,
     );
