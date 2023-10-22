@@ -233,12 +233,15 @@ class Routes {
         );
       case RouteDefine.homeScreen:
         return SlideLeftRoute(
-          duration: 0,
-          widget: BlocProvider(
-            create: (context) => ProductDetailBloc(),
-            child: const HomeScreen(),
-          ),
-        );
+            duration: 0,
+            widget: MultiBlocProvider(providers: [
+              BlocProvider(
+                create: (context) => ProductDetailBloc(),
+              ),
+              BlocProvider(
+                create: (context) => CartsBloc(),
+              )
+            ], child: const HomeScreen()));
       case RouteDefine.changePassScreen:
         return SlideLeftRoute(
           widget: const ChangePassScreen(),

@@ -4,6 +4,7 @@ enum SharedPreferenceKey {
   keyAccessToken,
   havedLogin,
   deviceId,
+  qtyCarts,
 }
 
 class SharedPreferencesManager {
@@ -23,8 +24,8 @@ class SharedPreferencesManager {
   double? getDouble(SharedPreferenceKey key) =>
       _sharedPreferences!.getDouble(key.name);
 
-  Future<bool> putInt(SharedPreferenceKey key, String value) =>
-      _sharedPreferences!.setString(key.name, value);
+  Future<bool> putInt(SharedPreferenceKey key, int value) =>
+      _sharedPreferences!.setInt(key.name, value);
 
   int? getInt(SharedPreferenceKey key) => _sharedPreferences!.getInt(key.name);
 

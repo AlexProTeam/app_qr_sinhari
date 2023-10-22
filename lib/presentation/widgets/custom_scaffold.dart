@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app/managers/color_manager.dart';
 import '../../app/managers/style_manager.dart';
@@ -85,13 +86,13 @@ class CustomAppBar extends StatelessWidget {
                   onTap: () => iconLeftTap != null
                       ? iconLeftTap!()
                       : Navigator.pop(context),
-                  child: const Padding(
-                    padding: EdgeInsets.only(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
                         left: 16, right: 20, top: 16, bottom: 16),
                     child: Center(
                         child: Icon(
                       Icons.arrow_back,
-                      size: 18,
+                      size: 18.r,
                       color: AppColors.colorACACAC,
                     )),
                   ),

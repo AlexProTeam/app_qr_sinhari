@@ -10,7 +10,6 @@ import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 import 'app/managers/color_manager.dart';
 import 'app/route/navigation/route_names.dart';
 import 'app/route/screen_utils.dart';
-import 'firebase/firebase_config.dart';
 
 Future main() async {
   await _beforeRunApp();
@@ -19,7 +18,7 @@ Future main() async {
 
 Future<void> _beforeRunApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupFirebase();
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,

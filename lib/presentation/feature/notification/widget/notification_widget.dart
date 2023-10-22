@@ -11,6 +11,15 @@ import '../../detail_product/ui/detail_product_screen.dart';
 Widget itemNotification(BuildContext context, NotiResponse model) => InkWell(
       onTap: () {
         switch (model.postType) {
+          case PostTypeEnum.notification:
+            if (model.content != null) {
+              Navigator.pushNamed(
+                context,
+                RouteDefine.webViewDetailScreen,
+                arguments: model.content ?? '',
+              );
+            }
+            break;
           case PostTypeEnum.product:
             Navigator.pushNamed(context, RouteDefine.detailProductScreen,
                 arguments: ArgumentDetailProductScreen(

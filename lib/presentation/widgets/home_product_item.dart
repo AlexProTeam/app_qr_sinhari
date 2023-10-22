@@ -4,6 +4,7 @@ import 'package:qrcode/app/app.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
+import 'package:qrcode/presentation/widgets/qty_carts_widget.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../app/managers/color_manager.dart';
@@ -126,7 +127,7 @@ class ProductItemHome extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 5.h,
+            bottom: 0,
             right: 5.w,
             child: GestureDetector(
               onTap: () {
@@ -141,12 +142,21 @@ class ProductItemHome extends StatelessWidget {
                   text: 'Chức năng đang phát triển',
                 );
               },
-              child: Image.asset(
-                onTapAddToCart != null
-                    ? Assets.icons.icCar.path
-                    : Assets.icons.heart.path,
-                width: 20.r,
-                height: 20.r,
+              child: Stack(
+                children: [
+                  Image.asset(
+                    onTapAddToCart != null
+                        ? Assets.icons.icCar.path
+                        : Assets.icons.heart.path,
+                    width: 23.r,
+                    height: 23.r,
+                  ),
+                  if (isAgency)
+                    qtyCartsWidget(
+                      qtyCustom:
+                          SessionUtils.qtyCartsByIds(productModel?.id ?? 0),
+                    ),
+                ],
               ),
             ),
           ),

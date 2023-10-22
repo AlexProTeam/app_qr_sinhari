@@ -15,6 +15,7 @@ import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
+import '../cart/bloc/carts_bloc.dart';
 import 'bottom/home_enum.dart';
 
 class HomeNested extends StatelessWidget {
@@ -50,12 +51,17 @@ class HomeScreenState extends State<HomeScreen>
   void initState() {
     _profileBloc = context.read<ProfileBloc>();
     _bottomBarBloc = context.read<BottomBarBloc>();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    if (SessionUtils.qtyCartsList.isEmpty &&
+        _profileBloc.state.profileModel?.isAgency == true) {
+      context.read<CartsBloc>().add(const InitDataCartEvent());
+    }
     return BlocListener<BottomBarBloc, BottomBarState>(
       listener: (context, state) async {
         if (state.bottomBarEnum == BottomBarEnum.home && state.isRefresh) {

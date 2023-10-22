@@ -81,6 +81,10 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
           addToCartModel: data,
           isAddToCartOnly: event.isAddToCartOnly,
         ));
+
+        ///thêm vào để đếm số lượng giỏ hàng
+        await SessionUtils.saveQtyCarts(
+            [...SessionUtils.qtyCartsList, '${event.proId}']);
       } catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,

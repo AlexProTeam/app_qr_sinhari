@@ -37,9 +37,9 @@ class GridViewDisplayProduct extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(label,
-                style: const TextStyle(
+                style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     color: AppColors.colorEF4948)),
             InkWell(
               onTap: onMore,
@@ -49,9 +49,6 @@ class GridViewDisplayProduct extends StatelessWidget {
               ),
             )
           ],
-        ),
-        const SizedBox(
-          height: 5,
         ),
         GridView.builder(
           shrinkWrap: true,
@@ -65,7 +62,7 @@ class GridViewDisplayProduct extends StatelessWidget {
             childAspectRatio:
                 context.read<ProfileBloc>().state.profileModel?.isAgency == true
                     ? 0.5
-                    : 0.60,
+                    : 0.6,
           ),
           itemBuilder: (context, index) {
             return CategoryItemProduct(

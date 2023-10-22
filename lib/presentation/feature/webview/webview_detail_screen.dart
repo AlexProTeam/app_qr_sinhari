@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // ignore: depend_on_referenced_packages
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 // ignore: depend_on_referenced_packages
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
+import '../../../app/managers/color_manager.dart';
+import '../../../app/route/common_util.dart';
 import '../../widgets/custom_scaffold.dart';
 
 class WebViewDetailScreen extends StatefulWidget {
@@ -20,8 +24,47 @@ class WebViewDetailScreen extends StatefulWidget {
 }
 
 class WebViewDetailScreenState extends State<WebViewDetailScreen> {
+  bool get _isUrl =>
+      widget.url.startsWith('http') || widget.url.startsWith('https');
+
   @override
   Widget build(BuildContext context) {
+    if (!_isUrl) {
+      return SafeArea(
+        child: CustomScaffold(
+          customAppBar: CustomAppBar(
+            title: 'Chi tiết thông báo',
+            iconLeftTap: () => Navigator.pop(context),
+          ),
+          body: Builder(builder: (BuildContext context) {
+            return Html(
+              data: widget.url,
+              shrinkWrap: true,
+              onLinkTap: (url, attributes, element) =>
+                  CommonUtil.runUrl(url ?? ''),
+              style: {
+                "html": Style(
+                  backgroundColor: Colors.transparent,
+                  color: AppColors.grey9,
+                  fontWeight: FontWeight.w500,
+                  fontSize: FontSize(14.sp),
+                  padding: HtmlPaddings.symmetric(horizontal: 16.w),
+                  fontStyle: FontStyle.normal,
+                  wordSpacing: 1.5,
+                ),
+                'img': Style(
+                  width: Width(MediaQuery.of(context).size.width),
+                  height: Height(
+                    MediaQuery.of(context).size.width * 1.5,
+                  ),
+                ),
+              },
+            );
+          }),
+        ),
+      );
+    }
+
     late final PlatformWebViewControllerCreationParams params;
     if (WebViewPlatform.instance is WebKitWebViewPlatform) {
       params = WebKitWebViewControllerCreationParams(
@@ -94,9 +137,30 @@ Page resource error:
         children: [
           Expanded(
             child: Builder(builder: (BuildContext context) {
-              return WebViewWidget(
-                controller: controller,
-              );
+              return _isUrl
+                  ? WebViewWidget(
+                      controller: controller,
+                    )
+                  : Html(
+                      data: widget.url,
+                      style: {
+                        "html": Style(
+                          backgroundColor: Colors.transparent,
+                          color: AppColors.grey9,
+                          fontWeight: FontWeight.w500,
+                          fontSize: FontSize(14),
+                          padding: HtmlPaddings.zero,
+                          fontStyle: FontStyle.normal,
+                          wordSpacing: 1.5,
+                        ),
+                        'img': Style(
+                          width: Width(MediaQuery.of(context).size.width),
+                          height: Height(
+                            MediaQuery.of(context).size.width * 1.5,
+                          ),
+                        ),
+                      },
+                    );
             }),
           ),
         ],

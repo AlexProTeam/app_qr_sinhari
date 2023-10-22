@@ -55,8 +55,39 @@ class SessionUtils {
         SharedPreferenceKey.deviceId,
       );
 
+  /// đếm số lượng trong đơn hàng
+  static int qtyCartsByIds(num id) {
+    if (qtyCartsList.isEmpty) {
+      return 0;
+    }
+
+    return qtyCartsList
+        .where((element) => element == id.toString())
+        .toList()
+        .length;
+  }
+
+  static int get qtyCarts => qtyCartsList.toSet().length;
+
+  static List<String> get qtyCartsList => pref
+      .getStringList(
+        SharedPreferenceKey.qtyCarts,
+      )
+      .toList();
+
+  static Future<void> saveQtyCarts(List<String> data) =>
+      getIt<SharedPreferencesManager>().putStringList(
+        SharedPreferenceKey.qtyCarts,
+        data,
+      );
+
+  static Future<void> get deleteQtyCarts => pref.removeByKey(
+        SharedPreferenceKey.qtyCarts,
+      );
+
   static Future<void> get clearLogout async {
     deleteAccessToken;
     deleteHavedLogin;
+    deleteQtyCarts;
   }
 }

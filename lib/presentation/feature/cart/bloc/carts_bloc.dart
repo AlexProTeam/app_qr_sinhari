@@ -26,6 +26,20 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
           status: BlocStatusEnum.success,
           cartsResponse: result,
         ));
+
+        /// cập nhật lại gio hàng để đếm chuẩn lúc mới vào giỏ hàng
+
+        if ((state.cartsResponse?.carts?.items ?? []).isNotEmpty) {
+          final listData = state.cartsResponse?.carts?.items ?? [];
+          final List<String> newListToSave = [];
+          for (final e in listData) {
+            for (int i = 0; i < e.getQtyNum; i++) {
+              newListToSave.add(e.productId.toString());
+            }
+          }
+
+          SessionUtils.saveQtyCarts(newListToSave);
+        }
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
@@ -82,6 +96,13 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
             ),
           ),
         ));
+
+        /// xóa từng item trong giỏ hàng
+        final List<String> newList = SessionUtils.qtyCartsList;
+
+        newList.remove(event.itemId.toString());
+
+        SessionUtils.saveQtyCarts(newList);
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
@@ -139,6 +160,15 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
             confirmCartResponse: result,
           ),
         );
+
+        /// xóa các item sau khi confirm
+
+        final List<String> newList = SessionUtils.qtyCartsList;
+        for (final e in listData) {
+          newList.remove(e.toString());
+        }
+
+        SessionUtils.saveQtyCarts(newList);
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,

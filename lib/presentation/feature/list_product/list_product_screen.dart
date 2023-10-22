@@ -9,6 +9,7 @@ import '../../../app/route/navigation/route_names.dart';
 import '../../../app/route/screen_utils.dart';
 import '../../widgets/category_product_item.dart';
 import '../../widgets/custom_scaffold.dart';
+import '../../widgets/qty_carts_widget.dart';
 import '../../widgets/toast_manager.dart';
 import '../detail_product/bloc/product_detail_bloc.dart';
 import '../detail_product/ui/detail_product_screen.dart';
@@ -48,12 +49,46 @@ class ListProductScreenState extends State<ListProductScreen> {
                 Routes.instance.navigatorKey.currentContext!,
                 RouteDefine.cartScreen,
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Assets.icons.icCar.image(
-                  width: 30,
-                  height: 30,
-                ),
+              child: BlocConsumer<ProductDetailBloc, ProductDetailState>(
+                listener: (context, state) {
+                  state.status == BlocStatusEnum.loading
+                      ? DialogManager.showLoadingDialog(context)
+                      : DialogManager.hideLoadingDialog;
+
+                  if (state.isNavigateToCartScreen &&
+                      widget.argument?.isAgency == true) {
+                    Navigator.pushNamed(
+                      Routes.instance.navigatorKey.currentContext!,
+                      RouteDefine.cartScreen,
+                      arguments: ArgumentCartScreen(
+                        carts: state.addToCartModel?.carts,
+                      ),
+                    );
+                  }
+
+                  if (state.errMes.isNotEmpty) {
+                    ToastManager.showToast(
+                      context,
+                      text: state.errMes,
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 16.w),
+                      child: Stack(
+                        children: [
+                          Assets.icons.icCar.image(
+                            width: 25.r,
+                            height: 25.r,
+                          ),
+                          qtyCartsWidget(),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
             )
         ],
@@ -70,56 +105,32 @@ class ListProductScreenState extends State<ListProductScreen> {
             );
           }
 
-          return BlocListener<ProductDetailBloc, ProductDetailState>(
-            listener: (context, state) {
-              state.status == BlocStatusEnum.loading
-                  ? DialogManager.showLoadingDialog(context)
-                  : DialogManager.hideLoadingDialog;
-
-              if (state.isNavigateToCartScreen &&
-                  widget.argument?.isAgency == true) {
-                Navigator.pushNamed(
-                  Routes.instance.navigatorKey.currentContext!,
-                  RouteDefine.cartScreen,
-                  arguments: ArgumentCartScreen(
-                    carts: state.addToCartModel?.carts,
-                  ),
-                );
-              }
-
-              if (state.errMes.isNotEmpty) {
-                ToastManager.showToast(
-                  context,
-                  text: state.errMes,
-                );
-              }
-            },
-            child: GridView.builder(
-              shrinkWrap: true,
-              itemCount: products.length,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0)
-                      .copyWith(bottom: 100.h),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12.0,
-                mainAxisSpacing: 12.0,
-                childAspectRatio: 0.5,
-              ),
-              itemBuilder: (context, index) {
-                final data = products[index];
-
-                return CategoryItemProduct(
-                  isShowLike: false,
-                  itemWidth: (GScreenUtil.screenWidthDp - 48) / 2,
-                  productModel: products[index],
-                  isAgency: widget.argument?.isAgency == true,
-                  onAddToCart: () => addToCartScreen(id: data.id ?? 0),
-                  buyNow: () =>
-                      addToCartScreen(id: data.id ?? 0, isAddToCartOnly: false),
-                );
-              },
+          return GridView.builder(
+            shrinkWrap: true,
+            itemCount: products.length,
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 16.0.h)
+                .copyWith(bottom: 100.h),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12.h,
+              mainAxisSpacing: 12.w,
+              childAspectRatio: 0.6,
             ),
+            itemBuilder: (context, index) {
+              final data = products[index];
+
+              return CategoryItemProduct(
+                isShowLike: false,
+                itemWidth: (GScreenUtil.screenWidthDp - 48) / 2,
+                productModel: products[index],
+                isAgency: widget.argument?.isAgency == true,
+                onAddToCart: () => addToCartScreen(id: data.id ?? 0),
+                buyNow: () => addToCartScreen(
+                  id: data.id ?? 0,
+                  isAddToCartOnly: false,
+                ),
+              );
+            },
           );
         },
       ),

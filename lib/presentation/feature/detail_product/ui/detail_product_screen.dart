@@ -17,6 +17,7 @@ import '../../../../../app/route/navigation/route_names.dart';
 import '../../../../domain/entity/add_to_cart_model.dart';
 import '../../../widgets/category_product_item.dart';
 import '../../../widgets/custom_button.dart';
+import '../../../widgets/qty_carts_widget.dart';
 import 'detail_product_slide.dart';
 
 class ArgumentDetailProductScreen {
@@ -55,45 +56,45 @@ class DetailProductScreenState extends State<DetailProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: BaseAppBar(
-          title: 'Chi tiết',
-          isShowBack: true,
-          actions: [
-            if (_profileBloc.state.isHasProfileData &&
-                _profileBloc.state.profileModel?.isAgency == true)
-              _iconAddToCarts(),
-            _iconFavorite()
-          ],
-        ),
-        body: BlocConsumer<ProductDetailBloc, ProductDetailState>(
-          listenWhen: (previous, current) => previous != current,
-          buildWhen: (previous, current) => previous != current,
-          listener: (context, state) {
-            state.status == BlocStatusEnum.loading
-                ? DialogManager.showLoadingDialog(context)
-                : DialogManager.hideLoadingDialog;
+    return BlocConsumer<ProductDetailBloc, ProductDetailState>(
+      listenWhen: (previous, current) => previous != current,
+      buildWhen: (previous, current) => previous != current,
+      listener: (context, state) {
+        state.status == BlocStatusEnum.loading
+            ? DialogManager.showLoadingDialog(context)
+            : DialogManager.hideLoadingDialog;
 
-            if (state.isNavigateToCartScreen &&
-                _profileBloc.state.profileModel?.isAgency == true) {
-              Navigator.pushNamed(
-                Routes.instance.navigatorKey.currentContext!,
-                RouteDefine.cartScreen,
-                arguments: ArgumentCartScreen(
-                  carts: state.addToCartModel?.carts,
-                ),
-              );
-            }
+        if (state.isNavigateToCartScreen &&
+            _profileBloc.state.profileModel?.isAgency == true) {
+          Navigator.pushNamed(
+            Routes.instance.navigatorKey.currentContext!,
+            RouteDefine.cartScreen,
+            arguments: ArgumentCartScreen(
+              carts: state.addToCartModel?.carts,
+            ),
+          );
+        }
 
-            if (state.errMes.isNotEmpty) {
-              ToastManager.showToast(
-                context,
-                text: state.errMes,
-              );
-            }
-          },
-          builder: (context, state) {
-            return RefreshIndicator(
+        if (state.errMes.isNotEmpty) {
+          ToastManager.showToast(
+            context,
+            text: state.errMes,
+          );
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+            appBar: BaseAppBar(
+              title: 'Chi tiết',
+              isShowBack: true,
+              actions: [
+                if (_profileBloc.state.isHasProfileData &&
+                    _profileBloc.state.profileModel?.isAgency == true)
+                  _iconAddToCarts(),
+                _iconFavorite()
+              ],
+            ),
+            body: RefreshIndicator(
               onRefresh: () async => _initData(),
               child: Stack(
                 children: [
@@ -313,9 +314,9 @@ class DetailProductScreenState extends State<DetailProductScreen> {
                   bottomButton(),
                 ],
               ),
-            );
-          },
-        ));
+            ));
+      },
+    );
   }
 
   String getDate(String dateTimeScan) {
@@ -581,11 +582,22 @@ class DetailProductScreenState extends State<DetailProductScreen> {
           Routes.instance.navigatorKey.currentContext!,
           RouteDefine.cartScreen,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: Assets.icons.icCar.image(
-            width: 23.r,
-            height: 23.r,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: Stack(
+              children: [
+                Assets.icons.icCar.image(
+                  width: 23.r,
+                  height: 23.r,
+                ),
+                qtyCartsWidget(
+                  qtyCustom: SessionUtils.qtyCartsByIds(
+                    widget.argument?.productId ?? 0,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );

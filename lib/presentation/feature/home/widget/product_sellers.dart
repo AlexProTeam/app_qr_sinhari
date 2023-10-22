@@ -87,7 +87,7 @@ class _ProductSellersWidgetState extends State<ProductSellersWidget> {
             ],
           ),
           ...List.generate(
-              _productSellers.length,
+              _productSellers.length > 4 ? 4 : _productSellers.length,
               (index) => ProductItemHome(
                     productModel: _productSellers[index],
                   )),

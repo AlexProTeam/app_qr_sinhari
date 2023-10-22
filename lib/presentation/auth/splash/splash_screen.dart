@@ -1,4 +1,3 @@
-// Project imports:
 part of app_layer;
 
 class SplashScreen extends StatefulWidget {
@@ -12,84 +11,106 @@ class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
-  late ProfileBloc _profileBloc;
-  final AppUseCase _appUseCase = getIt<AppUseCase>();
 
   @override
   void initState() {
-    _profileBloc = context.read<ProfileBloc>();
-
-    _initData();
     super.initState();
+    initializeAnimation();
+    initializeData();
+  }
+
+  void initializeAnimation() {
     controller =
         AnimationController(duration: const Duration(seconds: 2), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.linear)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           controller.reverse();
-        } else if (status == AnimationStatus.dismissed) {
+        }
+        if (status == AnimationStatus.dismissed) {
           controller.forward();
         }
       });
     controller.forward();
   }
 
-  Future<void> _initData() async {
-    if (SessionUtils.deviceId.isEmpty) {
-      final fcmToken = await FirebaseConfig.getTokenFcm();
-      SessionUtils.saveDeviceId(fcmToken ?? '');
-      try {
-        await _appUseCase.addDevice(fcmToken ?? '');
-      } on ApiException catch (e) {
-        ToastManager.showToast(
-          Routes.instance.navigatorKey.currentContext!,
-          text: e.message,
-        );
-      }
-    }
-
-    await Future.delayed(const Duration(seconds: 3));
-
-    if (SessionUtils.accessToken.isEmpty) {
-      Navigator.pushReplacementNamed(
+  Future<void> initializeData() async {
+    try {
+      await _initDevice();
+      await Future.delayed(const Duration(seconds: 3));
+      _checkProfile();
+    } catch (e) {
+      ToastManager.showToast(
         Routes.instance.navigatorKey.currentContext!,
-        RouteDefine.welcomeScreen,
+        text: 'Initialization Error: $e',
       );
-
-      return;
     }
+  }
 
-    _profileBloc.add(InitProfileEvent());
+  Future<void> _initDevice() async {
+    await setupFirebase();
+    try {
+      if (SessionUtils.deviceId.isEmpty) {
+        final fcmToken = await FirebaseConfig.getTokenFcm();
+        SessionUtils.saveDeviceId(fcmToken ?? '');
+
+        if (fcmToken != null) {
+          await getIt<AppUseCase>().addDevice(fcmToken);
+        }
+      }
+    } catch (e) {
+      ToastManager.showToast(
+        Routes.instance.navigatorKey.currentContext!,
+        text: 'Device Initialization Error: $e',
+      );
+    }
+  }
+
+  void _checkProfile() {
+    try {
+      if (SessionUtils.accessToken.isEmpty) {
+        _navigateToWelcomeScreen();
+      } else {
+        context.read<ProfileBloc>().add(InitProfileEvent());
+      }
+    } catch (e) {
+      ToastManager.showToast(
+        Routes.instance.navigatorKey.currentContext!,
+        text: 'Access Token Check Error: $e',
+      );
+    }
+  }
+
+  void _navigateToWelcomeScreen() {
+    Navigator.pushReplacementNamed(
+      context,
+      RouteDefine.welcomeScreen,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProfileBloc, ProfileState>(
-      listener: (context, state) async {
-        switch (state.status) {
-          case BlocStatusEnum.failed:
-            SessionUtils.deleteAccessToken;
-            Navigator.pushReplacementNamed(
-              Routes.instance.navigatorKey.currentContext!,
-              RouteDefine.welcomeScreen,
-            );
-            break;
-          case BlocStatusEnum.success:
-            Navigator.pushReplacementNamed(
-              Routes.instance.navigatorKey.currentContext!,
-              RouteDefine.bottomBarScreen,
-            );
-            break;
-          default:
+      listener: (context, state) {
+        if (state.status == BlocStatusEnum.failed) {
+          SessionUtils.deleteAccessToken;
+          _navigateToWelcomeScreen();
+        }
+        if (state.status == BlocStatusEnum.success) {
+          Navigator.pushReplacementNamed(
+            context,
+            RouteDefine.bottomBarScreen,
+          );
         }
       },
       child: Scaffold(
-          backgroundColor: Colors.white,
-          body: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: _AnimatedLogo(animation: animation),
-          )),
+        backgroundColor: Colors.white,
+        body: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: _AnimatedLogo(animation: animation),
+        ),
+      ),
     );
   }
 
@@ -111,13 +132,14 @@ class _AnimatedLogo extends AnimatedWidget {
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
     return Center(
-        child: Opacity(
-      opacity: _opacityTween.evaluate(animation),
-      child: SizedBox(
-        height: _sizeTween.evaluate(animation),
-        width: _sizeTween.evaluate(animation),
-        child: Assets.icons.logoLogin.image(),
+      child: Opacity(
+        opacity: _opacityTween.evaluate(animation),
+        child: SizedBox(
+          height: _sizeTween.evaluate(animation),
+          width: _sizeTween.evaluate(animation),
+          child: Assets.icons.logoLogin.image(),
+        ),
       ),
-    ));
+    );
   }
 }
