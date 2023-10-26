@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../app/app.dart';
+import '../../../../app/managers/route_names.dart';
 import '../../../../app/managers/style_manager.dart';
-import '../../../../app/route/navigation/route_names.dart';
 import '../../../../domain/entity/history_debt_model.dart';
 import 'item_history_detb_widget.dart';
 
@@ -39,6 +39,7 @@ class DetbsTabWidget extends StatelessWidget {
             date: dataItem.createdAt,
             price: dataItem.amount,
             code: dataItem.order?.code,
+            currency: dataItem.currency ?? '',
           ),
         );
       },

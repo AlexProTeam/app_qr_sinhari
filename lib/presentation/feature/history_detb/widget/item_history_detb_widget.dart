@@ -13,6 +13,7 @@ Widget itemDetbsWidget(
   String? date,
   String? price,
   String? code,
+  String? currency,
   required bool isDebt,
 }) {
   return Container(
@@ -56,7 +57,7 @@ Widget itemDetbsWidget(
               ),
               4.verticalSpace,
               Text(
-                '${isDebt ? '-' : '+'}${price.toAppNumberFormatWithNull}',
+                '${isDebt ? '-' : '+'}${price.toAppNumberFormatWithNull}$currency',
                 style: TextStyleManager.normalBlack.copyWith(
                   fontWeight: FontWeight.w700,
                   color: isDebt ? Colors.red : Colors.green,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
+import 'package:qrcode/app/managers/route_names.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
-import 'package:qrcode/app/route/navigation/route_names.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 

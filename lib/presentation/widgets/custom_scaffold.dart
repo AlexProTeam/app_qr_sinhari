@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app/managers/color_manager.dart';
 import '../../app/managers/style_manager.dart';
-import '../../app/route/common_util.dart';
-import '../../app/route/screen_utils.dart';
+import '../../app/utils/common_util.dart';
+import '../../app/utils/screen_utils.dart';
 
 const double defaultAppbar = 56.0;
 

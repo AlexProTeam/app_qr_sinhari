@@ -8,7 +8,7 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 import '../../../app/managers/color_manager.dart';
-import '../../../app/route/common_util.dart';
+import '../../../app/utils/common_util.dart';
 import '../../widgets/custom_scaffold.dart';
 
 class WebViewDetailScreen extends StatefulWidget {

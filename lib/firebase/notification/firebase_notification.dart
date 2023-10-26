@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../../app/route/log_util.dart';
 import 'local_notification.dart';
 
 class FirebaseNotification {
@@ -52,11 +51,9 @@ class FirebaseNotification {
       mapTypeMessageToNavigateTo(message?.data ?? {});
     });
     FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
-      lOG.d('onMessageNe: ${event.data}');
       handleOnMessage(event.data);
       RemoteNotification? notification = event.notification;
       String typeNoti = _getTypeNotification(event.data) ?? '';
-      lOG.d('typeNotiNe: $typeNoti');
       await LocalNotification.instance.showNotification(
         title: notification?.title,
         body: notification?.body,
@@ -101,7 +98,6 @@ class FirebaseNotification {
       var typeMessage = message['msgType'];
       return typeMessage;
     } catch (e) {
-      lOG.e('_getTypeNotification');
       return null;
     }
   }

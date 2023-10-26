@@ -9,8 +9,8 @@ import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/input_custom.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
-import '../../../../../app/route/validate_utils.dart';
 import '../../../../../domain/entity/profile_model.dart';
+import '../../../../app/utils/validate_utils.dart';
 
 class DetailProductContact extends StatefulWidget {
   final int? productId;

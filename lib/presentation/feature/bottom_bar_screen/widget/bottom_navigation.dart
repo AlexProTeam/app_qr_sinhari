@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 
 import '../../../../app/managers/color_manager.dart';
-import '../../../../app/route/screen_utils.dart';
+import '../../../../app/utils/screen_utils.dart';
 import '../bloc/bottom_bar_bloc.dart';
 import '../enum/bottom_bar_enum.dart';
 

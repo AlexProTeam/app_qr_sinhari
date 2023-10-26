@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 
 import '../../../../app/managers/color_manager.dart';
-import '../../../../app/route/common_util.dart';
+import '../../../../app/utils/common_util.dart';
 import '../../../widgets/box_border_widget.dart';
 import '../../../widgets/custom_scaffold.dart';
 import '../../../widgets/icon_text_widget.dart';

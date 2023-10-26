@@ -5,11 +5,10 @@ import 'dart:ui' as ui;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qrcode/app/route/screen_utils.dart';
+import 'package:qrcode/app/utils/screen_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../presentation/widgets/alert_dialog_container.dart';
-import 'log_util.dart';
 
 class CommonUtil {
   static Future<String> getDeviceId() async {
@@ -46,9 +45,10 @@ class CommonUtil {
     }
 
     Uri dataUrl = Uri.parse(url);
-    await canLaunchUrl(dataUrl)
-        ? await launchUrl(dataUrl)
-        : lOG.e('Exception: runUrl: $url');
+    bool can = await canLaunchUrl(dataUrl);
+    if (can) {
+      await launchUrl(dataUrl);
+    }
   }
 
   static void showCustomBottomSheet({

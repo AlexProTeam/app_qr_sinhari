@@ -4,9 +4,8 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 import 'package:qrcode/presentation/feature/scan/scanner_error_widget.dart';
 
-import '../../../app/route/common_util.dart';
-import '../../../app/route/log_util.dart';
-import '../../../app/route/navigation/route_names.dart';
+import '../../../app/managers/route_names.dart';
+import '../../../app/utils/common_util.dart';
 import '../../widgets/custom_scaffold.dart';
 
 class QrcodeScannerWithController extends StatefulWidget {
@@ -54,9 +53,6 @@ class QrcodeScannerWithControllerState
   }
 
   Future<void> _scanDetailQr(String url) async {
-    lOG.w('_onScan: $url');
-
-    lOG.w('_onScan: requestNe');
     if (url.contains('http://qcheck.vn/') || url.contains('http://qrco.de')) {
       CommonUtil.runUrl(url);
     } else {

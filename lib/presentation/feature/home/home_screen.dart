@@ -11,8 +11,8 @@ import 'package:qrcode/presentation/feature/home/widget/product_sellers.dart';
 import 'package:qrcode/presentation/feature/home/widget/silver_coated_shampoo_widget.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
+import '../../../app/managers/route_names.dart';
 import '../../../app/managers/status_bloc.dart';
-import '../../../app/route/navigation/route_names.dart';
 import '../../widgets/nested_route_wrapper.dart';
 import '../../widgets/qty_carts_widget.dart';
 import '../../widgets/toast_manager.dart';

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/domain/entity/noti_model.dart';
 
 import '../../../../app/managers/color_manager.dart';
+import '../../../../app/managers/route_names.dart';
 import '../../../../app/managers/style_manager.dart';
-import '../../../../app/route/navigation/route_names.dart';
 import '../../../../domain/all_app_enum/noti_enum_type.dart';
 import '../../../widgets/custom_image_network.dart';
 import '../../detail_product/ui/detail_product_screen.dart';

@@ -25,11 +25,13 @@ import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:qrcode/presentation/feature/history_scan/history_model.dart';
 import 'package:qrcode/presentation/feature/news/history_model.dart';
 
+import '../../../domain/entity/address_screen.dart';
 import '../../../domain/entity/confirm_cart_response.dart';
 import '../../../domain/entity/detail_order_response.dart';
 import '../../../domain/entity/history_debt_model.dart';
 import '../../../domain/entity/list_carts_response.dart';
 import '../models/request/confirm_job_request.dart';
+import '../models/request/update_address.dart';
 
 class AppRepositoryImpl implements AppRepository {
   final AppApi api;
@@ -386,6 +388,64 @@ class AppRepositoryImpl implements AppRepository {
     try {
       final result = await api.paymentConfirm();
       return result;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<List<AddressResponse>> getListAddress() async {
+    try {
+      final result = await api.getListAddress();
+      return result.data ?? [];
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<AddressResponse> updateAddress(
+    CUAddressRequest updateAddressRequest,
+  ) async {
+    try {
+      final result = await api.updateAddress(updateAddressRequest);
+      return result.data ?? AddressResponse();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<AddressResponse> createAddress(
+    CUAddressRequest updateAddressRequest,
+  ) async {
+    try {
+      final result = await api.createAddress(updateAddressRequest);
+      return result.data ?? AddressResponse();
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<ObjectResponse> deleteAddress(
+    int addressId,
+  ) async {
+    try {
+      final result = await api.deleteAddress(addressId);
+      return result;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
+
+  @override
+  Future<AddressResponse> detailAddress(
+    int id,
+  ) async {
+    try {
+      final result = await api.detailAddress(id);
+      return result.data ?? AddressResponse();
     } on DioException catch (e) {
       throw (ApiException.error(e));
     }

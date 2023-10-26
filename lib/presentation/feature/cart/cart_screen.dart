@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
+import '../../../app/managers/route_names.dart';
 import '../../../app/managers/status_bloc.dart';
-import '../../../app/route/navigation/route_names.dart';
+import '../../../app/managers/style_manager.dart';
 import '../../../domain/entity/list_carts_response.dart';
+import '../address/bloc/address_bloc.dart';
+import '../address/widget/address_item_widget.dart';
 import 'bloc/carts_bloc.dart';
 import 'widget/item_bottom.dart';
 import 'widget/item_check_promotion.dart';
 import 'widget/item_total_amount.dart';
 import 'widget/list_products.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    context.read<AddressBloc>().add(GetListAddressEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +65,49 @@ class CartScreen extends StatelessWidget {
           ),
           body: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                15.verticalSpace,
+
+                /// địa chỉ
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Text(
+                    'Địa chỉ nhận hàng',
+                    style: TextStyleManager.normalBlack.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                10.verticalSpace,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: BlocBuilder<AddressBloc, AddressState>(
+                    buildWhen: (previous, current) => previous != current,
+                    builder: (context, state) {
+                      if (state.listAddressResponse.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
+                      final dataDefault = state.listAddressResponse.first;
+
+                      return AddressItemWidget(
+                        fullName: dataDefault.name ?? '',
+                        phoneNumber: dataDefault.phone ?? '',
+                        address: dataDefault.address ?? '',
+                        note: dataDefault.note ?? '',
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RouteDefine.addressScreen,
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+                10.verticalSpace,
+                const Divider(),
+
                 /// list item
                 ListProducts(
                   listItemsCarts: state.cartsResponse?.carts?.items ?? [],

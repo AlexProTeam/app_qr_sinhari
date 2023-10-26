@@ -8,8 +8,8 @@ import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_scr
 import 'package:scan/scan.dart';
 
 import '../../../app/managers/color_manager.dart';
-import '../../../app/route/common_util.dart';
-import '../../../app/route/navigation/route_names.dart';
+import '../../../app/managers/route_names.dart';
+import '../../../app/utils/common_util.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/nested_route_wrapper.dart';

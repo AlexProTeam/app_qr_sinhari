@@ -33,6 +33,7 @@ class WithdrawalsTabWidget extends StatelessWidget {
           isDebt: false,
           date: dataItem.createdAt,
           price: dataItem.amount,
+          currency: dataItem.currency ?? '',
         );
       },
       itemCount: withdrawals.length,

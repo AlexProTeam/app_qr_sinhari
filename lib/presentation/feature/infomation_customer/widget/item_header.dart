@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/core/num_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
-import 'package:qrcode/app/route/navigation/route_names.dart';
+import 'package:qrcode/app/managers/route_names.dart';
 import 'package:qrcode/domain/entity/profile_model.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';

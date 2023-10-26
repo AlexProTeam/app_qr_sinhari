@@ -13,7 +13,7 @@ import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/style_manager.dart';
-import '../../../../../app/route/navigation/route_names.dart';
+import '../../../../app/managers/route_names.dart';
 import '../../../../domain/entity/add_to_cart_model.dart';
 import '../../../widgets/category_product_item.dart';
 import '../../../widgets/custom_button.dart';

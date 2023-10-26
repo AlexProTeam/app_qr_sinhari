@@ -8,8 +8,8 @@ import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../app/managers/color_manager.dart';
-import '../../app/route/format_utils.dart';
-import '../../app/route/navigation/route_names.dart';
+import '../../app/managers/route_names.dart';
+import '../../app/utils/format_utils.dart';
 import 'custom_image_network.dart';
 
 class CategoryItemProduct extends StatelessWidget {

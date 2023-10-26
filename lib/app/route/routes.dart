@@ -251,6 +251,20 @@ class Routes {
           widget: const NewsScreen(),
         );
 
+      case RouteDefine.addressScreen:
+        return SlideLeftRoute(
+          duration: 0,
+          widget: const AddressScreen(),
+        );
+
+      case RouteDefine.detailEditAddressScreen:
+        return SlideLeftRoute(
+          duration: 0,
+          widget: DetailEditAddressScreen(
+              detailEditAddressAgument:
+                  settings.arguments as DetailEditAddressAgument),
+        );
+
       default:
         return _emptyRoute(settings);
     }

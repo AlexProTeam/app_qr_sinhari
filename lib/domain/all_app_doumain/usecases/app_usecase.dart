@@ -153,4 +153,27 @@ class AppUseCase {
   Future<HistoryDebtResponse> getListDebt() => _repository.getListDebt();
 
   Future<ObjectResponse> paymentConfirm() => _repository.paymentConfirm();
+
+  Future<List<AddressResponse>> getListAddress() =>
+      _repository.getListAddress();
+
+  Future<AddressResponse> updateAddress({
+    required CUAddressRequest updateAddressRequest,
+  }) =>
+      _repository.updateAddress(updateAddressRequest);
+
+  Future<AddressResponse> createAddress({
+    required CUAddressRequest createAddressRequest,
+  }) =>
+      _repository.createAddress(createAddressRequest);
+
+  Future<ObjectResponse> deleteAddress({
+    required int addressId,
+  }) =>
+      _repository.deleteAddress(addressId);
+
+  Future<AddressResponse> detailAddress({
+    required int id,
+  }) =>
+      _repository.detailAddress(id);
 }

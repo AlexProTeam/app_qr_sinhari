@@ -14,6 +14,7 @@ import 'package:qrcode/domain/entity/product_model.dart';
 import 'package:qrcode/domain/entity/welcome_model.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../../domain/entity/address_screen.dart';
 import '../../../domain/entity/banner_model.dart';
 import '../../../domain/entity/confirm_cart_response.dart';
 import '../../../domain/entity/detail_order_response.dart';
@@ -25,6 +26,7 @@ import '../../../presentation/feature/news/history_model.dart';
 import '../../responses/object_response.dart';
 import '../models/request/confirm_job_request.dart';
 import '../models/request/login_request.dart';
+import '../models/request/update_address.dart';
 import '../models/response/login_response.dart';
 
 // Project imports:
@@ -59,7 +61,9 @@ abstract class AppApi {
   );
 
   @GET('products/show/{productId}')
-  Future<DataDetail> getDetaiProduct(@Path("productId") int productId);
+  Future<DataDetail> getDetaiProduct(
+    @Path("productId") int productId,
+  );
 
   @GET('banners')
   Future<ObjectResponse<List<BannerResponse>>> getBannerHome();
@@ -176,4 +180,27 @@ abstract class AppApi {
 
   @POST('payment_confirm')
   Future<ObjectResponse> paymentConfirm();
+
+  @GET('customer_address')
+  Future<ObjectResponse<List<AddressResponse>>> getListAddress();
+
+  @POST('update_customer_address')
+  Future<ObjectResponse<AddressResponse>> updateAddress(
+    @Body() CUAddressRequest updateAddressRequest,
+  );
+
+  @POST('create_customer_address')
+  Future<ObjectResponse<AddressResponse>> createAddress(
+    @Body() CUAddressRequest updateAddressRequest,
+  );
+
+  @POST('delete_customer_address')
+  Future<ObjectResponse> deleteAddress(
+    @Part(name: 'address_id') int addressId,
+  );
+
+  @GET('customer_address_detail/{id}')
+  Future<ObjectResponse<AddressResponse>> detailAddress(
+    @Path() int id,
+  );
 }

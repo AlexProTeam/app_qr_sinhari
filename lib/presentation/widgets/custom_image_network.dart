@@ -4,7 +4,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../app/managers/color_manager.dart';
 import '../../app/managers/style_manager.dart';
-import '../../app/route/common_util.dart';
+import '../../app/utils/common_util.dart';
 
 class CustomImageNetwork extends StatelessWidget {
   final String? url;

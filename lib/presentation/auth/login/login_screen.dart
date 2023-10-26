@@ -6,9 +6,9 @@ import 'package:qrcode/presentation/auth/login/bloc/login_bloc.dart';
 import 'package:qrcode/presentation/auth/login/widgets/input_phone_widget.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
+import '../../../app/managers/route_names.dart';
 import '../../../app/managers/status_bloc.dart';
-import '../../../app/route/common_util.dart';
-import '../../../app/route/navigation/route_names.dart';
+import '../../../app/utils/common_util.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/follow_keyboard_widget.dart';

@@ -5,8 +5,8 @@ import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import '../../../app/managers/color_manager.dart';
-import '../../../app/route/common_util.dart';
-import '../../../app/route/navigation/route_names.dart';
+import '../../../app/managers/route_names.dart';
+import '../../../app/utils/common_util.dart';
 import '../../auth/login/bloc/login_bloc.dart';
 import '../../widgets/box_border_widget.dart';
 import '../../widgets/custom_button.dart';

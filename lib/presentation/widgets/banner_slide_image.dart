@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qrcode/domain/entity/banner_model.dart';
 
 import '../../app/managers/color_manager.dart';
-import '../../app/route/navigation/route_names.dart';
+import '../../app/managers/route_names.dart';
 import 'custom_image_network.dart';
 
 class BannerSlideImage extends StatefulWidget {

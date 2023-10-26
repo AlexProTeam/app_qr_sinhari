@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/managers/color_manager.dart';
 import '../../../../app/managers/style_manager.dart';
-import '../../../../app/route/validate_utils.dart';
+import '../../../../app/utils/validate_utils.dart';
 
 class TypePhoneNumber extends StatelessWidget {
   final TextEditingController? controller;

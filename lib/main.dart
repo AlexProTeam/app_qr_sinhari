@@ -5,11 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
+import 'package:qrcode/presentation/feature/address/bloc/address_bloc.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
 
 import 'app/managers/color_manager.dart';
-import 'app/route/navigation/route_names.dart';
-import 'app/route/screen_utils.dart';
+import 'app/managers/route_names.dart';
+import 'app/utils/screen_utils.dart';
 import 'firebase/firebase_config.dart';
 
 Future main() async {
@@ -48,6 +49,9 @@ class AppState extends State<App> {
       providers: [
         BlocProvider(
           create: (context) => ProfileBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AddressBloc(),
         ),
       ],
       child: MaterialApp(

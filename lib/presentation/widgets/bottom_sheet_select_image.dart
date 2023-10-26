@@ -3,7 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qrcode/app/app.dart';
 
 import '../../app/managers/style_manager.dart';
-import '../../app/route/common_util.dart';
+import '../../app/utils/common_util.dart';
 
 class BottomSheetSelectImage extends StatefulWidget {
   final Function? onPhotoTap;

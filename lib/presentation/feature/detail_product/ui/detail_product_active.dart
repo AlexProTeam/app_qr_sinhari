@@ -10,8 +10,8 @@ import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../../../app/managers/color_manager.dart';
 import '../../../../../app/managers/style_manager.dart';
-import '../../../../../app/route/validate_utils.dart';
 import '../../../../../domain/entity/profile_model.dart';
+import '../../../../app/utils/validate_utils.dart';
 
 class ArgumentActiveScreen {
   final int? productId;

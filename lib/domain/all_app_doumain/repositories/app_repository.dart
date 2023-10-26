@@ -96,4 +96,18 @@ abstract class AppRepository {
   Future<HistoryDebtResponse> getListDebt();
 
   Future<ObjectResponse> paymentConfirm();
+
+  Future<List<AddressResponse>> getListAddress();
+
+  Future<AddressResponse> updateAddress(CUAddressRequest updateAddressRequest);
+
+  Future<AddressResponse> createAddress(CUAddressRequest updateAddressRequest);
+
+  Future<ObjectResponse> deleteAddress(
+    int addressId,
+  );
+
+  Future<AddressResponse> detailAddress(
+    int id,
+  );
 }

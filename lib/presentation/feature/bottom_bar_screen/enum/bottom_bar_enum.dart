@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 
-import '../../../../app/route/navigation/route_names.dart';
+import '../../../../app/managers/route_names.dart';
 import '../../history_scan/ui/history_scan_screen.dart';
 import '../../home/home_screen.dart';
 import '../../news/news_screen/ui/news_screen.dart';

@@ -3,7 +3,7 @@ import 'package:qrcode/app/app.dart';
 import 'package:qrcode/domain/entity/product_model.dart';
 
 import '../../../../app/managers/color_manager.dart';
-import '../../../../app/route/navigation/route_names.dart';
+import '../../../../app/managers/route_names.dart';
 import '../../../../data/utils/exceptions/api_exception.dart';
 import '../../../widgets/gridview_product.dart';
 import '../../../widgets/toast_manager.dart';

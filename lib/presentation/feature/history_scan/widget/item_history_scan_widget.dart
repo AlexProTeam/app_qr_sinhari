@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/presentation/feature/detail_product/ui/detail_product_screen.dart';
 
+import '../../../../app/managers/route_names.dart';
 import '../../../../app/managers/style_manager.dart';
-import '../../../../app/route/navigation/route_names.dart';
 import '../../../widgets/custom_image_network.dart';
 import '../history_model.dart';
 

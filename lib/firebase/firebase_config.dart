@@ -8,7 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../app/app.dart';
-import '../app/route/navigation/route_names.dart';
+import '../app/managers/route_names.dart';
 import 'firebase_options.dart';
 import 'notification/notification_service.dart';
 

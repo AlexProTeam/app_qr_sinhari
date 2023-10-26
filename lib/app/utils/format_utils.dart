@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 
 import 'common_util.dart';
-import 'log_util.dart';
 
 class FormatUtils {
   static double? formatMoneyFromStringTextField(String? input) {
@@ -57,7 +56,6 @@ class FormatUtils {
       final output = NumberFormat.simpleCurrency(locale: 'vi').format(currency);
       return haveUnit ? output : output.trim().replaceAll('₫', '');
     } catch (e) {
-      lOG.e('Exception: formatCurrencyDoubleToString: ${e.toString()}');
       return '$currency';
     }
   }

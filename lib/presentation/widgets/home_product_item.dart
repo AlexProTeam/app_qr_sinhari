@@ -8,7 +8,7 @@ import 'package:qrcode/presentation/widgets/qty_carts_widget.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../app/managers/color_manager.dart';
-import '../../app/route/navigation/route_names.dart';
+import '../../app/managers/route_names.dart';
 import 'category_product_item.dart';
 import 'custom_image_network.dart';
 

@@ -7,7 +7,7 @@ import 'package:qrcode/domain/entity/product_model.dart';
 
 import '../../app/managers/color_manager.dart';
 import '../../app/managers/style_manager.dart';
-import '../../app/route/screen_utils.dart';
+import '../../app/utils/screen_utils.dart';
 import '../feature/profile/bloc/profile_bloc.dart';
 import 'category_product_item.dart';
 

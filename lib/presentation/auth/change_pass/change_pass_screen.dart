@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/app/app.dart';
 
-import '../../../app/route/navigation/route_names.dart';
+import '../../../app/managers/route_names.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_scaffold.dart';
 import '../../widgets/custom_textfield.dart';

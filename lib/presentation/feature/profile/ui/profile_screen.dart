@@ -9,8 +9,8 @@ import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 
-import '../../../../app/route/common_util.dart';
-import '../../../../app/route/validate_utils.dart';
+import '../../../../app/utils/common_util.dart';
+import '../../../../app/utils/validate_utils.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_image_network.dart';
 import '../../../widgets/custom_scaffold.dart';
