@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'dart:core';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,14 +16,26 @@ import 'app/managers/color_manager.dart';
 import 'app/managers/route_names.dart';
 import 'app/utils/screen_utils.dart';
 import 'firebase/firebase_config.dart';
+import 'firebase/firebase_options.dart';
 
-Future main() async {
-  await _beforeRunApp();
-  runApp(const App());
+void main() async {
+  runZonedGuarded<Future<void>>(
+    () async {
+      await _beforeRunApp();
+      runApp(const App());
+    },
+    (error, stack) {
+      if (!kDebugMode) {
+        FirebaseCrashlytics.instance.recordError(error, stack);
+      }
+    },
+  );
 }
 
 Future<void> _beforeRunApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform, name: 'Sinhair');
   await setupFirebase();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(

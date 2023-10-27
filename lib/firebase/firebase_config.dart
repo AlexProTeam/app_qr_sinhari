@@ -9,13 +9,9 @@ import 'package:flutter/cupertino.dart';
 
 import '../app/app.dart';
 import '../app/managers/route_names.dart';
-import 'firebase_options.dart';
 import 'notification/notification_service.dart';
 
 Future setupFirebase() async {
-  // LocalNotification.instance.setUp();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform, name: 'Sinhair');
   listenFirebaseMessage();
 
   await FirebaseConfig.requestPermission();

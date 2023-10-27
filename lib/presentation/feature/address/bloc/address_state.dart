@@ -43,7 +43,7 @@ class AddressState extends Equatable {
       listAddressResponse: listAddressResponse ?? this.listAddressResponse,
       addressResponse: addressResponse ?? this.addressResponse,
       objectResponse: objectResponse ?? this.objectResponse,
-      isCanPop: isCanPop ?? false,
+      isCanPop: isCanPop ?? this.isCanPop,
     );
   }
 }

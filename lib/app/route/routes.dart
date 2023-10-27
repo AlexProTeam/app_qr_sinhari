@@ -247,19 +247,19 @@ class Routes {
         );
       case RouteDefine.newsScreen:
         return SlideLeftRoute(
-          duration: 0,
+          duration: 100,
           widget: const NewsScreen(),
         );
 
       case RouteDefine.addressScreen:
         return SlideLeftRoute(
-          duration: 0,
+          duration: 100,
           widget: const AddressScreen(),
         );
 
       case RouteDefine.detailEditAddressScreen:
         return SlideLeftRoute(
-          duration: 0,
+          duration: 100,
           widget: DetailEditAddressScreen(
               detailEditAddressAgument:
                   settings.arguments as DetailEditAddressAgument),

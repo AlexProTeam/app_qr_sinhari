@@ -72,6 +72,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           status: BlocStatusEnum.success,
           message: 'tạo mới địa chỉ thành công',
           listAddressResponse: updatedAddresses,
+          isCanPop: true,
         ));
       } on ApiException catch (e) {
         emit(state.copyWith(
