@@ -22,11 +22,12 @@ class DetailOrderBloc extends Bloc<DetailOrderEvent, DetailOrderState> {
         dataOrderDetail = data.data;
 
         emit(state.copyWith(
-            status: BlocStatusEnum.success, dataOrderDetail: dataOrderDetail));
+          status: BlocStatusEnum.success,
+          dataOrderDetail: dataOrderDetail,
+        ));
       } on ApiException catch (e) {
         emit(state.copyWith(
           status: BlocStatusEnum.failed,
-          dataOrderDetail: dataOrderDetail,
           errMes: e.message,
         ));
       }

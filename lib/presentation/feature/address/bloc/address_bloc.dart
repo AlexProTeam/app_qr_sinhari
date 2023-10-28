@@ -99,6 +99,14 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
             return e;
           }).toList();
 
+          if (data.getIsDefault) {
+            /// Remove the old address with the same ID if it exists
+            newList.removeWhere((address) => address.id == data.id);
+
+            /// Add the updated address at the beginning of the list
+            newList.insert(0, data);
+          }
+
           emit(state.copyWith(
             status: BlocStatusEnum.success,
             message: 'Cập nhật địa chỉ thành công',

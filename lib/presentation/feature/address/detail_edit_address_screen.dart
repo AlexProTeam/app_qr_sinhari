@@ -55,7 +55,7 @@ class DetailEditAddressScreenState extends State<DetailEditAddressScreen> {
   }
 
   @override
-  Widget build(BuildContext contextMain) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
         title: 'Địa chỉ nhận hàng',
@@ -113,7 +113,7 @@ class DetailEditAddressScreenState extends State<DetailEditAddressScreen> {
                         hintText: 'Số điện thoại',
                         validator: ValidateUtil.validPhone,
                         controller: _phoneController,
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.number,
                       ),
                       8.verticalSpace,
                       CustomTextField(
@@ -121,7 +121,6 @@ class DetailEditAddressScreenState extends State<DetailEditAddressScreen> {
                         hintText: 'Địa chỉ',
                         validator: ValidateUtil.validEmpty,
                         controller: _addressControler,
-                        keyboardType: TextInputType.phone,
                       ),
                       8.verticalSpace,
                       CustomTextField(

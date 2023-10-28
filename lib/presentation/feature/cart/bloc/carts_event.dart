@@ -23,10 +23,12 @@ class ChangeQualityCartEvent extends CartsEvent {
 }
 
 class ConfirmCartEvent extends CartsEvent {
-  const ConfirmCartEvent();
+  final int addressId;
+
+  const ConfirmCartEvent({required this.addressId});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [addressId];
 }
 
 class DeleteCartEvent extends CartsEvent {

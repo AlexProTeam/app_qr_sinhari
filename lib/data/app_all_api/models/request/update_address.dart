@@ -9,6 +9,7 @@ class CUAddressRequest {
   final String? name;
   final String? phone;
   final String? address;
+  @JsonKey(name: 'is_default')
   final int? isDefault;
   @JsonKey(name: 'customer_id')
   final int? customerId;

@@ -9,6 +9,7 @@ import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/gen/assets.gen.dart';
+import 'package:qrcode/presentation/feature/bottom_bar_screen/bloc/bottom_bar_bloc.dart';
 import 'package:qrcode/presentation/feature/pay_debt/bloc/pay_debt_bloc.dart';
 import 'package:qrcode/presentation/widgets/custom_button.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
@@ -16,6 +17,7 @@ import 'package:qrcode/presentation/widgets/input_custom.dart';
 import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../domain/entity/payment_debt_model.dart';
+import '../bottom_bar_screen/enum/bottom_bar_enum.dart';
 
 class ArgumentPayDebtQrScreen {
   final PaymentDebt? payment;
@@ -106,9 +108,19 @@ class _PayDebtQrScreenState extends State<PayDebtQrScreen> {
               state.data?.success == true) {
             DialogManager.showDialogConfirm(
               context,
-              onTapLeft: () => {},
               content: 'Cảm ơn bạn đã xác nhận thanh toán',
               leftTitle: 'Ok',
+              onTapLeft: () {
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                );
+                context.read<BottomBarBloc>().add(
+                      const ChangeTabBottomBarEvent(
+                        bottomBarEnum: BottomBarEnum.home,
+                      ),
+                    );
+              },
             );
           }
         },

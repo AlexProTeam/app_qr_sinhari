@@ -6,8 +6,13 @@ part 'confirm_job_request.g.dart';
 class ConfirmCartRequest {
   @JsonKey(name: 'product_ids')
   List<int> confirmJobs;
+  @JsonKey(name: 'address_id')
+  int addressId;
 
-  ConfirmCartRequest({required this.confirmJobs});
+  ConfirmCartRequest({
+    required this.confirmJobs,
+    required this.addressId,
+  });
 
   factory ConfirmCartRequest.fromJson(Map<String, dynamic> json) =>
       _$ConfirmCartRequestFromJson(json);

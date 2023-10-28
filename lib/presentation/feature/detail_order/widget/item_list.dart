@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/core/string_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
+import 'package:qrcode/presentation/widgets/custom_image_network.dart';
 
 import '../../../../domain/entity/detail_order_response.dart';
 
@@ -19,14 +21,11 @@ class ItemListViewDetailOrdersWidget extends StatelessWidget {
           border: Border(bottom: BorderSide(color: AppColors.colorF1F1F1))),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              products.productImage ?? '',
-              width: 111,
-              height: 95,
-              // fit: BoxFit.cover,
-            ),
+          CustomImageNetwork(
+            url: products.productImage ?? '',
+            width: 111.w,
+            height: 9.h,
+            border: 8.r,
           ),
           Expanded(
             child: Container(

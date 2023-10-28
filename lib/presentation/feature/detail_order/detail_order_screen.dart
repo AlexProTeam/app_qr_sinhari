@@ -5,6 +5,7 @@ import 'package:qrcode/presentation/feature/detail_order/bloc/detail_order_bloc.
 import 'package:qrcode/presentation/feature/detail_order/widget/adress_recive.dart';
 import 'package:qrcode/presentation/feature/detail_order/widget/item_list.dart';
 import 'package:qrcode/presentation/widgets/custom_scaffold.dart';
+import 'package:qrcode/presentation/widgets/toast_manager.dart';
 
 import '../../../domain/entity/detail_order_response.dart';
 
@@ -30,10 +31,18 @@ class _DetailOderScreenState extends State<DetailOderScreen> {
         child: BlocProvider(
           create: (context) => DetailOrderBloc()
             ..add(InitDetailOrderEvent(id: widget.proId ?? 0)),
-          child: BlocBuilder<DetailOrderBloc, DetailOrderState>(
+          child: BlocConsumer<DetailOrderBloc, DetailOrderState>(
+              listenWhen: (previous, current) => previous != current,
+              listener: (context, state) {
+                if (state.status == BlocStatusEnum.failed) {
+                  ToastManager.showToast(
+                    context,
+                    text: state.errMes,
+                  );
+                }
+              },
               buildWhen: (previous, current) => previous != current,
               builder: (BuildContext context, state) {
-                final products = state.dataOrderDetail;
                 if (state.status == BlocStatusEnum.loading) {
                   return Padding(
                     padding: EdgeInsets.only(
@@ -42,6 +51,8 @@ class _DetailOderScreenState extends State<DetailOderScreen> {
                     child: const Center(child: CircularProgressIndicator()),
                   );
                 }
+                final products = state.dataOrderDetail;
+
                 if ((products?.orderDetail?.products ?? []).isEmpty) {
                   return Padding(
                     padding: EdgeInsets.only(
@@ -55,15 +66,16 @@ class _DetailOderScreenState extends State<DetailOderScreen> {
                 return Column(
                   children: [
                     ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: products?.orderDetail?.products?.length,
-                        itemBuilder: (context, index) {
-                          return ItemListViewDetailOrdersWidget(
-                            products: products?.orderDetail?.products?[index] ??
-                                Products(),
-                          );
-                        }),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: products?.orderDetail?.products?.length,
+                      itemBuilder: (context, index) {
+                        return ItemListViewDetailOrdersWidget(
+                          products: products?.orderDetail?.products?[index] ??
+                              Products(),
+                        );
+                      },
+                    ),
 
                     /// thông tin đơn hàng
                     InformationDetailOrdersWidget(

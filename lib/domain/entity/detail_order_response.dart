@@ -16,26 +16,23 @@ class OrderDetail {
   int? id;
   String? code;
   int? userId;
-  dynamic shippingOption;
   ShippingMethod? shippingMethod;
   ShippingMethod? status;
   String? amount;
-  dynamic taxAmount;
-  dynamic shippingAmount;
+  String? taxAmount;
+  String? shippingAmount;
   String? description;
   String? customerAddress;
-  dynamic couponCode;
-  dynamic discountAmount;
+  String? couponCode;
+  String? discountAmount;
   String? subTotal;
   int? isConfirmed;
-  dynamic discountDescription;
+  String? discountDescription;
   int? isFinished;
-  dynamic completedAt;
-  dynamic token;
-  dynamic paymentId;
+  String? completedAt;
+  int? paymentId;
   String? createdAt;
   String? updatedAt;
-  dynamic storeId;
   List<Products>? products;
 
   String get getCreateAt =>
@@ -45,7 +42,6 @@ class OrderDetail {
     this.id,
     this.code,
     this.userId,
-    this.shippingOption,
     this.shippingMethod,
     this.status,
     this.amount,
@@ -59,11 +55,9 @@ class OrderDetail {
     this.discountDescription,
     this.isFinished,
     this.completedAt,
-    this.token,
     this.paymentId,
     this.createdAt,
     this.updatedAt,
-    this.storeId,
     this.products,
     this.customerAddress,
   });
@@ -72,7 +66,6 @@ class OrderDetail {
     id = json['id'];
     code = json['code'];
     userId = json['user_id'];
-    shippingOption = json['shipping_option'];
     shippingMethod = json['shipping_method'] != null
         ? ShippingMethod.fromJson(json['shipping_method'])
         : null;
@@ -89,12 +82,10 @@ class OrderDetail {
     discountDescription = json['discount_description'];
     isFinished = json['is_finished'];
     completedAt = json['completed_at'];
-    token = json['token'];
     paymentId = json['payment_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     customerAddress = json['customer_address'];
-    storeId = json['store_id'];
     if (json['products'] != null) {
       products = <Products>[];
       json['products'].forEach((v) {
@@ -122,8 +113,8 @@ class Products {
   int? qty;
   String? price;
   String? taxAmount;
-  List<String>? options;
-  List<String>? productOptions;
+  // List<String>? options;
+  // List<String>? productOptions;
   int? productId;
   String? productName;
   String? productImage;
@@ -133,28 +124,29 @@ class Products {
   String? updatedAt;
   String? productType;
   int? timesDownloaded;
-  dynamic licenseCode;
+  String? licenseCode;
   Product? product;
 
-  Products(
-      {this.id,
-      this.orderId,
-      this.qty,
-      this.price,
-      this.taxAmount,
-      this.options,
-      this.productOptions,
-      this.productId,
-      this.productName,
-      this.productImage,
-      this.weight,
-      this.restockQuantity,
-      this.createdAt,
-      this.updatedAt,
-      this.productType,
-      this.timesDownloaded,
-      this.licenseCode,
-      this.product});
+  Products({
+    this.id,
+    this.orderId,
+    this.qty,
+    this.price,
+    this.taxAmount,
+    // this.options,
+    // this.productOptions,
+    this.productId,
+    this.productName,
+    this.productImage,
+    this.weight,
+    this.restockQuantity,
+    this.createdAt,
+    this.updatedAt,
+    this.productType,
+    this.timesDownloaded,
+    this.licenseCode,
+    this.product,
+  });
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -162,21 +154,12 @@ class Products {
     qty = json['qty'];
     price = json['price'];
     taxAmount = json['tax_amount'];
-    if (json['options'] != null) {
-      options = <String>[];
-      json['options'].forEach((v) {
-        options!.add(v);
-      });
-    }
-    if (json['product_options'] != null) {
-      productOptions = <String>[];
-      json['product_options'].forEach((v) {
-        productOptions!.add(v);
-      });
-    }
+    // options = json['options']?.cast<String>() ?? [];
+    // productOptions = json['product_options']?.cast<String>() ?? [];
     productId = json['product_id'];
     productName = json['product_name'];
-    productImage = json['product_image'];
+    // Handle nullable field with null-aware operator (??)
+    productImage = json['product_image'] ?? "default_image_url.jpg";
     weight = json['weight'];
     restockQuantity = json['restock_quantity'];
     createdAt = json['created_at'];
@@ -184,6 +167,7 @@ class Products {
     productType = json['product_type'];
     timesDownloaded = json['times_downloaded'];
     licenseCode = json['license_code'];
+    // Handle nullable field with null-aware operator (??)
     product =
         json['product'] != null ? Product.fromJson(json['product']) : null;
   }
@@ -192,12 +176,12 @@ class Products {
 class Product {
   int? id;
   String? name;
-  dynamic aliasName;
+  String? aliasName;
   String? description;
   String? content;
   ShippingMethod? status;
   List<String>? images;
-  dynamic sku;
+  String? sku;
   int? order;
   int? quantity;
   int? allowCheckoutWhenOutOfStock;
@@ -210,13 +194,13 @@ class Product {
   int? saleType;
   int? price;
   int? salePrice;
-  dynamic startDate;
-  dynamic endDate;
+  String? startDate;
+  String? endDate;
   int? length;
   int? wide;
   int? height;
   int? weight;
-  dynamic taxId;
+  int? taxId;
   int? views;
   String? createdAt;
   String? updatedAt;
@@ -225,9 +209,8 @@ class Product {
   String? createdByType;
   String? image;
   ShippingMethod? productType;
-  dynamic barcode;
+  String? barcode;
   int? costPerItem;
-  dynamic storeId;
   int? approvedBy;
   int? generateLicenseCode;
   int? originalPrice;
@@ -272,7 +255,6 @@ class Product {
       this.productType,
       this.barcode,
       this.costPerItem,
-      this.storeId,
       this.approvedBy,
       this.generateLicenseCode,
       this.originalPrice,
@@ -322,7 +304,6 @@ class Product {
         : null;
     barcode = json['barcode'];
     costPerItem = json['cost_per_item'];
-    storeId = json['store_id'];
     approvedBy = json['approved_by'];
     generateLicenseCode = json['generate_license_code'];
     originalPrice = json['original_price'];
@@ -340,8 +321,8 @@ class ProductCollections {
   int? id;
   String? name;
   String? slug;
-  dynamic description;
-  dynamic image;
+  String? description;
+  String? image;
   ShippingMethod? status;
   String? createdAt;
   String? updatedAt;

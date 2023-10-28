@@ -104,6 +104,7 @@ class FirebaseConfig {
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+  Routes.instance.navigatorKey.currentState?.pushNamed(RouteDefine.notiScreen);
   final SendPort? send =
       IsolateNameServer.lookupPortByName(AppConstant.portBackgroundMessage);
   send?.send(message.data);

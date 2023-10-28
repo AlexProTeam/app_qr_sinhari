@@ -153,7 +153,10 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
             .toList();
 
         emit(state.copyWith(status: BlocStatusEnum.loading));
-        final result = await _appUseCase.postConfirmCart(listData);
+        final result = await _appUseCase.postConfirmCart(
+          listData,
+          event.addressId,
+        );
         emit(
           state.copyWith(
             status: BlocStatusEnum.success,
@@ -162,7 +165,6 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         );
 
         /// xóa các item sau khi confirm
-
         final List<String> newList = SessionUtils.qtyCartsList;
         for (final e in listData) {
           newList.remove(e.toString());

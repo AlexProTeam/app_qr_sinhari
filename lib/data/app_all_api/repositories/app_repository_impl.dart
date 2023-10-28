@@ -346,7 +346,8 @@ class AppRepositoryImpl implements AppRepository {
 
   @override
   Future<ConfirmCartResponse> confirmCart(
-      ConfirmCartRequest confirmCartRequest) async {
+    ConfirmCartRequest confirmCartRequest,
+  ) async {
     try {
       final response = await api.postConfirmCart(confirmCartRequest);
       return response.data ?? ConfirmCartResponse();

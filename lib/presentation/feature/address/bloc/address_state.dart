@@ -19,6 +19,14 @@ class AddressState extends Equatable {
     this.isCanPop = false,
   });
 
+  AddressResponse get defaultAddress {
+    if (listAddressResponse.isEmpty) {
+      return AddressResponse();
+    }
+
+    return listAddressResponse.first;
+  }
+
   @override
   List<Object?> get props => [
         message,

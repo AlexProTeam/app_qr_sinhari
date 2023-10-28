@@ -53,11 +53,14 @@ class AddressItemWidget extends StatelessWidget {
                 ],
               ),
               8.verticalSpace,
-              Text(
-                'Địa chỉ: $address',
-                style: TextStyleManager.normalBlack,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              Padding(
+                padding: EdgeInsets.only(right: 20.w),
+                child: Text(
+                  'Địa chỉ: $address',
+                  style: TextStyleManager.normalBlack,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               3.verticalSpace,
               Text(

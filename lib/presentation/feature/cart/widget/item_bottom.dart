@@ -5,6 +5,7 @@ import 'package:qrcode/app/core/num_ex.dart';
 import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/style_manager.dart';
 import 'package:qrcode/presentation/widgets/check_box_custom.dart';
+import 'package:qrcode/presentation/widgets/custom_button.dart';
 
 import '../bloc/carts_bloc.dart';
 
@@ -44,7 +45,7 @@ class _ItemBottomCartsState extends State<ItemBottomCarts> {
         ],
       ),
       padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-      height: 130.h,
+      height: 120.h,
       child: Column(
         children: [
           Row(
@@ -86,28 +87,13 @@ class _ItemBottomCartsState extends State<ItemBottomCarts> {
             ],
           ),
           8.verticalSpace,
-          SizedBox(
+          CustomButton(
+            backGroupColor:
+                _cartsBloc.state.isSelectedAny ? null : AppColors.grey7,
             width: (MediaQuery.of(context).size.width - 32).w,
-            child: GestureDetector(
-              onTap: () {
-                widget.onTap();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppColors.red,
-                ),
-                padding: EdgeInsets.symmetric(vertical: 16.h),
-                child: Text(
-                  'Mua hàng',
-                  style: TextStyleManager.mediumBlack14px.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18.sp,
-                      color: AppColors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
+            radius: 8.r,
+            text: 'Mua hàng',
+            onTap: () {},
           ),
         ],
       ),

@@ -85,10 +85,7 @@ class _CartScreenState extends State<CartScreen> {
                   child: BlocBuilder<AddressBloc, AddressState>(
                     buildWhen: (previous, current) => previous != current,
                     builder: (context, state) {
-                      if (state.listAddressResponse.isEmpty) {
-                        return const SizedBox.shrink();
-                      }
-                      final dataDefault = state.listAddressResponse.first;
+                      final dataDefault = state.defaultAddress;
 
                       return AddressItemWidget(
                         fullName: dataDefault.name ?? '',
@@ -133,8 +130,15 @@ class _CartScreenState extends State<CartScreen> {
                   context,
                   content: 'Bạn có chắc hoàn thành đơn hàng ?',
                   leftTitle: 'Mua',
-                  onTapLeft: () =>
-                      context.read<CartsBloc>().add(const ConfirmCartEvent()),
+                  onTapLeft: () => context.read<CartsBloc>().add(
+                        ConfirmCartEvent(
+                            addressId: context
+                                    .read<AddressBloc>()
+                                    .state
+                                    .defaultAddress
+                                    .id ??
+                                0),
+                      ),
                 );
               }
             },

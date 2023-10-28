@@ -24,6 +24,7 @@ class _InformationDetailOrdersWidgetState
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         10.verticalSpace,
         infoReciver(),
@@ -50,6 +51,7 @@ class _InformationDetailOrdersWidgetState
           ),
           10.verticalSpace,
           Container(
+            width: MediaQuery.of(context).size.width - 32.w,
             padding: EdgeInsets.all(16.r),
             decoration: BoxDecoration(
                 color: AppColors.grey3,
@@ -58,7 +60,7 @@ class _InformationDetailOrdersWidgetState
               widget.orderDetail.customerAddress ?? '',
               style: TextStyleManager.mediumBlack14px.copyWith(
                 fontWeight: FontWeight.w500,
-                fontSize: 16.sp,
+                fontSize: 14.sp,
                 color: AppColors.black,
               ),
             ),
