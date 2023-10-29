@@ -43,7 +43,7 @@ class ConfigManager {
           _instance = productionConfig;
           break;
         default:
-          _instance = devConfig;
+          _instance = productionConfig;
           break;
       }
 
