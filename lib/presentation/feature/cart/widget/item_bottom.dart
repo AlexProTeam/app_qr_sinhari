@@ -93,7 +93,9 @@ class _ItemBottomCartsState extends State<ItemBottomCarts> {
             width: (MediaQuery.of(context).size.width - 32).w,
             radius: 8.r,
             text: 'Mua hàng',
-            onTap: () {},
+            onTap: () {
+              widget.onTap();
+            },
           ),
         ],
       ),
