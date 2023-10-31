@@ -1,9 +1,6 @@
-import 'dart:async';
 import 'dart:core';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/feature/address/bloc/address_bloc.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
-import 'package:requests_inspector/requests_inspector.dart';
 
 import 'app/managers/color_manager.dart';
 import 'app/managers/route_names.dart';
@@ -21,8 +17,7 @@ import 'firebase/firebase_options.dart';
 
 Future main() async {
   await _beforeRunApp();
-  runApp(const RequestsInspector(
-      enabled: true, showInspectorOn: ShowInspectorOn.LongPress, child: App()));
+  runApp(const App());
 }
 
 Future<void> _beforeRunApp() async {
