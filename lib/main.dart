@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/app.dart';
 import 'package:qrcode/presentation/feature/address/bloc/address_bloc.dart';
 import 'package:qrcode/presentation/feature/profile/bloc/profile_bloc.dart';
+import 'package:requests_inspector/requests_inspector.dart';
 
 import 'app/managers/color_manager.dart';
 import 'app/managers/route_names.dart';
@@ -18,18 +19,10 @@ import 'app/utils/screen_utils.dart';
 import 'firebase/firebase_config.dart';
 import 'firebase/firebase_options.dart';
 
-void main() async {
-  runZonedGuarded<Future<void>>(
-    () async {
-      await _beforeRunApp();
-      runApp(const App());
-    },
-    (error, stack) {
-      if (!kDebugMode) {
-        FirebaseCrashlytics.instance.recordError(error, stack);
-      }
-    },
-  );
+Future main() async {
+  await _beforeRunApp();
+  runApp(const RequestsInspector(
+      enabled: true, showInspectorOn: ShowInspectorOn.LongPress, child: App()));
 }
 
 Future<void> _beforeRunApp() async {

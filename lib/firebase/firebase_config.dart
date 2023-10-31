@@ -14,12 +14,16 @@ import 'notification/notification_service.dart';
 Future setupFirebase() async {
   listenFirebaseMessage();
 
+  // await FirebaseConfig.requestPermission();
+  // await FirebaseConfig.showNotificationForeground();
+  // await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  // FirebaseConfig.onBackgroundPressed();
+  // await NotificationLocalService().createChanel();
+  // await FirebaseConfig.getTokenFcm();
   await FirebaseConfig.requestPermission();
   await FirebaseConfig.showNotificationForeground();
-  await FirebaseMessaging.instance.setAutoInitEnabled(true);
   FirebaseConfig.onBackgroundPressed();
   await NotificationLocalService().createChanel();
-  await FirebaseConfig.getTokenFcm();
 }
 
 void listenFirebaseMessage() {
