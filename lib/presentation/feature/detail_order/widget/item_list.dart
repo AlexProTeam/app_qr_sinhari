@@ -16,7 +16,8 @@ class ItemListViewDetailOrdersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      height: 120.h,
+      padding: EdgeInsets.all(16.r),
       decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: AppColors.colorF1F1F1))),
       child: Row(
@@ -24,14 +25,16 @@ class ItemListViewDetailOrdersWidget extends StatelessWidget {
           CustomImageNetwork(
             url: products.productImage ?? '',
             width: 111.w,
-            height: 9.h,
+            height: 95.h,
             border: 8.r,
+            fit: BoxFit.fill,
           ),
           Expanded(
             child: Container(
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     products.productName ?? '',
@@ -39,9 +42,6 @@ class ItemListViewDetailOrdersWidget extends StatelessWidget {
                         .copyWith(fontWeight: FontWeight.w500, fontSize: 14),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                  ),
-                  const SizedBox(
-                    height: 8,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,9 +69,6 @@ class ItemListViewDetailOrdersWidget extends StatelessWidget {
                       //   ),
                       // ),
                     ],
-                  ),
-                  const SizedBox(
-                    height: 8,
                   ),
                   Text(
                     'Số lượng: ${products.qty}',

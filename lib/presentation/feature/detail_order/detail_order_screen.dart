@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/app/managers/status_bloc.dart';
 import 'package:qrcode/presentation/feature/detail_order/bloc/detail_order_bloc.dart';
 import 'package:qrcode/presentation/feature/detail_order/widget/adress_recive.dart';
@@ -46,7 +47,7 @@ class _DetailOderScreenState extends State<DetailOderScreen> {
                 if (state.status == BlocStatusEnum.loading) {
                   return Padding(
                     padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height / 2 - 30,
+                      top: MediaQuery.of(context).size.height / 2 - 30.h,
                     ),
                     child: const Center(child: CircularProgressIndicator()),
                   );
@@ -56,7 +57,7 @@ class _DetailOderScreenState extends State<DetailOderScreen> {
                 if ((products?.orderDetail?.products ?? []).isEmpty) {
                   return Padding(
                     padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height / 2 - 30,
+                      top: MediaQuery.of(context).size.height / 2 - 30.h,
                     ),
                     child: const Center(
                       child: Text("Không có sản phẩm nào!"),
@@ -65,16 +66,12 @@ class _DetailOderScreenState extends State<DetailOderScreen> {
                 }
                 return Column(
                   children: [
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: products?.orderDetail?.products?.length,
-                      itemBuilder: (context, index) {
-                        return ItemListViewDetailOrdersWidget(
-                          products: products?.orderDetail?.products?[index] ??
-                              Products(),
-                        );
-                      },
+                    ...List.generate(
+                      products?.orderDetail?.products?.length ?? 0,
+                      (index) => ItemListViewDetailOrdersWidget(
+                        products: products?.orderDetail?.products?[index] ??
+                            Products(),
+                      ),
                     ),
 
                     /// thông tin đơn hàng

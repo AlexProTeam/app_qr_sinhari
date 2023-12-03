@@ -21,7 +21,8 @@ class _InfomationCustomerState extends State<InfomationCustomer> {
   void initState() {
     _infoBloc = context.read<InfoBloc>();
     _infoBloc.add(
-        InitListProductEvent(status: StatusOrderHistoryEnum.wait.getEnumKey));
+      const InitListProductEvent(),
+    );
     super.initState();
   }
 
