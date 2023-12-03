@@ -75,12 +75,13 @@ class ItemHeaderProfileBill extends StatelessWidget {
     return Column(
       children: [
         ClipOval(
-            child: CustomImageNetwork(
-          url: profileData.getAvatar,
-          width: 80.r,
-          height: 80.r,
-          fit: BoxFit.cover,
-        )),
+          child: CustomImageNetwork(
+            url: profileData.getAvatar,
+            width: 80.r,
+            height: 80.r,
+            fit: BoxFit.cover,
+          ),
+        ),
         5.verticalSpace,
         Text(
           profileData.phone ?? '',

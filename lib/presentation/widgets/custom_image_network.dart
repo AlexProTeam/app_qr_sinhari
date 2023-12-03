@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -14,6 +15,7 @@ class CustomImageNetwork extends StatelessWidget {
   final double? border;
   final double? paddingPlaceHolder;
   final String? userName;
+  final bool isCircle;
 
   const CustomImageNetwork({
     Key? key,
@@ -24,6 +26,7 @@ class CustomImageNetwork extends StatelessWidget {
     this.paddingPlaceHolder,
     this.border,
     this.userName,
+    this.isCircle = false,
   }) : super(key: key);
 
   @override
@@ -70,20 +73,21 @@ class CustomImageNetwork extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          border: Border.all(color: AppColors.grey4, width: 0.5),
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+          border: Border.all(color: AppColors.grey4, width: 0.5.w),
         ),
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.r),
         child: Container(
-          width: 80,
-          height: 80,
+          width: 80.r,
+          height: 80.r,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(isCircle ? 40.r : 0),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black.withOpacity(0.02),
-                    spreadRadius: 3,
-                    blurRadius: 5)
+                  color: Colors.black.withOpacity(0.02),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                )
               ],
               color: AppColors.white),
           child: Center(
@@ -102,7 +106,7 @@ class CustomImageNetwork extends StatelessWidget {
   }
 
   Widget _widgetImagePlaceHolder() => ClipRRect(
-        borderRadius: BorderRadius.circular(56),
+        borderRadius: BorderRadius.circular((isCircle ? 56 : 0).r),
         child: Assets.images.logo.image(
           width: width,
           height: height,

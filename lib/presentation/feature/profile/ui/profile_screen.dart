@@ -176,6 +176,7 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildProfileImage(ProfileState state) {
     if (state.image.isNotEmpty) {
+      print(111);
       return ClipRRect(
         borderRadius: BorderRadius.all(
           Radius.circular(11.r),

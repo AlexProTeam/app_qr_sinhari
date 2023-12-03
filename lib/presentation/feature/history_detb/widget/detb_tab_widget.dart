@@ -15,9 +15,13 @@ class DetbsTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (debts.isEmpty) {
-      Text(
-        'Chưa có lịch sử nào',
-        style: TextStyleManager.medium,
+      return Center(
+        child: Text(
+          'Chưa có lịch sử nào',
+          style: TextStyleManager.medium.copyWith(
+            color: Colors.black,
+          ),
+        ),
       );
     }
 
