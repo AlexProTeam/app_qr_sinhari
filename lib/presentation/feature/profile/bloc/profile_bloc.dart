@@ -80,5 +80,28 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         status: BlocStatusEnum.init,
       ));
     });
+
+    on<DeleteAccountEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(status: BlocStatusEnum.loading));
+
+        final result = await _appUseCase.detailAccount();
+
+        SessionUtils.clearLogout;
+        emit(
+          state.copyWith(
+            status: BlocStatusEnum.success,
+            mes: result.message,
+            profileModel: null,
+            deleteAccount: result.success,
+          ),
+        );
+      } on ApiException catch (e) {
+        emit(state.copyWith(
+          status: BlocStatusEnum.failed,
+          mes: e.message,
+        ));
+      }
+    });
   }
 }

@@ -49,3 +49,10 @@ class ClearProfileEvent extends ProfileEvent {
   @override
   List<Object?> get props => [];
 }
+
+class DeleteAccountEvent extends ProfileEvent {
+  const DeleteAccountEvent();
+
+  @override
+  List<Object?> get props => [];
+}

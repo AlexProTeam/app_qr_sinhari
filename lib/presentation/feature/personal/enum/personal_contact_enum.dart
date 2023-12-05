@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qrcode/app/app.dart';
+import 'package:qrcode/app/managers/color_manager.dart';
 import 'package:qrcode/app/managers/route_names.dart';
 import 'package:qrcode/gen/assets.gen.dart';
 import 'package:qrcode/presentation/feature/personal/enum/personal_menu_enum.dart';
+
+import '../../profile/bloc/profile_bloc.dart';
 
 enum PersonalContactEnum {
   account,
@@ -11,6 +17,7 @@ enum PersonalContactEnum {
   provisionOrder,
   provisionSecurity,
   adjust,
+  deleteAccount,
 }
 
 extension PersonalContactEnumEx on PersonalContactEnum {
@@ -32,6 +39,11 @@ extension PersonalContactEnumEx on PersonalContactEnum {
         return _icon(Assets.icons.iconCard.path);
       case PersonalContactEnum.historyDebt:
         return _icon(Assets.icons.iconApp.path);
+      case PersonalContactEnum.deleteAccount:
+        return const Icon(
+          Icons.delete_forever,
+          color: AppColors.red,
+        );
     }
   }
 
@@ -51,6 +63,8 @@ extension PersonalContactEnumEx on PersonalContactEnum {
         return 'Chính sách bảo mật';
       case PersonalContactEnum.adjust:
         return 'Điều khoản sử dụng';
+      case PersonalContactEnum.deleteAccount:
+        return 'Xóa tài khoản';
     }
   }
 
@@ -76,14 +90,26 @@ extension PersonalContactEnumEx on PersonalContactEnum {
           RouteDefine.informationCustomer,
         );
       case PersonalContactEnum.historyDebt:
-        return Navigator.pushNamed(context, RouteDefine.historyDetb,
-            arguments: PolicyEnum.policy);
+        return Navigator.pushNamed(
+          context,
+          RouteDefine.historyDetb,
+          arguments: PolicyEnum.policy,
+        );
+      case PersonalContactEnum.deleteAccount:
+        return DialogManager.showDialogConfirm(
+          Routes.instance.navigatorKey.currentContext!,
+          content: 'Xóa tài khoản',
+          leftTitle: 'xóa',
+          onTapLeft: () {
+            context.read<ProfileBloc>().add(const DeleteAccountEvent());
+          },
+        );
     }
   }
 
   Widget _icon(String icon) => Image.asset(
         icon,
-        width: 30,
-        height: 30,
+        width: 30.r,
+        height: 30.r,
       );
 }

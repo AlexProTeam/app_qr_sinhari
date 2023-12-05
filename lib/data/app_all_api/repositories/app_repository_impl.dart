@@ -451,4 +451,14 @@ class AppRepositoryImpl implements AppRepository {
       throw (ApiException.error(e));
     }
   }
+
+  @override
+  Future<ObjectResponse> detailAccount() async {
+    try {
+      final result = await api.detailAccount();
+      return result;
+    } on DioException catch (e) {
+      throw (ApiException.error(e));
+    }
+  }
 }

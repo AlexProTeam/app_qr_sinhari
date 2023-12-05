@@ -32,11 +32,11 @@ class LoginScreenState extends State<LoginScreen> {
       appBar: BaseAppBar(title: 'Đăng nhập', isShowBack: true),
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
-          if (state.status == BlocStatusEnum.loading) {
-            DialogManager.showLoadingDialog(context);
-          }
+          state.status == BlocStatusEnum.loading
+              ? DialogManager.showLoadingDialog(context)
+              : DialogManager.hideLoadingDialog;
+
           if (state.status == BlocStatusEnum.success) {
-            DialogManager.hideLoadingDialog;
             Navigator.pushNamed(
               context,
               RouteDefine.verifyOtpScreen,
@@ -44,7 +44,6 @@ class LoginScreenState extends State<LoginScreen> {
             );
           }
           if (state.status == BlocStatusEnum.failed) {
-            DialogManager.hideLoadingDialog;
             ToastManager.showToast(
               context,
               text: state.mesErr,

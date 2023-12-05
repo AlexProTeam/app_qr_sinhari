@@ -143,9 +143,9 @@ class DialogManager {
 
   static Future<bool> showDialogConfirm(
     BuildContext context, {
-    required Function() onTapLeft,
     required String content,
     required String leftTitle,
+    required Function() onTapLeft,
     bool? isDoubleButton = true,
   }) async {
     bool data = false;

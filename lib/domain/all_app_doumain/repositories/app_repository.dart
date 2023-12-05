@@ -110,4 +110,6 @@ abstract class AppRepository {
   Future<AddressResponse> detailAddress(
     int id,
   );
+
+  Future<ObjectResponse> detailAccount();
 }

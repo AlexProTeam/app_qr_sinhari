@@ -182,4 +182,6 @@ class AppUseCase {
     required int id,
   }) =>
       _repository.detailAddress(id);
+
+  Future<ObjectResponse> detailAccount() => _repository.detailAccount();
 }

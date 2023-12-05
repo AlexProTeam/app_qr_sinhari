@@ -203,4 +203,7 @@ abstract class AppApi {
   Future<ObjectResponse<AddressResponse>> detailAddress(
     @Path() int id,
   );
+
+  @POST('delete_account')
+  Future<ObjectResponse> detailAccount();
 }

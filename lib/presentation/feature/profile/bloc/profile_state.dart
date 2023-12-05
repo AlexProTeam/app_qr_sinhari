@@ -5,12 +5,14 @@ class ProfileState extends Equatable {
   final ProfileModel? profileModel;
   final String image;
   final String mes;
+  final bool? isDeleteAccount;
 
   const ProfileState({
     this.status = BlocStatusEnum.loading,
     this.profileModel,
     this.image = '',
     this.mes = '',
+    this.isDeleteAccount,
   });
 
   @override
@@ -19,6 +21,7 @@ class ProfileState extends Equatable {
         profileModel,
         image,
         mes,
+        isDeleteAccount,
       ];
 
   ProfileState copyWith({
@@ -26,12 +29,14 @@ class ProfileState extends Equatable {
     ProfileModel? profileModel,
     String? image,
     String? mes,
+    bool? deleteAccount,
   }) {
     return ProfileState(
       status: status ?? this.status,
       profileModel: profileModel,
       image: image ?? this.image,
       mes: mes ?? '',
+      isDeleteAccount: deleteAccount,
     );
   }
 
