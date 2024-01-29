@@ -59,9 +59,11 @@ class PersonalScreenState extends State<PersonalScreen> {
     return SingleChildScrollView(
       padding: EdgeInsets.only(bottom: 100.h),
       child: BlocConsumer<ProfileBloc, ProfileState>(
-        listenWhen: (previous, current) => previous != current,
+        listenWhen: (previous, current) =>
+            previous.isDeleteAccount != current.isDeleteAccount,
         listener: (context, state) {
-          state.status == BlocStatusEnum.loading
+          state.status == BlocStatusEnum.loading &&
+                  state.isDeleteAccount == true
               ? DialogManager.showLoadingDialog(context)
               : DialogManager.hideLoadingDialog;
 
