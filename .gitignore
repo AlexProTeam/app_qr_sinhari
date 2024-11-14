@@ -62,21 +62,19 @@ fastlane/app_store_connect_token.json
 assets/pem/public.pem
 android/app/build/intermediates/res/merged/debug/
 
-
 .firebase
 Gemfile.lock
 fastlane/report.xml
-.fvm/flutter_sdk
 *.stackdump
 fastlane/.env.
 *.cer
 *.mobileprovision
 node_modules
-*.jks
+#*.jks
 .flutter-plugins-dependencies
-.fvm/flutter_sdk
 android/app/build
-.fvm/flutter_sdk
 .idea/libraries/Flutter_Plugins.xml
 /pubspec.lock
 
+# FVM Version Cache
+.fvm/
