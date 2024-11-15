@@ -120,7 +120,7 @@ class CustomAppBar extends StatelessWidget {
   }
 }
 
-class BaseAppBar extends StatelessWidget with PreferredSizeWidget {
+class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isShowBack;
   @override
   final Size preferredSize;
